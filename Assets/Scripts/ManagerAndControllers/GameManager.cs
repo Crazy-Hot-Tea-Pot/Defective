@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
         {
             if(CurrentLevel!=Levels.Loading && CurrentLevel != Levels.Credits)
                 // Track the previous level
-                PreviousScene = CurrentLevel;
+                PreviousScene = CurrentLevel;            
 
             CurrentLevel = loadedScene;
 
@@ -211,7 +211,11 @@ public class GameManager : MonoBehaviour
                     break;
                 default:
                     CurrentGameMode = GameMode.Roaming;
-                    //SoundManager.StartBackgroundSound(BgSound.Background);
+
+                    if (PreviousScene == Levels.Title)
+                        GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(CurrentLevel);
+                    else
+                        GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(PreviousScene);
                     break;
             }
             

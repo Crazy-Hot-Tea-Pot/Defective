@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -91,6 +92,11 @@ public class StoryManager : MonoBehaviour
     {
 
     }
+    public void LoadStory(Story story)
+    {
+        CurrentStory = story;
+        CurrentLevel = CurrentStory.levels[0];
+    }
     /// <summary>
     /// Returns the currently active level definition.
     /// Useful for referencing which enemies to spawn or quest gating.
@@ -131,20 +137,16 @@ public class StoryManager : MonoBehaviour
         {
             case Levels.Title:
             case Levels.Credits:
+            case Levels.Loading:
                 break;
             default:
                 var tempDoors = GameObject.FindGameObjectsWithTag("Exit");
                 // or find by name, if necessary
-                foreach (var doorObj in tempDoors)
+                for (int i = 0; i < CurrentLevel.nextLevels.Count; i++)
                 {
-                    var sceneChangeScript = doorObj.GetComponent<SceneChange>();
-                    if (sceneChangeScript != null)
-                    {
-
-                    }
-                }
-
-                break;
+                    tempDoors[i].GetComponent<SceneChange>().SetNextLevel(CurrentLevel.nextLevels[i].levelID);
+                }               
+            break;
         }
     }
     void OnDestroy()

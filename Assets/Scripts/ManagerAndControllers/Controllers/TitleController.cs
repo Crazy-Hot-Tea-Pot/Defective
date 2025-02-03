@@ -24,6 +24,11 @@ public class TitleController : MonoBehaviour
 
     private GameData latestSave = null;
 
+    [Header("Starting stuff")]
+    public Story CurrentStory;
+    public int MaxHealth;
+    public int StartingScrap;    
+
 
     // Start is called before the first frame update
     void Start()
@@ -109,16 +114,23 @@ public class TitleController : MonoBehaviour
         GameData startData = new GameData();
 
         startData.SaveName = "Beginning";
-        startData.Level = Levels.Tutorial;
-        startData.MaxHealth = 50;
-        startData.Health = 50;
-        startData.Scraps = 100;
-        startData.TimeStamp = DateTime.Now;
+        //startData.Level = Levels.Tutorial;
+        //startData.MaxHealth = 50;
+        //startData.Health = 50;
+        //startData.Scraps = 100;
+        //startData.TimeStamp = DateTime.Now;
 
-        startData.storyProgress.storyName = "Tutorial";
-        startData.storyProgress.currentLevel = Levels.Tutorial;
+        //startData.storyProgress.storyName = "Tutorial";
+        //startData.storyProgress.currentLevel = Levels.Tutorial;
 
-        StoryManager.Instance.LoadStory("Tutorial");
+        startData.MaxHealth=MaxHealth;
+        startData.Health = MaxHealth;
+        startData.Scraps=StartingScrap;
+        startData.storyProgress.storyName = CurrentStory.storyName;
+
+        startData.storyProgress.currentLevel = CurrentStory.levels[0].levelID;
+
+        StoryManager.Instance.LoadStory(CurrentStory);
 
 
         // Adds gear to list.

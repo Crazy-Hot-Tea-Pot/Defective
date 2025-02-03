@@ -122,6 +122,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &307647944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307647946}
+  - component: {fileID: 307647945}
+  m_Layer: 0
+  m_Name: Story Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &307647945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307647944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb343f141d5c90e4181dd63c9228fc13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &307647946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307647944}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.239975, y: 9.436688, z: -31.05262}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &413283429
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,6 +978,9 @@ MonoBehaviour:
   ButtonSelectSound: 26
   ButtonClickSound: 24
   VersionText: {fileID: 4622310774376628093}
+  CurrentStory: {fileID: 11400000, guid: 77234dc8d3b1eb943ac5b5708c58a4fa, type: 2}
+  MaxHealth: 50
+  StartingScrap: 100
 --- !u!1 &1779277725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,6 +1121,11 @@ MonoBehaviour:
     Health: 0
     MaxHealth: 0
     Scraps: 0
+    storyProgress:
+      storyName: 
+      currentLevel: 0
+      isStoryComplete: 0
+      zoneStates: []
     Chips: []
     Gear: []
     TimeStampString: 
@@ -2828,3 +2880,4 @@ SceneRoots:
   - {fileID: 5954001462503609488}
   - {fileID: 1259556927}
   - {fileID: 1373282212}
+  - {fileID: 307647946}
