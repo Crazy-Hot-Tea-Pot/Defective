@@ -49,6 +49,8 @@ public class TitleController : MonoBehaviour
 
         CheckForSaveData();
 
+        Invoke(nameof(BringInButtons), 2f);
+
     }
 
     /// <summary>
@@ -188,8 +190,7 @@ public class TitleController : MonoBehaviour
             if (latestSave == null || save.TimeStamp > latestSave.TimeStamp)
                 latestSave = save;
         }
-    }
-    [ContextMenu("Bring in Buttons")]
+    }    
     private void BringInButtons()
     {
         ButtonPanel.GetComponent<Animator>().SetTrigger("BringInButtons");
@@ -197,6 +198,9 @@ public class TitleController : MonoBehaviour
 
     void OnDestroy()
     {
-       
+        PlayButton.onClick.RemoveAllListeners();
+        ResumeButton.onClick.RemoveAllListeners();
+        OptionsButton.onClick.RemoveAllListeners();
+        QuitButton.onClick.RemoveAllListeners();
     }
 }
