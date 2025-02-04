@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3279173873547390297}
   - component: {fileID: 7565799893066819078}
+  - component: {fileID: 2074716340593231451}
   m_Layer: 8
   m_Name: Maintenance bot
   m_TagString: Enemy
@@ -64,6 +65,29 @@ MonoBehaviour:
   DroppedItems:
   - {fileID: 11400000, guid: d9fe00d134e9ea34e98c128921fbd533, type: 2}
   DroppedScrap: 30
+--- !u!136 &2074716340593231451
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612628656415722534}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.069765
+  m_Height: 8.026597
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.42222643, z: 0}
 --- !u!1 &7379420038329593934
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +286,6 @@ GameObject:
   - component: {fileID: 87102578680874786}
   - component: {fileID: 3652657786580512111}
   - component: {fileID: 4838094459970744834}
-  - component: {fileID: 6367210980773161456}
   m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
@@ -335,27 +358,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6367210980773161456
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7599870235235460225}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.8104768, y: 7.792227, z: 11.807799}
-  m_Center: {x: -0.09433415, y: -0.4198569, z: -0.0052425875}
 --- !u!1001 &7905013168461357109
 PrefabInstance:
   m_ObjectHideFlags: 0
