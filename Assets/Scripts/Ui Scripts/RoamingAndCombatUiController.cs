@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -108,8 +107,8 @@ public class RoamingAndCombatUiController : UiController
         HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, targetHealthPercentage);
 
         // Update the health text
-        int percentage = Mathf.RoundToInt(targetHealthPercentage * 100);
-        HealthText.SetText($"{percentage}%");
+        //int percentage = Mathf.RoundToInt(targetHealthPercentage * 100);
+        HealthText.SetText(currentHealth.ToString());//$"{percentage}%");
 
         //float targetHealthPercentage = (float)currentHealth / maxHealth;
 

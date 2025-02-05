@@ -900,6 +900,11 @@ public class PlayerController : MonoBehaviour
     {
         CharacterSpeak("I have a voice.\nI realy do have a voice !!", true, 0.1f, 5f);
     }
+    [ContextMenu("Test Damage 5")]
+    private void TestDamage()
+    {
+        DamagePlayerBy(5);
+    }
     [ContextMenu("Kill Player")]
     private void TestPlayerdeath()
     {
