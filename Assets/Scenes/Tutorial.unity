@@ -14362,6 +14362,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.32
       objectReference: {fileID: 0}
+    - target: {fileID: 1227446777473963846, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
+      propertyPath: runSpeed
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227446777473963846, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
+      propertyPath: walkSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4986942985864643601, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
       propertyPath: m_Size.x
       value: 10
@@ -26038,3 +26046,5 @@ SceneRoots:
   - {fileID: 3886213359431161711}
   - {fileID: 1875204788018669359}
   - {fileID: 8724355751086773370}
+  - {fileID: 424938453}
+  - {fileID: 1426853962}
