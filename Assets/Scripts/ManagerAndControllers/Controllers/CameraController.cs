@@ -408,7 +408,7 @@ public class CameraController : MonoBehaviour
     /// <returns></returns>
     private bool IsPlayerInteracting()
     {
-        if(GameManager.Instance.CurrentGameMode==GameManager.GameMode.Interacting)
+        if(GameManager.Instance.CurrentGameMode==GameManager.GameMode.Interacting || GameManager.Instance.CurrentGameMode == GameManager.GameMode.CombatLoot)
             return true;
         else
             return false;        
