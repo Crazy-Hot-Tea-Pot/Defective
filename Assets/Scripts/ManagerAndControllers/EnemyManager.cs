@@ -191,6 +191,7 @@ public class EnemyManager : MonoBehaviour
                 if (enemyPrefab != null)
                 {
                     GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
+                    enemy.GetComponent<Enemy>().SetEnemyName(enemySpawn.enemyName);
                     enemy.SetActive(true);
                     CombatEnemies.Add(enemy);
                     Debug.Log($"Spawned {enemySpawn.enemyType} at {position}");

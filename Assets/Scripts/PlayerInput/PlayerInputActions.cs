@@ -55,24 +55,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DropItem"",
-                    ""type"": ""Button"",
-                    ""id"": ""b974d7b3-3052-4a48-971f-8d53336ed433"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Enteract"",
-                    ""type"": ""Button"",
-                    ""id"": ""03b42f9d-012a-43ac-883b-5b078e4ebf37"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Settings"",
                     ""type"": ""Button"",
                     ""id"": ""f4e8738c-287f-4626-bdd7-9e28edb997c2"",
@@ -133,28 +115,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cd869680-8243-4e69-9f36-a8cd0fa1c034"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DropItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""669c8f26-03b4-4870-a280-323348287a81"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Enteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -494,8 +454,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
         m_Player_UseTrinket = m_Player.FindAction("Use Trinket", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
-        m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
-        m_Player_Enteract = m_Player.FindAction("Enteract", throwIfNotFound: true);
         m_Player_Settings = m_Player.FindAction("Settings", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
         // Camera Controls
@@ -576,8 +534,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Select;
     private readonly InputAction m_Player_UseTrinket;
     private readonly InputAction m_Player_Inventory;
-    private readonly InputAction m_Player_DropItem;
-    private readonly InputAction m_Player_Enteract;
     private readonly InputAction m_Player_Settings;
     private readonly InputAction m_Player_Escape;
     public struct PlayerActions
@@ -587,8 +543,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Select => m_Wrapper.m_Player_Select;
         public InputAction @UseTrinket => m_Wrapper.m_Player_UseTrinket;
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
-        public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
-        public InputAction @Enteract => m_Wrapper.m_Player_Enteract;
         public InputAction @Settings => m_Wrapper.m_Player_Settings;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -609,12 +563,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
-            @DropItem.started += instance.OnDropItem;
-            @DropItem.performed += instance.OnDropItem;
-            @DropItem.canceled += instance.OnDropItem;
-            @Enteract.started += instance.OnEnteract;
-            @Enteract.performed += instance.OnEnteract;
-            @Enteract.canceled += instance.OnEnteract;
             @Settings.started += instance.OnSettings;
             @Settings.performed += instance.OnSettings;
             @Settings.canceled += instance.OnSettings;
@@ -634,12 +582,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
-            @DropItem.started -= instance.OnDropItem;
-            @DropItem.performed -= instance.OnDropItem;
-            @DropItem.canceled -= instance.OnDropItem;
-            @Enteract.started -= instance.OnEnteract;
-            @Enteract.performed -= instance.OnEnteract;
-            @Enteract.canceled -= instance.OnEnteract;
             @Settings.started -= instance.OnSettings;
             @Settings.performed -= instance.OnSettings;
             @Settings.canceled -= instance.OnSettings;
@@ -824,8 +766,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnUseTrinket(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
-        void OnDropItem(InputAction.CallbackContext context);
-        void OnEnteract(InputAction.CallbackContext context);
         void OnSettings(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
     }

@@ -1034,7 +1034,7 @@ MonoBehaviour:
   GearDescription: {fileID: 3789439235079757237}
   GearType: {fileID: 1902691363695069310}
   EffectsContainer: {fileID: 5660830122326489258}
-  animator: {fileID: 0}
+  animator: {fileID: 1710287258632204901}
 --- !u!95 &1710287258632204901
 Animator:
   serializedVersion: 5
@@ -1090,7 +1090,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1329.9591}
+  m_AnchoredPosition: {x: 0, y: 3114.268}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5631843506151763475
@@ -1158,8 +1158,8 @@ RectTransform:
   m_GameObject: {fileID: 5689283539698192534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5177789869247371569}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

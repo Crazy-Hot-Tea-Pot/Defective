@@ -42,7 +42,7 @@ public class EnemyEditor : Editor
         EditorGUILayout.PropertyField(itemsProperty, new GUIContent("Dropped Items"), true);
         enemy.DroppedScrap = EditorGUILayout.IntSlider("Dropped Scrap", enemy.DroppedScrap, 0, 100);
 
-        // Debug Mode Button
+        // Debug Mode EquipButton
         EditorGUILayout.Space();
         debugMode = EditorGUILayout.Toggle("Debug Mode", debugMode);
 

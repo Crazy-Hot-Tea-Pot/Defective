@@ -36,6 +36,9 @@ public class SceneChange : MonoBehaviour
         //TODO add quest condition
         if (other.transform.tag == "Player") //&& QuestManager.Instance)
         {
+            // Update StoryManager with the new level BEFORE switching scenes
+            StoryManager.Instance.SetNextLevel(nextLevel);            
+
             //load next scene
             GameManager.Instance.RequestScene(NextLevel);
         }

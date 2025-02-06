@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static GameEnums;
 
 public class StoryManager : MonoBehaviour
 {
@@ -37,10 +33,6 @@ public class StoryManager : MonoBehaviour
             if (currentLevel == null)
             {
                 Debug.LogError("StoryManager: Current level is null!");
-            }
-            else
-            {
-                Debug.Log($"StoryManager: Returning Current Level: {currentLevel.levelID}");
             }
             return currentLevel;
         }
@@ -90,7 +82,7 @@ public class StoryManager : MonoBehaviour
     /// <param name="storyName"></param>
     public void LoadStory(string storyName)
     {
-
+        Debug.LogError("Nothing in here, Jayce you forgot me!");
     }
     public void LoadStory(Story story)
     {
@@ -130,6 +122,23 @@ public class StoryManager : MonoBehaviour
         DataManager.Instance.CurrentGameData.storyProgress.storyName = currentStory ? currentStory.storyName : "";
         DataManager.Instance.CurrentGameData.storyProgress.currentLevel = currentLevel?.levelID ?? Levels.Title;
     }
+    /// <summary>
+    /// Update the story with next level the player choose.
+    /// </summary>
+    /// <param name="nextLevel">Level Enum</param>
+    public void SetNextLevel(Levels nextLevel)
+    {
+        LevelDefinition nextLevelDef = currentStory.levels.Find(level => level.levelID == nextLevel);
+        if (nextLevelDef != null)
+        {
+            currentLevel = nextLevelDef;
+            Debug.Log($"StoryManager: Current Level set to {currentLevel.levelID}");
+        }
+        else
+        {
+            Debug.LogError($"StoryManager: Level {nextLevel} not found in the story.");
+        }
+    }
 
     private void SceneChange(Levels newLevel)
     {
@@ -142,11 +151,27 @@ public class StoryManager : MonoBehaviour
             default:
                 var tempDoors = GameObject.FindGameObjectsWithTag("Exit");
                 // or find by name, if necessary
-                for (int i = 0; i < CurrentLevel.nextLevels.Count; i++)
+                for (int i = 0; i < CurrentLevel.NextLevels.Count; i++)
                 {
-                    tempDoors[i].GetComponent<SceneChange>().SetNextLevel(CurrentLevel.nextLevels[i].levelID);
-                }               
-            break;
+                    tempDoors[i].GetComponent<SceneChange>().SetNextLevel(CurrentLevel.NextLevels[i].levelID);
+                }
+
+                //Handle terminal Activation
+                GameObject upgradeComputer = GameObject.Find("Upgrade Computer");
+
+                if (upgradeComputer != null)
+                {
+                    if (Random.Range(0, 100) < CurrentLevel.terminalSpawnChance)
+                        upgradeComputer.SetActive(true);
+                    else
+                    {
+                        Debug.Log("With a terminal spawn chance of " + CurrentLevel.terminalSpawnChance + " upgradeComputer failed to spawn.");
+                        upgradeComputer.SetActive(false);
+                    }
+                }
+                else
+                    Debug.LogWarning("Can not find Upgrade Computer in scene.");
+                break;
         }
     }
     void OnDestroy()

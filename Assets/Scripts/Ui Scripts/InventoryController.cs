@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventoryController : UiController
 {
@@ -135,6 +136,7 @@ public class InventoryController : UiController
                     temp = Instantiate(GearPrefab, EquipmentGearContainer.transform);
                     break;
             }
+            temp.GetComponent<GearInventory>().PrefabMode=GearInventory.Mode.Inventory;
             temp.GetComponent<GearInventory>().Item = item;
             
         }

@@ -68,7 +68,7 @@ public class SoundAssetEditor : Editor
             EditorGUILayout.HelpBox("No Sound FX Available", MessageType.Warning);
         }
 
-        // Manual Update Button
+        // Manual Update EquipButton
         if (GUILayout.Button("Manually Update Sound Assets"))
         {
             PopulateSoundArrays(soundAsset);

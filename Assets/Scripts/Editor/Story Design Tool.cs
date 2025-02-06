@@ -70,14 +70,14 @@ public class StoryDesignTool : EditorWindow
             }
         }
 
-        // Save Story Button
+        // Save Story EquipButton
         EditorGUILayout.Space();
         if (GUILayout.Button("Save Story"))
         {
             SaveStory();
         }
 
-        // Graph Visualization Button
+        // Graph Visualization EquipButton
         if (GUILayout.Button("Visualize Path Graph"))
         {
             ShowPathGraph();
@@ -124,30 +124,30 @@ public class StoryDesignTool : EditorWindow
         // Next Levels Section
         GUILayout.Label("Next Levels", EditorStyles.boldLabel);
 
-        for (int i = 0; i < level.nextLevels.Count; i++)
+        for (int i = 0; i < level.NextLevels.Count; i++)
         {
             GUILayout.BeginVertical("box");
 
-            GUILayout.Label($"Next Level {i + 1}: {level.nextLevels[i].levelID}", EditorStyles.boldLabel);
+            GUILayout.Label($"Next Level {i + 1}: {level.NextLevels[i].levelID}", EditorStyles.boldLabel);
 
             GUIContent Tip = new GUIContent("Quest Condition (Optiona):", "The quest condition is a quest in the preceeding level that needs to be completed.");
 
-            level.nextLevels[i].questCondition = (Quest)EditorGUILayout.ObjectField(Tip, level.nextLevels[i].questCondition, typeof(Quest), false);
+            level.NextLevels[i].questCondition = (Quest)EditorGUILayout.ObjectField(Tip, level.NextLevels[i].questCondition, typeof(Quest), false);
 
             // Draw the next level
-            DrawLevel(level.nextLevels[i], depth + 1, $"{level.levelID}");
+            DrawLevel(level.NextLevels[i], depth + 1, $"{level.levelID}");
 
             GUILayout.EndVertical();
         }
 
 
-        // Add Next Level Button (Respecting Path Rules)
-        if ((pathType == StoryPathType.Linear && level.nextLevels.Count < 1) ||
-            (pathType == StoryPathType.Branching && level.nextLevels.Count < 2))
+        // Add Next Level EquipButton (Respecting Path Rules)
+        if ((pathType == StoryPathType.Linear && level.NextLevels.Count < 1) ||
+            (pathType == StoryPathType.Branching && level.NextLevels.Count < 2))
         {
             if (GUILayout.Button("+ Add Next Level", GUILayout.Width(200)))
             {
-                level.nextLevels.Add(new LevelDefinition());
+                level.NextLevels.Add(new LevelDefinition());
             }
         }
 

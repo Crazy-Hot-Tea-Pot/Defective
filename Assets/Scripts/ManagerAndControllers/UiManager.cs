@@ -154,6 +154,10 @@ public class UiManager : MonoBehaviour
     {
         GetCurrentController<UpgradeTerminalUIController>().FillData();
     }
+    public void UpdateItemsInTermianl()
+    {
+        GetCurrentController<UpgradeTerminalUIController>().LoadItemsIntoTerminal();
+    }
     #endregion
     #region LootUI
     /// <summary>

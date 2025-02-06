@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,13 +6,36 @@ using UnityEngine.UI;
 
 public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public enum Mode
+    {
+        None,
+        Inventory,
+        Terminal
+    }
+
     public Image GearImage;
     public TextMeshProUGUI GearName;
     public TextMeshProUGUI GearDescription;
     public Button EquipButton;
+    public Button ScrapButton;
     public GameObject GearInfoPrefab;
     public GameObject EffectPrefab;
+    public Mode PrefabMode
+    {
+        get
+        {
+            return mode;
+        }
+        set
+        {
+            mode = value;
+        }
+    }
+
     private GameObject gearInfoDisplay;
+    private Mode mode;
+
+
 
     public Item Item
     {
@@ -31,9 +53,22 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         GearImage.sprite = Item.itemImage;
         GearName.SetText(Item.itemName);
         GearDescription.SetText(Item.itemDescription);
-        EquipButton.interactable = !Item.IsEquipped;
 
-        EquipButton.onClick.AddListener(EquipGear);
+        switch(PrefabMode)
+        {
+            case Mode.Inventory:
+                EquipButton.gameObject.SetActive(true);
+                EquipButton.interactable = !Item.IsEquipped;
+                EquipButton.onClick.AddListener(EquipGear);
+                break;
+            case Mode.Terminal:
+                ScrapButton.gameObject.SetActive(true);
+                ScrapButton.onClick.AddListener(ScrapGear);
+                break;
+            default:
+                Debug.LogWarning("Prefab Mode not set!!");
+                break;
+        }        
     }
     private Item item;
     public void OnPointerEnter(PointerEventData eventData)
@@ -93,9 +128,24 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         else
             Debug.LogWarning("UnExpected error here.");
     }
+    private void ScrapGear()
+    {        
+        //Add scrap to player
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GainScrap(Item.GetScrapValue());
+
+        //Remove item from Gear
+        GearManager.Instance.RemoveItem(Item);
+
+        //Update player scrap
+        UiManager.Instance.UpdateScrapDisplay(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Scrap);
+
+        //Update the Item Terminal
+        UiManager.Instance.UpdateItemsInTermianl();
+    }
     void OnDestroy()
     {
         EquipButton.onClick.RemoveAllListeners();
+        ScrapButton.onClick.RemoveAllListeners();
 
         if (gearInfoDisplay != null)
             Destroy(gearInfoDisplay);

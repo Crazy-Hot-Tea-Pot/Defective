@@ -47,10 +47,10 @@ public class PathGraphWindow : EditorWindow
             }
 
             // Move the next level straight down
-            if (level.nextLevels != null && level.nextLevels.Count > 0)
+            if (level.NextLevels != null && level.NextLevels.Count > 0)
             {
                 Vector2 nextPos = position + new Vector2(0, 150); // Space below for next level
-                ArrangeLinearPath(level.nextLevels, nextPos, depth + 1);
+                ArrangeLinearPath(level.NextLevels, nextPos, depth + 1);
             }
 
             position += new Vector2(0, 150);
@@ -68,22 +68,22 @@ public class PathGraphWindow : EditorWindow
         }
 
         // Ensure max 2 next levels in branching path
-        if (level.nextLevels.Count > 2)
+        if (level.NextLevels.Count > 2)
         {
-            level.nextLevels.RemoveRange(2, level.nextLevels.Count - 2);
+            level.NextLevels.RemoveRange(2, level.NextLevels.Count - 2);
         }
 
-        if (level.nextLevels.Count > 0)
+        if (level.NextLevels.Count > 0)
         {
             float childSpacing = horizontalSpacing / 2;
             Vector2 leftPos = position + new Vector2(-childSpacing, 150); // Left Child
             Vector2 rightPos = position + new Vector2(childSpacing, 150); // Right Child
 
-            if (level.nextLevels.Count > 0)
-                ArrangeBranchingPath(level.nextLevels[0], leftPos, depth + 1, childSpacing);
+            if (level.NextLevels.Count > 0)
+                ArrangeBranchingPath(level.NextLevels[0], leftPos, depth + 1, childSpacing);
 
-            if (level.nextLevels.Count > 1)
-                ArrangeBranchingPath(level.nextLevels[1], rightPos, depth + 1, childSpacing);
+            if (level.NextLevels.Count > 1)
+                ArrangeBranchingPath(level.NextLevels[1], rightPos, depth + 1, childSpacing);
         }
     }
 
@@ -111,9 +111,9 @@ public class PathGraphWindow : EditorWindow
 
         foreach (var level in nodePositions.Keys)
         {
-            if (level.nextLevels == null || level.nextLevels.Count == 0) continue;
+            if (level.NextLevels == null || level.NextLevels.Count == 0) continue;
 
-            foreach (var nextLevel in level.nextLevels)
+            foreach (var nextLevel in level.NextLevels)
             {
                 if (nodePositions.ContainsKey(level) && nodePositions.ContainsKey(nextLevel))
                 {
