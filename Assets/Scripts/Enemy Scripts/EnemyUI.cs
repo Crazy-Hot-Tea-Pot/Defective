@@ -71,17 +71,7 @@ public class EnemyUI : MonoBehaviour
     {
         playerCamera = Camera.main;    
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void LateUpdate()
     {        
         FaceCamera();
@@ -177,7 +167,8 @@ public class EnemyUI : MonoBehaviour
     public void UpdateIntent(Intent intent)
     {
         IntentContainer.SetActive(true);
-        //IntentText.SetActive(true);
+
+
         var textComponent = IntentText.GetComponent<TextMeshProUGUI>();
         textComponent.SetText($"{intent.Name} - {intent.Damage} Damage\n{intent.AdditionalInfo}");
         textComponent.color = intent.IntentColor;

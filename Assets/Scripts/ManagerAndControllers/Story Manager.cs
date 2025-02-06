@@ -149,11 +149,36 @@ public class StoryManager : MonoBehaviour
             case Levels.Loading:
                 break;
             default:
-                var tempDoors = GameObject.FindGameObjectsWithTag("Exit");
-                // or find by name, if necessary
-                for (int i = 0; i < CurrentLevel.NextLevels.Count; i++)
+
+                GameObject[] tempDoors = GameObject.FindGameObjectsWithTag("Exit");
+
+                if (tempDoors.Length == 0)
                 {
-                    tempDoors[i].GetComponent<SceneChange>().SetNextLevel(CurrentLevel.NextLevels[i].levelID);
+                    Debug.LogWarning("No exits found in the scene.");
+                    return;
+                }
+
+                if (CurrentLevel.NextLevels.Count == 0)
+                {
+                    Debug.LogWarning("No next levels assigned for this level.");
+                    return;
+                }
+
+                // Ensure we are not assigning more exits than next levels available
+                for (int i = 0; i < tempDoors.Length; i++)
+                {
+                    SceneChange sceneChange = tempDoors[i].GetComponent<SceneChange>();
+
+                    if (sceneChange == null)
+                    {
+                        Debug.LogError($"Exit {tempDoors[i].name} is missing a SceneChange component!");
+                        continue;
+                    }
+
+                    // Assign next levels in order, looping if necessary
+                    Levels assignedLevel = CurrentLevel.NextLevels[i % CurrentLevel.NextLevels.Count].levelID;
+                    sceneChange.SetNextLevel(assignedLevel);
+
                 }
 
                 //Handle terminal Activation

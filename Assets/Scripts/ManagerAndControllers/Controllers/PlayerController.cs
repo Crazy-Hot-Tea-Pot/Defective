@@ -364,6 +364,7 @@ public class PlayerController : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
 
+        GameManager.Instance.OnEndCombat += TriggerPassiveEffectsOnCombatEnd;
     }
 
     void Start()
@@ -882,6 +883,26 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Anything for player to do at combat end
+    /// </summary>
+    public void TriggerPassiveEffectsOnCombatEnd()
+    {
+        foreach (var statusEffect in ListOfActiveEffects)
+        {
+            switch (statusEffect.Effect)
+            {
+                case Effects.SpecialEffects.LuckyTrinket:
+                    // Give player +10 scrap
+                    GainScrap(10);
+                    Debug.Log("Lucky Trinket effect triggered: +10 scrap granted after combat!");
+                    break;
+
+                    // Future passive effects can be added here
+            }
+        }
+    }
+
     #endregion
 
     /// <summary>
@@ -895,6 +916,22 @@ public class PlayerController : MonoBehaviour
     {
         uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay);
     }
+
+    void OnDestroy()
+    {
+        //Unsubscribe to prevent memory leaks
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnEndCombat -= TriggerPassiveEffectsOnCombatEnd;
+        }
+    }
+
+
+
+
+
+
+
     [ContextMenu("Test Speak")]
     private void TestSpeak()
     {

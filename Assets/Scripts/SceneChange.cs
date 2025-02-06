@@ -16,13 +16,13 @@ public class SceneChange : MonoBehaviour
             nextLevel = value;
         }
     }
-
+    [SerializeField]
     private Levels nextLevel;
     private Quest quest;
 
     void Start()
     {
-        NextLevel = GameManager.Instance.CurrentLevel;
+        
     }
 
     public void SetNextLevel(Levels level,Quest OptionalQuest=null )
