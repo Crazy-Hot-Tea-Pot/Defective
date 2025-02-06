@@ -19,13 +19,18 @@ public class MaintenanceBot : Enemy
     // Start is called before the first frame update
     public override void Start()
     {
-        EnemyName = "Maintenance Bot";
-        maxHP = 80;
-        CurrentHP = maxHP;
+        if(EnemyName==null)
+            EnemyName = "Maintenance Bot";
+
+
+        //Add Common Chips Todrop
+        DroppedChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Common);
+
         base.Start();
     }
     protected override void PerformIntent()
     {
+
         if (CurrentHP <= maxHP / 2 && !RepairUsed)
         {
             Repair();
@@ -44,6 +49,21 @@ public class MaintenanceBot : Enemy
         }
 
         base.PerformIntent();
+    }
+    protected override Intent GetNextIntent()
+    {
+        if (CurrentHP <= maxHP / 2 && !RepairUsed)
+        {
+            return new Intent("Repair", Color.green, 0, "Heals 30% of max HP");
+        }
+        else if (Random.Range(1, 11) <= 4)
+        {
+            return new Intent("Galvanize", Color.yellow, 0, "Gains 4 Galvanize");
+        }
+        else
+        {
+            return new Intent("Disassemble", Color.red, 9, "Deals damage and applies Worn");
+        }
     }
     /// <summary>
     /// Deals 9 Damage

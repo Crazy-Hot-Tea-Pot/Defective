@@ -14,6 +14,7 @@ public class CombatArea : MonoBehaviour
         if (parentCombatZone != null && other.tag == "Player")
         {
             parentCombatZone.PlayerEnteredCombatZone();
+            parentCombatZone.CombatArea = this.gameObject;
         }
      }
 }

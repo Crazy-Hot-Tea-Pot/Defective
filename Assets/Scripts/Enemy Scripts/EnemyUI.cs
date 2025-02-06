@@ -55,9 +55,15 @@ public class EnemyUI : MonoBehaviour
     public List<GameObject> activeEffects;
 
     /// <summary>
+    /// Container for intentTextBox
+    /// </summary>
+    public GameObject IntentContainer;
+
+    /// <summary>
     /// Intent text box.
     /// </summary>
     public GameObject IntentText;
+
 
     private Camera playerCamera;
 
@@ -170,7 +176,8 @@ public class EnemyUI : MonoBehaviour
     /// <param name="intent"></param>
     public void UpdateIntent(Intent intent)
     {
-        IntentText.SetActive(true);
+        IntentContainer.SetActive(true);
+        //IntentText.SetActive(true);
         var textComponent = IntentText.GetComponent<TextMeshProUGUI>();
         textComponent.SetText($"{intent.Name} - {intent.Damage} Damage\n{intent.AdditionalInfo}");
         textComponent.color = intent.IntentColor;

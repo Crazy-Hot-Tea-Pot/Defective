@@ -57,7 +57,17 @@ public class ChipManager : MonoBehaviour
     /// <summary>
     /// All the chips in the whole game.
     /// </summary>
-    public List<NewChip> AllChips = new();
+    public List<NewChip> AllChips
+    {
+        get
+        {
+            return allChips;
+        }
+        private set
+        {
+            allChips = value;
+        }
+    }
 
     public GameObject chipPrefab;
 
@@ -69,6 +79,7 @@ public class ChipManager : MonoBehaviour
 
     private static ChipManager instance;
     private List<NewChip> playerDeck = new();
+    private List<NewChip> allChips = new();
 
     void Awake()
     {
@@ -170,7 +181,28 @@ public class ChipManager : MonoBehaviour
         {
             Debug.LogWarning("[ChipManager] Chip not found in Deck.");
         }
-    }    
+    }
+
+    /// <summary>
+    /// Get all chips of a specific type.
+    /// </summary>
+    /// <param name="chipType">The type of chips to filter by.</param>
+    /// <returns>A list of chips matching the specified type.</returns>
+    public List<NewChip> GetChipsByType(NewChip.TypeOfChips chipType)
+    {
+        return AllChips.FindAll(chip => chip.ChipType == chipType);
+    }
+
+    /// <summary>
+    /// Get all chips of a specific rarity.
+    /// </summary>
+    /// <param name="chipRarity">The rarity of chips to filter by.</param>
+    /// <returns>A list of chips matching the specified rarity.</returns>
+    public List<NewChip> GetChipsByRarity(NewChip.ChipRarity chipRarity)
+    {
+        return AllChips.FindAll(chip => chip.chipRarity == chipRarity);
+    }
+
 
     /// <summary>
     /// Load all Chip ScriptableObjects in the Resources folder.
@@ -182,6 +214,7 @@ public class ChipManager : MonoBehaviour
     }
     private void StartCombat()
     {
+        UsedChips.Clear();
         ShufflePlayerDeck();
     }
     private void ShufflePlayerDeck()
@@ -218,9 +251,19 @@ public class ChipManager : MonoBehaviour
     }
     private void SceneChange(Levels newLevel)
     {
+
         switch (newLevel)
         {
+            case Levels.Title:
+                PlayerHand.Clear();
+                PlayerDeck.Clear();
+                UsedChips.Clear();
+
+                break;
             case Levels.Tutorial:
+            case Levels.Level2:
+            case Levels.Level3:
+            case Levels.Level4:
                 ShufflePlayerDeck();
                 break;
         }

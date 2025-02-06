@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inspector : MonoBehaviour
+public class Inspector : Enemy
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        
-    }
+        if (EnemyName == null)
+            EnemyName = "Inspector";
 
-    // Update is called once per frame
-    void Update()
+        base.Start();
+    }
+    protected override void PerformIntent()
     {
-        
+
+    }
+    protected override Intent GetNextIntent()
+    {
+        return null;
     }
 }

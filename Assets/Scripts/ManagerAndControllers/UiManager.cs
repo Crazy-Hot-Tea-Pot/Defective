@@ -108,6 +108,14 @@ public class UiManager : MonoBehaviour
 
         StartCoroutine(GetCurrentController<RoamingAndCombatUiController>().RedrawPlayerHand());
     }
+    /// <summary>
+    /// Change the state of the buttons on combat wheel
+    /// </summary>
+    /// <param name="State"></param>
+    public void ChangeStateOfGear(bool State)
+    {
+        GetCurrentController<RoamingAndCombatUiController>().MakeGearInteractable(State);
+    }
     #endregion
     #region InventoryUI
     public void ToggleInventory(InputAction.CallbackContext context)

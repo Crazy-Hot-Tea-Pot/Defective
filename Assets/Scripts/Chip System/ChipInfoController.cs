@@ -23,7 +23,7 @@ public class ChipInfoController : MonoBehaviour
     /// <param name="startPosition"></param>
     /// <param name="targetPosition"></param>
     /// <param name="duration"></param>
-    public void Enlarge(Vector3 startPosition, Vector3 targetPosition, float duration = 1f)
+    public void Enlarge(Vector3 startPosition, Vector3 targetPosition, float duration = 2f)
     {
         if (animator == null)
         {

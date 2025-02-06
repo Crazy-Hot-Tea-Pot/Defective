@@ -78,7 +78,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
 
         if (polygonCollider.OverlapPoint(worldPoint))
         {
-            Debug.Log("Button clicked within Polygon Collider of "+this.gameObject.name);
+            //Debug.Log("Button clicked within Polygon Collider of "+this.gameObject.name);
             PerformButtonAction();
         }
     }
@@ -98,10 +98,12 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
                 throw new NullReferenceException("No Item equipped.");
             else
             {
-                if(CombatController.Target == null)
+                if (CombatController.Target == null)
                     Item.ItemActivate(Player.GetComponent<PlayerController>());
                 else
-                    Item.ItemActivate(Player.GetComponent<PlayerController>(),CombatController.Target.GetComponent<Enemy>());
+                {
+                        Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                }
             }
         }
         catch (NullReferenceException ex)

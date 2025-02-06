@@ -1,8 +1,10 @@
 ﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Just made this to keep track of Buffs and Debuffs in the game.
 /// </summary>
+[System.Serializable]
 public static class Effects
 {
     /// <summary>
@@ -38,7 +40,11 @@ public static class Effects
         /// <summary>
         /// While Worn Down, your ShieldBar provides 30% less shield.
         /// </summary>
-        WornDown
+        WornDown,
+        /// <summary>
+        /// Disable item use
+        /// </summary>
+        Redirect
     }
 
     /// <summary>
@@ -58,12 +64,13 @@ public static class Effects
         /// <summary>
         /// Gain 10 Scrap at the end of every combat.
         /// </summary>
-        LuckyTrinket,
+        LuckyTrinket
     }
 
     /// <summary>
     /// General structure to represent a status effect.
     /// </summary>
+    [System.Serializable]
     public struct StatusEffect
     {
         // Effect(buff,Debuff or SpecialEffect)

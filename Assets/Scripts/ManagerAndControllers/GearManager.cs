@@ -211,7 +211,12 @@ public class GearManager : MonoBehaviour
 
     private void SceneChange(Levels newLevel)
     {
-
+        switch (newLevel)
+        {
+            case Levels.Title:
+                PlayerCurrentGear.Clear();
+                break;
+        }
     }
 
     private void OnDestroy()

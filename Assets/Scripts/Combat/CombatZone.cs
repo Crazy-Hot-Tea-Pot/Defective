@@ -108,12 +108,6 @@ public class CombatZone : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     
     public void PlayerEnteredCombatZone()
     {
@@ -153,6 +147,8 @@ public class CombatZone : MonoBehaviour
 
 
         CombatController.StartCombat(this.gameObject);
+
+        CombatController.CombatArea=CombatArea;
     }
     /// <summary>
     /// Sav combat zone settings

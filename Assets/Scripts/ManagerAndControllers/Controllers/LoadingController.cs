@@ -35,7 +35,7 @@ public class LoadingController : MonoBehaviour
         choosenChip = Instantiate(Chips[Random.Range(0, Chips.Count)]);
 
         Display.GetComponent<Image>().sprite = choosenChip.chipImage;
-            TipText.SetText("Chip Tip: " + choosenChip.ChipTip);
+            TipText.SetText("Chip Tip:\n" + choosenChip.ChipTip);
 
 
         Display.SetActive(true);

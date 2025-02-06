@@ -89,9 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8980b81e20ad8314bb44689776086377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CombatController: {fileID: 0}
-  Player: {fileID: 0}
-  UpgradeController: {fileID: 0}
   ChipinfoPrefab: {fileID: 240468819975450476, guid: 9557f649c7a1b4148992602e8a5011d0, type: 3}
   chipButton: {fileID: 8308470880536474269}
 --- !u!114 &8308470880536474269

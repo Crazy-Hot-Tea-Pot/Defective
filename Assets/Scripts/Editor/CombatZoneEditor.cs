@@ -1,7 +1,5 @@
-using Cinemachine.Editor;
 using UnityEditor;
 using UnityEngine;
-using static Codice.Client.BaseCommands.BranchExplorer.Layout.BrExLayout;
 
 [CustomEditor(typeof(CombatZone))]
 public class CombatZoneEditor : Editor
