@@ -20,6 +20,7 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public Button ScrapButton;
     public GameObject GearInfoPrefab;
     public GameObject EffectPrefab;
+    public GameObject ConfirmationWindow;
     public Mode PrefabMode
     {
         get
@@ -48,20 +49,22 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             item = value;
         }
     }
+    private Item item;
     void Start()
     {
         GearImage.sprite = Item.itemImage;
-        GearName.SetText(Item.itemName);
-        GearDescription.SetText(Item.itemDescription);
+        GearName.SetText(Item.itemName);        
 
         switch(PrefabMode)
         {
             case Mode.Inventory:
+                GearDescription.SetText(Item.itemDescription);
                 EquipButton.gameObject.SetActive(true);
                 EquipButton.interactable = !Item.IsEquipped;
                 EquipButton.onClick.AddListener(EquipGear);
                 break;
             case Mode.Terminal:
+                GearDescription.SetText("Scrap Value: " + Item.GetScrapValue());
                 ScrapButton.gameObject.SetActive(true);
                 ScrapButton.onClick.AddListener(ScrapGear);
                 break;
@@ -69,8 +72,7 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 Debug.LogWarning("Prefab Mode not set!!");
                 break;
         }        
-    }
-    private Item item;
+    }    
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (gearInfoDisplay == null)
@@ -129,7 +131,17 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             Debug.LogWarning("UnExpected error here.");
     }
     private void ScrapGear()
-    {        
+    {
+        GameObject temp = Instantiate(ConfirmationWindow,UiManager.Instance.transform);
+        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow("You are about to scrap the item " 
+            + item.itemName + 
+            " for the scrap value of "
+            + item.GetScrapValue());
+
+        temp.GetComponent<ConfirmationWindow>().ConfirmationButton.onClick.AddListener(ConfirmScrap);
+    }
+    private void ConfirmScrap()
+    {
         //Add scrap to player
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GainScrap(Item.GetScrapValue());
 
