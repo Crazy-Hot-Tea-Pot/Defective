@@ -66,7 +66,7 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             case Mode.Terminal:
                 GearDescription.SetText("Scrap Value: " + Item.GetScrapValue());
                 ScrapButton.gameObject.SetActive(true);
-                ScrapButton.onClick.AddListener(ScrapGear);
+                ScrapButton.onClick.AddListener(VerifyScrapItem);
                 break;
             default:
                 Debug.LogWarning("Prefab Mode not set!!");
@@ -130,15 +130,16 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         else
             Debug.LogWarning("UnExpected error here.");
     }
-    private void ScrapGear()
+    /// <summary>
+    /// First Confirm with user. Using the Confirmation Window.
+    /// </summary>
+    private void VerifyScrapItem()
     {
         GameObject temp = Instantiate(ConfirmationWindow,UiManager.Instance.transform);
         temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow("You are about to scrap the item " 
             + item.itemName + 
             " for the scrap value of "
-            + item.GetScrapValue());
-
-        temp.GetComponent<ConfirmationWindow>().ConfirmationButton.onClick.AddListener(ConfirmScrap);
+            + item.GetScrapValue(),ConfirmScrap);        
     }
     private void ConfirmScrap()
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -24,15 +25,25 @@ public class ConfirmationWindow : MonoBehaviour
     private Button confirmationButton;
     [SerializeField]
     private Button cancelButton;
+    [SerializeField]
+    private Action onConfrimAction;
+
+
     void OnEnable()
     {
-        cancelButton.onClick.AddListener(DestroyWindow);
-        ConfirmationButton.onClick.AddListener(DestroyWindow);
-        
+        cancelButton.onClick.AddListener(DestroyWindow);        
+        ConfirmationButton.onClick.AddListener(InvokeConfirmAction);        
     }
-    public void SetUpComfirmationWindow(string Message)
+    public void SetUpComfirmationWindow(string Message, Action onConfirm)
     {
         TextBox.SetText(Message);
+        onConfrimAction = onConfirm;
+    }
+
+    private void InvokeConfirmAction()
+    {
+        onConfrimAction?.Invoke();
+        DestroyWindow();
     }
     private void DestroyWindow()
     {
