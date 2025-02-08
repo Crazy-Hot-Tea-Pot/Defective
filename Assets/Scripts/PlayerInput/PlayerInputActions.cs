@@ -71,6 +71,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skip Animation"",
+                    ""type"": ""Button"",
+                    ""id"": ""30ea9535-2e11-4dac-8192-2e006c31cc8d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -137,6 +146,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4038c88-427a-41e2-9508-baf611bb3da7"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip Animation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ddb881bc-bea0-4951-8f48-3e618d92eb6a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip Animation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -456,6 +487,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_Settings = m_Player.FindAction("Settings", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
+        m_Player_SkipAnimation = m_Player.FindAction("Skip Animation", throwIfNotFound: true);
         // Camera Controls
         m_CameraControls = asset.FindActionMap("Camera Controls", throwIfNotFound: true);
         m_CameraControls_Look = m_CameraControls.FindAction("Look", throwIfNotFound: true);
@@ -536,6 +568,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_Settings;
     private readonly InputAction m_Player_Escape;
+    private readonly InputAction m_Player_SkipAnimation;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -545,6 +578,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputAction @Settings => m_Wrapper.m_Player_Settings;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
+        public InputAction @SkipAnimation => m_Wrapper.m_Player_SkipAnimation;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -569,6 +603,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Escape.started += instance.OnEscape;
             @Escape.performed += instance.OnEscape;
             @Escape.canceled += instance.OnEscape;
+            @SkipAnimation.started += instance.OnSkipAnimation;
+            @SkipAnimation.performed += instance.OnSkipAnimation;
+            @SkipAnimation.canceled += instance.OnSkipAnimation;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -588,6 +625,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Escape.started -= instance.OnEscape;
             @Escape.performed -= instance.OnEscape;
             @Escape.canceled -= instance.OnEscape;
+            @SkipAnimation.started -= instance.OnSkipAnimation;
+            @SkipAnimation.performed -= instance.OnSkipAnimation;
+            @SkipAnimation.canceled -= instance.OnSkipAnimation;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -768,6 +808,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnInventory(InputAction.CallbackContext context);
         void OnSettings(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
+        void OnSkipAnimation(InputAction.CallbackContext context);
     }
     public interface ICameraControlsActions
     {

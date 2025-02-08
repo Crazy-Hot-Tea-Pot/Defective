@@ -16,7 +16,6 @@ public class SceneChange : MonoBehaviour
             nextLevel = value;
         }
     }
-    [SerializeField]
     private Levels nextLevel;
     private Quest quest;
 

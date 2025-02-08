@@ -4,10 +4,31 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.Video;
+using Random = UnityEngine.Random;
 
 public class TitleController : MonoBehaviour
 {
+    [Header("Title Animation Stuff")]
+    public Animator animator;
+    public VideoPlayer videoPlayer;
+    public GameObject Screen;
+    public TextMeshProUGUI TitleText;
+    // Time between glitches
+    [Range(0.0f,1.0f)]
+    [Tooltip("How often the glitch happens (increase this to slow down the effect)")]
+    public float glitchInterval = 0.5f;
+    // How long each glitch lasts
+    [Range(0.00f, 1.00f)]
+    [Tooltip("How long each glitch lasts (increase this to make glitches last longer)")]
+    public float glitchDuration = 0.10f;
+    // Max pixel offset
+    [Range(0f, 10f)]
+    [Tooltip("How much the text shakes (reduce this for subtle movement)")]
+    public float positionJitter = 1f;
+
     [Header("Buttons")]
     public GameObject ButtonPanel;
     public Button PlayButton;
@@ -27,9 +48,26 @@ public class TitleController : MonoBehaviour
     [Header("Starting stuff")]
     public Story CurrentStory;
     public int MaxHealth;
-    public int StartingScrap;    
+    public int StartingScrap;
 
+    // Input System reference
+    private PlayerInputActions playerInput;
 
+    // Skip video action
+    private InputAction skipAction;
+
+    private string originalText;
+    void OnEnable()
+    {
+        skipAction = playerInput.Player.SkipAnimation;
+        skipAction.Enable();
+        skipAction.performed += SkipVideo;
+    }
+    void Awake()
+    {
+        // Get PlayerInput component
+        playerInput = new PlayerInputActions();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -54,8 +92,16 @@ public class TitleController : MonoBehaviour
 
         CheckForSaveData();
 
-        Invoke(nameof(BringInButtons), 2f);
+        videoPlayer.loopPointReached += OnVideoEnd;
 
+        if (skipAction != null)
+        {
+            // Listen for input
+            skipAction.performed += SkipVideo;
+        }
+
+
+        originalText=TitleText.text;
     }
 
     /// <summary>
@@ -76,6 +122,10 @@ public class TitleController : MonoBehaviour
         GameManager.Instance.RequestScene(Levels.Credits);
     }
 
+    public void StartGlitchEffect()
+    {
+        StartCoroutine(GlitchEffect());
+    }
     /// <summary>
     /// Adds OnSelect listener to play button sound.
     /// </summary>
@@ -101,7 +151,6 @@ public class TitleController : MonoBehaviour
         pointerEnterEntry.callback.AddListener((eventData) => PlaySelectButtonSound());
         trigger.triggers.Add(pointerEnterEntry);
     }
-
 
     /// <summary>
     /// Start a new game.
@@ -208,16 +257,63 @@ public class TitleController : MonoBehaviour
                 latestSave = save;
         }
     }    
-    private void BringInButtons()
+    private void OnVideoEnd(VideoPlayer source)
     {
-        ButtonPanel.GetComponent<Animator>().SetTrigger("BringInButtons");
+        animator.SetTrigger("VideoFinish");
     }
+    /// <summary>
+    /// Stop the video immediately
+    /// Move to the next animation
+    /// </summary>
+    /// <param name="context"></param>
+    private void SkipVideo(InputAction.CallbackContext context)
+    {        
+        videoPlayer.Stop();
+        animator.SetTrigger("VideoFinish");
+    }
+    /// <summary>
+    /// 20% chance to glitch each character.
+    /// Replace with random ASCII character.
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    private string GlitchText(string input)
+    {
+        char[] chars = input.ToCharArray();
+        for (int i = 0; i < chars.Length; i++)
+        {
+            if (Random.value > 0.8f)
+            {
+                chars[i] = (char)UnityEngine.Random.Range(33, 126);
+            }
+        }
+        return new string(chars);
+    }
+    private IEnumerator GlitchEffect()
+    {
+        while (true) // Runs infinitely until title screen changes
+        {
+            yield return new WaitForSeconds(glitchInterval);
 
+            string glitchedText = GlitchText(originalText);           
+            Vector3 randomOffset = new Vector3(Random.Range(-positionJitter, positionJitter), Random.Range(-positionJitter, positionJitter), 0);
+
+            TitleText.text = glitchedText;
+            Vector2 offset2D = new Vector2(randomOffset.x, randomOffset.y); // Convert to Vector2
+            TitleText.rectTransform.anchoredPosition += offset2D;
+
+            yield return new WaitForSeconds(glitchDuration);
+
+            TitleText.text = originalText;
+            TitleText.rectTransform.anchoredPosition -= offset2D;
+        }
+    }
     void OnDestroy()
     {
         PlayButton.onClick.RemoveAllListeners();
         ResumeButton.onClick.RemoveAllListeners();
         OptionsButton.onClick.RemoveAllListeners();
         QuitButton.onClick.RemoveAllListeners();
+        skipAction.Disable();
     }
 }

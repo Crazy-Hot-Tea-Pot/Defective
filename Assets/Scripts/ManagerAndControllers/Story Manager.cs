@@ -128,17 +128,30 @@ public class StoryManager : MonoBehaviour
     /// <param name="nextLevel">Level Enum</param>
     public void SetNextLevel(Levels nextLevel)
     {
-        LevelDefinition nextLevelDef = currentStory.levels.Find(level => level.levelID == nextLevel);
-        if (nextLevelDef != null)
+
+        if (CurrentStory == null)
         {
-            currentLevel = nextLevelDef;
-            Debug.Log($"StoryManager: Current Level set to {currentLevel.levelID}");
+            Debug.LogError("StoryManager: No current story loaded!");
+            return;
         }
         else
         {
-            Debug.LogError($"StoryManager: Level {nextLevel} not found in the story.");
+            CurrentLevel.isCompleted = true;
+        }
+
+        LevelDefinition nextLevelDef = CurrentLevel.NextLevels.Find(level => level.levelID == nextLevel);
+
+        if (nextLevelDef != null)
+        {
+            CurrentLevel = nextLevelDef;
+            Debug.Log($"StoryManager: Current Level set to {CurrentLevel.levelID}");
+        }
+        else
+        {
+            Debug.LogError($"StoryManager: Level {nextLevel} not found in the story! Check story setup.");
         }
     }
+
 
     private void SceneChange(Levels newLevel)
     {

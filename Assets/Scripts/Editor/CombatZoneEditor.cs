@@ -37,7 +37,15 @@ public class CombatZoneEditor : Editor
         showPositionSettings = EditorGUILayout.Foldout(showPositionSettings, "Position Settings");
         if (showPositionSettings)
         {
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("playerPositionXZOffset"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("areaSize"), new GUIContent("Combat Area Size"));
+            SerializedProperty playerPositionOffset = serializedObject.FindProperty("playerPositionXZOffset");
+
+            Vector2 offset = playerPositionOffset.vector2Value;
+            EditorGUILayout.LabelField("Player Position Offset (X and Z)", EditorStyles.boldLabel);
+            offset.x = EditorGUILayout.FloatField("X Offset", offset.x);
+            offset.y = EditorGUILayout.FloatField("Z Offset", offset.y);
+            playerPositionOffset.vector2Value = offset;
+
             EditorGUILayout.PropertyField(serializedObject.FindProperty("cameraPositionOffset"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("cameraTargetPositionOffset"));
         }

@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &120838341
 RectTransform:
   m_ObjectHideFlags: 0
@@ -593,8 +593,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281703452
+  m_fontColor: {r: 0.10980392, g: 0.6117647, b: 0.20784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -903,7 +903,10 @@ MonoBehaviour:
   Display: {fileID: 6870660005147197050}
   TipText: {fileID: 1113470617}
   ProgressBar: {fileID: 1370696067}
-  rotationSpeed: 30
+  ChipRotationSpeed: 30
+  graphContainer: {fileID: 1582813256}
+  nodePrefab: {fileID: 4412870159785095051, guid: 4a261f3338f0d1948a821e519a4296c8, type: 3}
+  connectionPrefab: {fileID: 5652026202427385441, guid: 65eb825bc348748429e961aac751cba7, type: 3}
 --- !u!4 &1599400096
 Transform:
   m_ObjectHideFlags: 0
@@ -1096,7 +1099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400, y: -400}
+  m_AnchoredPosition: {x: -500, y: -400}
   m_SizeDelta: {x: 960, y: 743}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807

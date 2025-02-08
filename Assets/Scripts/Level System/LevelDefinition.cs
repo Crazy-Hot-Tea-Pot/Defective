@@ -16,6 +16,8 @@ public class LevelDefinition
     [SerializeReference]
     public List<LevelDefinition> nextLevels = new List<LevelDefinition>();
 
+    public bool isCompleted = false;
+
     public List<LevelDefinition> NextLevels
     {
         get => nextLevels;

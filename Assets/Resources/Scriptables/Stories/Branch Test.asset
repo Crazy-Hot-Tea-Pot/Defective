@@ -10,41 +10,55 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81cc3f0f3f73f624e9acf36bae9e783d, type: 3}
-  m_Name: Tutorial
+  m_Name: Branch Test
   m_EditorClassIdentifier: 
-  storyName: Tutorial
-  pathType: 0
+  storyName: Branch Test
+  pathType: 1
   difficulty: 1
   levels:
   - levelID: 1
-    terminalSpawnChance: 100
+    terminalSpawnChance: 0
     enemySpawns:
-    - enemyType: 1
-      enemyName: Tutorial Drone
+    - enemyType: 0
+      enemyName: Testing Branch Enemy
     nextLevels:
-    - rid: 6737146637870956544
+    - rid: 6737146637870956546
+    - rid: 6737146637870956547
     questCondition: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 6737146637870956544
+    - rid: 6737146637870956546
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
         levelID: 2
         terminalSpawnChance: 0
-        enemySpawns:
-        - enemyType: 2
-          enemyName: Bajan Yard Man
+        enemySpawns: []
         nextLevels:
-        - rid: 6737146637870956545
+        - rid: 6737146637870956548
         questCondition: {fileID: 0}
-    - rid: 6737146637870956545
+    - rid: 6737146637870956547
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
         levelID: 3
         terminalSpawnChance: 0
-        enemySpawns:
-        - enemyType: 0
-          enemyName: Thief
+        enemySpawns: []
+        nextLevels:
+        - rid: 6737146637870956549
+        questCondition: {fileID: 0}
+    - rid: 6737146637870956548
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        levelID: 4
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels: []
+        questCondition: {fileID: 0}
+    - rid: 6737146637870956549
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        levelID: 5
+        terminalSpawnChance: 0
+        enemySpawns: []
         nextLevels: []
         questCondition: {fileID: 0}

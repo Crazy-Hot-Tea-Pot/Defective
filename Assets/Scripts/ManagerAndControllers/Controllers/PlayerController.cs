@@ -924,6 +924,7 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.OnEndCombat -= TriggerPassiveEffectsOnCombatEnd;
         }
+        select.Disable();
     }
 
 
