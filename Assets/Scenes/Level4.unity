@@ -9370,6 +9370,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.00383
       objectReference: {fileID: 0}
+    - target: {fileID: -5224026671188066109, guid: afc92cc387b08f34987c6ddd690115e6, type: 3}
+      propertyPath: m_TagString
+      value: Exit
+      objectReference: {fileID: 0}
     - target: {fileID: -5190181881373218999, guid: afc92cc387b08f34987c6ddd690115e6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -9402,6 +9406,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 4766116379013067661, guid: afc92cc387b08f34987c6ddd690115e6, type: 3}
+      propertyPath: m_TagString
+      value: Exit
+      objectReference: {fileID: 0}
     - target: {fileID: 7946247436604974606, guid: afc92cc387b08f34987c6ddd690115e6, type: 3}
       propertyPath: m_LocalScale.y
       value: 2.1
@@ -9409,6 +9417,10 @@ PrefabInstance:
     - target: {fileID: 7946247436604974606, guid: afc92cc387b08f34987c6ddd690115e6, type: 3}
       propertyPath: m_LocalScale.z
       value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8490785745980070446, guid: afc92cc387b08f34987c6ddd690115e6, type: 3}
+      propertyPath: m_TagString
+      value: Exit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
