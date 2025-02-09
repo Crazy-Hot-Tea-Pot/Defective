@@ -339,9 +339,17 @@ public class CameraController : MonoBehaviour
             Debug.Log("Camera reset ignored because the player is interacting.");
             return;
         }
-        if(CurrentCamera != CameraState.Default)
-            // Switch to Default camera if not in FirstPerson
-            SwitchCamera(CameraState.Default);
+        switch (GameManager.Instance.CurrentGameMode)
+        {
+            case GameManager.GameMode.Roaming:
+                if (CurrentCamera != CameraState.Default)
+                    // Switch to Default camera if not in FirstPerson
+                    SwitchCamera(CameraState.Default);
+                break;
+            case GameManager.GameMode.Combat:
+                SwitchCamera(CameraState.Combat);
+                break;
+        }        
     }
 
     /// <summary>
@@ -400,7 +408,7 @@ public class CameraController : MonoBehaviour
     /// <returns></returns>
     private bool IsPlayerInteracting()
     {
-        if(GameManager.Instance.CurrentGameMode==GameManager.GameMode.Interacting)
+        if(GameManager.Instance.CurrentGameMode==GameManager.GameMode.Interacting || GameManager.Instance.CurrentGameMode == GameManager.GameMode.CombatLoot)
             return true;
         else
             return false;        

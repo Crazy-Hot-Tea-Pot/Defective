@@ -13,7 +13,7 @@ public class ItemEditor : Editor
         // Cache the serialized properties
         valueIncreaseBy = serializedObject.FindProperty("valueIncreaseBy");
         energyCostDecreaseBy = serializedObject.FindProperty("energyCostDecreaseBy");
-        scrapValue = serializedObject.FindProperty("scrapValue");
+        scrapValue = serializedObject.FindProperty("scrapValueForEachTeir");
     }
 
     public override void OnInspectorGUI()
@@ -22,7 +22,7 @@ public class ItemEditor : Editor
         serializedObject.Update();
 
         // Draw default inspector for other fields
-        DrawPropertiesExcluding(serializedObject, "valueIncreaseBy", "energyCostDecreaseBy", "scrapValue");
+        DrawPropertiesExcluding(serializedObject, "valueIncreaseBy", "energyCostDecreaseBy", "scrapValueForEachTeir");
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Tier values to increase by", EditorStyles.boldLabel);

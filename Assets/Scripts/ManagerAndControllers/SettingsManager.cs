@@ -173,18 +173,25 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SaveSettings()
     {
-        CurrentSettingsData.VideoData = VideoSettings.GetDataToWrite();
-        CurrentSettingsData.DataForCameraSettings = CameraSettings.GetDataToWrite();
-        CurrentSettingsData.DataForDataSettings = DataSettings.GetDataToWrite();
-        CurrentSettingsData.DataForSoundSettings = SoundSettings.GetDataToWrite();
+        try
+        {
+            CurrentSettingsData.VideoData = VideoSettings.GetDataToWrite();
+            CurrentSettingsData.DataForCameraSettings = CameraSettings.GetDataToWrite();
+            CurrentSettingsData.DataForDataSettings = DataSettings.GetDataToWrite();
+            CurrentSettingsData.DataForSoundSettings = SoundSettings.GetDataToWrite();
 
-        string saveFilePath = Path.Combine(saveDirectory, $"Settings.json");
+            string saveFilePath = Path.Combine(saveDirectory, $"Settings.json");
 
-        string json = JsonUtility.ToJson(CurrentSettingsData, true);
+            string json = JsonUtility.ToJson(CurrentSettingsData, true);
 
-        File.WriteAllText(saveFilePath, json);
+            File.WriteAllText(saveFilePath, json);
 
-        Debug.Log($"Settings saved successfully: {saveFilePath}");
+            Debug.Log($"Settings saved successfully: {saveFilePath}");
+        }
+        catch
+        {
+            Debug.LogWarning("Saving Settings Failed.");
+        }
     }
 
     private void SceneChange(Levels newLevel)

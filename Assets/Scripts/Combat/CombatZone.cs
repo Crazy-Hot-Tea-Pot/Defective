@@ -5,8 +5,23 @@ using UnityEngine;
 
 public class CombatZone : MonoBehaviour
 {
-    
+    [System.Serializable]
+    public class EnemyPlacementData
+    {
+        public GameObject enemyObject;
+        public EnemyManager.EnemyType enemyType;
+
+        public EnemyPlacementData(GameObject obj, EnemyManager.EnemyType type)
+        {
+            enemyObject = obj;
+            enemyType = type;
+        }
+    }
     public bool CombatZoneSet;
+
+    public List<EnemyPlacementData> EnemiesInZone = new List<EnemyPlacementData>();
+
+    public GameObject EnemyPlaceholder;
 
     [Header("Color Status")]
     public Color SavedColor;
@@ -87,6 +102,9 @@ public class CombatZone : MonoBehaviour
         {
             CameraTarget.transform.position = transform.position + cameraTargetPositionOffset;
         }
+
+        // Ensure Enemy are inside the Combat Zone
+        ValidateEnemyPositions();
     }
 
 
@@ -104,15 +122,19 @@ public class CombatZone : MonoBehaviour
         // Deactivate positions
         PlayerPosition.SetActive(false);
 
+        // **Disable enemy placeholders at runtime**
+        foreach (var enemyData in EnemiesInZone)
+        {
+            if (enemyData.enemyObject != null)
+            {
+                // Hide placeholders
+                enemyData.enemyObject.SetActive(false);
+            }
+        }
+
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     
     public void PlayerEnteredCombatZone()
@@ -153,12 +175,20 @@ public class CombatZone : MonoBehaviour
 
 
         CombatController.StartCombat(this.gameObject);
+
+        CombatController.CombatArea=CombatArea;
     }
     /// <summary>
     /// Sav combat zone settings
     /// </summary>
     public void SaveCombatZone()
     {
+        if (EnemiesInZone.Count == 0)
+        {
+            Debug.LogError("Cannot save CombatZone without at least one enemy.");
+            return;
+        }
+
         // Ensure unique material instance
         combatMaterial = CombatAreaRender.material = new Material(CombatAreaRender.material);
 
@@ -204,6 +234,56 @@ public class CombatZone : MonoBehaviour
         combatMaterial.SetFloat("_Transparicy", NotSaveTransparicy);
         CombatZoneSet = false;
     }
+
+    /// <summary>
+    /// Get data from combat zone to spawn enemies
+    /// </summary>
+    /// <returns></returns>
+    public List<(Vector3 position, EnemyManager.EnemyType type)> GetEnemySpawnData()
+    {
+        List<(Vector3, EnemyManager.EnemyType)> spawnData = new();
+
+        foreach (var enemyData in EnemiesInZone)
+        {
+            if (enemyData.enemyObject != null)
+            {
+                // Convert local position to world position
+                Vector3 worldPosition = transform.TransformPoint(enemyData.enemyObject.transform.localPosition);
+                spawnData.Add((worldPosition, enemyData.enemyType));
+            }
+        }
+
+        return spawnData;
+    }
+
+
+    /// <summary>
+    /// Handles position of enemies in the CombatZone
+    /// </summary>
+    private void ValidateEnemyPositions()
+    {
+        if (CombatArea == null || zoneCollider == null) return;
+
+        Bounds combatAreaBounds = zoneCollider.bounds;
+
+        foreach (var enemyData in EnemiesInZone)
+        {
+            if (enemyData.enemyObject == null) continue;
+
+            // Store the enemy's offset relative to the CombatZone
+            Vector3 localOffset = enemyData.enemyObject.transform.localPosition;
+
+            // Ensure enemies stay inside CombatZone bounds
+            Vector3 worldPosition = transform.TransformPoint(localOffset);
+            if (!combatAreaBounds.Contains(worldPosition))
+            {
+                enemyData.enemyObject.transform.localPosition = Vector3.zero; // Reset to center
+                Debug.LogWarning($"{enemyData.enemyObject.name} was outside the Combat Zone and has been repositioned.");
+            }
+        }
+    }
+
+
 
     private void OnDrawGizmos()
     {

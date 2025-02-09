@@ -33,24 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DropItem",
-                    "type": "Button",
-                    "id": "b974d7b3-3052-4a48-971f-8d53336ed433",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Enteract",
-                    "type": "Button",
-                    "id": "03b42f9d-012a-43ac-883b-5b078e4ebf37",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Settings",
                     "type": "Button",
                     "id": "f4e8738c-287f-4626-bdd7-9e28edb997c2",
@@ -63,6 +45,15 @@
                     "name": "Escape",
                     "type": "Button",
                     "id": "c4c5eebf-2f3a-4838-a28f-0fd4cd7fc058",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skip Animation",
+                    "type": "Button",
+                    "id": "30ea9535-2e11-4dac-8192-2e006c31cc8d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -116,28 +107,6 @@
                 },
                 {
                     "name": "",
-                    "id": "cd869680-8243-4e69-9f36-a8cd0fa1c034",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DropItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "669c8f26-03b4-4870-a280-323348287a81",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Enteract",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d09c1819-400c-4350-8ebe-d541686fe13c",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -155,6 +124,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b4038c88-427a-41e2-9508-baf611bb3da7",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skip Animation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddb881bc-bea0-4951-8f48-3e618d92eb6a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skip Animation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

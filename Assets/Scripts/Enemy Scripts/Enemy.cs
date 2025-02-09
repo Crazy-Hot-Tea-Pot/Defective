@@ -25,6 +25,13 @@ public class Intent
 }
 public class Enemy : MonoBehaviour
 {   
+    public enum EnemyDifficulty
+    {
+        Easy,
+        Medium,
+        Hard,
+        Boss
+    }
 
     public GameObject enemyTarget;
     /// <summary>
@@ -77,6 +84,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy status")]
     #region EnemyStatus
+    [SerializeField]
     private string enemyName;
 
     /// <summary>
@@ -85,18 +93,12 @@ public class Enemy : MonoBehaviour
     public virtual string EnemyName
     {
         get
-        {
-            if (enemyName == null || enemyName == "")
-            {
-                return this.gameObject.name;
-            }
-            else
+        {            
                 return enemyName;
         }
         protected set
         {
-            enemyName = value;
-            thisEnemyUI.SetEnemyName(EnemyName);
+            enemyName = value;            
         }
     }
 
@@ -116,6 +118,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private EnemyDifficulty enemyDifficulty;
+
+    /// <summary>
+    /// This Enemies Difficulty
+    /// </summary>
+    public EnemyDifficulty Difficulty
+    {
+        get
+        {
+            return enemyDifficulty;
+        }
+        set
+        {
+            enemyDifficulty = value;
+        }
+    }
     /// <summary>
     /// Max Hp of Enemy
     /// </summary>
@@ -326,7 +345,8 @@ public class Enemy : MonoBehaviour
     public virtual void Initialize()
     {
         CurrentHP = maxHP;
-        EnemyName = gameObject.name;
+        gameObject.name = EnemyName;
+        thisEnemyUI.SetEnemyName(EnemyName);
 
         CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
         enemyTarget = GameObject.FindGameObjectWithTag("Player");
@@ -377,12 +397,12 @@ public class Enemy : MonoBehaviour
         RemoveEffect(Effects.Buff.Galvanize, 1);        
 
         //Look at Player
-        this.gameObject.transform.LookAt(EnemyTarget.transform);
+        //this.gameObject.transform.LookAt(EnemyTarget.transform);
 
         //Check if Player is in range
         //if (DistanceToPlayer <= AttackRange)
         //{
-            agent.ResetPath();
+            //agent.ResetPath();
             PerformIntent();
         //}
         //else
@@ -666,6 +686,11 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+
+    public void SetEnemyName(string newName)
+    {
+        EnemyName = newName;
+    }
 
     [ContextMenu("Test Death")]
     public void TestDeath()

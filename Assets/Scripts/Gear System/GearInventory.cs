@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,13 +6,37 @@ using UnityEngine.UI;
 
 public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public enum Mode
+    {
+        None,
+        Inventory,
+        Terminal
+    }
+
     public Image GearImage;
     public TextMeshProUGUI GearName;
     public TextMeshProUGUI GearDescription;
     public Button EquipButton;
+    public Button ScrapButton;
     public GameObject GearInfoPrefab;
     public GameObject EffectPrefab;
+    public GameObject ConfirmationWindow;
+    public Mode PrefabMode
+    {
+        get
+        {
+            return mode;
+        }
+        set
+        {
+            mode = value;
+        }
+    }
+
     private GameObject gearInfoDisplay;
+    private Mode mode;
+
+
 
     public Item Item
     {
@@ -26,16 +49,30 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             item = value;
         }
     }
+    private Item item;
     void Start()
     {
         GearImage.sprite = Item.itemImage;
-        GearName.SetText(Item.itemName);
-        GearDescription.SetText(Item.itemDescription);
-        EquipButton.interactable = !Item.IsEquipped;
+        GearName.SetText(Item.itemName);        
 
-        EquipButton.onClick.AddListener(EquipGear);
-    }
-    private Item item;
+        switch(PrefabMode)
+        {
+            case Mode.Inventory:
+                GearDescription.SetText(Item.itemDescription);
+                EquipButton.gameObject.SetActive(true);
+                EquipButton.interactable = !Item.IsEquipped;
+                EquipButton.onClick.AddListener(EquipGear);
+                break;
+            case Mode.Terminal:
+                GearDescription.SetText("Scrap Value: " + Item.GetScrapValue());
+                ScrapButton.gameObject.SetActive(true);
+                ScrapButton.onClick.AddListener(VerifyScrapItem);
+                break;
+            default:
+                Debug.LogWarning("Prefab Mode not set!!");
+                break;
+        }        
+    }    
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (gearInfoDisplay == null)
@@ -93,9 +130,35 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         else
             Debug.LogWarning("UnExpected error here.");
     }
+    /// <summary>
+    /// First Confirm with user. Using the Confirmation Window.
+    /// </summary>
+    private void VerifyScrapItem()
+    {
+        GameObject temp = Instantiate(ConfirmationWindow,UiManager.Instance.transform);
+        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow("You are about to scrap the item " 
+            + item.itemName + 
+            " for the scrap value of "
+            + item.GetScrapValue(),ConfirmScrap);        
+    }
+    private void ConfirmScrap()
+    {
+        //Add scrap to player
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GainScrap(Item.GetScrapValue());
+
+        //Remove item from Gear
+        GearManager.Instance.RemoveItem(Item);
+
+        //Update player scrap
+        UiManager.Instance.UpdateScrapDisplay(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Scrap);
+
+        //Update the Item Terminal
+        UiManager.Instance.UpdateItemsInTermianl();
+    }
     void OnDestroy()
     {
         EquipButton.onClick.RemoveAllListeners();
+        ScrapButton.onClick.RemoveAllListeners();
 
         if (gearInfoDisplay != null)
             Destroy(gearInfoDisplay);

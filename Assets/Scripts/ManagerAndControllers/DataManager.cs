@@ -104,6 +104,8 @@ public class DataManager : MonoBehaviour
             CurrentGameData.Gear.Add(gearData);
         }
 
+        StoryManager.Instance.SaveStoryProgress();
+
         string json = JsonUtility.ToJson(CurrentGameData, true);
         File.WriteAllText(saveFilePath, json);
 

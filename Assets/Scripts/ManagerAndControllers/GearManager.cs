@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class GearManager : MonoBehaviour
@@ -65,47 +64,47 @@ public class GearManager : MonoBehaviour
         GameManager.Instance.OnSceneChange += SceneChange;
     }
     /// <summary>
-    /// Updates the list of playercurrentgear.
-    /// no longer needed
-    /// </summary>
-    //public void UpdateGear()
-    //{
-    //    PlayerCurrentGear.Clear();
-
-    //    foreach (Item item in AllGear)
-    //    {
-    //        if (item.IsEquipped || item.IsPlayerOwned)
-    //        {
-    //            PlayerCurrentGear.Add(item);
-    //        }
-    //    }
-    //}
-    /// <summary>
     /// Add item to Player gear.
     /// </summary>
-    /// <param name="CloneOfNewItem">Clone Of item Only!</param>
-    public bool Acquire(Item CloneOfNewItem)
+    /// <param name="newItem">Clone Of item Only!</param>
+    public bool Acquire(Item newItem)
     {
-        if (CloneOfNewItem == null)
-            return false;
+        // Check if the player already has this item
+        Item existingItem = PlayerCurrentGear.Find(item => item.itemName == newItem.itemName);
 
-        // Check if the maximum limit is reached
-        if (PlayerCurrentGear.Count >= gearLimit)
+        if (existingItem != null)
         {
-            return false;
-        }
+            // Prioritize upgrading the equipped item if it exists
+            if (existingItem.IsEquipped)
+            {
+                UpgradeItem(existingItem);
+            }
+            else
+            {
+                UpgradeItem(existingItem);
+            }
 
-        if (!CloneOfNewItem.IsPlayerOwned)
+            Debug.Log($"{newItem.itemName} combined to increase tier.");
+            return true;
+        }
+        else
         {
-            CloneOfNewItem.IsPlayerOwned = true;           
+            // If inventory isn't full, add the item
+            if (PlayerCurrentGear.Count < gearLimit)
+            {
+                PlayerCurrentGear.Add(newItem);
+                newItem.IsPlayerOwned = true;
+                Debug.Log($"{newItem.itemName} added to inventory.");
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("Inventory full! Cannot acquire new item.");
+                return false;
+            }
         }
-
-        // Add the item regardless of duplicates, as long as the limit is not exceeded
-        PlayerCurrentGear.Add(CloneOfNewItem);
-
-        return true;
-
     }
+
     /// <summary>
     /// Remove item from Player inventory
     /// </summary>
@@ -199,6 +198,26 @@ public class GearManager : MonoBehaviour
         AllGear = new List<Item>(Resources.LoadAll<Item>("Scriptables/Gear"));       
     }
 
+    /// <summary>
+    /// Upgrade item tear.
+    /// </summary>
+    /// <param name="item"></param>
+    private void UpgradeItem(Item item)
+    {
+        // Max Tier is Platinum (Tier 4)
+        if (item.ItemTeir < Item.Teir.Platinum)
+        {
+            // Increase tier by one
+            item.UpgradeTier();
+            Debug.Log($"{item.itemName} upgraded to {item.ItemTeir}.");
+        }
+        else
+        {
+            Debug.Log($"{item.itemName} is already at max tier!");
+        }
+    }
+
+
     private void StartCombat()
     {
 
@@ -211,7 +230,12 @@ public class GearManager : MonoBehaviour
 
     private void SceneChange(Levels newLevel)
     {
-
+        switch (newLevel)
+        {
+            case Levels.Title:
+                PlayerCurrentGear.Clear();
+                break;
+        }
     }
 
     private void OnDestroy()

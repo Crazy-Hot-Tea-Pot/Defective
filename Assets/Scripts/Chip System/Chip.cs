@@ -223,6 +223,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             chipinfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
 
+
             ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
 
             StartCoroutine(DelayForAnimator(controller));            

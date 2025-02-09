@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -54,6 +53,8 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
     [Header("Item Screen")]
     public GameObject ItemPanel;
     public GameObject ItemSelectionContainer;
+    public GameObject GearPrefab;
+    public GameObject ItemScreenExitButton;
 
     [Header("Error Screen")]
     public GameObject ErrorPanel;
@@ -155,10 +156,30 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
     /// Update the display amount of scrap
     /// </summary>
     public void UpdateScrapDisplay(int NewScrapAmount)
-    {
+    {        
         StartCoroutine(UpdateScrapAmount(NewScrapAmount));
     }
-    
+
+    /// <summary>
+    /// Loads the terminal with items
+    /// </summary>
+    public void LoadItemsIntoTerminal()
+    {
+        // Remove any previous items displayed
+        foreach (Transform child in ItemSelectionContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Get all player-owned items
+        foreach (Item item in GearManager.Instance.PlayerCurrentGear)
+        {
+            GameObject itemUI = Instantiate(GearPrefab, ItemSelectionContainer.transform);
+            itemUI.GetComponent<GearInventory>().Item = item;
+            itemUI.GetComponent<GearInventory>().PrefabMode = GearInventory.Mode.Terminal;
+        }
+    }
+
     /// <summary>
     /// When UI link is clicked this method is called.
     /// </summary>
@@ -198,7 +219,7 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
                 controller.SwitchToScreen(TerminalController.Screens.Data);
                 break;
             case "Items":
-                controller.SwitchToScreen(TerminalController.Screens.Items);
+                controller.SwitchToScreen(TerminalController.Screens.Items); 
                 break;
             case "Back":
                 controller.SwitchToScreen(TerminalController.Screens.Intro);
@@ -310,6 +331,11 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
 
                 break;
             case TerminalController.Screens.Items:
+                SetActiveUIElement(ItemPanel);
+                LoadItemsIntoTerminal();
+
+                ItemScreenExitButton.SetActive(true);
+                ItemScreenExitButton.GetComponent<Button>().onClick.AddListener(() => controller.SwitchToScreen(TerminalController.Screens.Exit));
                 break;
             case TerminalController.Screens.Data:
 
@@ -418,7 +444,7 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
     private void UpdateErrorScreen(string message)
     {
         ErrorConsole.SetText(message);
-    }
+    }    
 
     /// <summary>
     /// Populate the panel with Chips first and then,

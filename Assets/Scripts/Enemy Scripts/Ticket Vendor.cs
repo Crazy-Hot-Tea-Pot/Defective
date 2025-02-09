@@ -11,31 +11,47 @@ using UnityEngine;
 /// </summary>
 public class TicketVendor : Enemy
 {
+    private int intentRandom;
     // Start is called before the first frame update
     public override void Start()
     {
-        EnemyName = "Ticket Vendor";
-        maxHP = 90;
+        if (EnemyName == null)
+            EnemyName = "Ticket Vendor";
+
+        //Add Common Chips Todrop
+        DroppedChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Common);
+
         base.Start();
     }
     protected override void PerformIntent()
     {
-        var tempRandom = Random.Range(1, 11);
 
-        if (tempRandom <= 3)
+        if (intentRandom <= 3)
             Halt();
-        else if (tempRandom <= 7)
+        else if (intentRandom <= 7)
             Confiscate();
         else
             Redirect();
 
         base.PerformIntent();
     }
+    protected override Intent GetNextIntent()
+    {
+        //decide next intent
+        intentRandom = Random.Range(1, 11);
+
+        if (intentRandom <= 3)
+            return new Intent("Halt", Color.red, 9, "Deals damage and applies Worn/Drained");
+        else if (intentRandom <= 7)
+            return new Intent("Confiscate", Color.red, 7, "Disables 2 chips");
+        else
+            return new Intent("Redirect", Color.red, 7, "Disables an ability");
+    }
     private void Redirect()
     {
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(7);
 
-        //TODO Sabastian implement ability disabled.
+        EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.Redirect,1);
     }
     private void Confiscate()
     {

@@ -35,6 +35,9 @@ public class Looter : Enemy
     // Start is called before the first frame update
     public override void Start()
     {
+        if (EnemyName == null)
+            EnemyName = "Looter";
+
         swipeCount = 0;
         StolenScrap = 0;
 
@@ -43,7 +46,6 @@ public class Looter : Enemy
 
     protected override void PerformIntent()
     {    
-        UpdateIntentUI();
         // Since 100% on first chance just made it this way.
 
         if (swipeCount < 3) // First three turns are Swipe
@@ -67,6 +69,7 @@ public class Looter : Enemy
     public override void Die()
     {        
         ReturnStolenScrap();
+
         base.Die();
     }    
 
@@ -84,15 +87,15 @@ public class Looter : Enemy
     {
         if (swipeCount < 3)
         {
-            return new Intent("Swipe", Color.red, 6, "Steals 5 Scrap");
+            return new Intent("Swipe", Color.red, 6, "Steals 5 Scrap.");
         }
         else if (swipeCount == 3 && !IsShrouded)
         {
-            return new Intent("Shroud", Color.blue, 0, "Gains 10 Shield");
+            return new Intent("Shroud", Color.blue, 0, "Gains 10 Shield.");
         }
         else if (IsShrouded)
         {
-            return new Intent("Escape", Color.yellow, 0, "Exits the fight with stolen Scrap");
+            return new Intent("Escape", Color.yellow, 0, "Exits the fight with stolen Scrap.");
         }
         return new Intent("Unknown", Color.gray);
     }

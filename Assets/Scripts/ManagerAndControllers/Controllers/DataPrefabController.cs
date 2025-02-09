@@ -23,7 +23,7 @@ public class DataPrefabController : MonoBehaviour
     void Start()
     {
         NameText.SetText("Name: "+Name);
-        LevelText.SetText("Level: "+Level);
+        LevelText.SetText("Levels: "+Level);
         TimeText.SetText("Time Saved: "+Time);
 
 

@@ -76,7 +76,7 @@ public class Item : ScriptableObject
     public List<int> energyCostDecreaseBy = new() { 0, 2, 3, 4, 5 };
 
     [Tooltip("How much scrap value for each Teir")]
-    public List<int> scrapValue = new() { 0, 1, 2, 3, 4, 5 };
+    public List<int> scrapValueForEachTeir = new() { 0, 1, 2, 3, 4, 5 };
 
     private bool isEquipped = false;
 
@@ -167,19 +167,19 @@ public class Item : ScriptableObject
         switch (ItemTeir)
         {
             case Teir.Base:
-                tempReturnValue = scrapValue[(int)Teir.Base];
+                tempReturnValue = scrapValueForEachTeir[(int)Teir.Base];
                 break;
             case Teir.Bronze:
-                tempReturnValue = scrapValue[(int)Teir.Bronze];
+                tempReturnValue = scrapValueForEachTeir[(int)Teir.Bronze];
                 break;
             case Teir.Silver:
-                tempReturnValue = scrapValue[(int)Teir.Silver];
+                tempReturnValue = scrapValueForEachTeir[(int)Teir.Silver];
                 break;
             case Teir.Gold:
-                tempReturnValue = scrapValue[(int)Teir.Gold];
+                tempReturnValue = scrapValueForEachTeir[(int)Teir.Gold];
                 break;
             case Teir.Platinum:
-                tempReturnValue = scrapValue[(int)Teir.Platinum];
+                tempReturnValue = scrapValueForEachTeir[(int)Teir.Platinum];
                 break;
             default:
                 tempReturnValue = 100;
@@ -188,6 +188,29 @@ public class Item : ScriptableObject
 
         return tempReturnValue;
     }
+
+    public void UpgradeTier()
+    {
+        if (ItemTeir < Teir.Platinum)
+        {
+            ItemTeir += 1;
+            Debug.Log($"{itemName} upgraded to {ItemTeir}!");
+
+            // Apply new tier values
+            ApplyTierStats();
+        }
+        else
+        {
+            Debug.Log($"{itemName} is already at max tier!");
+        }
+    }
+
+    private void ApplyTierStats()
+    {
+        // Update values based on the new tier
+        Debug.Log($"Applying new stats for {itemName} at Tier {ItemTeir}.");
+    }
+
 
     [ContextMenu("Reset to Default")]
     public void ResetToDefault()

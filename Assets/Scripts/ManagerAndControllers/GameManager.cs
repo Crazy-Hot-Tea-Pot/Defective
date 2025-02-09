@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -158,7 +156,7 @@ public class GameManager : MonoBehaviour
             case Levels.Credits:
                 break;
             default:
-                DataManager.Instance.CurrentGameData.Level = level;
+                DataManager.Instance.CurrentGameData.Level = level;                
 
                 //Get Player
                 PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -193,7 +191,7 @@ public class GameManager : MonoBehaviour
         {
             if(CurrentLevel!=Levels.Loading && CurrentLevel != Levels.Credits)
                 // Track the previous level
-                PreviousScene = CurrentLevel;
+                PreviousScene = CurrentLevel;            
 
             CurrentLevel = loadedScene;
 
@@ -213,7 +211,11 @@ public class GameManager : MonoBehaviour
                     break;
                 default:
                     CurrentGameMode = GameMode.Roaming;
-                    //SoundManager.StartBackgroundSound(BgSound.Background);
+
+                    if (PreviousScene == Levels.Title)
+                        GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(CurrentLevel);
+                    else
+                        GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(PreviousScene);
                     break;
             }
             
