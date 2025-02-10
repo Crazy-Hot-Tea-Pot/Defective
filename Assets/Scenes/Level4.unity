@@ -3482,7 +3482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.4
+      value: -3.6
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15645,7 +15645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.4
+      value: -3.6
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18324,6 +18324,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1227446777473963846, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
+      propertyPath: runSpeed
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227446777473963846, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
+      propertyPath: walkSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6591943734183549131, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.3393254
@@ -32505,8 +32513,10 @@ MonoBehaviour:
   EnemiesInZone:
   - enemyObject: {fileID: 1014254550}
     enemyType: 2
+    position: {x: -18.71, y: -3.04, z: 66.159996}
   - enemyObject: {fileID: 288526200}
     enemyType: 2
+    position: {x: -7.23, y: -3.04, z: 66.159996}
   EnemyPlaceholder: {fileID: 4914832572848079038, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
   SavedColor: {r: 0, g: 0.46666667, b: 0, a: 1}
   savedTransparicy: 0.7
@@ -34084,7 +34094,7 @@ Transform:
   m_GameObject: {fileID: 6630072964059689545}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.25432, y: 0.56, z: 65.92}
+  m_LocalPosition: {x: -14.17, y: 0.56, z: 65.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -34187,6 +34197,7 @@ MonoBehaviour:
   EnemiesInZone:
   - enemyObject: {fileID: 874818383}
     enemyType: 0
+    position: {x: -51, y: -5.57, z: 55.51}
   EnemyPlaceholder: {fileID: 4914832572848079038, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
   SavedColor: {r: 0, g: 0.46666667, b: 0, a: 1}
   savedTransparicy: 0.7
@@ -34314,8 +34325,10 @@ MonoBehaviour:
   EnemiesInZone:
   - enemyObject: {fileID: 690464511}
     enemyType: 0
+    position: {x: 3.0700006, y: -5.57, z: 6.27}
   - enemyObject: {fileID: 573793039}
     enemyType: 0
+    position: {x: -21.95, y: -5.57, z: 6.27}
   EnemyPlaceholder: {fileID: 4914832572848079038, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
   SavedColor: {r: 0, g: 0.46666667, b: 0, a: 1}
   savedTransparicy: 0.7
@@ -34428,6 +34441,7 @@ MonoBehaviour:
   EnemiesInZone:
   - enemyObject: {fileID: 1608371158}
     enemyType: 0
+    position: {x: 33.68, y: -5.57, z: -82.5}
   EnemyPlaceholder: {fileID: 4914832572848079038, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
   SavedColor: {r: 0, g: 0.46666667, b: 0, a: 1}
   savedTransparicy: 0.7
@@ -34480,10 +34494,13 @@ MonoBehaviour:
   EnemiesInZone:
   - enemyObject: {fileID: 1580036893}
     enemyType: 0
+    position: {x: -8.57, y: -5.7200003, z: -110.68}
   - enemyObject: {fileID: 1877778025}
     enemyType: 0
+    position: {x: -1.7699995, y: -5.7200003, z: -106.95}
   - enemyObject: {fileID: 1611902993}
     enemyType: 0
+    position: {x: -16.27, y: -5.7200003, z: -106.95}
   EnemyPlaceholder: {fileID: 4914832572848079038, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
   SavedColor: {r: 0, g: 0.46666667, b: 0, a: 1}
   savedTransparicy: 0.7

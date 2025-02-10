@@ -10351,6 +10351,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1227446777473963846, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
+      propertyPath: runSpeed
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227446777473963846, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
+      propertyPath: walkSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6591943734183549131, guid: 4b5acdc5716c4e54593e1cdb1b57db28, type: 3}
       propertyPath: m_LocalPosition.x
       value: 46.22
@@ -20415,8 +20423,10 @@ MonoBehaviour:
   EnemiesInZone:
   - enemyObject: {fileID: 1877390278}
     enemyType: 0
+    position: {x: -31, y: -8.23, z: 3.8600006}
   - enemyObject: {fileID: 2032280879}
     enemyType: 0
+    position: {x: -31, y: -8.229999, z: 11.25}
   EnemyPlaceholder: {fileID: 4914832572848079038, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
   SavedColor: {r: 0, g: 0.46666667, b: 0, a: 1}
   savedTransparicy: 0.7
