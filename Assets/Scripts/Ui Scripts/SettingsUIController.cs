@@ -103,6 +103,9 @@ public class SettingsUIController : UiController
         {
             SkipMiniMenu();
 
+            //Make UI Manager above the title canvas.
+            UiManager.Instance.GetComponent<Canvas>().sortingOrder = 1;
+
             //Pause time
             UnityEngine.Time.timeScale = 0;
         }
@@ -132,12 +135,6 @@ public class SettingsUIController : UiController
             MainMenubtn.onClick.RemoveAllListeners();
             MainMenubtn.onClick.AddListener(MainMenu);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     /// <summary>
@@ -196,6 +193,9 @@ public class SettingsUIController : UiController
     /// </summary>
     public void Continue()
     {
+        //Reset UI Manager Canvas to default
+        UiManager.Instance.GetComponent<Canvas>().sortingOrder = 0;
+
         UiManager.Instance.CloseSettingsOnClick();
         //Pause time
         UnityEngine.Time.timeScale = 1;
