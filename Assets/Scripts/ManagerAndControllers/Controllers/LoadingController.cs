@@ -80,10 +80,12 @@ public class LoadingController : MonoBehaviour
         // Dictionary to store positions for each level to prevent overlapping
         Dictionary<LevelDefinition, Vector2> levelPositions = new Dictionary<LevelDefinition, Vector2>();
 
+        bool isLinear = IsLinearPath(story.levels[0]);
+
         // Horizontal distance between levels
-        float spacingX = 100f;
+        float spacingX = isLinear ? 200f : 150f;
         // Vertical spacing for branching paths
-        float spacingY = 80f;
+        float spacingY = isLinear ? 0f : 60f;
 
         // Recursive function to create nodes for branching paths
         void CreateNodes(LevelDefinition level, Vector2 position, int depth)
@@ -167,7 +169,25 @@ public class LoadingController : MonoBehaviour
         }
 
         // Start from the first level and build the branching paths
-        CreateNodes(story.levels[0], new Vector2(0, 0), 0);
+        Vector2 startPosition = IsLinearPath(story.levels[0]) ? new Vector2(-600f, -100f) : new Vector2(-600f, 100f);
+        CreateNodes(story.levels[0], startPosition, 0);
+    }
+
+    private bool IsLinearPath(LevelDefinition levelDefinition)
+    {
+        int totalBranches = 0;
+
+        void CountBranches(LevelDefinition currentLevel)
+        {
+            if(currentLevel.NextLevels.Count>1)
+                totalBranches++;
+
+            foreach (var next in currentLevel.NextLevels)
+                CountBranches(next);
+        }
+
+        CountBranches(levelDefinition);
+        return totalBranches == 0;
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)

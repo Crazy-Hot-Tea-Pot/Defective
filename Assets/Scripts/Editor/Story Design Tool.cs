@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using static GameEnums;
 using static EnemyManager;
+using System;
 
 public class StoryDesignTool : EditorWindow
 {
@@ -151,10 +152,32 @@ public class StoryDesignTool : EditorWindow
             }
         }
 
+        if (GUILayout.Button("Remove Level", GUILayout.Width(200)))
+        {
+            RemoveLevel(level);
+        }
+
         GUILayout.EndVertical();
     }
 
-
+    private void RemoveLevel(LevelDefinition level)
+    {
+        if (levels.Contains(level))
+        {
+            levels.Remove(level);
+        }
+        else
+        {
+            foreach(var parentLevel in levels)
+            {
+                if(parentLevel.nextLevels.Contains(level))
+                {
+                    parentLevel.NextLevels.Remove(level);
+                    break;
+                }
+            }
+        }
+    }
 
     private void SaveStory()
     {

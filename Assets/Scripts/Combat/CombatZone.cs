@@ -10,11 +10,13 @@ public class CombatZone : MonoBehaviour
     {
         public GameObject enemyObject;
         public EnemyManager.EnemyType enemyType;
+        public Vector3 position;
 
         public EnemyPlacementData(GameObject obj, EnemyManager.EnemyType type)
         {
             enemyObject = obj;
             enemyType = type;
+            position = obj.transform.position;
         }
     }
     public bool CombatZoneSet;
@@ -248,7 +250,7 @@ public class CombatZone : MonoBehaviour
             if (enemyData.enemyObject != null)
             {
                 // Convert local position to world position
-                Vector3 worldPosition = transform.TransformPoint(enemyData.enemyObject.transform.localPosition);
+                Vector3 worldPosition = enemyData.enemyObject.transform.position;
                 spawnData.Add((worldPosition, enemyData.enemyType));
             }
         }
@@ -268,7 +270,8 @@ public class CombatZone : MonoBehaviour
 
         foreach (var enemyData in EnemiesInZone)
         {
-            if (enemyData.enemyObject == null) continue;
+            if (enemyData.enemyObject == null) 
+                continue;
 
             // Store the enemy's offset relative to the CombatZone
             Vector3 localOffset = enemyData.enemyObject.transform.localPosition;
@@ -280,6 +283,8 @@ public class CombatZone : MonoBehaviour
                 enemyData.enemyObject.transform.localPosition = Vector3.zero; // Reset to center
                 Debug.LogWarning($"{enemyData.enemyObject.name} was outside the Combat Zone and has been repositioned.");
             }
+
+            enemyData.position=enemyData.enemyObject.transform.position;
         }
     }
 

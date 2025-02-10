@@ -22,29 +22,68 @@ MonoBehaviour:
     - enemyType: 1
       enemyName: Tutorial Drone
     nextLevels:
-    - rid: 6737146637870956544
+    - rid: 6737146676237303808
+    isCompleted: 0
     questCondition: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 6737146637870956544
+    - rid: 6737146676237303808
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
         levelID: 2
         terminalSpawnChance: 0
-        enemySpawns:
-        - enemyType: 2
-          enemyName: Bajan Yard Man
+        enemySpawns: []
         nextLevels:
-        - rid: 6737146637870956545
+        - rid: 6737146676237303809
+        isCompleted: 0
         questCondition: {fileID: 0}
-    - rid: 6737146637870956545
+    - rid: 6737146676237303809
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
         levelID: 3
         terminalSpawnChance: 0
-        enemySpawns:
-        - enemyType: 0
-          enemyName: Thief
+        enemySpawns: []
+        nextLevels:
+        - rid: 6737146676237303810
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 6737146676237303810
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        levelID: 4
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels:
+        - rid: 6737146676237303811
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 6737146676237303811
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        levelID: 5
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels:
+        - rid: 6737146676237303812
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 6737146676237303812
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        levelID: 6
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels:
+        - rid: 6737146676237303813
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 6737146676237303813
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        levelID: 10
+        terminalSpawnChance: 0
+        enemySpawns: []
         nextLevels: []
+        isCompleted: 0
         questCondition: {fileID: 0}
