@@ -240,7 +240,6 @@ public class UiManager : MonoBehaviour
     /// </summary>
     private void ToggleSettingsAtTitle()
     {
-        SettingsUI.transform.GetComponent<SettingsUIController>().miniSkip = true;
         SwitchScreen(SettingsUI);
     }
 
@@ -254,7 +253,6 @@ public class UiManager : MonoBehaviour
     public void CloseSettingsOnClickTitle()
     {
         Destroy(CurrentUI);
-        SettingsUI.transform.GetComponent<SettingsUIController>().miniSkip = false;
     }
     #endregion
     /// <summary>

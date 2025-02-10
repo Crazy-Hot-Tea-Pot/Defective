@@ -43,9 +43,6 @@ public class SettingsUIController : UiController
     private Button Discardbtn;
     private Button RestoreDefaultsbtn;
     private Button BackBtn;
-
-    //A bool for title screen
-    public bool miniSkip = false;
     private GameObject titleScreenUI;
 
     // Start is called before the first frame update
@@ -99,7 +96,7 @@ public class SettingsUIController : UiController
         BackBtn.onClick.AddListener(ReturnToMiniMenu);
 
         //If title screen skip mini menu
-        if (miniSkip)
+        if (GameManager.Instance.CurrentLevel == Levels.Title)
         {
             SkipMiniMenu();
 
@@ -147,7 +144,7 @@ public class SettingsUIController : UiController
         {
             largeSettingMenu.SetActive(false);
             //If we aren't skipping main menu open it again
-            if (miniSkip == false)
+            if (GameManager.Instance.CurrentLevel != Levels.Title)
             {
                 smallSettingMenu.SetActive(true);
             }
@@ -502,10 +499,8 @@ public class SettingsUIController : UiController
     public void ReturnToMiniMenu()
     {
         //Skip this menu if applicable
-        if (miniSkip)
+        if (GameManager.Instance.CurrentLevel == Levels.Title)
         {
-            miniSkip = false;
-            Debug.Log(miniSkip);
             titleScreenUI.SetActive(true);
             largeSettingMenu.SetActive(false);
             UiManager.Instance.CloseSettingsOnClickTitle();
@@ -541,7 +536,8 @@ public class SettingsUIController : UiController
     {
         smallSettingMenu.SetActive(false);
         Destroy(UiManager.Instance.CurrentUI);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+        UnityEngine.Time.timeScale = 1;
+        GameManager.Instance.RequestScene(Levels.Title);
     }
 
     /// <summary>
