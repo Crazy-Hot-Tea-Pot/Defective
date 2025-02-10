@@ -26,7 +26,6 @@ public class BackgroundSoundGlobal : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
         // Subscribe to scene loaded event
         GameManager.Instance.OnSceneChange += SceneChange;
     }
@@ -38,7 +37,6 @@ public class BackgroundSoundGlobal : MonoBehaviour
 
     private void SceneChange(Levels newLevel)
     {
-        Debug.Log($"SceneChange called for level: {newLevel}");
         if (pauseInScenes.Contains(newLevel))
             PauseSound();
         else

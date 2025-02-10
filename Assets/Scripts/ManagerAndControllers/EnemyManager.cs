@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -44,7 +45,6 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-
     private static EnemyManager instance;
     private List<GameObject> combatEnemies = new();
     [SerializeField] 
@@ -76,12 +76,6 @@ public class EnemyManager : MonoBehaviour
         GameManager.Instance.OnStartCombat += StartCombat;
         GameManager.Instance.OnEndCombat += EndCombat;
         GameManager.Instance.OnSceneChange += SceneChange;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     /// <summary>
@@ -134,6 +128,12 @@ public class EnemyManager : MonoBehaviour
                 }
             }
         }
+
+        //Debug.Log("Enemy Prefab Dictionary:");
+        //foreach(var test in enemyPrefabDict)
+        //{
+        //    Debug.Log("Type: " + test.Key + ", Prefab:" + test.Value.name);
+        //}
     }
 
     private void GetAllEnemiesInLevel()
@@ -169,44 +169,45 @@ public class EnemyManager : MonoBehaviour
         {
             Debug.LogWarning("No enemies are set to spawn for this level.");
             return;
-        }
-
-        Debug.Log($"Spawning {enemySpawns.Count} enemies across {combatZones.Length} combat zones.");
-
-        int enemyIndex = 0; // Tracks which enemy from enemySpawns to place next
-
-        // 3. Iterate through Combat Zones and assign enemies
-        foreach (CombatZone combatZone in combatZones)
+        }                        
+        //3. loop through each combat zone and directly use enemiesinzone
+        foreach(CombatZone combatZone in combatZones)
         {
-            List<(Vector3 position, EnemyManager.EnemyType type)> availablePositions = combatZone.GetEnemySpawnData();
-
-            int spawnCount = Mathf.Min(enemySpawns.Count - enemyIndex, availablePositions.Count);
-
-            for (int i = 0; i < spawnCount; i++)
+            foreach (var enemyData in combatZone.EnemiesInZone)
             {
-                EnemySpawn enemySpawn = enemySpawns[enemyIndex++];
-                (Vector3 position, EnemyManager.EnemyType storedType) = availablePositions[i];
-
-                GameObject enemyPrefab = enemySpawn.GetEnemyPrefab();
-                if (enemyPrefab != null)
+                if (enemyData.enemyObject == null)
                 {
-                    GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-                    enemy.GetComponent<Enemy>().SetEnemyName(enemySpawn.enemyName);
-                    enemy.SetActive(true);
-                    CombatEnemies.Add(enemy);
-                    Debug.Log($"Spawned {enemySpawn.enemyType} at {position}");
+                    Debug.LogWarning("Warning: Missing enemy object for " + enemyData.enemyType + " in " + combatZone.name);
+                    continue;
+                }
+
+                GameObject enemyPrefab = GetEnemyPrefab(enemyData.enemyType);
+
+                if (enemyPrefab == null)
+                {
+                    Debug.LogError("ERROR: No prefab found for " + enemyData.enemyType);
+                    continue;
+                }
+
+                string enemyName = "Unable to fetch name";
+                EnemySpawn matchingEnemy = enemySpawns.Find(e => e.enemyType == enemyData.enemyType);
+
+                if(matchingEnemy != null)
+                {
+                    enemyName = matchingEnemy.enemyName;
+                    enemySpawns.Remove(matchingEnemy);
                 }
                 else
                 {
-                    Debug.LogError($"Enemy prefab for {enemySpawn.enemyType} not found!");
+                    Debug.LogWarning("Can't find enemy name");
                 }
 
-                // If we've assigned all enemies, stop early
-                if (enemyIndex >= enemySpawns.Count) return;
+                //Spawn enemy
+                GameObject enemy = Instantiate(enemyPrefab, enemyData.position, Quaternion.identity);                
+                enemy.GetComponent<Enemy>().SetEnemyName(enemyName);
+                enemy.SetActive(true);
             }
         }
-
-        Debug.Log($"Finished spawning enemies. {enemySpawns.Count - enemyIndex} enemies were not placed.");
     }
 
 

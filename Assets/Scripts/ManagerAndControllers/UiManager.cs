@@ -184,10 +184,12 @@ public class UiManager : MonoBehaviour
     public void DropLoot(NewChip selection)
     {
         GetCurrentController<LootUiController>().LootChips.Remove(selection);
+        GetCurrentController<LootUiController>().UpdateLootScreen();
     }
     public void DropLoot(Item selection)
     {
         GetCurrentController<LootUiController>().LootItems.Remove(selection);
+        GetCurrentController<LootUiController>().UpdateLootScreen();
     }
     public void AddItemToInventory(Item item)
     {

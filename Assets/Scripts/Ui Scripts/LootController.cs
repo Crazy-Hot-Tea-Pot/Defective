@@ -183,5 +183,10 @@ public class LootController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         DropButton.onClick.RemoveListener(Drop);
         KeepButton.onClick.RemoveListener(Keep);
+
+        if (chipinfoDisplay != null)
+            Destroy(chipinfoDisplay);
+        if(gearInfoDisplay != null) 
+            Destroy(gearInfoDisplay);
     }
 }

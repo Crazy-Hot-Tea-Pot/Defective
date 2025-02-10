@@ -8,6 +8,8 @@ public class EnemySpawn
 
     public GameObject GetEnemyPrefab()
     {
+        Debug.Log("Fetching prefab for "+ enemyType+": "+ enemyName);
+
         return EnemyManager.Instance.GetEnemyPrefab(enemyType);
     }
 }

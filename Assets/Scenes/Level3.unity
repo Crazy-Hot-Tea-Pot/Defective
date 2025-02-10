@@ -20450,6 +20450,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Entrance(exit)
       objectReference: {fileID: 0}
+    - target: {fileID: 3925799449388646072, guid: e4ec4afaa5104ce4eb40d977851f4437, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4409285032616371202, guid: e4ec4afaa5104ce4eb40d977851f4437, type: 3}
       propertyPath: m_LocalPosition.x
       value: 65.37

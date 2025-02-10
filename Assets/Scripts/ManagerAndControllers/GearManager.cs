@@ -94,7 +94,6 @@ public class GearManager : MonoBehaviour
             {
                 PlayerCurrentGear.Add(newItem);
                 newItem.IsPlayerOwned = true;
-                Debug.Log($"{newItem.itemName} added to inventory.");
                 return true;
             }
             else

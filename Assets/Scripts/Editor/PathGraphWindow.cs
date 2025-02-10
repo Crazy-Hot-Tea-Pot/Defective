@@ -8,6 +8,7 @@ public class PathGraphWindow : EditorWindow
     private List<LevelDefinition> levels;
     private StoryPathType pathType;
     private Dictionary<LevelDefinition, Vector2> nodePositions = new Dictionary<LevelDefinition, Vector2>();
+    private Vector2 scrollPosition = Vector2.zero;
 
     public static void OpenWindow(List<LevelDefinition> storyLevels, StoryPathType type)
     {
@@ -96,7 +97,27 @@ public class PathGraphWindow : EditorWindow
             return;
         }
 
+        // Determine graph boundaries for scrolling
+        float maxX = 0f, maxY = 0f;
+        foreach (var level in nodePositions.Keys)
+        {
+            Vector2 pos = nodePositions[level];
+            // 200 to account for node width
+            maxX = Mathf.Max(maxX, pos.x + 200);
+            // 100 to account for node height
+            maxY = Mathf.Max(maxY, pos.y + 100);
+        }
+
+        // Set scrolling area size dynamically
+        Rect scrollArea = new Rect(0, 0, maxX + 50, maxY + 50);
+
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition,GUILayout.Width(position.width),GUILayout.Height(position.height));
+
         BeginWindows();
+
+        Rect graphRect = GUILayoutUtility.GetRect(scrollArea.width, scrollArea.height);
+
+        GUI.BeginGroup(graphRect);
 
         foreach (var level in nodePositions.Keys)
         {
@@ -104,7 +125,12 @@ public class PathGraphWindow : EditorWindow
             GUI.Box(rect, level.levelID.ToString());
         }
 
+        GUI.EndGroup();
+
+
         EndWindows();
+
+        EditorGUILayout.EndScrollView();
 
         Handles.BeginGUI();
         Handles.color = Color.white;
@@ -125,6 +151,5 @@ public class PathGraphWindow : EditorWindow
             }
         }
         Handles.EndGUI();
-
     }
 }

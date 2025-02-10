@@ -54,7 +54,14 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
         // Set image to chip
         //GetComponent<Image>().sprite = Item.itemImage
         //
-        CombatController=GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
+        try
+        {
+            CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
+        }
+        catch
+        {
+            Debug.LogWarning("Failed to find CombatController");
+        }
 
         Button.onClick.AddListener(() =>  UseItem() );
     }
