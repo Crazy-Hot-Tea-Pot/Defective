@@ -2000,7 +2000,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8836494093751931086}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.91
   m_Speed: 9
   m_Acceleration: 100
   avoidancePriority: 50
@@ -2009,7 +2009,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 5.76
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -2026,7 +2026,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiController: {fileID: 3325475525751263956}
-  abilityRangedEnemies: []
   agent: {fileID: 2181696517448560852}
   animator: {fileID: 2076073105753185607}
   RipplePrefab: {fileID: 8841478494395001973, guid: 839c72b8383e95e4eb6ad82977d126f0, type: 3}
@@ -2036,6 +2035,7 @@ MonoBehaviour:
   runThreshold: 5
   doubleClickTime: 0.5
   SoundWhenPlayerClicks: 7
+  listOfActiveEffects: []
 --- !u!136 &613447968063264353
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2056,9 +2056,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.2482624
-  m_Height: 2.4870205
+  m_Height: 5.941685
   m_Direction: 1
-  m_Center: {x: 0, y: 1.2382026, z: 0.03194114}
+  m_Center: {x: 0, y: 2.9607828, z: 0.031941175}
 --- !u!54 &3074764985001963115
 Rigidbody:
   m_ObjectHideFlags: 0

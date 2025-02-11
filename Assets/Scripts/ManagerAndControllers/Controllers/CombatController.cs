@@ -4,6 +4,11 @@ using UnityEngine.InputSystem;
 
 public class CombatController : MonoBehaviour
 {
+    public static CombatController Instance
+    {
+        get;
+        private set;
+    }
     public GameObject Player
     {
         get

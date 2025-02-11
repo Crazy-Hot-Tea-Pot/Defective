@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour
 
     #region Effects
 
+    [SerializeField]
     private List<Effects.StatusEffect> listOfActiveEffects = new List<Effects.StatusEffect>();
 
     public List<Effects.StatusEffect> ListOfActiveEffects
@@ -389,7 +390,10 @@ public class PlayerController : MonoBehaviour
 
         // Set animator bools based on detected movement state
         animator.SetBool("IsWalking", isWalking);
-        animator.SetBool("IsRunning", isRunning);        
+        animator.SetBool("IsRunning", isRunning);
+
+        if(GameManager.Instance.CurrentGameMode==GameManager.GameMode.Combat)
+            SmoothRotateTowardsTarget();
     }    
 
     /// <summary>
@@ -815,6 +819,24 @@ public class PlayerController : MonoBehaviour
     {
         agent.SetDestination(TargetPosition);
     }
+
+    /// <summary>
+    /// Totate to Target
+    /// </summary>
+    private void SmoothRotateTowardsTarget()
+    {
+        if (GameObject.Find("CombatController").GetComponent<CombatController>().Target != null)
+        {
+            Vector3 direction = CombatController.Instance.Target.transform.position - transform.position;
+            direction.y = 0; // Keep rotation on the horizontal plane
+
+            if (direction.magnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // Smooth rotation
+            }
+        }
+    }
     #endregion
 
     #region Combat
@@ -902,6 +924,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
 
     #endregion
 

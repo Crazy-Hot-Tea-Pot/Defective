@@ -21,7 +21,7 @@ public class DamageEffect : ItemEffect
             SoundManager.PlayFXSound(ItemActivate);
 
             if (player.IsPowered)
-                adjustedDamage += player.PoweredStacks;
+                adjustedDamage += (player.PoweredStacks * 2);
 
             if(player.IsDrained)
                 adjustedDamage = Mathf.FloorToInt(adjustedDamage * 0.8f); // Reduce damage by 20%
