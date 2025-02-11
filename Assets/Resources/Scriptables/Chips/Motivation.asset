@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 0
   chipName: Motivation
   description: Your next chip activates twice.
-  chipImage: {fileID: 21300000, guid: 6d9d5002225a4db429a1da7997221af3, type: 3}
+  chipImage: {fileID: 21300000, guid: 40a7ac21b0dd7f849b39996444119c2e, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: Get double the use out of your next chip.

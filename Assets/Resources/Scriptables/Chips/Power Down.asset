@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 1
   chipName: Power Down
   description: Deal 7 Damage, Apply 1 Drained.
-  chipImage: {fileID: 21300000, guid: ce719f8d54c41f1438e3b434adddf22d, type: 3}
+  chipImage: {fileID: 21300000, guid: 9e3745e2f2ae7a04cb59f2b3d7ca7d06, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Use Drained to weaken your foes so you can save your Defense chips for
