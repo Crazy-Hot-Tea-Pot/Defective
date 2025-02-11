@@ -132,6 +132,10 @@ public class EnemyUI : MonoBehaviour
     /// Update the Effects for Enemy
     /// </summary>
     /// <param name="activeEffects"></param>
+    /// <summary>
+    /// Update the Effects for Enemy
+    /// </summary>
+    /// <param name="activeEffects"></param>
     public void UpdateEffectsPanel(List<Effects.StatusEffect> activeEffects)
     {
         // Clear existing UI elements
@@ -144,21 +148,41 @@ public class EnemyUI : MonoBehaviour
         // Populate the panel with new effects
         foreach (var statusEffect in activeEffects)
         {
-            string effectName = statusEffect.Effect.ToString();
-            GameObject effectPrefab = effectPrefabs.Find(prefab => prefab.name == effectName);
+            string effectName = null;
 
-            if (effectPrefab != null)
+            // Determine which effect type is active
+            if (statusEffect.BuffEffect != Effects.Buff.None)
             {
-                GameObject effectInstance = Instantiate(effectPrefab, EffectsPanel.transform);
-                effectInstance.name = effectName;
-                this.activeEffects.Add(effectInstance);
+                effectName = statusEffect.BuffEffect.ToString();
             }
-            else
+            else if (statusEffect.DebuffEffect != Effects.Debuff.None)
             {
-                Debug.LogError($"Effect prefab not found for {effectName}");
+                effectName = statusEffect.DebuffEffect.ToString();
+            }
+            else if (statusEffect.SpecialEffect != Effects.SpecialEffects.None)
+            {
+                effectName = statusEffect.SpecialEffect.ToString();
+            }
+
+            // Proceed if a valid effect name was found
+            if (!string.IsNullOrEmpty(effectName))
+            {
+                GameObject effectPrefab = effectPrefabs.Find(prefab => prefab.name == effectName);
+
+                if (effectPrefab != null)
+                {
+                    GameObject effectInstance = Instantiate(effectPrefab, EffectsPanel.transform);
+                    effectInstance.name = effectName;
+                    this.activeEffects.Add(effectInstance);
+                }
+                else
+                {
+                    Debug.LogError($"[EnemyUI] Effect prefab not found for {effectName}");
+                }
             }
         }
     }
+
 
     /// <summary>
     /// Update intent box.

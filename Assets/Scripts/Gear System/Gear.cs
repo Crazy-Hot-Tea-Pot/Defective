@@ -109,7 +109,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
                     Item.ItemActivate(Player.GetComponent<PlayerController>());
                 else
                 {
-                        Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                    Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
                 }
             }
         }

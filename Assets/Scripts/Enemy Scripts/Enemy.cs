@@ -549,15 +549,16 @@ public class Enemy : MonoBehaviour
         AddOrUpdateEffect(debuff, stacks);
     }
 
+
     /// <summary>
     /// Add Special Effect to enemy.
     /// </summary>
     /// <param name="specialEffect"></param>
     public void AddEffect(Effects.SpecialEffects specialEffect)
     {
-        if (!ListOfActiveEffects.Any(e => e.Effect.Equals(specialEffect)))
+        if (!ListOfActiveEffects.Any(e => e.SpecialEffect == specialEffect))
         {
-            ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 0));
+            ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 1));
         }
     }
 
@@ -572,18 +573,25 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < ListOfActiveEffects.Count; i++)
         {
             var statusEffect = ListOfActiveEffects[i];
-            if (statusEffect.Effect.Equals(effect))
+
+            if ((effect is Effects.Buff && statusEffect.BuffEffect.Equals(effect)) ||
+                (effect is Effects.Debuff && statusEffect.DebuffEffect.Equals(effect)) ||
+                (effect is Effects.SpecialEffects && statusEffect.SpecialEffect.Equals(effect)))
             {
                 statusEffect.StackCount += stacks;
-                // Reassign the updated effect
                 ListOfActiveEffects[i] = statusEffect;
                 return;
             }
         }
 
-        // Add a new effect if it doesn't exist
-        ListOfActiveEffects.Add(new Effects.StatusEffect(effect, stacks));
+        if (effect is Effects.Buff buffEffect)
+            ListOfActiveEffects.Add(new Effects.StatusEffect(buffEffect, stacks));
+        else if (effect is Effects.Debuff debuffEffect)
+            ListOfActiveEffects.Add(new Effects.StatusEffect(debuffEffect, stacks));
+        else if (effect is Effects.SpecialEffects specialEffect)
+            ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 1));
     }
+
     #endregion
 
     #region Remove Effects
@@ -616,7 +624,8 @@ public class Enemy : MonoBehaviour
     /// <param name="specialEffect"></param>
     public void RemoveEffect(Effects.SpecialEffects specialEffect)
     {
-        ListOfActiveEffects.RemoveAll(e => e.Effect.Equals(specialEffect));
+        ListOfActiveEffects.RemoveAll(e => e.SpecialEffect == specialEffect);
+        Debug.Log($"[Enemy] Removing all instances of Special Effect: {specialEffect}");
     }
 
     /// <summary>
@@ -631,22 +640,27 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < ListOfActiveEffects.Count; i++)
         {
             var statusEffect = ListOfActiveEffects[i];
-            if (statusEffect.Effect.Equals(effect))
+
+            if ((effect is Effects.Buff && statusEffect.BuffEffect.Equals(effect)) ||
+                (effect is Effects.Debuff && statusEffect.DebuffEffect.Equals(effect)) ||
+                (effect is Effects.SpecialEffects && statusEffect.SpecialEffect.Equals(effect)))
             {
                 if (removeAll || statusEffect.StackCount <= stacks)
                 {
-                    // Fully remove the effect
                     ListOfActiveEffects.RemoveAt(i);
+                    Debug.Log($"[Enemy] Removing Effect: {effect}");
                     return;
                 }
 
-                // Reduce stack count
                 statusEffect.StackCount -= stacks;
                 ListOfActiveEffects[i] = statusEffect;
                 return;
             }
         }
+
+        Debug.LogWarning($"[Enemy] Attempted to remove non-existent effect: {effect}");
     }
+
     #endregion
 
     /// <summary>
@@ -659,15 +673,16 @@ public class Enemy : MonoBehaviour
     {
         foreach (var statusEffect in ListOfActiveEffects)
         {
-            if (statusEffect.Effect.Equals(effect))
+            if ((effect is Effects.Buff && statusEffect.BuffEffect.Equals(effect)) ||
+                (effect is Effects.Debuff && statusEffect.DebuffEffect.Equals(effect)) ||
+                (effect is Effects.SpecialEffects && statusEffect.SpecialEffect.Equals(effect)))
             {
                 return statusEffect.StackCount;
             }
         }
-
-        // Return 0 if the effect is not present
         return 0;
     }
+
 
     #endregion
 

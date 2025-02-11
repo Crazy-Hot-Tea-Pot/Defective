@@ -57,22 +57,34 @@ public class ItemEffect : ScriptableObject
 
     public virtual void Activate(PlayerController player, Item item, Enemy enemy = null)
     {
-        // Apply buffs
-        foreach (Effects.TempBuffs buff in buffToApplyToPlayer)
+        if (player.SpendEnergy(energyCost))
         {
-            player.AddEffect(buff.Buff, buff.AmountToBuff);
-        }
+            //Play Item Effect
+            SoundManager.PlayFXSound(ItemActivate);
 
-        // Apply debuffs
-        foreach (Effects.TempDeBuffs debuff in debuffToApplyToPlayer)
-        {
-            player.AddEffect(debuff.DeBuff, debuff.AmountToDeBuff);
-        }
+            // Apply buffs
+            foreach (Effects.TempBuffs buff in buffToApplyToPlayer)
+            {
+                player.AddEffect(buff.Buff, buff.AmountToBuff);
+            }
 
-        // Apply special effects
-        if (effectToApplyToPlayer != Effects.SpecialEffects.None)
+            // Apply debuffs
+            foreach (Effects.TempDeBuffs debuff in debuffToApplyToPlayer)
+            {
+                player.AddEffect(debuff.DeBuff, debuff.AmountToDeBuff);
+            }
+
+            // Apply special effects
+            if (effectToApplyToPlayer != Effects.SpecialEffects.None)
+            {
+                player.AddEffect(effectToApplyToPlayer);
+            }
+        }
+        else
         {
-            player.AddEffect(effectToApplyToPlayer);
+            SoundManager.PlayFXSound(ItemFail);
+
+            Debug.Log("Not enough energy to use Equipment.");
         }
     }
 

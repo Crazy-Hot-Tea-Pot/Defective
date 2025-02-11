@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using static Effects;
 
 // Controller for Player this class is not the input class that is generated.
 public class PlayerController : MonoBehaviour
@@ -337,7 +338,7 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            return ListOfActiveEffects.Any(e => e.Effect.Equals(Effects.SpecialEffects.Motivation));
+            return ListOfActiveEffects.Any(e => e.SpecialEffect.Equals(Effects.SpecialEffects.Motivation));
         }
     }
     /// <summary>
@@ -347,7 +348,7 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            return ListOfActiveEffects.Any(e => e.Effect.Equals(Effects.SpecialEffects.Impervious));
+            return ListOfActiveEffects.Any(e => e.SpecialEffect.Equals(Effects.SpecialEffects.Impervious));
         }
     }
     #endregion
@@ -589,10 +590,11 @@ public class PlayerController : MonoBehaviour
     /// <param name="specialEffect"></param>
     public void AddEffect(Effects.SpecialEffects specialEffect)
     {
-        if (!ListOfActiveEffects.Any(e => e.Effect.Equals(specialEffect)))
-        {
-            ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 0));
-        }
+        //if (!ListOfActiveEffects.Any(e => e.Effect.Equals(specialEffect)))
+        //{
+        //    ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 0));
+        //}
+        AddOrUpdateEffect(specialEffect, 1);
     }
 
     /// <summary>
@@ -606,17 +608,26 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < ListOfActiveEffects.Count; i++)
         {
             var statusEffect = ListOfActiveEffects[i];
-            if (statusEffect.Effect.Equals(effect))
+
+            if ((statusEffect.BuffEffect.Equals(effect) && effect is Effects.Buff) ||
+                (statusEffect.DebuffEffect.Equals(effect) && effect is Debuff) ||
+                (statusEffect.SpecialEffect.Equals(effect) && effect is SpecialEffects))
             {
                 statusEffect.StackCount += stacks;
-                ListOfActiveEffects[i] = statusEffect; // Reassign to update the list
+                ListOfActiveEffects[i] = statusEffect;                
                 return;
             }
         }
 
-        // If the effect does not exist in the list
-        ListOfActiveEffects.Add(new Effects.StatusEffect(effect, stacks));
+        if (effect is Effects.Buff buffEffect)
+            ListOfActiveEffects.Add(new StatusEffect(buffEffect, stacks));
+        else if (effect is Debuff debuffEffect)
+            ListOfActiveEffects.Add(new StatusEffect(debuffEffect, stacks));
+        else if (effect is SpecialEffects specialEffect)
+            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks));
+
     }
+
     #endregion
 
     // Remove Effect Methods
@@ -651,7 +662,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="specialEffect"></param>
     public void RemoveEffect(Effects.SpecialEffects specialEffect)
     {
-        ListOfActiveEffects.RemoveAll(e => e.Effect.Equals(specialEffect));
+        ListOfActiveEffects.RemoveAll(e => e.SpecialEffect.Equals(specialEffect));
     }
 
     /// <summary>
@@ -666,36 +677,62 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < ListOfActiveEffects.Count; i++)
         {
             var statusEffect = ListOfActiveEffects[i];
-            if (statusEffect.Effect.Equals(effect))
+            
+            if (effect is Effects.Buff && statusEffect.BuffEffect.Equals(effect))
             {
                 if (removeAll || statusEffect.StackCount <= stacks)
                 {
+                    Debug.Log($"[PlayerController] Removing Buff: {effect}");
                     ListOfActiveEffects.RemoveAt(i);
                     return;
                 }
 
                 statusEffect.StackCount -= stacks;
-
-                // Reassign to ensure the list is updated
                 ListOfActiveEffects[i] = statusEffect;
                 return;
             }
+            
+            if (effect is Effects.Debuff && statusEffect.DebuffEffect.Equals(effect))
+            {
+                if (removeAll || statusEffect.StackCount <= stacks)
+                {
+                    Debug.Log($"[PlayerController] Removing Debuff: {effect}");
+                    ListOfActiveEffects.RemoveAt(i);
+                    return;
+                }
+
+                statusEffect.StackCount -= stacks;
+                ListOfActiveEffects[i] = statusEffect;
+                return;
+            }
+
+            if (effect is Effects.SpecialEffects && statusEffect.SpecialEffect.Equals(effect))
+            {
+                Debug.Log($"[PlayerController] Removing Special Effect: {effect}");
+                ListOfActiveEffects.RemoveAt(i);
+                return;
+            }
         }
+
+        Debug.LogWarning($"[PlayerController] Attempted to remove non-existent effect: {effect}");
     }
+
     #endregion
 
     private int GetStacks<T>(T effect) where T : Enum
     {
         foreach (var statusEffect in ListOfActiveEffects)
         {
-            if (statusEffect.Effect.Equals(effect))
-            {
+            if (effect is Effects.Buff && statusEffect.BuffEffect.Equals(effect))
                 return statusEffect.StackCount;
-            }
+            if (effect is Debuff && statusEffect.DebuffEffect.Equals(effect))
+                return statusEffect.StackCount;
+            if (effect is SpecialEffects && statusEffect.SpecialEffect.Equals(effect))
+                return statusEffect.StackCount;
         }
-
         return 0;
     }
+
     #endregion
 
     #region Scrap
@@ -912,7 +949,7 @@ public class PlayerController : MonoBehaviour
     {
         foreach (var statusEffect in ListOfActiveEffects)
         {
-            switch (statusEffect.Effect)
+            switch (statusEffect.SpecialEffect)
             {
                 case Effects.SpecialEffects.LuckyTrinket:
                     // Give player +10 scrap
@@ -923,6 +960,8 @@ public class PlayerController : MonoBehaviour
                     // Future passive effects can be added here
             }
         }
+
+       RemoveEffect(Effects.Buff.Power,0,true);
     }
 
 

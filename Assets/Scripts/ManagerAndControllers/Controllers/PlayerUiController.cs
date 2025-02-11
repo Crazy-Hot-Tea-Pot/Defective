@@ -29,6 +29,10 @@ public class PlayerUiController : MonoBehaviour
     /// Update the Player Effects Panel
     /// </summary>
     /// <param name="activeEffects"></param>
+    /// <summary>
+    /// Update the Player Effects Panel
+    /// </summary>
+    /// <param name="activeEffects"></param>
     public void UpdateEffectsPanel(List<Effects.StatusEffect> activeEffects)
     {
         // Clear the panel
@@ -36,27 +40,46 @@ public class PlayerUiController : MonoBehaviour
         {
             Destroy(effect);
         }
-
         this.activeEffects.Clear();
 
-        // Repopulate the panel
+        // Repopulate the panel with new effects
         foreach (var statusEffect in activeEffects)
         {
-            string effectName = statusEffect.Effect.ToString();
-            GameObject effectPrefab = effectPrefabs.Find(prefab => prefab.name == effectName);
+            string effectName = null;
 
-            if (effectPrefab != null)
+            // Determine which effect type is active
+            if (statusEffect.BuffEffect != Effects.Buff.None)
             {
-                GameObject effectInstance = Instantiate(effectPrefab, effectsPanel.transform);
-                effectInstance.name = effectName;
-                this.activeEffects.Add(effectInstance);
+                effectName = statusEffect.BuffEffect.ToString();
             }
-            else
+            else if (statusEffect.DebuffEffect != Effects.Debuff.None)
             {
-                Debug.LogError($"Effect prefab not found for {effectName}");
+                effectName = statusEffect.DebuffEffect.ToString();
+            }
+            else if (statusEffect.SpecialEffect != Effects.SpecialEffects.None)
+            {
+                effectName = statusEffect.SpecialEffect.ToString();
+            }
+
+            // Only proceed if a valid effect name was found
+            if (!string.IsNullOrEmpty(effectName))
+            {
+                GameObject effectPrefab = effectPrefabs.Find(prefab => prefab.name == effectName);
+
+                if (effectPrefab != null)
+                {
+                    GameObject effectInstance = Instantiate(effectPrefab, effectsPanel.transform);
+                    effectInstance.name = effectName;
+                    this.activeEffects.Add(effectInstance);
+                }
+                else
+                {
+                    Debug.LogError($"[PlayerUiController] Effect prefab not found for {effectName}");
+                }
             }
         }
     }
+
 
     /// <summary>
     /// Make it look like the Player character in the game is talking to Player.

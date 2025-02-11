@@ -70,18 +70,49 @@ public static class Effects
     /// General structure to represent a status effect.
     /// </summary>
     [System.Serializable]
-    public struct StatusEffect
+    public class StatusEffect
     {
-        // Effect(buff,Debuff or SpecialEffect)
-        public Enum Effect;
-        // Stack count for buffs/debuffs (if applicable)
-        public int StackCount;        
+        ////Effect(buff, Debuff or SpecialEffect)
+        //public Enum Effect;
+        ////Stack count for buffs/debuffs(if applicable)
+        //public int StackCount;
 
-        public StatusEffect(Enum effect, int stackCount)
-        {
-            Effect = effect;
-            StackCount = stackCount;
-        }
+        //public StatusEffect(Enum effect, int stackCount)
+        //{
+        //    Effect = effect;
+        //    StackCount = stackCount;
+        //}
+            public Buff BuffEffect;  
+            public Debuff DebuffEffect;
+            public SpecialEffects SpecialEffect;
+            public int StackCount;
+
+            // Constructor for Buffs
+            public StatusEffect(Buff buff, int stackCount)
+            {
+                BuffEffect = buff;
+                DebuffEffect = Debuff.None;
+                SpecialEffect = SpecialEffects.None;
+                StackCount = stackCount;
+            }
+
+            // Constructor for Debuffs
+            public StatusEffect(Debuff debuff, int stackCount)
+            {
+                BuffEffect = Buff.None;
+                DebuffEffect = debuff;
+                SpecialEffect = SpecialEffects.None;
+                StackCount = stackCount;
+            }
+
+            // Constructor for Special Effects
+            public StatusEffect(SpecialEffects specialEffect, int stackCount)
+            {
+                BuffEffect = Buff.None;
+                DebuffEffect = Debuff.None;
+                SpecialEffect = specialEffect;
+                StackCount = stackCount;
+            }
     }
 
     // FOR SCRIPTABLES
