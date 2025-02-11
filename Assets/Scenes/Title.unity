@@ -438,8 +438,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1edccfd35e5a3e498b14e5939a9ba6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questList: []
+  futureQuestList: []
   completeList: []
+  CurrentQuest: {fileID: 0}
   nameTemp: 
 --- !u!4 &829852518
 Transform:
@@ -2731,7 +2732,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1779277731}
         m_TargetAssemblyTypeName: TitleController, Assembly-CSharp
         m_MethodName: Credits
         m_Mode: 1
