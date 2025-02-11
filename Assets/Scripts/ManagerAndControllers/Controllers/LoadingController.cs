@@ -65,6 +65,9 @@ public class LoadingController : MonoBehaviour
         // Gradually rotate the image on the Y-axis
         Display.GetComponent<Transform>().Rotate(0f, ChipRotationSpeed * Time.deltaTime, 0f);
     }
+    /// <summary>
+    /// Generate graph for story progression.
+    /// </summary>
     private void GenerateStoryGraph()
     {
         // Clear previous graph before generating
@@ -77,101 +80,90 @@ public class LoadingController : MonoBehaviour
         Story story = StoryManager.Instance.CurrentStory;
         LevelDefinition currentLevel = StoryManager.Instance.CurrentLevel;
 
-        // Dictionary to store positions for each level to prevent overlapping
         Dictionary<LevelDefinition, Vector2> levelPositions = new Dictionary<LevelDefinition, Vector2>();
 
         bool isLinear = IsLinearPath(story.levels[0]);
 
-        // Horizontal distance between levels
         float spacingX = isLinear ? 200f : 150f;
-        // Vertical spacing for branching paths
         float spacingY = isLinear ? 0f : 60f;
 
-        // Recursive function to create nodes for branching paths
+        List<(Vector2, Vector2)> connectionPairs = new List<(Vector2, Vector2)>();
+
+        // Step 1: First Create All Nodes
         void CreateNodes(LevelDefinition level, Vector2 position, int depth)
         {
             if (levelPositions.ContainsKey(level)) return; // Prevent duplicates
 
-            // Create the node
             GameObject node = Instantiate(nodePrefab, graphContainer.transform);
             node.GetComponent<RectTransform>().anchoredPosition = position;
             nodes.Add(node);
             levelPositions[level] = position;
 
-            // Get the Image component for coloring
             Image nodeImage = node.GetComponent<Image>();
 
-            // Determine if the level is unreachable (locked)
             bool isLocked = true;
             foreach (var prevLevel in levelPositions.Keys)
             {
                 if (prevLevel.NextLevels.Contains(level))
                 {
-                    // If any previous level leads to this, it's reachable
                     isLocked = false;
                     break;
                 }
             }
 
-            // Set color based on level status
             if (level == currentLevel)
             {
-                // Highlight current level
                 nodeImage.color = currentColor;
-                // Make it pulse
                 StartCoroutine(PulseEffect(node.transform));
             }
             else if (level.isCompleted)
             {
-                // Past levels
                 nodeImage.color = completedColor;
             }
             else if (isLocked)
             {
-                // Unreachable path (player didn't take this branch)
                 nodeImage.color = lockedColor;
             }
             else
             {
-                // Future levels
                 nodeImage.color = futureColor;
             }
 
-
-            // Create connections for all branches
             for (int i = 0; i < level.NextLevels.Count; i++)
             {
                 LevelDefinition nextLevel = level.NextLevels[i];
-
-                // Calculate position for the next node (spread branches vertically)
                 Vector2 nextPosition = new Vector2(position.x + spacingX, position.y - (i * spacingY));
 
-                // Recursively create nodes for next levels
+                // Store connection pair for later
+                connectionPairs.Add((position, nextPosition));
+
                 CreateNodes(nextLevel, nextPosition, depth + 1);
-
-                // Create a connection line
-                GameObject connection = Instantiate(connectionPrefab, graphContainer.transform);
-                RectTransform rect = connection.GetComponent<RectTransform>();
-
-                // Position in the middle of the two nodes
-                Vector2 midPoint = (position + nextPosition) / 2;
-                rect.anchoredPosition = midPoint;
-
-                // Set width to match distance between nodes
-                float distance = Vector2.Distance(position, nextPosition);
-                rect.sizeDelta = new Vector2(distance, rect.sizeDelta.y);
-
-                // Rotate the line to match the angle between nodes
-                float angle = Mathf.Atan2(nextPosition.y - position.y, nextPosition.x - position.x) * Mathf.Rad2Deg;
-                rect.rotation = Quaternion.Euler(0, 0, angle);
-
             }
         }
 
-        // Start from the first level and build the branching paths
-        Vector2 startPosition = IsLinearPath(story.levels[0]) ? new Vector2(-600f, -100f) : new Vector2(-600f, 100f);
+        Vector2 startPosition = isLinear ? new Vector2(-600f, -100f) : new Vector2(-600f, 100f);
         CreateNodes(story.levels[0], startPosition, 0);
+
+        // Step 2: Now Create Connections AFTER Nodes Exist
+        foreach (var pair in connectionPairs)
+        {
+            GameObject connection = Instantiate(connectionPrefab, graphContainer.transform);
+            RectTransform rect = connection.GetComponent<RectTransform>();
+
+            Vector2 midPoint = (pair.Item1 + pair.Item2) / 2;
+            rect.anchoredPosition = midPoint;
+
+            float distance = Vector2.Distance(pair.Item1, pair.Item2);
+            rect.sizeDelta = new Vector2(distance, rect.sizeDelta.y);
+
+            float angle = Mathf.Atan2(pair.Item2.y - pair.Item1.y, pair.Item2.x - pair.Item1.x) * Mathf.Rad2Deg;
+            rect.rotation = Quaternion.Euler(0, 0, angle);
+
+            // Move lines behind nodes in the hierarchy
+            connection.transform.SetAsFirstSibling();
+        }
     }
+
 
     private bool IsLinearPath(LevelDefinition levelDefinition)
     {
