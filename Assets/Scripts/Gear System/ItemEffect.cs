@@ -56,11 +56,7 @@ public class ItemEffect : ScriptableObject
     private bool isEquipped = false;
 
     public virtual void Activate(PlayerController player, Item item, Enemy enemy = null)
-    {
-        if (player.SpendEnergy(energyCost))
-        {
-            //Play Item Effect
-            SoundManager.PlayFXSound(ItemActivate);
+    {        
 
             // Apply buffs
             foreach (Effects.TempBuffs buff in buffToApplyToPlayer)
@@ -78,14 +74,7 @@ public class ItemEffect : ScriptableObject
             if (effectToApplyToPlayer != Effects.SpecialEffects.None)
             {
                 player.AddEffect(effectToApplyToPlayer);
-            }
-        }
-        else
-        {
-            SoundManager.PlayFXSound(ItemFail);
-
-            Debug.Log("Not enough energy to use Equipment.");
-        }
+            }        
     }
 
     protected virtual void Equipped()

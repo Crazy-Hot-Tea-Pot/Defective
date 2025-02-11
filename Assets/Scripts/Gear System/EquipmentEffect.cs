@@ -30,7 +30,18 @@ public class EquipmentEffect : ItemEffect
 
     public override void Activate(PlayerController player, Item item, Enemy enemy = null)
     {
-        base.Activate(player, item, enemy);
+        if (player.SpendEnergy(energyCost))
+        {
+            //Play Item Effect
+            SoundManager.PlayFXSound(ItemActivate);
+            base.Activate(player, item, enemy);
+        }
+        else
+        {
+            SoundManager.PlayFXSound(ItemFail);
+
+            Debug.Log("Not enough energy to use Equipment.");
+        }
     }
     protected override void Equipped()
     {
