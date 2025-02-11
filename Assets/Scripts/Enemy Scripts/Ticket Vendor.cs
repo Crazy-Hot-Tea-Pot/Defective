@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 /// <summary>
@@ -35,18 +33,18 @@ public class TicketVendor : Enemy
 
         base.PerformIntent();
     }
-    protected override Intent GetNextIntent()
+    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        //decide next intent
         intentRandom = Random.Range(1, 11);
 
         if (intentRandom <= 3)
-            return new Intent("Halt", Color.red, 9, "Deals damage and applies Worn/Drained");
+            return ("Halt", IntentType.Attack, 9);
         else if (intentRandom <= 7)
-            return new Intent("Confiscate", Color.red, 7, "Disables 2 chips");
+            return ("Confiscate", IntentType.Debuff, 7);
         else
-            return new Intent("Redirect", Color.red, 7, "Disables an ability");
+            return ("Redirect", IntentType.Debuff, 7);
     }
+
     private void Redirect()
     {
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(7);

@@ -302,7 +302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &270392509558366676
 RectTransform:
   m_ObjectHideFlags: 0
@@ -318,9 +318,9 @@ RectTransform:
   - {fileID: 4320646130432336248}
   m_Father: {fileID: 725513441622281150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1100.9999, y: -111.09}
   m_SizeDelta: {x: 600, y: 222.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8033090216312333285
@@ -531,8 +531,8 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -737,7 +737,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 7
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -756,15 +756,15 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 51bf5f0b05698594d8f52f65ede61a81, type: 2}
   m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 11400000, guid: e04be1490efa7bb44b4f9860227a665b, type: 2}
+  m_StyleSheet: {fileID: 11400000, guid: f952c082cb03451daed3ee968ac6c63e, type: 2}
   m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1116,6 +1116,11 @@ MonoBehaviour:
   - {fileID: 8724220798877620809, guid: cede0f028bad1a148baa1cb79d5559b5, type: 3}
   - {fileID: 7839586207813239809, guid: aea73f56854f5874c8f489a05484267b, type: 3}
   - {fileID: 32853026164306056, guid: ff016982a5353d04bacce9a244d7f0fa, type: 3}
+  - {fileID: 388897534641274333, guid: f2c78a6393a76204680e00caa066441a, type: 3}
+  - {fileID: 9129874559953162845, guid: fa951bb273e083846b115d07a62012dc, type: 3}
+  - {fileID: 8398288055641616892, guid: be434cbf2732f6241913387621db5ba3, type: 3}
+  - {fileID: 6419293263820415179, guid: f2ce8619b89cd8d4cb4db6f184fb3a2a, type: 3}
+  - {fileID: 3198590763560356794, guid: 31b3fd2c977ab8f4e952f9c8a448da11, type: 3}
   activeEffects: []
   IntentContainer: {fileID: 5139836085644037944}
   IntentText: {fileID: 6649264294314104044}

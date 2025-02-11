@@ -5,24 +5,6 @@ using UnityEngine.AI;
 using TMPro;
 using System.Linq;
 using System;
-/// <summary>
-/// For UI display of Intent
-/// </summary>
-public class Intent
-{
-    public string Name { get; set; }
-    public Color IntentColor { get; set; }
-    public int Damage { get; set; }
-    public string AdditionalInfo { get; set; }
-
-    public Intent(string name, Color intentColor, int damage = 0, string additionalInfo = "")
-    {
-        Name = name;
-        IntentColor = intentColor;
-        Damage = damage;
-        AdditionalInfo = additionalInfo;
-    }
-}
 public class Enemy : MonoBehaviour
 {   
     public enum EnemyDifficulty
@@ -32,6 +14,17 @@ public class Enemy : MonoBehaviour
         Hard,
         Boss
     }
+
+    public enum IntentType
+    {
+        None,
+        Attack,
+        Shield,
+        Buff,
+        Debuff,
+        Unique
+    }
+
 
     public GameObject enemyTarget;
     /// <summary>
@@ -154,7 +147,7 @@ public class Enemy : MonoBehaviour
             currentHp = value;
 
             //Update UI for enemy HealthBar
-            thisEnemyUI.UpdateHealth(currentHp,maxHP);
+            thisEnemyUI.UpdateHealth(currentHp);
 
             if (currentHp <= 0)
             {
@@ -330,15 +323,6 @@ public class Enemy : MonoBehaviour
         Initialize();
     }
 
-    public virtual void FixedUpdate()
-    {
-        
-    }
-    public virtual void Update()
-    {
-
-    }
-
     /// <summary>
     /// Initialize enemy
     /// </summary>
@@ -494,7 +478,7 @@ public class Enemy : MonoBehaviour
     public virtual void UpdateIntentUI()
     {
         var nextIntent = GetNextIntent();
-        thisEnemyUI.UpdateIntent(nextIntent);
+        thisEnemyUI.DisplayIntent(nextIntent.intentText, nextIntent.intentType, nextIntent.value);
     }
 
     /// <summary>
@@ -533,11 +517,11 @@ public class Enemy : MonoBehaviour
     }
 
 
-    protected virtual Intent GetNextIntent()
+    protected virtual (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        // Default implementation, overridden in derived classes
-        return new Intent("Unknown", Color.gray);
+        return ("Unknown", IntentType.None, 0);
     }
+
 
     #endregion
 

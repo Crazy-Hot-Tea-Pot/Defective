@@ -27,18 +27,18 @@ public class GarbageBot : Enemy
 
         base.PerformIntent();
     }
-    protected override Intent GetNextIntent()
+    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        //int tempRange = Random.Range(1, 11);
+        int tempRange = Random.Range(1, 11);
 
-        //if (tempRange <= 3)
-        //    return new Intent("Compact", Color.red, 15, "Deals high damage");
-        //else if (tempRange <= 6)
-        //    return new Intent("Shred", Color.red, 7, "Deals damage and gains shield");
-        //else
-        //    return new Intent("Pile On", Color.red, 10, "Deals damage and applies Jam");
-        return new Intent("Taking out the trash.", Color.red);
+        if (tempRange <= 3)
+            return ("Compact", IntentType.Attack, 15);
+        else if (tempRange <= 6)
+            return ("Shred", IntentType.Attack, 7);
+        else
+            return ("Pile On", IntentType.Attack, 10);
     }
+
     /// <summary>
     /// Deals 15 damage.
     /// Has 30% chance

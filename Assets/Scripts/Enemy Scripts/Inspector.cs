@@ -15,8 +15,5 @@ public class Inspector : Enemy
     {
 
     }
-    protected override Intent GetNextIntent()
-    {
-        return null;
-    }
+
 }

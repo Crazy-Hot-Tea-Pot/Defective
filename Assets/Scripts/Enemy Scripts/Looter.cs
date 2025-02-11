@@ -83,22 +83,18 @@ public class Looter : Enemy
         base.CombatStart();               
     }
 
-    protected override Intent GetNextIntent()
+    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
         if (swipeCount < 3)
-        {
-            return new Intent("Swipe", Color.red, 6, "Steals 5 Scrap.");
-        }
+            return ("Swipe", IntentType.Attack, 6);
         else if (swipeCount == 3 && !IsShrouded)
-        {
-            return new Intent("Shroud", Color.blue, 0, "Gains 10 Shield.");
-        }
+            return ("Shroud", IntentType.Shield, 10);
         else if (IsShrouded)
-        {
-            return new Intent("Escape", Color.yellow, 0, "Exits the fight with stolen Scrap.");
-        }
-        return new Intent("Unknown", Color.gray);
+            return ("Escape", IntentType.Unique, 0);
+
+        return ("Unknown", IntentType.None, 0);
     }
+
     /// <summary>
     ///  After the 3rd Swipe, perform Shroud
     /// </summary>

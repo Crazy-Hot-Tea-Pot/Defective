@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Enemy;
 
 public class EnemyUI : MonoBehaviour
 {
@@ -91,15 +92,14 @@ public class EnemyUI : MonoBehaviour
     /// </summary>
     /// <param name="currentHp"></param>
     /// <param name="maxHp"></param>
-    public void UpdateHealth(int currentHp, int maxHp)
+    public void UpdateHealth(int currentHp)
     {
-        float targetHealthPercentage = (float)currentHp / maxHp;
 
         // Stop any currently running health update coroutine
-        StopCoroutine(UpdateHealthOverTime(targetHealthPercentage));
+        StopCoroutine(UpdateHealthOverTime(currentHp));
 
         // Start the coroutine to smoothly update the health bar
-        StartCoroutine(UpdateHealthOverTime(targetHealthPercentage));
+        StartCoroutine(UpdateHealthOverTime(currentHp));
     }
 
     /// <summary>
@@ -164,14 +164,45 @@ public class EnemyUI : MonoBehaviour
     /// Update intent box.
     /// </summary>
     /// <param name="intent"></param>
-    public void UpdateIntent(Intent intent)
+    public void DisplayIntent(string intentText,Enemy.IntentType intentType,int value = 0)
     {
         IntentContainer.SetActive(true);
 
-
         var textComponent = IntentText.GetComponent<TextMeshProUGUI>();
-        textComponent.SetText($"{intent.Name} - {intent.Damage} Damage\n{intent.AdditionalInfo}");
-        textComponent.color = intent.IntentColor;
+
+        // Define colors based on IntentType
+        string colorTag = intentType switch
+        {
+            // Red for damage
+            IntentType.Attack => "<color=#FF0000>",
+            // Blue for shield
+            IntentType.Shield => "<color=#0000FF>",
+            // Green for buffs
+            IntentType.Buff => "<color=#00FF00>",
+            // Yellow for debuffs
+            IntentType.Debuff => "<color=#FFFF00>",
+            // Orange for unique actions
+            IntentType.Unique => "<color=#FFA500>",
+            // Default white
+            _ => "<color=#FFFFFF>"
+        };
+
+        // Define corresponding icons based on IntentType
+        string iconTag = intentType switch
+        {
+            IntentType.Attack => "<sprite name=Attacking>",
+            IntentType.Shield => "<sprite name=Shielding>",
+            IntentType.Buff => "<sprite name=Buff>",
+            IntentType.Debuff => "<sprite name=Debuff>",
+            IntentType.Unique => "<sprite name=Unique1> " + intentText + " <sprite name='Unique2'>",
+            _ => ""
+        };
+
+        // If there is a numeric value, format appropriately
+        string formattedText = value > 0 ? $"{colorTag}{value}</color> {iconTag}" : $"{iconTag}";
+
+        // Set the text
+        textComponent.SetText(formattedText);
     }
 
     /// <summary>
@@ -187,29 +218,28 @@ public class EnemyUI : MonoBehaviour
         }
     }
 
-    private IEnumerator UpdateHealthOverTime(float targetFillAmount)
-    {        
-
+    private IEnumerator UpdateHealthOverTime(int currentHp)
+    {
         float initialFillAmount = healthBar.fillAmount;
-        float elapsedTime = 0f;       
+        float elapsedTime = 0f;
 
         while (elapsedTime < UiDuration)
         {
             elapsedTime += Time.deltaTime;
-            float newFillAmount = Mathf.Lerp(initialFillAmount, targetFillAmount, elapsedTime / UiDuration);
+            float newFillAmount = Mathf.Lerp(initialFillAmount, (float)currentHp / healthBar.fillAmount, elapsedTime / UiDuration);
             healthBar.fillAmount = newFillAmount;
 
-            // Update health text as percentage
-            int currentHealthPercentage = Mathf.RoundToInt(newFillAmount * 100);
-            healthText.SetText($"{currentHealthPercentage}%");
+            // Display only the current HP value
+            healthText.SetText($"{Mathf.RoundToInt(Mathf.Lerp(initialFillAmount * healthBar.fillAmount, currentHp, elapsedTime / UiDuration))}");
 
             yield return null;
         }
 
-        // Ensure it snaps to the final target amount
-        healthBar.fillAmount = targetFillAmount;
-        healthText.SetText($"{Mathf.RoundToInt(targetFillAmount * 100)}%");
+        // Ensure final value snaps correctly
+        healthBar.fillAmount = (float)currentHp / healthBar.fillAmount;
+        healthText.SetText($"{currentHp}");
     }
+
 
     private IEnumerator UpdateShieldOverTime(float targetFillAmount,float maxShield)
     {

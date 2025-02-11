@@ -1,12 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GangLeader : Enemy
 {
-    public GameObject Looter1;
-    public GameObject Looter2;
+    public GameObject Looter1
+    {
+        get
+        {
+            return looter1;
+        }
+        private set
+        {
+            looter1 = value;
+        }
+    }
+    public GameObject Looter2
+    {
+        get
+        {
+            return looter2;
+        }
+        private set
+        {
+            looter2 = value;
+        }
+    }
+
+    private GameObject looter1;
+    private GameObject looter2;
 
     // Start is called before the first frame update
     public override void Start()
@@ -81,4 +101,23 @@ public class GangLeader : Enemy
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.WornDown, 1);
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.Drained, 1);
     }
+
+    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
+    {
+        if (Looter1.activeInHierarchy || Looter2.activeInHierarchy)
+        {
+            if (Random.Range(1, 11) < 5)
+                return ("Threaten", IntentType.Buff, 2);
+            else
+                return ("Intimidate", IntentType.Debuff, 1);
+        }
+        else
+        {
+            if (Random.Range(1, 11) < 4)
+                return ("Disorient", IntentType.Attack, 6);
+            else
+                return ("Cower", IntentType.Shield, 15);
+        }
+    }
+
 }

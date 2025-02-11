@@ -22,9 +22,26 @@ public class MaintenanceBot : Enemy
         if(EnemyName==null)
             EnemyName = "Maintenance Bot";
 
+        DroppedChips.Clear();
 
-        //Add Common Chips Todrop
-        DroppedChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Common);
+        // Get list of all common chips
+        var commonChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Common);
+
+        // Ensure at least 2 chips exist before selecting
+        if (commonChips.Count >= 2)
+        {
+            int firstIndex = Random.Range(0, commonChips.Count);
+            int secondIndex;
+
+            // Make sure second chip is different
+            do
+            {
+                secondIndex = Random.Range(0, commonChips.Count);
+            } while (secondIndex == firstIndex);
+
+            DroppedChips.Add(commonChips[firstIndex]);
+            DroppedChips.Add(commonChips[secondIndex]);
+        }
 
         base.Start();
     }
@@ -50,21 +67,16 @@ public class MaintenanceBot : Enemy
 
         base.PerformIntent();
     }
-    protected override Intent GetNextIntent()
+    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
         if (CurrentHP <= maxHP / 2 && !RepairUsed)
-        {
-            return new Intent("Repair", Color.green, 0, "Heals 30% of max HP");
-        }
+            return ("Repair", IntentType.Buff, 0);
         else if (Random.Range(1, 11) <= 4)
-        {
-            return new Intent("Galvanize", Color.yellow, 0, "Gains 4 Galvanize");
-        }
+            return ("Galvanize", IntentType.Buff, 4);
         else
-        {
-            return new Intent("Disassemble", Color.red, 9, "Deals damage and applies Worn");
-        }
+            return ("Disassemble", IntentType.Attack, 9);
     }
+
     /// <summary>
     /// Deals 9 Damage
     /// and

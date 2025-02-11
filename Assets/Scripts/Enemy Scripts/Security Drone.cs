@@ -93,21 +93,16 @@ public class SecurityDrone : Enemy
        base.PerformIntent();
 
     }
-    protected override Intent GetNextIntent()
+    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
         if (IntentsPerformed > 5 && NumberOfAlertDrones < 3)
-        {
-            return new Intent("Alert", Color.blue, 0, "Summons another Security Drone");
-        }
+            return ("Alert", IntentType.Unique, 0);
         else if (Random.Range(1, 11) <= 3)
-        {
-            return new Intent("Neutralize", Color.red, 7, "Deals damage and applies Drained");
-        }
+            return ("Neutralize", IntentType.Attack, 7);
         else
-        {
-            return new Intent("Ram", Color.red, 12, "Deals heavy damage");
-        }
+            return ("Ram", IntentType.Attack, 12);
     }
+
     /// <summary>
     /// Deals 12 Damage.
     /// Has a 70% chance of being called.
