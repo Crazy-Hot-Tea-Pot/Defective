@@ -825,7 +825,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void SmoothRotateTowardsTarget()
     {
-        if (GameObject.Find("CombatController").GetComponent<CombatController>().Target != null)
+        if (CombatController.Instance.Target != null)
         {
             Vector3 direction = CombatController.Instance.Target.transform.position - transform.position;
             direction.y = 0; // Keep rotation on the horizontal plane

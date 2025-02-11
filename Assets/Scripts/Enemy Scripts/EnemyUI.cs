@@ -92,14 +92,14 @@ public class EnemyUI : MonoBehaviour
     /// </summary>
     /// <param name="currentHp"></param>
     /// <param name="maxHp"></param>
-    public void UpdateHealth(int currentHp)
+    public void UpdateHealth(int currentHp, int maxHp)
     {
 
         // Stop any currently running health update coroutine
-        StopCoroutine(UpdateHealthOverTime(currentHp));
+        StopAllCoroutines();
 
         // Start the coroutine to smoothly update the health bar
-        StartCoroutine(UpdateHealthOverTime(currentHp));
+        StartCoroutine(UpdateHealthOverTime(currentHp,maxHp));
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public class EnemyUI : MonoBehaviour
 
             //ShieldBar.fillAmount = shieldPercentage;
 
-            StopCoroutine(UpdateShieldOverTime(shieldPercentage, maxShield));
+            StopAllCoroutines();
 
             // Start the coroutine to smoothly update the shield bar
             StartCoroutine(UpdateShieldOverTime(shieldPercentage, maxShield));
@@ -218,27 +218,37 @@ public class EnemyUI : MonoBehaviour
         }
     }
 
-    private IEnumerator UpdateHealthOverTime(int currentHp)
+    private IEnumerator UpdateHealthOverTime(int currentHp, int maxHp)
     {
         float initialFillAmount = healthBar.fillAmount;
+        float targetFillAmount = (float)currentHp / maxHp;
         float elapsedTime = 0f;
+
+        int initialHP = Mathf.RoundToInt(initialFillAmount * maxHp); // Correct initial HP
+        int displayedHP = initialHP;  // Track displayed HP separately
 
         while (elapsedTime < UiDuration)
         {
             elapsedTime += Time.deltaTime;
-            float newFillAmount = Mathf.Lerp(initialFillAmount, (float)currentHp / healthBar.fillAmount, elapsedTime / UiDuration);
+            float progress = elapsedTime / UiDuration;
+
+            // Smooth transition for health bar
+            float newFillAmount = Mathf.Lerp(initialFillAmount, targetFillAmount, progress);
             healthBar.fillAmount = newFillAmount;
 
-            // Display only the current HP value
-            healthText.SetText($"{Mathf.RoundToInt(Mathf.Lerp(initialFillAmount * healthBar.fillAmount, currentHp, elapsedTime / UiDuration))}");
+            // Smooth transition for health text
+            displayedHP = Mathf.RoundToInt(Mathf.Lerp(initialHP, currentHp, progress));
+            healthText.SetText($"{displayedHP}");
 
             yield return null;
         }
 
-        // Ensure final value snaps correctly
-        healthBar.fillAmount = (float)currentHp / healthBar.fillAmount;
+        // Snap to exact final value to prevent small inconsistencies
+        healthBar.fillAmount = targetFillAmount;
         healthText.SetText($"{currentHp}");
     }
+
+
 
 
     private IEnumerator UpdateShieldOverTime(float targetFillAmount,float maxShield)

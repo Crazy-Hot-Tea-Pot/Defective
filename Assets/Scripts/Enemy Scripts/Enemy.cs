@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
             currentHp = value;
 
             //Update UI for enemy HealthBar
-            thisEnemyUI.UpdateHealth(currentHp);
+            thisEnemyUI.UpdateHealth(currentHp,maxHP);
 
             if (currentHp <= 0)
             {
