@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 0
   chipName: Punch
-  description: Punch dealing 5 damage.
-  chipImage: {fileID: 21300000, guid: 10f72e185d30cd9478704e46af88adc2, type: 3}
+  description: Deal 5 Damage.
+  chipImage: {fileID: 21300000, guid: e0ff3cd5256d34e41a92a227bdb6444f, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: Use this to punch stuff. The ultimate solution to conflict resolution!

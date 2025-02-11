@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 2
   chipName: Imprevious
-  description: You take no damage this turn.
-  chipImage: {fileID: 21300000, guid: 0117bf35552d50945bba2890db39e28e, type: 3}
+  description: You take no Damage this turn.
+  chipImage: {fileID: 21300000, guid: 801da49807357a048b8798ff668f0fc3, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: You can't touch this! Take no damage for a turn when this is played.

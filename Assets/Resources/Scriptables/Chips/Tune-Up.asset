@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 1
   chipName: Tune-Up
   description: Removes the effects of "Jammed"
-  chipImage: {fileID: 21300000, guid: 84d5b77c4e637c64b84524861cd67880, type: 3}
+  chipImage: {fileID: 21300000, guid: 3bd2b546cc234514f8024190a121ff85, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: A great defensive option when in need to remove a debuff.

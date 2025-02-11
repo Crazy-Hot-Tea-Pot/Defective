@@ -15,12 +15,13 @@ MonoBehaviour:
   chipRarity: 0
   chipName: Guard
   description: Gain 5 Shield
-  chipImage: {fileID: 21300000, guid: 0b71cd9d54f4a3049be441227abad93c, type: 3}
+  chipImage: {fileID: 21300000, guid: 364cf616f30fc1243ae3099b81e52adf, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: Play this to increase your shielding.
   ChipRareityWeight: 0.15
   hitAllTargets: 0
+  chipType: 2
   shieldAmount: 5
   upgradedShieldAmountToApply: 0
   effectToApply: 0
