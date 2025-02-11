@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 1
   chipName: Static Shock
   description: Deal 12 Damage, Apply 2 "Worn Down"
-  chipImage: {fileID: 21300000, guid: b9e78177b3d69cc4690a6299a7f6d4cf, type: 3}
+  chipImage: {fileID: 21300000, guid: 705b40beea16e7e44a2cd1857b50db09, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Deal a massive amount of damage, but at the cost of reducing your Shield!

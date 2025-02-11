@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 1
   chipName: Well Structured
   description: Gain 3 "Galvanize"
-  chipImage: {fileID: 21300000, guid: cc1644eaaa6eb754d886115c066a5679, type: 3}
+  chipImage: {fileID: 21300000, guid: b9b310c8f3e185549b0dbeedcb09747b, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Add more power to your shields to protect against powerful attacks!

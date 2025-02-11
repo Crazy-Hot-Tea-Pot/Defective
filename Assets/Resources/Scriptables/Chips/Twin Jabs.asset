@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 1
   chipName: Twin Jabs
   description: Deal 4 Damage twice.
-  chipImage: {fileID: 21300000, guid: 034a522e2da868c42a2c4e16257f7027, type: 3}
+  chipImage: {fileID: 21300000, guid: cc80f92719f64374489e9c797285e716, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Try pairing this with Power buffs for some serious damage!
