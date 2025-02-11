@@ -51,7 +51,7 @@ public class QuestUIController : MonoBehaviour
         OpenSettingsbtn.onClick.RemoveAllListeners();
         //Find the method we need in settingsuicontroller and call it
         OpenSettingsbtn.onClick.AddListener(UiManager.Instance.ToggleSettings);
-        MiniLogContainer = QuestUIContanier.transform.Find("MiniLog").gameObject;
+        MiniLogContainer = QuestUIContanier.transform.Find("Mask").gameObject.transform.Find("MiniLog").gameObject;
         //Disable MiniLogContainer
         MiniLogContainer.SetActive(false);
         FullLogContainer = QuestUIContanier.transform.Find("FullLog").gameObject;
