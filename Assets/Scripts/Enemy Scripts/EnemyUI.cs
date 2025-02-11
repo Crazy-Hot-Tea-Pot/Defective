@@ -194,7 +194,7 @@ public class EnemyUI : MonoBehaviour
             IntentType.Shield => "<sprite name=Shielding>",
             IntentType.Buff => "<sprite name=Buff>",
             IntentType.Debuff => "<sprite name=Debuff>",
-            IntentType.Unique => "<sprite name=Unique1> " + intentText + " <sprite name='Unique2'>",
+            IntentType.Unique => "<sprite name=Unique1> " + intentText + " <sprite name=Unique2>",
             _ => ""
         };
 
