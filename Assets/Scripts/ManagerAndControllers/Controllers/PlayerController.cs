@@ -804,8 +804,8 @@ public class PlayerController : MonoBehaviour
         // Make the ripple effect face the Player
         ClickIndicator.transform.LookAt(this.transform.position);
 
-        // Destroy the ripple effect after 2 seconds
-        Destroy(ClickIndicator, 2f);
+        // Destroy the ripple effect after 1 seconds
+        Destroy(ClickIndicator, 1f);
 
         // Move the Player to the clicked position
         agent.SetDestination(clickPoint);
