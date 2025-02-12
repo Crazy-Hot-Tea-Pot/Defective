@@ -122,6 +122,8 @@ public class PlayerController : MonoBehaviour
                 energy = 0;
 
             UiManager.Instance.UpdateEnergy(Energy, MaxEnergy);
+
+            UiManager.Instance.UpdateGearButtonsStates(energy);
         }
     }
     private readonly int maxEnergy=50;

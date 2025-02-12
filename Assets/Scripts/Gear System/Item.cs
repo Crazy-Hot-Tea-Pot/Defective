@@ -90,6 +90,19 @@ public class Item : ScriptableObject
         ItemTeir=Teir.Base;
     }
 
+    /// <summary>
+    /// Use item out of combat
+    /// </summary>
+    /// <param name="player"></param>
+    public void ItemActivate(PlayerController player)
+    {
+        Debug.LogError("This is for quest use.");
+    }
+    /// <summary>
+    /// Item use in combat
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="targetEnemy"></param>
     public void ItemActivate(PlayerController player,Enemy targetEnemy = null)
     {
         foreach (ItemEffect effect in itemEffects)

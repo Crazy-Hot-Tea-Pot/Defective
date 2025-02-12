@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class UiManager : MonoBehaviour
 {
@@ -115,6 +116,18 @@ public class UiManager : MonoBehaviour
     public void ChangeStateOfGear(bool State)
     {
         GetCurrentController<RoamingAndCombatUiController>().MakeGearInteractable(State);
+    }
+    /// <summary>
+    /// Update gear buttons
+    /// </summary>
+    /// <param name="energy"></param>
+    public void UpdateGearButtonsStates(int energy)
+    {
+        var controller = GetCurrentController<RoamingAndCombatUiController>();
+        if (controller != null)
+        {
+            controller.UpdateGearButtonStates(energy);
+        }
     }
     #endregion
     #region InventoryUI
