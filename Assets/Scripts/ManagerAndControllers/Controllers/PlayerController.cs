@@ -167,19 +167,17 @@ public class PlayerController : MonoBehaviour
     #region Effects
 
     [SerializeField]
-    private List<Effects.StatusEffect> listOfActiveEffects = new List<Effects.StatusEffect>();
+    private List<StatusEffect> listOfActiveEffects = new List<StatusEffect>();
 
-    public List<Effects.StatusEffect> ListOfActiveEffects
+    public List<StatusEffect> ListOfActiveEffects
     {
         get
         {
             return listOfActiveEffects;
         }
-        set
+        private set
         {
-            listOfActiveEffects = value;
-            
-            uiController.UpdateEffectsPanel(listOfActiveEffects);
+            listOfActiveEffects = value;                       
         }
     }   
 
@@ -626,6 +624,8 @@ public class PlayerController : MonoBehaviour
         else if (effect is SpecialEffects specialEffect)
             ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks));
 
+        uiController.UpdateEffectsPanel(ListOfActiveEffects);
+
     }
 
     #endregion
@@ -714,7 +714,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"[PlayerController] Attempted to remove non-existent effect: {effect}");
+        uiController.UpdateEffectsPanel(listOfActiveEffects);
     }
 
     #endregion
