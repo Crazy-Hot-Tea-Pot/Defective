@@ -16,6 +16,8 @@ public class SecurityDrone : Enemy
     [SerializeField]
     private bool isAlertDrone;
 
+    private int nextIntentRoll;
+
     /// <summary>
     /// Amount of Intents done.
     /// </summary>
@@ -75,6 +77,18 @@ public class SecurityDrone : Enemy
 
         base.Start();
     }
+    public override void CombatStart()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.CombatStart();
+    }
+
+    public override void EndTurn()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+
+        base.EndTurn();
+    }
     protected override void PerformIntent()
     {
         IntentsPerformed++;
@@ -83,7 +97,7 @@ public class SecurityDrone : Enemy
             Alert();
         else
         {            
-            if(Random.Range(1,11) <= 3)
+            if(nextIntentRoll <= 3)
                 Neutralize();
             else
                 Ram();
@@ -96,11 +110,17 @@ public class SecurityDrone : Enemy
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
         if (IntentsPerformed > 5 && NumberOfAlertDrones < 3)
+        {
             return ("Alert", IntentType.Unique, 0);
-        else if (Random.Range(1, 11) <= 3)
+        }
+        else if (nextIntentRoll <= 3)
+        {
             return ("Neutralize", IntentType.Attack, 7);
+        }
         else
+        {
             return ("Ram", IntentType.Attack, 12);
+        }
     }
 
     /// <summary>

@@ -44,8 +44,8 @@ public class RoamingAndCombatUiController : UiController
     // Start is called before the first frame update
     void Start()
     {
-        EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>().EndTurn(GameObject.FindGameObjectWithTag("Player")));
         EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().EndTurn());
+        EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>().EndTurn(GameObject.FindGameObjectWithTag("Player")));        
         
         EndTurn.SetActive(false);
         PlayerHandContainer.SetActive(false);

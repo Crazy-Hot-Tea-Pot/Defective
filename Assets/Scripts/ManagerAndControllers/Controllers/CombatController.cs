@@ -133,11 +133,6 @@ public class CombatController : MonoBehaviour
             playerInputActions = new PlayerInputActions();
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
     /// <summary>
     /// Starts combat by initializing combatants and setting up the turn order.
     /// </summary>
@@ -340,6 +335,8 @@ public class CombatController : MonoBehaviour
         {
             GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
         }
+        //Add loot to player
+        Player.GetComponent<PlayerController>().GainScrap(ScrapLootForCurrentCombat);
 
         //Delete CombatZone
         Destroy(CombatZone);

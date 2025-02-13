@@ -55,8 +55,11 @@ public class LoadingController : MonoBehaviour
 
         Display.SetActive(true);
 
-        //Generate Story Graph
-        GenerateStoryGraph();
+        if (GameManager.Instance.TargetScene != Levels.Credits)
+        {
+            //Generate Story Graph
+            GenerateStoryGraph();
+        }
     }
 
     // Update is called once per frame

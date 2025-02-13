@@ -5,6 +5,8 @@ public class MaintenanceBot : Enemy
     [Header("Custom for Enemy type")]
     private bool repairUsed;
 
+    private int nextIntentRoll;
+
     public bool RepairUsed
     {
         get
@@ -45,6 +47,11 @@ public class MaintenanceBot : Enemy
 
         base.Start();
     }
+    public override void EndTurn()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.EndTurn();
+    }
     protected override void PerformIntent()
     {
 
@@ -55,7 +62,7 @@ public class MaintenanceBot : Enemy
         }
         else
         {           
-            if (Random.Range(1, 11) <= 4)
+            if (nextIntentRoll <= 4)
             {
                 Galvanize();                
             }
@@ -71,7 +78,7 @@ public class MaintenanceBot : Enemy
     {
         if (CurrentHP <= maxHP / 2 && !RepairUsed)
             return ("Repair", IntentType.Buff, 0);
-        else if (Random.Range(1, 11) <= 4)
+        else if (nextIntentRoll <= 4)
             return ("Galvanize", IntentType.Buff, 4);
         else
             return ("Disassemble", IntentType.Attack, 9);

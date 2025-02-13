@@ -996,7 +996,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+    //DEBUG METHODS
     [ContextMenu("Test Speak")]
     private void TestSpeak()
     {
@@ -1011,5 +1011,15 @@ public class PlayerController : MonoBehaviour
     private void TestPlayerdeath()
     {
         DamagePlayerBy(1000);
+    }
+    [ContextMenu("Spend 5 energy")]
+    private void TestEnergyUse()
+    {
+        SpendEnergy(5);
+    }
+    [ContextMenu("Add 5 energy")]
+    private void TestEnergyGain()
+    {
+        RecoverEnergy(5);
     }
 }

@@ -9,7 +9,8 @@ using UnityEngine;
 /// </summary>
 public class TicketVendor : Enemy
 {
-    private int intentRandom;
+    private int nextIntentRoll;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -21,25 +22,43 @@ public class TicketVendor : Enemy
 
         base.Start();
     }
+    public override void CombatStart()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.CombatStart();
+    }
+
+    public override void EndTurn()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.EndTurn();
+    }
     protected override void PerformIntent()
     {
 
-        if (intentRandom <= 3)
-            Halt();
-        else if (intentRandom <= 7)
-            Confiscate();
-        else
-            Redirect();
+        switch (NextIntent.intentText)
+        {
+            case "Halt":
+                Halt();
+                break;
+            case "Confiscate":
+                Confiscate();
+                break;
+            case "Redirect":
+                Redirect();
+                break;
+            default:
+                Debug.LogWarning("Shouldn't hit here!");
+                break;
+        }
 
         base.PerformIntent();
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        intentRandom = Random.Range(1, 11);
-
-        if (intentRandom <= 3)
+        if (nextIntentRoll <= 3)
             return ("Halt", IntentType.Attack, 9);
-        else if (intentRandom <= 7)
+        else if (nextIntentRoll <= 7)
             return ("Confiscate", IntentType.Debuff, 7);
         else
             return ("Redirect", IntentType.Debuff, 7);
