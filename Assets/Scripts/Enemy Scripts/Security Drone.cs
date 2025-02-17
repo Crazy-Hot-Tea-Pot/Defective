@@ -1,11 +1,11 @@
 
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SecurityDrone : Enemy
 {
     [Header("Custom for Enemy type")]
+
+    public GameObject AdditionalDrone;
 
     [SerializeField]
     private int intentsPerformed;
@@ -90,8 +90,7 @@ public class SecurityDrone : Enemy
         base.EndTurn();
     }
     protected override void PerformIntent()
-    {
-        IntentsPerformed++;
+    {        
 
         if(IntentsPerformed > 5 && NumberOfAlertDrones < 3)
             Alert();
@@ -100,11 +99,13 @@ public class SecurityDrone : Enemy
             if(nextIntentRoll <= 3)
                 Neutralize();
             else
-                Ram();
+                Ram();            
         }
 
-       //THIS IS NEEDED DON'T REMOVE. don't want that again.
-       base.PerformIntent();
+        IntentsPerformed++;
+
+        //THIS IS NEEDED DON'T REMOVE. don't want that again.
+        base.PerformIntent();
 
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
@@ -167,7 +168,7 @@ public class SecurityDrone : Enemy
             Vector3 areaCenter = areaCollider.bounds.center;
             Vector3 areaSize = areaCollider.bounds.size;
             Vector3 spawnPosition;
-            int maxAttempts = 10;
+            int maxAttempts = 20;
             int attempt = 0;
             bool foundValidPosition = false;
 
@@ -178,11 +179,25 @@ public class SecurityDrone : Enemy
                 float z = Random.Range(areaCenter.z - areaSize.z / 2, areaCenter.z + areaSize.z / 2);
                 spawnPosition = new Vector3(x, areaCenter.y, z);
 
+                // Define a LayerMask that only includes Player (6) and Enemy (8)
+                LayerMask collisionMask = (1 << 6) | (1 << 8);
+
                 // Check if the position is clear
-                if (Physics.OverlapSphere(spawnPosition, 1f).Length == 0)
+                if (Physics.OverlapSphere(spawnPosition, 0.5f, collisionMask).Length == 0)
                 {
                     foundValidPosition = true;
                 }
+
+                //Leaving this here for in the future if this intent give problems again.
+                //Collider[] hitColliders = Physics.OverlapSphere(spawnPosition, 0.5f);
+
+                //if (hitColliders.Length > 0)
+                //{
+                //    foreach (var col in hitColliders)
+                //    {
+                //        Debug.Log($"Overlap detected with: {col.gameObject.name} on Layer: {LayerMask.LayerToName(col.gameObject.layer)} at {spawnPosition}");
+                //    }
+                //}
 
                 attempt++;
 
@@ -190,7 +205,7 @@ public class SecurityDrone : Enemy
 
             if (foundValidPosition)
             {
-                GameObject additionalDrone = Instantiate(this.gameObject, spawnPosition, Quaternion.identity);
+                GameObject additionalDrone = Instantiate(AdditionalDrone, spawnPosition, Quaternion.identity);
                 additionalDrone.GetComponent<SecurityDrone>().IAmAlertDrone();
 
                 CombatController.AddEnemyToCombat(additionalDrone);
@@ -218,4 +233,15 @@ public class SecurityDrone : Enemy
 
         base.Initialize();
     }
+
+    [ContextMenu("Force Next Intent Alert")]
+    private void ForceAlertIntent()
+    {
+        // Ensures Alert condition is met
+        IntentsPerformed = 6;
+        // Any value greater than 3 to avoid Neutralize
+        nextIntentRoll = 10;
+        Debug.Log("Next Intent is set to ALERT.");
+    }
+
 }
