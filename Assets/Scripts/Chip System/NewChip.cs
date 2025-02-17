@@ -171,6 +171,11 @@ public class NewChip : ScriptableObject
         
     }
 
+    public virtual void OnChipPlayed(PlayerController player, PuzzleRange Target)
+    {
+
+    }
+
     /// <summary>
     /// Any action chip needs to do at end of Turn.
     /// </summary>

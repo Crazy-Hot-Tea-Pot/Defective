@@ -59,6 +59,25 @@ public class AttackChip : NewChip
         }
     }
 
+    public override void OnChipPlayed(PlayerController player, PuzzleRange Target)
+    {
+        base.OnChipPlayed(player, Target);
+        int tempDamage = damage;
+
+        // Apply buffs/debuffs to damage
+        if (player.IsPowered)
+        {
+            tempDamage += player.PoweredStacks;
+        }
+
+        if (player.IsDrained)
+        {
+            tempDamage = Mathf.FloorToInt(tempDamage * 0.8f);
+        }
+
+        Target.TakeDamage(tempDamage);
+    }
+
     void OnValidate()
     {
         ChipType = TypeOfChips.Attack;       

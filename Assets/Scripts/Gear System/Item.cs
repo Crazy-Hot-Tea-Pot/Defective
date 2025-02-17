@@ -97,6 +97,15 @@ public class Item : ScriptableObject
             effect.Activate(player,this, targetEnemy);
         }
     }
+
+    public void ItemActivate(PlayerController player, PuzzleRange TargetPuzzle)
+    {
+        foreach (ItemEffect effect in itemEffects)
+        {
+            effect.Activate(player, TargetPuzzle);
+        }
+    }
+
     public void ItemEquipped()
     {
         if (isEquipped)

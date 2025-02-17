@@ -83,24 +83,27 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private NewChip newChip;
     private GameObject chipinfoDisplay;
     private CombatController CombatController;
+    private PuzzleController PuzzleController;
     private GameObject Player;
     private TerminalController UpgradeController;
 
     void Start()
     {        
-        Player = GameObject.FindGameObjectWithTag("Player"); 
+        Player = GameObject.FindGameObjectWithTag("Player");
+        PuzzleController = GameObject.FindGameObjectWithTag("PuzzleController").GetComponent<PuzzleController>();
     }
     /// <summary>
     /// Runs Scriptable Chip
     /// </summary>
     public void ChipSelected()
-    {        
+    {
+        #region combatStuff
         try
         {
                 // Check if there is a target available
                 if (CombatController.Target == null)
                 {
-                    throw new NullReferenceException("No target assigned.");
+                    throw new NullReferenceException("No target assigned for combat.");
                 }
 
                 //Check if Player is jammed
@@ -139,8 +142,9 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             }
                             else
                             {
-                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
-                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                                    newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                                    newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+
                             }
                         }
                         //Remove effect after it has been used.
@@ -160,7 +164,10 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                                 }
                             }
                             else
-                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                            {
+                                    newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                            }
+                               
                         }
 
                     }
@@ -181,7 +188,71 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             // Generic catch for any other exceptions that may occur
             Debug.LogError($"An unexpected error occurred: {ex.Message}");
         }
-    }    
+#endregion
+        #region puzzlestuff
+        try
+        {
+            //Check if targeted
+            if (PuzzleController.Target == null)
+            {
+                throw new NullReferenceException("No target assigned for puzzles.");
+            }
+
+            //Check if Player is jammed
+            if (Player.GetComponent<PlayerController>().IsJammed)
+            {
+                return;
+            }
+
+            //Check if newChip is assigned
+            if (newChip != null)
+            {
+                //Plays chip use sound
+                SoundManager.PlayFXSound(SoundFX.ChipPlayed);
+
+                newChip.IsActive = true;
+
+                    if (newChip is DefenseChip defenseChip)
+                        newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
+                    else
+                    {
+                        if (newChip.hitAllTargets)
+                        {
+                            foreach (GameObject target in EnemyManager.Instance.CombatEnemies)
+                            {
+                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), target.GetComponent<Enemy>());
+                            }
+                        }
+                        else
+                        {
+                            if (PuzzleController.Target.tag == "Puzzle")
+                            {
+                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
+                            }
+                        }
+
+                    }
+
+                
+
+                ChipManager.Instance.AddToUsedChips(this.gameObject);
+            }
+            else
+            {
+                throw new NullReferenceException("No chip script attached.");
+            }
+        }
+        catch (NullReferenceException ex)
+        {
+            Debug.LogWarning($"Null reference error: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            // Generic catch for any other exceptions that may occur
+            Debug.LogError($"An unexpected error occurred: {ex.Message}");
+        }
+        #endregion
+    }
     /// <summary>
     /// Set chip prefab to different mode so it can be used in multiple different enviroments.
     /// </summary>

@@ -17,6 +17,9 @@ TagManager:
   - CombatZone
   - Exit
   - Entrance
+  - PuzzleController
+  - PuzzleManager
+  - Puzzle
   layers:
   - Default
   - TransparentFX

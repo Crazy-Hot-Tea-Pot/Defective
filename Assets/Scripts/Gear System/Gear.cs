@@ -9,6 +9,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
 {
     public PolygonCollider2D polygonCollider;
     public CombatController CombatController;
+    public PuzzleController PuzzleController;
     public GameObject Player;
     public Button Button;
     public Image GearImage;
@@ -57,6 +58,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
         try
         {
             CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
+            PuzzleController = GameObject.FindGameObjectWithTag("PuzzleController").GetComponent<PuzzleController>();
         }
         catch
         {
@@ -106,7 +108,17 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
             else
             {
                 if (CombatController.Target == null)
+                {
                     Item.ItemActivate(Player.GetComponent<PlayerController>());
+                }
+                else if (PuzzleController.Target == null)
+                {
+                    //Don't want nulls in our itemactivate but don't have a use for them and I don't think it's valuable to warn the devs about
+                }
+                else if (PuzzleController.Target.tag == "Puzzle")
+                {
+                    Item.ItemActivate(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
+                }
                 else
                 {
                     Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());

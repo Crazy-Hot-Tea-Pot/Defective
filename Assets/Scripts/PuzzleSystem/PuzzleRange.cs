@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PuzzleRange : MonoBehaviour
 {
+    private float currentHealth;
+    public float maxHealth;
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -20,7 +22,7 @@ public class PuzzleRange : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            PuzzleManager.Instance.OpenPuzzle();
+            PuzzleManager.Instance.OpenPuzzle(this.gameObject);
         }
     }
 
@@ -28,7 +30,21 @@ public class PuzzleRange : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            PuzzleManager.Instance.ClosePuzzle();
+            PuzzleManager.Instance.ClosePuzzle(this.gameObject);
         }
+    }
+
+    public void TakeDamage(int number)
+    {
+        currentHealth = currentHealth - number;
+        if (currentHealth <= 0)
+        {
+            DestroyMe();
+        }
+    }
+
+    public void DestroyMe()
+    {
+        Destroy(this.gameObject);
     }
 }

@@ -77,6 +77,27 @@ public class ItemEffect : ScriptableObject
             }        
     }
 
+    public virtual void Activate(PlayerController player, PuzzleRange puzzle = null)
+    {
+        // Apply buffs
+        foreach (Effects.TempBuffs buff in buffToApplyToPlayer)
+        {
+            player.AddEffect(buff.Buff, buff.AmountToBuff);
+        }
+
+        // Apply debuffs
+        foreach (Effects.TempDeBuffs debuff in debuffToApplyToPlayer)
+        {
+            player.AddEffect(debuff.DeBuff, debuff.AmountToDeBuff);
+        }
+
+        // Apply special effects
+        if (effectToApplyToPlayer != Effects.SpecialEffects.None)
+        {
+            player.AddEffect(effectToApplyToPlayer);
+        }
+    }
+
     protected virtual void Equipped()
     {
 
