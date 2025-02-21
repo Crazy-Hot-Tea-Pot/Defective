@@ -87,10 +87,7 @@ public class TitleController : MonoBehaviour
         AddOnSelectListener(PlayButton);
         AddOnSelectListener(ResumeButton);
         AddOnSelectListener(OptionsButton);
-        AddOnSelectListener(QuitButton);
-
-
-        CheckForSaveData();
+        AddOnSelectListener(QuitButton);        
 
         videoPlayer.loopPointReached += OnVideoEnd;
 
@@ -240,6 +237,7 @@ public class TitleController : MonoBehaviour
     /// <summary>
     /// Get all saves from DataManager
     /// Enable or disable the ResumeButton based on save availability
+    /// Is Called by Animator.
     /// </summary>
     private void CheckForSaveData()
     {    
@@ -256,6 +254,7 @@ public class TitleController : MonoBehaviour
             if (latestSave == null || save.TimeStamp > latestSave.TimeStamp)
                 latestSave = save;
         }
+        Debug.Log("Checked for save data");
     }    
     private void OnVideoEnd(VideoPlayer source)
     {
