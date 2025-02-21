@@ -47,7 +47,7 @@ public class QuestGoHere : Quest
     }
 
     //Pass through can end to show collision has been made in QuestCollison
-    public override void TouchPassThrough()
+    public override void TouchPassThrough(string tag)
     {
         canEnd = true;
     }

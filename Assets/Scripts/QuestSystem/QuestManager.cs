@@ -61,6 +61,30 @@ public class QuestManager : MonoBehaviour
             }
             futureQuestList.Clear();
         }
+        //If one is delete doubles in future quests
+        else
+        {
+            //We don't want to effect the originals so we are instantly copying the quest into its self so it's a list of copiess
+            for (int i = 0; i < CurrentQuest.Count; i++)
+            {
+
+                //Clone the value
+                Quest Temp = CurrentQuest[i];
+                CurrentQuest[i] = Instantiate(Temp);
+            }
+
+            //Remove doubles
+            for (int i = 0; i < futureQuestList.Count; i++)
+            {
+                for(int y = 0; y < CurrentQuest.Count; y++)
+                {
+                    if (futureQuestList[i].name == CurrentQuest[y].name)
+                    {
+                        futureQuestList.RemoveAt(i);
+                    }
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -79,8 +103,8 @@ public class QuestManager : MonoBehaviour
                         //remove it from current
                         CurrentQuest.RemoveAt(i);
 
-                        //Change the current quest if it's not null
-                        if (futureQuestList.Count != 0)
+                        //Change the current quest if it's not null and it's automatic
+                        if (futureQuestList.Count != 0 && automatic == true)
                         {
                             //Make the next quest current quest
                             CurrentQuest[i] = futureQuestList[0];
@@ -235,6 +259,15 @@ public class QuestManager : MonoBehaviour
         List<Quest> tempList;
         tempList = futureQuestList;
         return tempList;
+    }
+
+    public void AddCurrentQuest(Quest quest)
+    {
+        CurrentQuest.Add(quest);
+        if(futureQuestList.Contains(quest))
+        {
+            futureQuestList.Remove(quest);
+        }
     }
 
     /// <summary>

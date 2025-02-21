@@ -6,6 +6,8 @@ public class PuzzleRange : MonoBehaviour
 {
     private float currentHealth;
     public float maxHealth;
+    public Quest newQuest;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,7 @@ public class PuzzleRange : MonoBehaviour
         currentHealth = currentHealth - number;
         if (currentHealth <= 0)
         {
+            QuestManager.Instance.AddCurrentQuest(newQuest);
             DestroyMe();
         }
     }

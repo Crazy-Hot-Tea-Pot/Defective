@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1e6c407d110da04398fa9750617f1b6, type: 3}
-  m_Name: QuestGoHereTest
+  m_Script: {fileID: 11500000, guid: 9782ff461ba283541b00d26c04d227be, type: 3}
+  m_Name: QuestCollectable
   m_EditorClassIdentifier: 
-  questName: Go To The Sparkles (Complete)
-  questDesc: You have to move towards the sparkles
+  questName: Collect Junk
+  questDesc: 'Collect some junk please :'
   complete: 0
-  questEndNameForPositionCalc: QuestMarker(Clone)
+  tagName: Junk
+  neededCollections: 3

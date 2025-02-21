@@ -6,9 +6,14 @@ using UnityEngine.UI;
 public class Quest : ScriptableObject
 {
     public string questName;
+    private string ccQuestName;
     public string questDesc;
     public bool complete = false;
 
+    private void Awake()
+    {
+        ccQuestName = questName;
+    }
     /// <summary>
     /// A method intended to be overwritten to run quests and meet their requirments
     /// </summary>
@@ -20,7 +25,7 @@ public class Quest : ScriptableObject
     ///<summary>
     ///This method is always over written but allows for mono objects using collision detection to pass useful data script by script
     ///</summary>
-    public virtual void TouchPassThrough()
+    public virtual void TouchPassThrough(string tag)
     {
 
     }
@@ -31,7 +36,7 @@ public class Quest : ScriptableObject
     public virtual void CompleteQuest()
     {
         complete = true;
-        questName = questName + " (Complete)";
+        questName = ccQuestName + " (Complete)";
         Debug.Log("Quest Complete: " + questName);
     }
 

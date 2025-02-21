@@ -20,6 +20,7 @@ TagManager:
   - PuzzleController
   - PuzzleManager
   - Puzzle
+  - Junk
   layers:
   - Default
   - TransparentFX
