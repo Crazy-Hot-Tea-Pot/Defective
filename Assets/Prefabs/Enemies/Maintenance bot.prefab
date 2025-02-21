@@ -57,7 +57,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   TargetIcon: {fileID: 7379420038329593934}
   playerCamera: {fileID: 0}
-  enemyName: 
+  enemyName: Maintenance
   enemyDifficulty: 1
   maxHP: 80
   listOfActiveEffects: []

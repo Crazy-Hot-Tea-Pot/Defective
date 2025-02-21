@@ -6,31 +6,30 @@ using UnityEngine;
 public class QuestCountEnemies : Quest
 {
     public int totalEnemies;
-    private int remainingEnemies;
+    private int remainingEnemies = 0;
     public string enemyName;
 
-    private string ccQuestName;
-    private string ccQuestDesc;
+    private string saveQuestName;
+    private string saveQuestDesc;
 
     private void Awake()
     {
-        remainingEnemies = totalEnemies;
-        ccQuestDesc = questDesc;
-        ccQuestName = questName;
+        saveQuestDesc = questDesc;
+        saveQuestName = questName;
     }
     public override void RunQuest()
     {
 
         //Update the description
-        questDesc = ccQuestDesc + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
+        questDesc = saveQuestDesc + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
         //Update the name
-        questName = ccQuestName + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
+        questName = saveQuestName + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
 
         //If remaining enemies is equal to 0 complete the quest
-        if (remainingEnemies == 0)
+        if (remainingEnemies == totalEnemies)
         {
-            questDesc = ccQuestDesc;
-            questName = ccQuestName;
+            questDesc = saveQuestDesc;
+            questName = saveQuestName;
             CompleteQuest();
         }
 
@@ -46,7 +45,7 @@ public class QuestCountEnemies : Quest
         if(enemyTypeName == enemyName)
         {
             //Take away from the counter
-            remainingEnemies -= 1;
+            remainingEnemies += 1;
         }
     }
 }

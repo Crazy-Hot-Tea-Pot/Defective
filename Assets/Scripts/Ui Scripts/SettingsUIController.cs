@@ -99,6 +99,7 @@ public class SettingsUIController : UiController
         if (GameManager.Instance.CurrentLevel == Levels.Title)
         {
             SkipMiniMenu();
+            titleScreenUI = GameObject.Find("TitleController");
 
             //Make UI Manager above the title canvas.
             UiManager.Instance.GetComponent<Canvas>().sortingOrder = 1;

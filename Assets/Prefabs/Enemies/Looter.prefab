@@ -57,7 +57,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   TargetIcon: {fileID: 6115485176170895110}
   playerCamera: {fileID: 0}
-  enemyName: 
+  enemyName: Looter
   enemyDifficulty: 1
   maxHP: 50
   listOfActiveEffects: []

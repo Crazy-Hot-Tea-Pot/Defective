@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2e94c00137ccef42aca0929b37e26af, type: 3}
-  m_Name: ZQuestCountEnemies
+  m_Script: {fileID: 11500000, guid: 9782ff461ba283541b00d26c04d227be, type: 3}
+  m_Name: QuestCollectable
   m_EditorClassIdentifier: 
-  questName: 'The Alpha:'
-  questDesc: 'Kill the alpha however you see fit to '
+  questName: Recover Documents
+  questDesc: 'Collect some crushed up paper :'
   complete: 0
-  totalEnemies: 1
-  enemyName: Alpha
+  tagName: Junk
+  neededCollections: 3
