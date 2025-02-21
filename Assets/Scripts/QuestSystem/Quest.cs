@@ -46,7 +46,7 @@ public class Quest : ScriptableObject
     /// <param name="enemyTypeName"></param>
     public virtual void EnemyQuestCounterUpdate(string enemyTypeName)
     {
-
+        Debug.Log("EnemyCounterBase");
     }
 
 }

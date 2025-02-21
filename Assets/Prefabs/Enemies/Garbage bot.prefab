@@ -288,13 +288,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
   AttackRange: 10
+  EnemyType: 
   thisEnemyUI: {fileID: 6137250837617735189}
   CombatController: {fileID: 0}
   animator: {fileID: 0}
   agent: {fileID: 0}
   TargetIcon: {fileID: 1794017152557271501}
   playerCamera: {fileID: 0}
-  enemyName: 
+  enemyName: Garbage
   enemyDifficulty: 2
   maxHP: 120
   listOfActiveEffects: []

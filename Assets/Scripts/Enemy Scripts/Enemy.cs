@@ -53,11 +53,6 @@ public class Enemy : MonoBehaviour
         }               
     }
 
-    /// <summary>
-    /// Important for quest counter UI to know the type of enemy this is 
-    /// </summary>
-    public string EnemyType;
-
     [Header("Enemy Components")]
     /// <summary>
     /// reference to enemy canvas.
@@ -444,9 +439,9 @@ public class Enemy : MonoBehaviour
         try
         {
             //Give enemy counter update the enemy name so they can verify it
-            foreach (QuestCountEnemies quest in QuestManager.Instance.CurrentQuest)
+            foreach (Quest quest in QuestManager.Instance.CurrentQuest)
             {
-                quest.EnemyQuestCounterUpdate(EnemyType);
+                quest.EnemyQuestCounterUpdate(EnemyName);
             }
         }
         catch

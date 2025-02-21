@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e94c00137ccef42aca0929b37e26af, type: 3}
   m_Name: ZQuestCountEnemies
   m_EditorClassIdentifier: 
-  questName: 'The Looter King:'
-  questDesc: 'It''s simple '
+  questName: 'The Alpha:'
+  questDesc: Kill the alpha however you see fit
   complete: 0
   totalEnemies: 1
-  enemyName: Looter
+  enemyName: Alpha

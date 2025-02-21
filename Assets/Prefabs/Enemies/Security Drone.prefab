@@ -245,7 +245,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   TargetIcon: {fileID: 4257605719684884670}
   playerCamera: {fileID: 0}
-  enemyName: 
+  enemyName: Drone
   enemyDifficulty: 0
   maxHP: 60
   listOfActiveEffects: []
