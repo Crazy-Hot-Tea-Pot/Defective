@@ -7,6 +7,7 @@ public class PuzzleManager : MonoBehaviour
 
     private GameObject CombatUI;
     private PuzzleController PuzzleController;
+
     //Make an instance
     public static PuzzleManager Instance
     {

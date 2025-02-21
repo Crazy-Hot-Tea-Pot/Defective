@@ -209,25 +209,27 @@ public class QuestUIController : MonoBehaviour
         }
         else if (logContainer == FullLogContainer)
         {
-            //Add a container for quest one
-            Quest1 = logContainer.transform.Find("Quest1").GetComponent<TMP_Text>();
-            Quest1Desc = logContainer.transform.Find("Quest1LongDescription").GetComponent<TMP_Text>();
-            QuestManager.Instance.RetrieveQuestInfo(0, Quest1,Quest1Desc);
+            //Find the text box for scroll content
+            TMP_Text textBox;
+            textBox = logContainer.transform.Find("Scroll View").gameObject.transform.Find("Viewport").gameObject.transform.Find("Content").gameObject.transform.Find("Text (TMP)").GetComponent<TMP_Text>();
+            //Clear the text box in content
+            textBox.text = " ";
 
-            //Add a container for quest two
-            Quest2 = logContainer.transform.Find("Quest2").GetComponent<TMP_Text>();
-            Quest2Desc = logContainer.transform.Find("Quest2LongDescription").GetComponent<TMP_Text>();
-            QuestManager.Instance.RetrieveQuestInfo(1, Quest2, Quest2Desc);
-
-            //Add a container for quest three
-            Quest3 = logContainer.transform.Find("Quest3").GetComponent<TMP_Text>();
-            Quest3Desc = logContainer.transform.Find("Quest3LongDescription").GetComponent<TMP_Text>();
-            QuestManager.Instance.RetrieveQuestInfo(2, Quest3, Quest3Desc);
-
-            //Add a container for quest four
-            Quest4 = logContainer.transform.Find("Quest4").GetComponent<TMP_Text>();
-            Quest4Desc = logContainer.transform.Find("Quest4LongDesciption").GetComponent<TMP_Text>();
-            QuestManager.Instance.RetrieveQuestInfo(3, Quest4, Quest4Desc);
+            //If the complete list is empty tell the player
+            if (QuestManager.Instance.CurrentQuest.Count == 0 || QuestManager.Instance.CurrentQuest == null)
+            {
+                textBox.text = "No Active Quests";
+            }
+            //Otherwise continue
+            else
+            {
+                //Go through our complete list
+                foreach (Quest quest in QuestManager.Instance.CurrentQuest)
+                {
+                    //Add one by one every item in the complete list
+                    textBox.text = textBox.text + "\n " + quest.questName + "\n " + quest.questDesc + "\n";
+                }
+            }
         }
     }
 }

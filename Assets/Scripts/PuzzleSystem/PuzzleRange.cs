@@ -7,11 +7,25 @@ public class PuzzleRange : MonoBehaviour
     private float currentHealth;
     public float maxHealth;
     public Quest newQuest;
+    public Material mat;
+    public string QuestMarkerName;
+    private GameObject QuestMarker;
+    private Material save;
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+        save = this.gameObject.GetComponent<Renderer>().material;
+        try
+        {
+            QuestMarker = GameObject.Find(QuestMarkerName);
+            QuestMarker.SetActive(false);
+        }
+        catch
+        {
+
+        }
     }
 
     // Update is called once per frame
@@ -24,6 +38,7 @@ public class PuzzleRange : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            this.gameObject.GetComponent<Renderer>().material = mat;
             PuzzleManager.Instance.OpenPuzzle(this.gameObject);
         }
     }
@@ -32,6 +47,7 @@ public class PuzzleRange : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            this.gameObject.GetComponent<Renderer>().material = save;
             PuzzleManager.Instance.ClosePuzzle(this.gameObject);
         }
     }
@@ -42,6 +58,10 @@ public class PuzzleRange : MonoBehaviour
         if (currentHealth <= 0)
         {
             QuestManager.Instance.AddCurrentQuest(newQuest);
+            if(QuestMarker != null)
+            {
+                QuestMarker.SetActive(true);
+            }
             DestroyMe();
         }
     }

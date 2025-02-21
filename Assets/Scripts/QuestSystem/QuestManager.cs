@@ -156,6 +156,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    #region Quest Information
     /// <summary>
     /// Retrieve the name and description of a quest based on a given index. Use -1 for current quest
     /// </summary>
@@ -187,32 +188,6 @@ public class QuestManager : MonoBehaviour
                 Debug.Log("That quest doesn't exist at index: " + index);
             }
         }
-    }
-
-    #region Quest Information
-    /// <summary>
-    /// If the quest state is false that means it is not a completed quest
-    /// </summary>
-    /// <param name="questName"></param>
-    /// <returns></returns>
-    public bool CheckQuestState(Quest QuestToCheck)
-    {
-        string questName = QuestToCheck.questName;
-        bool questState = false;
-        foreach(Quest quest in completeList)
-        {
-            if(quest.questName == questName)
-            {
-                questState = true;
-               
-            }
-            else
-            {
-                questState = false;
-            }
-        }
-
-        return questState;
     }
 
     /// <summary>

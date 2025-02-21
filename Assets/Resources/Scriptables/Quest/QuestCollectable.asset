@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9782ff461ba283541b00d26c04d227be, type: 3}
   m_Name: QuestCollectable
   m_EditorClassIdentifier: 
-  questName: Collect Junk
-  questDesc: 'Collect some junk please :'
+  questName: Recover Documents
+  questDesc: 'Collect some crushed up paper :'
   complete: 0
   tagName: Junk
   neededCollections: 3

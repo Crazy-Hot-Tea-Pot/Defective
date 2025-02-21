@@ -8,28 +8,28 @@ public class QuestCollectable : Quest
     public string tagName;
     public int neededCollections;
     private int currentCollectoin = 0;
-    string ccQuestName;
-    string ccQuestDesc;
+    private string QuestNameHold;
+    private string QuestDescHold;
 
     private void Awake()
     {
-        ccQuestDesc = questDesc;
-        ccQuestName = questName;
+        QuestDescHold = questDesc;
+        QuestNameHold = questName;
     }
     public override void RunQuest()
     {
         base.RunQuest();
 
         //Update the description
-        questDesc = ccQuestDesc + "(" + ccQuestDesc + "/" + neededCollections + ")";
+        questDesc = QuestDescHold + "(" + QuestDescHold + "/" + neededCollections + ")";
         //Update the name
-        questName = ccQuestName + "(" + currentCollectoin + "/" + neededCollections + ")";
+        questName = QuestNameHold + "(" + currentCollectoin + "/" + neededCollections + ")";
 
         //If remaining enemies is equal to 0 complete the quest
         if (currentCollectoin == neededCollections)
         {
-            questDesc = ccQuestDesc;
-            questName = ccQuestName;
+            questDesc = QuestDescHold;
+            questName = QuestNameHold;
             CompleteQuest();
         }
     }
