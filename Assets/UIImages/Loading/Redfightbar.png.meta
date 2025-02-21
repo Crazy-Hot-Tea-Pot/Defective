@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,13 +37,13 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,9 +52,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -95,7 +95,196 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Redfightbar_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2730
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 013927c5c4ea5ab4284bf75c15b0c583
+      internalID: -1872508985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Redfightbar_1
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 2730
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db9b884a2f2d871418bb3d0df759f4db
+      internalID: 836620649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Redfightbar_2
+      rect:
+        serializedVersion: 2
+        x: 2730
+        y: 2730
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 602daea20e9018941b52c06d6714f323
+      internalID: 680292557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Redfightbar_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1365
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e7c11a9de58ba54d98880d57bb3df49
+      internalID: 119851387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Redfightbar_4
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 1365
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1763e390ae90e084fa4fff19fa396313
+      internalID: -521284773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Redfightbar_5
+      rect:
+        serializedVersion: 2
+        x: 2730
+        y: 1365
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f57fef60bb6fab445b7c58c4fa504c6d
+      internalID: -787084170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Redfightbar_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da6e1a42cd5797a4ea4248e3878ee0dc
+      internalID: 996832843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Redfightbar_7
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 0
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76fab6c20357ead48bf001feb2097891
+      internalID: 984665696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Redfightbar_8
+      rect:
+        serializedVersion: 2
+        x: 2730
+        y: 0
+        width: 1365
+        height: 1365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8bfe354782547744a89b12041d329e5
+      internalID: -1843684043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +295,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Redfightbar_0: -1872508985
+      Redfightbar_1: 836620649
+      Redfightbar_2: 680292557
+      Redfightbar_3: 119851387
+      Redfightbar_4: -521284773
+      Redfightbar_5: -787084170
+      Redfightbar_6: 996832843
+      Redfightbar_7: 984665696
+      Redfightbar_8: -1843684043
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

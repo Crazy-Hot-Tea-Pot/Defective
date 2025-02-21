@@ -237,7 +237,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
   AttackRange: 10
-  EnemyType: Security Drone
   thisEnemyUI: {fileID: 6396867329242295756}
   CombatController: {fileID: 0}
   animator: {fileID: 0}
@@ -289,19 +288,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 270392509558366676, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 270392509558366676, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 270392509558366676, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 270392509558366676, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -111.09
       objectReference: {fileID: 0}
     - target: {fileID: 692259597026661380, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchorMax.y
@@ -397,7 +396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4.94
+      value: 6.8409
       objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -446,6 +445,10 @@ PrefabInstance:
     - target: {fileID: 5139836085644037944, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139836085644037944, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5146906263344973441, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchorMax.y
@@ -509,7 +512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -250
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 8622234643699543731, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Name
