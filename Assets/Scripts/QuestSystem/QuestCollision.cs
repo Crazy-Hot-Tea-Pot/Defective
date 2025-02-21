@@ -20,7 +20,11 @@ public class QuestCollision : MonoBehaviour
     {
         if(other.transform.tag == "Player")
         {
-            QuestManager.Instance.CurrentQuest.TouchPassThrough();
+            //Give enemy counter update the enemy name so they can verify it
+            foreach (Quest quest in QuestManager.Instance.CurrentQuest)
+            {
+                quest.TouchPassThrough();
+            }
             Destroy(this.gameObject);
         }
     }

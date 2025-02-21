@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 
 public class Quest : ScriptableObject
@@ -9,11 +8,6 @@ public class Quest : ScriptableObject
     public string questName;
     public string questDesc;
     public bool complete = false;
-
-    public void speaking(TMP_Text speaker, TMP_Text player)
-    {
-        RunQuest();
-    }
 
     /// <summary>
     /// A method intended to be overwritten to run quests and meet their requirments

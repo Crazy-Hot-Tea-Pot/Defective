@@ -484,8 +484,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   futureQuestList: []
   completeList: []
-  CurrentQuest: {fileID: 0}
-  nameTemp: 
+  CurrentQuest: []
 --- !u!4 &829852518
 Transform:
   m_ObjectHideFlags: 0

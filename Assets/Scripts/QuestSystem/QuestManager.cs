@@ -24,13 +24,9 @@ public class QuestManager : MonoBehaviour
     public List<Quest> futureQuestList;
     public List<Quest> completeList;
 
-    private TMP_Text textSpeaker;
-    private TMP_Text textPlayer;
+    public List<Quest> CurrentQuest;
 
-    public Quest CurrentQuest;
-
-    //Validates Quest Complete
-    public string nameTemp;
+    private bool automatic = false;
 
     private void Awake()
     {
@@ -50,9 +46,21 @@ public class QuestManager : MonoBehaviour
         //Load all the quest scriptables and clone them
         PopulateQuestSciptables();
 
-        //Set Current Active Quest
-        CurrentQuest = futureQuestList[0];
-        futureQuestList.RemoveAt(0);
+        //If there are no current quests 
+        if(CurrentQuest == null || CurrentQuest.Count == 0)
+        {
+            automatic = true;
+        }
+
+        //If no order is given for quests we will make one up
+        if(automatic)
+        {
+            foreach (Quest quest in futureQuestList)
+            {
+                CurrentQuest.Add(quest);
+            }
+            futureQuestList.Clear();
+        }
     }
 
     // Update is called once per frame
@@ -61,30 +69,28 @@ public class QuestManager : MonoBehaviour
         //This line tells the manager to stop if we run out of quests
         if(CurrentQuest != null)
         {
-            //If the current quest is complete
-            if (CurrentQuest.complete == true)
+            for (int i = 0; i < CurrentQuest.Count; i++)
             {
-                //Add to the complete list
-                completeList.Add(CurrentQuest);
-                
-                //Change the current quest if it's not null
-                if(futureQuestList.Count != 0)
-                {
-                    //Make the next quest current quest
-                    CurrentQuest = futureQuestList[0];
-                    futureQuestList.RemoveAt(0);
-                }
-                //If the quest is null
-                else
-                {
-                    //Empty current quest
-                    CurrentQuest = null;
-                }
-            }
-            //If the quest is not complete then all the quests action
-            else if (CurrentQuest.complete == false)
-            {
-                CurrentQuest.speaking(textSpeaker, textPlayer);
+                    //If the current quest is complete
+                    if (CurrentQuest[i].complete == true)
+                    {
+                        //Add to the complete list
+                        completeList.Add(CurrentQuest[i]);
+                        //remove it from current
+                        CurrentQuest.RemoveAt(i);
+
+                        //Change the current quest if it's not null
+                        if (futureQuestList.Count != 0)
+                        {
+                            //Make the next quest current quest
+                            CurrentQuest[i] = futureQuestList[0];
+                            futureQuestList.RemoveAt(0);
+                        }
+                    }
+                    else
+                    {
+                        CurrentQuest[i].RunQuest();
+                    }
             }
         }
     }
@@ -97,41 +103,23 @@ public class QuestManager : MonoBehaviour
     /// <param name="description"></param>
     public void RetrieveQuestInfo(int index, TMP_Text quest, TMP_Text description)
     {
-        //For some reason not having two try catches just will return null even with a != null check 
+        //Try to collect a quest from the currentquest list
         try
         {
-            //If we need the current quest
-            if (index == -1)
-            {
-                quest.text = CurrentQuest.questName;
-                description.text = CurrentQuest.questDesc;
-            }
-            //Otherwise
-            else
-            {
-                quest.text = futureQuestList[index].questName;
-                description.text = futureQuestList[index].questDesc;
-            }
+                quest.text = CurrentQuest[index].questName;
+                description.text = CurrentQuest[index].questDesc;
         }
+        //But if we can't that's ok just go to the complete list
         catch
         {
+            //For some reason not having two try catches just will return null even with a != null check
             try
             {
                 //If there is a value to show as a complete quest show it
                 if (completeList[0] != null)
                 {
-                    //Name temp is a check that makes sure we aren't repeating quests this system can't check for repeats out of order but I don't think the program should ever do that
-                    if (nameTemp != completeList[0].questName)
-                    {
-                        nameTemp = completeList[0].questName;
                         quest.text = completeList[0].questName;
                         description.text = completeList[0].questDesc;
-                    }
-                    else
-                    {
-                        quest.text = " ";
-                        description.text = " ";
-                    }
                 }
             }
             //If there is only one quest then just hide the other text and make it nothing
@@ -151,36 +139,21 @@ public class QuestManager : MonoBehaviour
     /// <param name="quest"></param>
     public void RetrieveQuestInfo(int index, TMP_Text quest)
     {
+        //Try to collect a quest from the currentquest list
         try
         {
-            //If we need the current quest
-            if(index == -1)
-            {
-                quest.text = CurrentQuest.questName;
-            }
-            //Otherwise
-            else
-            {
-                quest.text = futureQuestList[index].questName;
-            }
+            quest.text = CurrentQuest[index].questName;
         }
+        //But if we can't that's ok just go to the complete list
         catch
         {
-            //If there is a value to show as a complete quest show it
+            //For some reason not having two try catches just will return null even with a != null check
             try
             {
+                //If there is a value to show as a complete quest show it
                 if (completeList[0] != null)
                 {
-                    //Name temp is a check that makes sure we aren't repeating quests this system can't check for repeats out of order but I don't think the program should ever do that
-                    if (nameTemp != completeList[0].questName)
-                    {
-                        nameTemp = completeList[0].questName;
-                        quest.text = completeList[0].questName;
-                    }
-                    else
-                    {
-                        quest.text = " ";
-                    }
+                    quest.text = completeList[0].questName;
                 }
             }
             //If there is only one quest then just hide the other text and make it nothing
@@ -238,7 +211,10 @@ public class QuestManager : MonoBehaviour
     public List<Quest> GetAllQuests()
     {
         List<Quest> tempList = null;
-        tempList.Add(CurrentQuest);
+        foreach (Quest quest in CurrentQuest)
+        {
+            tempList.Add(quest);
+        }
         foreach (Quest quest in futureQuestList)
         {
             tempList.Add(quest);
@@ -248,12 +224,6 @@ public class QuestManager : MonoBehaviour
             tempList.Add(quest);
         }
         return tempList;
-    }
-
-    //Returns the current quest
-    public Quest GetCurrentQuest()
-    {
-        return CurrentQuest;
     }
 
     /// <summary>
