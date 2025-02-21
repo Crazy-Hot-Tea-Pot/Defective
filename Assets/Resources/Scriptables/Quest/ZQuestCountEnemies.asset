@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ZQuestCountEnemies
   m_EditorClassIdentifier: 
   questName: 'The Alpha:'
-  questDesc: Kill the alpha however you see fit
+  questDesc: 'Kill the alpha however you see fit to '
   complete: 0
   totalEnemies: 1
   enemyName: Alpha
