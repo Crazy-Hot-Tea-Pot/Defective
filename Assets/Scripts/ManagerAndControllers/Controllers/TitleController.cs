@@ -298,7 +298,8 @@ public class TitleController : MonoBehaviour
             Vector3 randomOffset = new Vector3(Random.Range(-positionJitter, positionJitter), Random.Range(-positionJitter, positionJitter), 0);
 
             TitleText.text = glitchedText;
-            Vector2 offset2D = new Vector2(randomOffset.x, randomOffset.y); // Convert to Vector2
+            // Convert to Vector2
+            Vector2 offset2D = new Vector2(randomOffset.x, randomOffset.y);
             TitleText.rectTransform.anchoredPosition += offset2D;
 
             yield return new WaitForSeconds(glitchDuration);

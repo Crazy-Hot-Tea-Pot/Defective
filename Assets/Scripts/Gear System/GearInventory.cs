@@ -67,6 +67,8 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 GearDescription.SetText("Scrap Value: " + Item.GetScrapValue());
                 ScrapButton.gameObject.SetActive(true);
                 ScrapButton.onClick.AddListener(VerifyScrapItem);
+                if (Item.IsEquipped)
+                    ScrapButton.interactable = false;
                 break;
             default:
                 Debug.LogWarning("Prefab Mode not set!!");

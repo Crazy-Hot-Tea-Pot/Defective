@@ -115,6 +115,8 @@ public class GearManager : MonoBehaviour
 
         itemToRemove.IsPlayerOwned = false;
         itemToRemove.IsEquipped = false;
+
+        PlayerCurrentGear.Remove(itemToRemove);
     }
 
     /// <summary>
