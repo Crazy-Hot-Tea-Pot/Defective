@@ -858,7 +858,18 @@ public class PlayerController : MonoBehaviour
     {
         agent.SetDestination(TargetPosition);
     }
+    public IEnumerator SmoothRoatePlayerToTarget(Vector3 target)
+    {
+        target.y = 0;
 
+        while (target.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(target);
+            yield return null;
+            // Smooth rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        }
+    }
     /// <summary>
     /// Totate to Target
     /// </summary>
