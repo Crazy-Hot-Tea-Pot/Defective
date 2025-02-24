@@ -227,7 +227,7 @@ public class QuestUIController : MonoBehaviour
                 foreach (Quest quest in QuestManager.Instance.CurrentQuest)
                 {
                     //Add one by one every item in the complete list
-                    textBox.text = textBox.text + "\n " + quest.questName + "\n " + quest.questDesc + "\n";
+                    textBox.text = textBox.text + "\n " + quest.modifiedQuestName + "\n " + quest.questDesc + "\n";
                 }
             }
         }

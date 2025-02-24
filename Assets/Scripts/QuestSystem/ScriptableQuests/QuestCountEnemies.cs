@@ -16,14 +16,17 @@ public class QuestCountEnemies : Quest
     {
         saveQuestDesc = questDesc;
         saveQuestName = questName;
+        ccQuestName = saveQuestName;
     }
     public override void RunQuest()
     {
 
         //Update the description
-        questDesc = saveQuestDesc + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
+        questDesc = saveQuestDesc + "Kill " + enemyName + "\n(" + remainingEnemies + "/" + totalEnemies + ")";
         //Update the name
         questName = saveQuestName + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
+        //Update alt name
+        modifiedQuestName = saveQuestName + "Kill " + enemyName;
 
         //If remaining enemies is equal to 0 complete the quest
         if (remainingEnemies == totalEnemies)

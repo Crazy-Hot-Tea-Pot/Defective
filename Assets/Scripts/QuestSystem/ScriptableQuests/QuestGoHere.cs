@@ -9,6 +9,12 @@ public class QuestGoHere : Quest
     public string questEndNameForPositionCalc;
 
     private bool canEnd = false;
+
+    private void Awake()
+    {
+        modifiedQuestName = questName;
+        ccQuestName = modifiedQuestName;
+    }
     //Override the Run quest method
     public override void RunQuest()
     {

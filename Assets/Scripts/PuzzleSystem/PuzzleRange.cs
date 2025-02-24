@@ -62,6 +62,7 @@ public class PuzzleRange : MonoBehaviour
             {
                 QuestMarker.SetActive(true);
             }
+            PuzzleManager.Instance.ClosePuzzle(this.gameObject);
             DestroyMe();
         }
     }

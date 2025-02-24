@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: QuestCollectable
   m_EditorClassIdentifier: 
   questName: Recover Documents
-  questDesc: 'Collect some crushed up paper :'
+  questDesc: Collect some crushed up paper
   complete: 0
   tagName: Junk
   neededCollections: 3
