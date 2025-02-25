@@ -30,7 +30,7 @@ public class FXPlayerToLinkAnimation : MonoBehaviour
                 PlaySound_Footstep5();
                 break;
         }
-
+        //ASK LAY IF TO PUT DELAY, OR AT SAME TIME 
         //If help is less than 35% play another audio
         if (PlayerController.Health <= PlayerController.MaxHealth * 0.35f)
         {

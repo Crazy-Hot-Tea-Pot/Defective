@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemEffectDescription: Spend 5 Energy and gain 2 Shield
   energyCost: 5
-  ItemActivate: 0
-  ItemDeactivate: 0
+  ItemActivate: 50
+  ItemDeactivate: 50
   ItemFail: 0
   SpecialConditionEffect: 0
   Condition: 0
