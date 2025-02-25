@@ -15,15 +15,18 @@ public class QuestCollectable : Quest
     {
         QuestDescHold = questDesc;
         QuestNameHold = questName;
+        ccQuestName = QuestNameHold;
     }
     public override void RunQuest()
     {
         base.RunQuest();
 
         //Update the description
-        questDesc = QuestDescHold + "(" + QuestDescHold + "/" + neededCollections + ")";
+        questDesc = QuestDescHold +"\n" + "(" + currentCollectoin + "/" + neededCollections + ")";
         //Update the name
         questName = QuestNameHold + "(" + currentCollectoin + "/" + neededCollections + ")";
+        //Update alt name
+        modifiedQuestName = QuestNameHold;
 
         //If remaining enemies is equal to 0 complete the quest
         if (currentCollectoin == neededCollections)

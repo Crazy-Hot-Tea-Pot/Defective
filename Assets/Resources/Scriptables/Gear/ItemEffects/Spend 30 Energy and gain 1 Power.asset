@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemEffectDescription: Spend 30 Energy and gain 1 Power
   energyCost: 30
-  ItemActivate: 3
-  ItemDeactivate: 3
+  ItemActivate: 43
+  ItemDeactivate: 43
   ItemFail: 11
   SpecialConditionEffect: 0
   Condition: 0

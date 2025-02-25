@@ -9,6 +9,11 @@ public class QuestUIHighlight : Quest
     public string UIElementPath;
     private GameObject UIElement = null;
 
+    private void Awake()
+    {
+        modifiedQuestName = questName;
+        ccQuestName = modifiedQuestName;
+    }
     public override void RunQuest()
     {
         try

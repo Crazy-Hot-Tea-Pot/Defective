@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class Quest : ScriptableObject
 {
     public string questName;
-    private string ccQuestName;
+    public string ccQuestName;
+    public string modifiedQuestName;
     public string questDesc;
     public bool complete = false;
 
@@ -36,7 +37,7 @@ public class Quest : ScriptableObject
     public virtual void CompleteQuest()
     {
         complete = true;
-        questName = ccQuestName + " (Complete)";
+        questName = "\n" + ccQuestName + " (Complete)";
         Debug.Log("Quest Complete: " + questName);
     }
 
