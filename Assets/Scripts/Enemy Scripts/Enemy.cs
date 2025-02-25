@@ -62,9 +62,8 @@ public class Enemy : MonoBehaviour
     /// Reference to combat controller.
     /// </summary>
     public CombatController CombatController;
-    public Animator animator;
-    public NavMeshAgent agent;
-    public GameObject TargetIcon;
+    public NavMeshAgent agent;    
+    public Animator Animator;
     /// <summary>
     /// reference to Player camera.
     /// </summary>
@@ -339,7 +338,6 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
         playerCamera = Camera.main;
         thisEnemyUI = this.gameObject.GetComponentInChildren<EnemyUI>();
     }
@@ -459,6 +457,8 @@ public class Enemy : MonoBehaviour
         CurrentHP -= damage;
 
         DisplayDamageTaken(damage);
+
+        Animator.SetTrigger("Hit");
     }
 
     /// <summary>
@@ -488,8 +488,17 @@ public class Enemy : MonoBehaviour
 
         }
 
+        //Call Death Animation
+        StartCoroutine(WaitForAnimation("Die", FinishDeath));
+        
         SoundManager.PlayFXSound(SoundFX.EnemyDefeated, this.gameObject.transform);
+    }
 
+    /// <summary>
+    /// Finish death stuff after animation plays
+    /// </summary>
+    private void FinishDeath()
+    {
         Debug.Log($"{enemyName} has been defeated!");
 
         CombatController.LeaveCombat(this.gameObject, DroppedScrap, DroppedChips, DroppedItems);
@@ -528,6 +537,11 @@ public class Enemy : MonoBehaviour
             EndTurn();            
         }
     }
+    public virtual void PerformIntentTrigger(string intentName)
+    {
+        Debug.Log($"{EnemyName} triggered intent effect at correct animation timing.");
+    }
+
 
     /// <summary>
     /// Display damage taken in game.
@@ -559,6 +573,23 @@ public class Enemy : MonoBehaviour
 
 
     #endregion
+
+    protected IEnumerator WaitForAnimation(string triggerName, Action onComplete)
+    {
+        Animator.SetTrigger(triggerName);
+
+        yield return null;
+
+        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+
+        while (stateInfo.normalizedTime < 1f)
+        {
+            stateInfo=Animator.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+
+        onComplete?.Invoke();
+    }
 
     #region Effects
 
@@ -725,8 +756,14 @@ public class Enemy : MonoBehaviour
     }
 
     [ContextMenu("Test Death")]
-    public void TestDeath()
+    private void TestDeath()
     {
         CurrentHP = 0;
+    }
+
+    [ContextMenu("Take 5 Damage")]
+    private void TestHit()
+    {
+        TakeDamage(5);
     }
 }

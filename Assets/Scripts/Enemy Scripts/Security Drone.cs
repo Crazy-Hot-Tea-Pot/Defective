@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class SecurityDrone : Enemy
@@ -89,17 +88,41 @@ public class SecurityDrone : Enemy
 
         base.EndTurn();
     }
-    protected override void PerformIntent()
-    {        
+    public override void PerformIntentTrigger(string intentName)
+    {
+        base.PerformIntentTrigger(intentName);
 
-        if(IntentsPerformed > 5 && NumberOfAlertDrones < 3)
-            Alert();
+        switch (intentName) {
+            case "Ram":
+                Ram();
+                break;
+            case "Neutralize":
+                Neutralize(); 
+            break;
+            case "Alert":
+                Alert();
+                break;
+            default:
+                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+                break;
+
+        }
+
+    }
+    protected override void PerformIntent()
+    {
+
+        if (IntentsPerformed > 5 && NumberOfAlertDrones < 3)
+            Animator.SetTrigger("Intent 3");
+            //Alert();
         else
-        {            
-            if(nextIntentRoll <= 3)
-                Neutralize();
+        {
+            if (nextIntentRoll <= 3)
+                Animator.SetTrigger("Intent 1");
+            //Neutralize();
             else
-                Ram();            
+                Animator.SetTrigger("Intent 2");
+                //Ram();            
         }
 
         IntentsPerformed++;
