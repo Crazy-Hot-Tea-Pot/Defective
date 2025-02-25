@@ -4,7 +4,7 @@ using static Effects;
 
 [CreateAssetMenu(fileName = "NewDefenseChip", menuName = "Chip System/Defense Chip")]
 public class DefenseChip : NewChip
-{  
+{    
     [System.Serializable]
     public class DebuffInfo
     {
@@ -13,6 +13,7 @@ public class DefenseChip : NewChip
         public int upgradedAmountToRemoveBy;
         public bool removeAll;
     }
+    [Header("Defense chip")]
     /// <summary>
     /// How much shield the card will give.
     /// </summary>
@@ -106,6 +107,9 @@ public class DefenseChip : NewChip
             if (!IsUpgraded)
                 break;           
         }
+
+        //Play sound for activate
+        SoundManager.PlayFXSound(ChipActivate);
     }
 
     void OnValidate()

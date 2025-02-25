@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewAttackChip", menuName = "Chip System/Attack Chip")]
 public class AttackChip : NewChip
 {
+    [Header("Attack Chip")]
     /// <summary>
     /// Amount of Damage Chip will do.
     /// </summary>
@@ -51,6 +52,12 @@ public class AttackChip : NewChip
         }
 
         Target.TakeDamage(tempDamage);
+
+        //Play sound for damage
+        if (Target.Shield <= 0)
+            SoundManager.PlayFXSound(ChipActivate);
+        else
+            SoundManager.PlayFXSound(ChipHitShield);
 
         //Now to apply debuffs
         if (debuffStacks > 0)
