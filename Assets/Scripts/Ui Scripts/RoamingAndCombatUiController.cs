@@ -40,12 +40,13 @@ public class RoamingAndCombatUiController : UiController
     public GameObject EndTurn;
     public Button EndTurnButton;
     public GameObject CombatAnimation;
+    public GameObject DeathAnimation;
 
     // Start is called before the first frame update
     void Start()
     {
-        EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>().EndTurn(GameObject.FindGameObjectWithTag("Player")));
         EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().EndTurn());
+        EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>().EndTurn(GameObject.FindGameObjectWithTag("Player")));        
         
         EndTurn.SetActive(false);
         PlayerHandContainer.SetActive(false);
@@ -199,6 +200,37 @@ public class RoamingAndCombatUiController : UiController
         EquipmentButton.interactable = Interactable;
     }
 
+    public void UpdateGearButtonStates(int currentEnergy)
+    {
+        // Get all equipped items
+        Item armor = GearManager.Instance.GetEquippedItem(Item.ItemType.Armor);
+        Item weapon = GearManager.Instance.GetEquippedItem(Item.ItemType.Weapon);
+        Item equipment = GearManager.Instance.GetEquippedItem(Item.ItemType.Equipment);
+
+        // Check if each gear button should be enabled or disabled based on energy cost
+        ArmorButton.interactable = (armor != null && CanUseItem(armor, currentEnergy));
+        WeaponButton.interactable = (weapon != null && CanUseItem(weapon, currentEnergy));
+        EquipmentButton.interactable = (equipment != null && CanUseItem(equipment, currentEnergy));
+    }
+
+    /// <summary>
+    /// Checks if item can be used.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="currentEnergy"></param>
+    /// <returns></returns>
+    private bool CanUseItem(Item item, int currentEnergy)
+    {
+        if (item == null) return false;
+
+        int energyCost = 0;
+        foreach (ItemEffect effect in item.itemEffects)
+        {
+            energyCost += effect.energyCost - item.GetEnergyCostDecreaseBy();
+        }
+
+        return currentEnergy >= energyCost;
+    }
     /// <summary>
     /// play combat entrance animation and then continue.
     /// </summary>

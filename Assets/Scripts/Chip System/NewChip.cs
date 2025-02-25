@@ -149,6 +149,10 @@ public class NewChip : ScriptableObject
     [SerializeField]
     private TypeOfChips chipType;
 
+    [Header("Chip Sound")]
+    public SoundFX ChipActivate;
+    public SoundFX ChipHitShield;
+
     void OnEnable()
     {
         IsUpgraded = false;

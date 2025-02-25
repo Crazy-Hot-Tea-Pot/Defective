@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSkillChip", menuName = "Chip System/Skill Chip")]
 public class SkillChip : NewChip
 {
+    [Header("Skill Chip")]
     public SkillEffects specialEffect;
 
     public override bool IsUpgraded { 
@@ -31,11 +32,15 @@ public class SkillChip : NewChip
                 specialEffect.ApplyEffect(player);
             }
             Debug.Log(chipName + " triggered a special effect: " + specialEffect.name);
+
+            //Play sound for activate
+            SoundManager.PlayFXSound(ChipActivate);
         }
         else
         {
             Debug.LogWarning("No special effect assigned to this card.");
         }
+        
     }
 
     void OnValidate()

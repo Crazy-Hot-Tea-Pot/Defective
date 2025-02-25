@@ -192,8 +192,27 @@ public class Enemy : MonoBehaviour
         }
         set
         {
+            int newLayer;
             isTargeted = value;
-            TargetIcon.SetActive(value);
+            if (isTargeted)
+            {
+                newLayer = 9;
+            }
+            else
+            {
+                newLayer = 8;   
+            }
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = newLayer;
+
+                foreach (Transform grandchild in child.transform)
+                {
+                    grandchild.gameObject.layer = newLayer;
+                };
+            };
+
+            //TargetIcon.SetActive(value);
         }
     }
     #endregion
@@ -302,7 +321,20 @@ public class Enemy : MonoBehaviour
     [Range(0,100)]
     public int DroppedScrap;
 
+    protected (string intentText, IntentType intentType, int value) NextIntent
+    {
+        get
+        {
+            return nextIntent;
+        }
+        set
+        {
+            nextIntent = value;
+        }
+    }
+
     private float distanceToPlayer;
+    protected (string intentText, IntentType intentType, int value) nextIntent;
 
     void Awake()
     {
@@ -339,16 +371,23 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void CombatStart()
     {
+        NextIntent = GetNextIntent();
         UpdateIntentUI();
     }
 
     /// <summary>
-    /// Call at end of enemyies turn.
+    /// Call at end of enemiies turn.
     /// </summary>
     public virtual void EndTurn()
     {
         //Remove debuffs by 1
         RemoveEffect(Effects.Debuff.Drained, 1);        
+
+        //Assign new intent AFTER performing the current one
+        NextIntent = GetNextIntent();
+        UpdateIntentUI();
+
+        CombatController.EndTurn(this.gameObject);
     }
 
     /// <summary>
@@ -475,8 +514,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void UpdateIntentUI()
     {
-        var nextIntent = GetNextIntent();
-        thisEnemyUI.DisplayIntent(nextIntent.intentText, nextIntent.intentType, nextIntent.value);
+        thisEnemyUI.DisplayIntent(NextIntent.intentText, NextIntent.intentType, NextIntent.value);
     }
 
     /// <summary>
@@ -486,9 +524,8 @@ public class Enemy : MonoBehaviour
     protected virtual void PerformIntent()
     {
         if (this.gameObject != null)
-        {
-            CombatController.EndTurn(this.gameObject);
-            UpdateIntentUI();
+        {            
+            EndTurn();            
         }
     }
 
@@ -655,8 +692,6 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }
-
-        Debug.LogWarning($"[Enemy] Attempted to remove non-existent effect: {effect}");
     }
 
     #endregion

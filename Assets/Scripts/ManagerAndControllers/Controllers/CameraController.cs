@@ -173,7 +173,7 @@ public class CameraController : MonoBehaviour
             {
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
                 {
-                    if (hit.collider.CompareTag("Ground") && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming)
+                    if (hit.collider.CompareTag("Ground") && (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming || GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat))
                     {
                         OnResetCamera();
                     }

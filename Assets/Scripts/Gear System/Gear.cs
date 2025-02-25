@@ -107,22 +107,45 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
                 throw new NullReferenceException("No Item equipped.");
             else
             {
-                if (CombatController.Target == null)
+                //  THIS IS A TEMP FIX AND MUST BE DONE FOR CASES SO THE FIRST IF STATEMENT ALWAYS RUN NO MATTER THE MODE
+                if(GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
                 {
-                    Item.ItemActivate(Player.GetComponent<PlayerController>());
-                }
-                else if (PuzzleController.Target == null)
-                {
-                    //Don't want nulls in our itemactivate but don't have a use for them and I don't think it's valuable to warn the devs about
-                }
-                else if (PuzzleController.Target.tag == "Puzzle")
-                {
-                    Item.ItemActivate(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
+                    if (CombatController.Target == null)
+                    {
+                        Item.ItemActivate(Player.GetComponent<PlayerController>());
+                    }
+                    else
+                    {
+                        Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                    }
                 }
                 else
                 {
-                    Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                    if (PuzzleController.Target == null)
+                    {
+                        //Don't want nulls in our itemactivate but don't have a use for them and I don't think it's valuable to warn the devs about
+                    }
+                    else if (PuzzleController.Target.tag == "Puzzle")
+                    {
+                        Item.ItemActivate(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
+                    }
                 }
+                //if (CombatController.Target == null)
+                //{
+                //    Item.ItemActivate(Player.GetComponent<PlayerController>());
+                //}
+                //else if (PuzzleController.Target == null && GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
+                //{
+                //    //Don't want nulls in our itemactivate but don't have a use for them and I don't think it's valuable to warn the devs about
+                //}
+                //else if (PuzzleController.Target.tag == "Puzzle" && GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
+                //{
+                //    Item.ItemActivate(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
+                //}
+                //else
+                //{
+                //    Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                //}
             }
         }
         catch (NullReferenceException ex)

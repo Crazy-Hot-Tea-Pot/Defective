@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +20,7 @@ public class QuestUIHighlight : Quest
         {
             //Find the UIElementPath
             UIElement = GameObject.Find(UIElementPath);
-            Debug.Log(UIElement);
+            //Debug.Log(UIElement);
 
             //If we have a button to change
             if (UIElement.GetComponent<Button>() == true)

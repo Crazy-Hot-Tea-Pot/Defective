@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GarbageBot : Enemy
 {
+    // Store the roll for consistency
+    private int nextIntentRoll;
     public override void Start()
     {
         if (EnemyName == null)
@@ -14,26 +16,43 @@ public class GarbageBot : Enemy
 
         base.Start();
     }
+    public override void CombatStart()
+    {
+        //Roll once at the start
+        nextIntentRoll = Random.Range(1, 11);
+
+        base.CombatStart();
+    }
+    public override void EndTurn()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.EndTurn();
+    }
     protected override void PerformIntent()
     {
-        int tempRange = Random.Range(1, 11);
-
-        if (tempRange <= 3)
-            Compact();
-        else if (tempRange <= 6)
-            Shred();
-        else
-            PileOn();
+        switch (NextIntent.intentText)
+        {
+            case "Compact":
+                Compact();
+                break;
+            case "Shred":
+                Shred();
+                break;
+            case "PileOn":
+                PileOn();
+                break;
+            default:
+                Debug.LogWarning("Should never hit here!");
+                break;
+        }
 
         base.PerformIntent();
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        int tempRange = Random.Range(1, 11);
-
-        if (tempRange <= 3)
+        if (nextIntentRoll <= 3)
             return ("Compact", IntentType.Attack, 15);
-        else if (tempRange <= 6)
+        else if (nextIntentRoll <= 6)
             return ("Shred", IntentType.Attack, 7);
         else
             return ("Pile On", IntentType.Attack, 10);
