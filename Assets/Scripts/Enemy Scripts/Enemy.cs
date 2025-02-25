@@ -197,8 +197,26 @@ public class Enemy : MonoBehaviour
         }
         set
         {
+            int newLayer;
             isTargeted = value;
+            if (isTargeted)
+            {
+                newLayer = 9;
+            }
+            else
+            {
+                newLayer = 8;   
+            }
             TargetIcon.SetActive(value);
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = newLayer;
+
+                foreach (Transform grandchild in child.transform)
+                {
+                    grandchild.gameObject.layer = newLayer;
+                };
+            };
         }
     }
     #endregion
