@@ -207,7 +207,6 @@ public class Enemy : MonoBehaviour
             {
                 newLayer = 8;   
             }
-            TargetIcon.SetActive(value);
             foreach (Transform child in transform)
             {
                 child.gameObject.layer = newLayer;
@@ -217,6 +216,8 @@ public class Enemy : MonoBehaviour
                     grandchild.gameObject.layer = newLayer;
                 };
             };
+
+            //TargetIcon.SetActive(value);
         }
     }
     #endregion
