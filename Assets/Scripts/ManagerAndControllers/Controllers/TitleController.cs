@@ -16,15 +16,19 @@ public class TitleController : MonoBehaviour
     public VideoPlayer videoPlayer;
     public GameObject Screen;
     public TextMeshProUGUI TitleText;
-    // Time between glitches
-    [Range(0.0f,1.0f)]
-    [Tooltip("How often the glitch happens (increase this to slow down the effect)")]
-    public float glitchInterval = 0.5f;
-    // How long each glitch lasts
+
+    [Header("Title Effect Settings")]
+    [Tooltip("Switch between Glitch and Scramble effects.")]
+    public bool useScrambleEffect = false;
+
+    [Range(0.0f, 1.0f)]
+    [Tooltip("How often the effect happens (increase this to slow down the effect)")]
+    public float effectInterval = 0.5f;
+
     [Range(0.00f, 1.00f)]
-    [Tooltip("How long each glitch lasts (increase this to make glitches last longer)")]
-    public float glitchDuration = 0.10f;
-    // Max pixel offset
+    [Tooltip("How long each effect lasts (increase this to make effects last longer)")]
+    public float effectDuration = 0.15f;
+
     [Range(0f, 10f)]
     [Tooltip("How much the text shakes (reduce this for subtle movement)")]
     public float positionJitter = 1f;
@@ -119,9 +123,10 @@ public class TitleController : MonoBehaviour
         GameManager.Instance.RequestScene(Levels.Credits);
     }
 
-    public void StartGlitchEffect()
+    public void StartEffect()
     {
-        StartCoroutine(GlitchEffect());
+        StopCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
+        StartCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
     }
     /// <summary>
     /// Adds OnSelect listener to play button sound.
@@ -270,6 +275,8 @@ public class TitleController : MonoBehaviour
         videoPlayer.Stop();
         animator.SetTrigger("VideoFinish");
     }
+
+
     /// <summary>
     /// 20% chance to glitch each character.
     /// Replace with random ASCII character.
@@ -288,11 +295,43 @@ public class TitleController : MonoBehaviour
         }
         return new string(chars);
     }
+
+    private IEnumerator ScrambleEffect()
+    {
+        char[] scrambleChars = "0123456789ABCDEF@#$%&*<>?/\\|".ToCharArray();
+
+        while (true)
+        {
+            yield return new WaitForSeconds(effectInterval);
+            char[] chars = originalText.ToCharArray();
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (!char.IsWhiteSpace(chars[i]))
+                {
+                    char originalChar = chars[i];
+                    for (int j = 0; j < 5; j++)
+                    {
+                        chars[i] = scrambleChars[Random.Range(0, scrambleChars.Length)];
+                        TitleText.text = new string(chars);
+                        yield return new WaitForSeconds(effectDuration / 5f);
+                    }
+                    chars[i] = originalChar;
+                    TitleText.text = new string(chars);
+                }
+            }
+
+            Vector3 randomOffset = new Vector3(Random.Range(-positionJitter, positionJitter), Random.Range(-positionJitter, positionJitter), 0);
+            TitleText.rectTransform.anchoredPosition += new Vector2(randomOffset.x, randomOffset.y);
+            yield return new WaitForSeconds(effectDuration);
+            TitleText.rectTransform.anchoredPosition -= new Vector2(randomOffset.x, randomOffset.y);
+        }
+    }
     private IEnumerator GlitchEffect()
     {
         while (true) // Runs infinitely until title screen changes
         {
-            yield return new WaitForSeconds(glitchInterval);
+            yield return new WaitForSeconds(effectInterval);
 
             string glitchedText = GlitchText(originalText);           
             Vector3 randomOffset = new Vector3(Random.Range(-positionJitter, positionJitter), Random.Range(-positionJitter, positionJitter), 0);
@@ -302,7 +341,7 @@ public class TitleController : MonoBehaviour
             Vector2 offset2D = new Vector2(randomOffset.x, randomOffset.y);
             TitleText.rectTransform.anchoredPosition += offset2D;
 
-            yield return new WaitForSeconds(glitchDuration);
+            yield return new WaitForSeconds(effectDuration);
 
             TitleText.text = originalText;
             TitleText.rectTransform.anchoredPosition -= offset2D;

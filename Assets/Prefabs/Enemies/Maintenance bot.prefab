@@ -50,7 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
   AttackRange: 10
-  EnemyType: Maintenance bot
   thisEnemyUI: {fileID: 4405787257033179231}
   CombatController: {fileID: 0}
   animator: {fileID: 0}
@@ -367,6 +366,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3279173873547390297}
     m_Modifications:
+    - target: {fileID: 270392509558366676, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 270392509558366676, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 270392509558366676, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 270392509558366676, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -111.09
+      objectReference: {fileID: 0}
     - target: {fileID: 692259597026661380, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -511,6 +526,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5139836085644037944, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5146906263344973441, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -569,7 +588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -312.5
+      value: -293.75
       objectReference: {fileID: 0}
     - target: {fileID: 8622234643699543731, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Name

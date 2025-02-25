@@ -1573,7 +1573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8d9328398042643bfb471d4a371865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniSkip: 0
 --- !u!1 &1404316045857668505
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,8 +2616,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 219}
-  m_SizeDelta: {x: 1620, y: 100}
+  m_AnchoredPosition: {x: -1.6238, y: 219}
+  m_SizeDelta: {x: 1267.7864, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &436893643264853090
 CanvasRenderer:
@@ -2670,18 +2669,18 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 97690656
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 78.55
+  m_fontSize: 98.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
   m_fontSizeMax: 100
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
