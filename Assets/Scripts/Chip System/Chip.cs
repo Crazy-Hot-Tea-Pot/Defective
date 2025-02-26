@@ -66,7 +66,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             if (NewChip != null)
             {
-                ChipTitle = NewChip.chipName + " Chip";
+                ChipTitle = NewChip.chipName;// + " Chip";
                 this.gameObject.name = ChipTitle;
                 NewChip.ThisChip = this.gameObject;
                 // Set image to chip
@@ -331,6 +331,21 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         controller.ChipName.SetText(ChipTitle);
         controller.ChipImage.sprite = NewChip.chipImage;
+        switch (NewChip.ChipType)
+        {
+            case NewChip.TypeOfChips.Attack:
+                controller.ChipType.color = Color.red;
+                break;
+            case NewChip.TypeOfChips.Defense:
+                controller.ChipType.color = Color.blue;
+                break;
+            case NewChip.TypeOfChips.Skill:
+                controller.ChipType.color = Color.green;
+                break;
+            default:
+                controller.ChipType.color = Color.white;
+                break;
+        }
         controller.ChipType.SetText(NewChip.ChipType.ToString());
         controller.ChipDescription.SetText(NewChip.description);
 

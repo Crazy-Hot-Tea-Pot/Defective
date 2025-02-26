@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
         get;
         private set;
     }
+    public bool Debugging = false;
 
     public enum GameMode
     {

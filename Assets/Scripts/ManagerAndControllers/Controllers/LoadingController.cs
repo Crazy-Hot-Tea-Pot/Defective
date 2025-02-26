@@ -191,13 +191,30 @@ public class LoadingController : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false; // Prevents auto-activation
 
-        float elapsedTime = 0f;
-        float FillDuration = 5f;
-        while(elapsedTime < FillDuration)
+        if (GameManager.Instance.Debugging)
         {
-            elapsedTime += Time.deltaTime;
-            ProgressBar.fillAmount = Mathf.Lerp(0,1,elapsedTime/FillDuration);
-            yield return null;
+            while (!asyncLoad.isDone)
+            {
+                ProgressBar.fillAmount = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+
+                if (asyncLoad.progress >= 0.9f)
+                    asyncLoad.allowSceneActivation = true;
+
+                yield return null;
+            }
+        }
+        else
+        {
+            //Fake loading time with progress bar
+            float elapsedTime = 0f;
+            float FillDuration = 5f;
+
+            while (elapsedTime < FillDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                ProgressBar.fillAmount = Mathf.Lerp(0, 1, elapsedTime / FillDuration);
+                yield return null;
+            }
         }
 
         // Wait until the scene is fully loaded (progress reaches 90%)

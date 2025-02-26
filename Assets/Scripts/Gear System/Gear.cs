@@ -108,7 +108,6 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, I
             PerformButtonAction();
         }
     }
-
     public void UseItem()
     {
         try

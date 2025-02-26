@@ -108,16 +108,21 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         yield return null;
 
         controller.GearName.SetText(Item.itemName);
-        controller.GearDescription.SetText(Item.itemDescription);
+        //controller.GearDescription.SetText(Item.itemDescription);
         controller.GearImage.sprite = Item.itemImage;
         controller.GearType.SetText(Item.itemType.ToString());
+
+        string gearDesriptionText="";
         foreach(var effect in Item.itemEffects)
         {
-            GameObject temp = null;
-            temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);
-            temp.GetComponent<TextMeshProUGUI>().SetText(effect.ItemEffectDescription);
+            gearDesriptionText += effect.ItemEffectDescription;            
+            gearDesriptionText += "\n=====\n";
+            //GameObject temp = null;
+            //temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);
+            //temp.GetComponent<TextMeshProUGUI>().SetText(effect.ItemEffectDescription);
         }
-        
+        controller.GearDescription.SetText(gearDesriptionText);
+
 
         //Animate
 
