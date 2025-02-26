@@ -574,7 +574,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual IEnumerator PrepareToEndTurn()
     {
-
         AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
 
 
