@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
+public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, IPointerEnterHandler, IPointerExitHandler
 {
     public PolygonCollider2D polygonCollider;
     public CombatController CombatController;
@@ -13,6 +14,8 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
     public GameObject Player;
     public Button Button;
     public Image GearImage;
+    public GameObject GearTip;
+    public TextMeshProUGUI GearTipText;
 
     public Item Item
     {
@@ -79,7 +82,21 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
         // Check if the world point is inside the Polygon Collider
         return polygonCollider != null && polygonCollider.OverlapPoint(new Vector2(worldPoint.x, worldPoint.y));
     }
-
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (Item != null)
+        {
+            GearTipText.SetText(item.itemDescription);
+            GearTip.SetActive(true);
+        }
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (GearTip.activeInHierarchy)
+        {
+            GearTip.SetActive(false);
+        }
+    }
     // Handle clicks within the collider area
     public void OnPointerClick(PointerEventData eventData)
     {
