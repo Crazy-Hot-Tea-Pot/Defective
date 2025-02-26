@@ -6,6 +6,10 @@ public class SecurityDrone : Enemy
 
     public GameObject AdditionalDrone;
 
+    public SoundFX NeutralizeSound;
+    public SoundFX RamSound;
+    public SoundFX AlertSound;
+
     [SerializeField]
     private int intentsPerformed;
 
@@ -107,29 +111,34 @@ public class SecurityDrone : Enemy
                 break;
 
         }
-
     }
     protected override void PerformIntent()
     {
+        base.PerformIntent();
 
         if (IntentsPerformed > 5 && NumberOfAlertDrones < 3)
-            Animator.SetTrigger("Intent 3");
+        {
             //Alert();
+            Animator.SetTrigger("Intent 3");
+            StartCoroutine(PrepareToEndTurn());
+        }
         else
         {
             if (nextIntentRoll <= 3)
+            {
                 Animator.SetTrigger("Intent 1");
-            //Neutralize();
+                //Neutralize();
+                StartCoroutine(PrepareToEndTurn());
+            }
             else
+            {
                 Animator.SetTrigger("Intent 2");
                 //Ram();            
+                StartCoroutine(PrepareToEndTurn());
+            }
         }
 
-        IntentsPerformed++;
-
-        //THIS IS NEEDED DON'T REMOVE. don't want that again.
-        base.PerformIntent();
-
+        IntentsPerformed++;               
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
@@ -154,6 +163,7 @@ public class SecurityDrone : Enemy
     private void Ram()
     {
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(12);
+        SoundManager.PlayFXSound(RamSound);
     }
     /// <summary>
     /// Deals 7 Damage.
@@ -163,7 +173,7 @@ public class SecurityDrone : Enemy
     private void Neutralize()
     {
         // Play Sound
-        SoundManager.PlayFXSound(SoundFX.NeutralizeSecurityDrone,this.gameObject.transform);
+        SoundManager.PlayFXSound(NeutralizeSound);
 
         Debug.Log(this.gameObject.name + " is Neutralizing.");
 
@@ -234,7 +244,7 @@ public class SecurityDrone : Enemy
                 CombatController.AddEnemyToCombat(additionalDrone);
                 NumberOfAlertDrones++;
 
-                SoundManager.PlayFXSound(SoundFX.AlertSecurityDrone);
+                SoundManager.PlayFXSound(AlertSound);
             }
             else
             {

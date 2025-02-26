@@ -33,26 +33,50 @@ public class TicketVendor : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
+    public override void PerformIntentTrigger(string intentName)
+    {
+        base.PerformIntentTrigger(intentName);
+
+        switch (intentName)
+        {
+            case "Halt": 
+                Halt(); 
+                break;
+            case "Confiscate": 
+                Confiscate(); 
+                break;
+            case "Redirect": 
+                Redirect(); 
+                break;
+            default:
+                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+                break;
+        }
+    }
     protected override void PerformIntent()
     {
+        base.PerformIntent();
 
         switch (NextIntent.intentText)
         {
             case "Halt":
-                Halt();
+                //Halt();
+                Animator.SetTrigger("Intent 1");
                 break;
             case "Confiscate":
-                Confiscate();
+                //Confiscate();
+                Animator.SetTrigger("Intent 2");
                 break;
             case "Redirect":
-                Redirect();
+                //Redirect();
+                Animator.SetTrigger("Intent 3");
                 break;
             default:
                 Debug.LogWarning("Shouldn't hit here!");
                 break;
         }
 
-        base.PerformIntent();
+        StartCoroutine(PrepareToEndTurn());
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {

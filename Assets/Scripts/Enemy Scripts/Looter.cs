@@ -43,25 +43,49 @@ public class Looter : Enemy
 
         base.Start();
     }
+    public override void PerformIntentTrigger(string intentName)
+    {
+        base.PerformIntentTrigger(intentName);
 
+        switch (intentName)
+        {
+            case "Swipe":
+                Swipe();
+                break;
+            case "Shroud":
+                Shroud();
+                break;
+            case "Escape":
+                Escape();
+                break;
+            default:
+                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+                break;
+        }
+    }
     protected override void PerformIntent()
-    {    
+    {
+        base.PerformIntent();
+
         // Since 100% on first chance just made it this way.
 
         if (swipeCount < 3) // First three turns are Swipe
         {
-            Swipe();
+            //Swipe();
+            Animator.SetTrigger("Intent 1");
         }
         else if (swipeCount == 3 && !IsShrouded) // After three Swipes, do Shroud
         {
-            Shroud();
+            //Shroud();
+            Animator.SetTrigger("Intent 2");
         }
         else if (IsShrouded) // After Shroud, perform Escape
         {
-            Escape();
+            //Escape();
+            Animator.SetTrigger("Intent 3");
         }
 
-        base.PerformIntent();
+        StartCoroutine(PrepareToEndTurn());
     }
     /// <summary>
     /// Return all stolen Scraps upon killing

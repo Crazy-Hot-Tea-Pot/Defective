@@ -9,7 +9,9 @@ public class Inspector : Enemy
     }
     protected override void PerformIntent()
     {
+        base.PerformIntent();
 
+        StartCoroutine(PrepareToEndTurn());
     }
 
 }

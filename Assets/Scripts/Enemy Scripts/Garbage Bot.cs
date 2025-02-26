@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GarbageBot : Enemy
@@ -28,25 +26,46 @@ public class GarbageBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
+    public override void PerformIntentTrigger(string intentName)
+    {
+        base.PerformIntentTrigger(intentName);
+
+        switch (intentName)
+        {
+            case "Compact": 
+                Compact(); 
+                break;
+            case "Shred": 
+                Shred(); 
+                break;
+            case "PileOn": 
+                PileOn(); 
+                break;
+        }
+    }
     protected override void PerformIntent()
     {
+        base.PerformIntent();
         switch (NextIntent.intentText)
         {
             case "Compact":
-                Compact();
+                    //Compact();
+                    Animator.SetTrigger("Intent 1");
                 break;
             case "Shred":
-                Shred();
+                    //Shred();
+                    Animator.SetTrigger("Intent 2");
                 break;
             case "PileOn":
-                PileOn();
+                //PileOn();
+                Animator.SetTrigger("Intent 3");
                 break;
             default:
                 Debug.LogWarning("Should never hit here!");
                 break;
         }
 
-        base.PerformIntent();
+        StartCoroutine(PrepareToEndTurn());
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {

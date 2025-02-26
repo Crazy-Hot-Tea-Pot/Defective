@@ -54,6 +54,7 @@ public class Enemy : MonoBehaviour
     }
 
     [Header("Enemy Components")]
+    public GameObject EnemyUIObject;
     /// <summary>
     /// reference to enemy canvas.
     /// </summary>
@@ -410,7 +411,7 @@ public class Enemy : MonoBehaviour
 
         //Remove Buffs
         RemoveEffect(Effects.Buff.Power, 1);
-        RemoveEffect(Effects.Buff.Galvanize, 1);        
+        RemoveEffect(Effects.Buff.Galvanize, 1);
 
         //Look at Player
         //this.gameObject.transform.LookAt(EnemyTarget.transform);
@@ -418,8 +419,8 @@ public class Enemy : MonoBehaviour
         //Check if Player is in range
         //if (DistanceToPlayer <= AttackRange)
         //{
-            //agent.ResetPath();
-            PerformIntent();
+        //agent.ResetPath();
+        PerformIntent();
         //}
         //else
         //{
@@ -512,10 +513,13 @@ public class Enemy : MonoBehaviour
     /// <param name="shieldAmount"></param>
     public virtual void ApplyShield(int shieldAmount)
     {
+        Animator.SetTrigger("Shield");
+
         //Restore ShieldBar
         Shield += shieldAmount;
 
         Debug.Log("Shield Restored: " + shield);
+
     }
 
     /// <summary>
@@ -532,10 +536,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected virtual void PerformIntent()
     {
-        if (this.gameObject != null)
-        {            
-            EndTurn();            
-        }
+        EnemyUIObject.SetActive(false);
     }
     public virtual void PerformIntentTrigger(string intentName)
     {
@@ -571,8 +572,27 @@ public class Enemy : MonoBehaviour
         return ("Unknown", IntentType.None, 0);
     }
 
+    protected virtual IEnumerator PrepareToEndTurn()
+    {
 
-    #endregion
+        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+
+
+        while (stateInfo.normalizedTime < 1f)
+        {
+            stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+
+        EnemyUIObject.SetActive(true);
+
+        yield return new WaitForEndOfFrame();
+
+        Debug.Log("Reactive UI");
+
+
+        EndTurn();
+    }
 
     protected IEnumerator WaitForAnimation(string triggerName, Action onComplete)
     {
@@ -584,12 +604,13 @@ public class Enemy : MonoBehaviour
 
         while (stateInfo.normalizedTime < 1f)
         {
-            stateInfo=Animator.GetCurrentAnimatorStateInfo(0);
+            stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
             yield return null;
         }
 
         onComplete?.Invoke();
     }
+    #endregion   
 
     #region Effects
 

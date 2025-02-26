@@ -99,15 +99,9 @@ public class UiManager : MonoBehaviour
     {
         GetCurrentController<RoamingAndCombatUiController>().ChangeEndButtonVisibility(Visiable);
     }
-    public void EndTurnButtonInteractable(bool Interact)
+    public void ChangeCombatScreenTemp(bool Interact)
     {
-        GetCurrentController<RoamingAndCombatUiController>().EndTurnButton.interactable = Interact;
-    }
-    public void ReDrawPlayerhand()
-    {
-        StopCoroutine(GetCurrentController<RoamingAndCombatUiController>().RedrawPlayerHand());
-
-        StartCoroutine(GetCurrentController<RoamingAndCombatUiController>().RedrawPlayerHand());
+        GetCurrentController<RoamingAndCombatUiController>().ChangeCombatScreenTemp(Interact);
     }
     /// <summary>
     /// Change the state of the buttons on combat wheel

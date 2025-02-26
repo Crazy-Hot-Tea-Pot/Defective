@@ -171,10 +171,7 @@ public class CombatController : MonoBehaviour
     /// </summary>
     /// <param name="combatant">The combatant that ended their turn.</param>
     public void EndTurn(GameObject combatant)
-    {
-        if (combatant == Player)        
-            UiManager.Instance.EndTurnButtonInteractable(false);
-
+    {                    
         StartTurn();
     }
 
@@ -252,18 +249,14 @@ public class CombatController : MonoBehaviour
         {
             EndRound();
             return;
-        }
-
-        RoundCounter++;
+        }        
 
         CurrentCombadant = turnQueue.Dequeue();
 
         if (CurrentCombadant == Player)
         {
 
-            UiManager.Instance.EndTurnButtonInteractable(true);
-
-            UiManager.Instance.ReDrawPlayerhand();            
+            UiManager.Instance.ChangeCombatScreenTemp(true);                        
 
             player.GetComponent<PlayerController>().StartTurn();
         }
@@ -297,7 +290,9 @@ public class CombatController : MonoBehaviour
         {
             turnQueue.Enqueue(enemy);
         }
-        
+
+        RoundCounter++;
+
         StartTurn();
     }
 

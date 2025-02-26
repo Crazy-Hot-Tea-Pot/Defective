@@ -37,22 +37,64 @@ public class GangLeader : Enemy
         base.Start();
     }
 
+    public override void PerformIntentTrigger(string intentName)
+    {
+        base.PerformIntentTrigger(intentName);
+
+        switch (intentName)
+        {
+            case "Threaten": 
+                Threaten(); 
+                break;
+            case "Intimidate": 
+                Intimidate(); 
+                break;
+            case "Disorient": 
+                Disorient(); 
+                break;
+            case "Cower": 
+                Cower(); 
+                break;
+            default:
+                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+                break;
+        }
+    }
+
     protected override void PerformIntent()
     {
-        if(Looter1.activeInHierarchy || Looter2.activeInHierarchy)
+        base.PerformIntent();
+
+        if (Looter1.activeInHierarchy || Looter2.activeInHierarchy)
         {
             if (Random.Range(1, 11) < 5)
-                Threaten();
+            {
+                //Threaten();
+                Animator.SetTrigger("Intent 1");
+                StartCoroutine(PrepareToEndTurn());
+            }                
             else
-                Intimidate();
+            {
+                //Intimidate();
+                Animator.SetTrigger("Intent 2");
+                StartCoroutine(PrepareToEndTurn());
+            }
         }
         //Once Looters are defeated
         else
         {
             if (Random.Range(1, 11) < 4)
-                Disorient();
+            {
+                //Disorient();
+                Animator.SetTrigger("Intent 3");
+                StartCoroutine(PrepareToEndTurn());
+            }
             else
-                Cower();
+            {
+                //Cower();
+                Animator.SetTrigger("Intent 4");
+                StartCoroutine(PrepareToEndTurn());
+            }
         }
     }
     /// <summary>

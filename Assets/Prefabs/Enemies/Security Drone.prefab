@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
   AttackRange: 10
+  EnemyUIObject: {fileID: 9223046558604698389}
   thisEnemyUI: {fileID: 6396867329242295756}
   CombatController: {fileID: 0}
   agent: {fileID: 0}
@@ -65,6 +66,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 973ffdfa52080df418e8e09c0fc909fa, type: 2}
   DroppedScrap: 15
   AdditionalDrone: {fileID: 8879099704411737662}
+  NeutralizeSound: 20
+  RamSound: 21
+  AlertSound: 19
   intentsPerformed: 0
   numberOfAlertDrones: 0
   isAlertDrone: 0
@@ -348,12 +352,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5805350694152790122, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
   m_PrefabInstance: {fileID: 600811925751893414}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 9223046558604698389}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d69068a79f2f355499df4f6ed53a8c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &9223046558604698389 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8622234643699543731, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+  m_PrefabInstance: {fileID: 600811925751893414}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5667916422162904298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -449,7 +458,7 @@ Animator:
   m_GameObject: {fileID: 4785376030717266363}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 1cbfbe58978cf0a479523da158cd494d, type: 2}
+  m_Controller: {fileID: 22100000, guid: 6421a4180c2a22048ae43526c873043c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

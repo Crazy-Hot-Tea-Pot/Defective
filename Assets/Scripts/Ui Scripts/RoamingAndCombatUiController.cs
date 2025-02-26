@@ -46,6 +46,7 @@ public class RoamingAndCombatUiController : UiController
     void Start()
     {
         EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().EndTurn());
+        EndTurnButton.onClick.AddListener(() => ChangeCombatScreenTemp(false));
         EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>().EndTurn(GameObject.FindGameObjectWithTag("Player")));        
         
         EndTurn.SetActive(false);
@@ -71,30 +72,23 @@ public class RoamingAndCombatUiController : UiController
         Debug.Log("RoamingAndCombatUiController initialized");        
     }
 
-    /// <summary>
-    /// Close hand and reopen with new cards or just draw hand with cards.
-    /// </summary>
-    public IEnumerator RedrawPlayerHand()
-    {
-        if(PlayerHandContainer.GetComponent<PlayerHandContainer>().PanelIsVisible)
-            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
-
-        yield return new WaitForSeconds(1f);
-
-        ChipManager.Instance.RefreshPlayerHand();
-
-        yield return new WaitForSeconds(1f);
-
-        if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-            yield break;
-
-        if (!PlayerHandContainer.GetComponent<PlayerHandContainer>().PanelIsVisible && ChipManager.Instance.PlayerHand.Count != 0)
-            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
-    }
 
     public void ChangeEndButtonVisibility(bool visibility)
     {
         EndTurn.SetActive(visibility);
+    }
+    /// <summary>
+    /// Temp remove combat screen
+    /// </summary>
+    /// <param name="isInteractable"></param>
+    public void ChangeCombatScreenTemp(bool isInteractable)
+    {
+        EndTurnButton.interactable = isInteractable;
+        // Proceed with enabling combat UI
+        PlayerHandContainer.SetActive(isInteractable);
+        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
+
+        StartCoroutine(RedrawPlayerHand());
     }
 
     /// <summary>
@@ -212,7 +206,26 @@ public class RoamingAndCombatUiController : UiController
         WeaponButton.interactable = (weapon != null && CanUseItem(weapon, currentEnergy));
         EquipmentButton.interactable = (equipment != null && CanUseItem(equipment, currentEnergy));
     }
+    /// <summary>
+    /// Close hand and reopen with new cards or just draw hand with cards.
+    /// </summary>
+    private IEnumerator RedrawPlayerHand()
+    {
+        if (PlayerHandContainer.GetComponent<PlayerHandContainer>().PanelIsVisible)
+            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
 
+        yield return new WaitForSeconds(1f);
+
+        ChipManager.Instance.RefreshPlayerHand();
+
+        yield return new WaitForSeconds(1f);
+
+        if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
+            yield break;
+
+        //if (!PlayerHandContainer.GetComponent<PlayerHandContainer>().PanelIsVisible && ChipManager.Instance.PlayerHand.Count != 0)
+        //    PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
+    }
     /// <summary>
     /// Checks if item can be used.
     /// </summary>

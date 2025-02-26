@@ -52,27 +52,51 @@ public class MaintenanceBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
+    public override void PerformIntentTrigger(string intentName)
+    {
+        base.PerformIntentTrigger(intentName);
+
+        switch (intentName)
+        {
+            case "Repair":
+                Repair();
+                repairUsed = true;
+                break;
+            case "Galvanize":
+                Galvanize();
+                break;
+            case "Disassemble":
+                Disassemble();
+                break;
+            default:
+                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+                break;
+        }
+    }
     protected override void PerformIntent()
     {
+        base.PerformIntent();
 
         if (CurrentHP <= maxHP / 2 && !RepairUsed)
         {
-            Repair();
-            RepairUsed = true;
+            //Repair();
+            //RepairUsed = true;
+            Animator.SetTrigger("Intent 3");
         }
         else
         {           
             if (nextIntentRoll <= 4)
             {
-                Galvanize();                
+                //Galvanize();
+                Animator.SetTrigger("Intent 1");
             }
             else
             {
-                Disassemble();
+                //Disassemble();
+                Animator.SetTrigger("Intent 2");
             }
         }
-
-        base.PerformIntent();
+        StartCoroutine(PrepareToEndTurn());
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
