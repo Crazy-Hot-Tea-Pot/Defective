@@ -15,7 +15,7 @@ MonoBehaviour:
   ItemTeir: 0
   itemName: Punch
   itemDescription: Spend 5 Energy, and do 1 Damage.
-  itemImage: {fileID: 21300000, guid: 0c9e9279b7094034ebceaf01e189b598, type: 3}
+  itemImage: {fileID: 21300000, guid: 39c5d1485cb89bc4b9d329546effce5e, type: 3}
   itemType: 0
   itemEffects:
   - {fileID: 11400000, guid: ca15e08f36de01341978e1f2015a9587, type: 2}

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/UIImages/Old UI/punch.png.meta
 guid: e0843e1052b3914478180501fe501514
+========
+guid: d5b51320dbdaeb04eac7f64e44514f79
+>>>>>>>> main:Assets/UIImages/Abilities/Assets/NewAssets/PowerBooster 1.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -42519,8 +42519,8 @@ MonoBehaviour:
   CombatTransparicy: 1
   areaSize: {x: 20, y: 15, z: 25}
   playerPositionXZOffset: {x: 0.2, y: -7.15}
-  cameraPositionOffset: {x: -1.57, y: 0.28, z: -12.29}
-  cameraTargetPositionOffset: {x: 0.09, y: -11.11, z: 2.12}
+  cameraPositionOffset: {x: -1.57, y: -0.73, z: -12.29}
+  cameraTargetPositionOffset: {x: 0.09, y: -6.62, z: 2.12}
   CombatArea: {fileID: 7223975909412565546}
   zoneCollider: {fileID: 9128834500601315863}
   enemyLayer:
@@ -42624,7 +42624,7 @@ Transform:
   m_GameObject: {fileID: 6690165551631859944}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9.2, z: 0}
+  m_LocalPosition: {x: 0, y: -6.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42689,7 +42689,7 @@ Transform:
   m_GameObject: {fileID: 4636356569830699340}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9.46, z: 0}
+  m_LocalPosition: {x: 0, y: -6.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42732,7 +42732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.27999997
+      value: -0.73
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.z
@@ -42740,19 +42740,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.97694564
+      value: 0.9978876
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.20565094
+      value: 0.030584875
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.056085523
+      value: 0.057287797
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.011806224
+      value: -0.0017558496
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -42818,8 +42818,8 @@ MonoBehaviour:
   CombatTransparicy: 1
   areaSize: {x: 20, y: 15, z: 20}
   playerPositionXZOffset: {x: -7.38, y: 0}
-  cameraPositionOffset: {x: -9.22, y: -2.1, z: 2.81}
-  cameraTargetPositionOffset: {x: 0, y: -9.46, z: 0}
+  cameraPositionOffset: {x: -15.32, y: -2.1, z: 2.81}
+  cameraTargetPositionOffset: {x: 0, y: -6.19, z: 0}
   CombatArea: {fileID: 4918177687551761977}
   zoneCollider: {fileID: 6823082906046017028}
   enemyLayer:
@@ -42856,19 +42856,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.74607253
+      value: 0.75036705
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.091091156
+      value: -0.043256633
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6547425
+      value: -0.65851134
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0799403
+      value: -0.0379614
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -42979,7 +42979,7 @@ Transform:
   m_GameObject: {fileID: 6942284396624551263}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09000015, y: -11.11, z: 2.12}
+  m_LocalPosition: {x: 0.09000015, y: -6.62, z: 2.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43033,7 +43033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.22
+      value: -15.32
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.y
@@ -43045,19 +43045,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.59089065
+      value: 0.6427145
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07128586
+      value: -0.018009378
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.79781127
+      value: 0.76559365
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.09624905
+      value: 0.021452554
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -43124,7 +43124,7 @@ MonoBehaviour:
   areaSize: {x: 20, y: 15, z: 20}
   playerPositionXZOffset: {x: 7.5, y: 0}
   cameraPositionOffset: {x: 8.4, y: -2.1, z: -1.1}
-  cameraTargetPositionOffset: {x: 0, y: -9.2, z: 0}
+  cameraTargetPositionOffset: {x: 0, y: -6.12, z: 0}
   CombatArea: {fileID: 6399469038612410269}
   zoneCollider: {fileID: 4773796240661258144}
   enemyLayer:

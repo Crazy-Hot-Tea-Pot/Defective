@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: d9bc3337081eab347b70d1d60022f710
+<<<<<<<< HEAD:Assets/UIImages/Old UI/punch.png.meta
+guid: e0843e1052b3914478180501fe501514
+========
+guid: d5b51320dbdaeb04eac7f64e44514f79
+>>>>>>>> main:Assets/UIImages/Abilities/Assets/NewAssets/PowerBooster 1.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -82,19 +86,6 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
