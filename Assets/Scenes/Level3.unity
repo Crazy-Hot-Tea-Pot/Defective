@@ -20381,8 +20381,8 @@ MonoBehaviour:
   CombatTransparicy: 1
   areaSize: {x: 20, y: 15, z: 15}
   playerPositionXZOffset: {x: 7.62, y: -4.91}
-  cameraPositionOffset: {x: 9.6, y: -2.9, z: 6.36}
-  cameraTargetPositionOffset: {x: -0.03, y: -9.25, z: 0}
+  cameraPositionOffset: {x: 9.6, y: -2.9, z: -7.38}
+  cameraTargetPositionOffset: {x: -0.03, y: -9.85, z: 0}
   CombatArea: {fileID: 6928754125826825549}
   zoneCollider: {fileID: 8851671578262498672}
   enemyLayer:
@@ -20496,23 +20496,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.3600006
+      value: -7.38
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.472961
+      value: 0.8938922
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.027568977
+      value: 0.07137663
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.8791597
+      value: -0.44115898
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.051246364
+      value: 0.035226215
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20627,7 +20627,7 @@ Transform:
   m_GameObject: {fileID: 7219450634551358008}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.030000687, y: -9.25, z: 0}
+  m_LocalPosition: {x: -0.030000687, y: -9.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
