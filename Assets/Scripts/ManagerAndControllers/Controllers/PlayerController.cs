@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -162,6 +163,8 @@ public class PlayerController : MonoBehaviour
     public float doubleClickTime = 0.3f; 
     private float lastClickTime;
     public SoundFX SoundWhenPlayerClicks;
+
+    private Coroutine rotateCoroutine;
 
 
     [Header("Status Effects")]
@@ -858,17 +861,30 @@ public class PlayerController : MonoBehaviour
     {
         agent.SetDestination(TargetPosition);
     }
-    public IEnumerator SmoothRoatePlayerToTarget(Vector3 target)
+    public void StartSmoothRotate(Vector3 targetPosition)
     {
-        target.y = 0;
+        if (rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);
 
-        while (target.magnitude > 0.1f)
+        rotateCoroutine = StartCoroutine(SmoothRoatePlayerToTarget(targetPosition));
+    }
+    private IEnumerator SmoothRoatePlayerToTarget(Vector3 target)
+    {
+        // Keep rotation only on the horizontal axis
+        target.y = transform.position.y;
+
+        Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
+
+        // Loop until the rotation is almost complete
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(target);
+            // 180 degrees per second rotation speed
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 180f);
             yield return null;
-            // Smooth rotation
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
+
+        // Ensure final rotation is exactly at the target
+        transform.rotation = targetRotation;
     }
     /// <summary>
     /// Totate to Target

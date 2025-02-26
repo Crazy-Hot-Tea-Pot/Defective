@@ -423,8 +423,7 @@ public class TerminalController : MonoBehaviour
         IsInteractingWithMe = true;
 
         //Rotate player
-        StartCoroutine(GameObject.FindGameObjectWithTag("Player")
-        .GetComponent<PlayerController>().SmoothRoatePlayerToTarget(Camera.FirstPersonCamera.transform.position));
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().StartSmoothRotate(DefaultScreen.transform.position);
 
         //Change player Camera
         Camera.SwitchCamera(CameraController.CameraState.FirstPerson);
