@@ -15,7 +15,7 @@ MonoBehaviour:
   ItemTeir: 0
   itemName: Power Booster
   itemDescription: Spend 30 Energy and gain 1 Power
-  itemImage: {fileID: 21300000, guid: d5b51320dbdaeb04eac7f64e44514f79, type: 3}
+  itemImage: {fileID: 21300000, guid: 106bfc780d3de39469518220a8a621b3, type: 3}
   itemType: 2
   itemEffects:
   - {fileID: 11400000, guid: fa8285e41d193e44cbd4982938f5fef7, type: 2}
