@@ -6,35 +6,37 @@ public class FXPlayerToLinkAnimation : MonoBehaviour
     public PlayerController PlayerController;
 
     public void CustomPlayFootSteps()
-    {
-        // Randomly select a footstep sound
-        int randomIndex = Random.Range(1, 6);
-        switch (randomIndex)
-        {
-            case 1:
-                PlaySound_Footstep();
-                break;
-            case 2:
-                PlaySound_Footstep1();
-                break;
-            case 3:
-                PlaySound_Footstep2();
-                break;
-            case 4:
-                PlaySound_Footstep3();
-                break;
-            case 5:
-                PlaySound_Footstep4();
-                break;
-            case 6:
-                PlaySound_Footstep5();
-                break;
-        }
-        //ASK LAY IF TO PUT DELAY, OR AT SAME TIME 
+    {        
         //If help is less than 35% play another audio
         if (PlayerController.Health <= PlayerController.MaxHealth * 0.35f)
         {
             SoundManager.PlayFXSound(SoundFX.DEFECTION_Glitch);
+        }
+        else
+        {
+            // Randomly select a footstep sound
+            int randomIndex = Random.Range(1, 6);
+            switch (randomIndex)
+            {
+                case 1:
+                    PlaySound_Footstep();
+                    break;
+                case 2:
+                    PlaySound_Footstep1();
+                    break;
+                case 3:
+                    PlaySound_Footstep2();
+                    break;
+                case 4:
+                    PlaySound_Footstep3();
+                    break;
+                case 5:
+                    PlaySound_Footstep4();
+                    break;
+                case 6:
+                    PlaySound_Footstep5();
+                    break;
+            }
         }
     }
 

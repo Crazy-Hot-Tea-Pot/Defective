@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static GameData;
 
 public class StoryManager : MonoBehaviour
 {
@@ -30,10 +33,6 @@ public class StoryManager : MonoBehaviour
     {
         get
         {
-            if (currentLevel == null)
-            {
-                Debug.LogError("StoryManager: Current level is null!");
-            }
             return currentLevel;
         }
         private set
@@ -53,6 +52,15 @@ public class StoryManager : MonoBehaviour
         }
     }
 
+    public IReadOnlyList<Story> AllStories
+    {
+        get
+        {
+            return allStories;
+        }
+    } 
+
+    private List<Story> allStories = new();
     private static StoryManager instance;
     private Story currentStory;
     private LevelDefinition currentLevel;
@@ -64,6 +72,7 @@ public class StoryManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadAllStories();
         }
         else
         {
@@ -75,15 +84,10 @@ public class StoryManager : MonoBehaviour
     {
         GameManager.Instance.OnSceneChange += SceneChange;
     }
-
     /// <summary>
-    /// Loads a story from resources and sets teh current level
+    /// Loads a story from resources and sets the correct level based on saved progress.
     /// </summary>
-    /// <param name="storyName"></param>
-    public void LoadStory(string storyName)
-    {
-        Debug.LogError("Nothing in here, Jayce you forgot me!");
-    }
+    /// <param name="story"></param>
     public void LoadStory(Story story)
     {
         CurrentStory = story;
@@ -97,22 +101,59 @@ public class StoryManager : MonoBehaviour
     {
         return currentLevel;
     }
-
     /// <summary>
     /// Loads the saved story progress from DataManager, sets currentStory & currentLevel accordingly.
     /// </summary>
     public void LoadStoryProgress()
     {
-        var sp = DataManager.Instance.CurrentGameData.storyProgress;
-        if (!string.IsNullOrEmpty(sp.storyName))
-        {
-            LoadStory(sp.storyName);
+        if (AllStories.Count == 0) {
+            Debug.LogWarning("No Stories loaded. Will attempt to load again.");
+            LoadAllStories();
         }
-        // 
-        // Then find the matching LevelDefinition in currentStory 
-        // and set currentLevel to it, if it exists.
-    }
 
+        StoryProgress StoryProgress = DataManager.Instance.CurrentGameData.storyProgress;
+
+        if (!string.IsNullOrEmpty(StoryProgress.storyName))
+        {
+            Story loadingStory = AllStories.FirstOrDefault(s => s.storyName == StoryProgress.storyName);
+
+            if (loadingStory == null)
+            {
+                Debug.LogError($"Story '{StoryProgress.storyName}' not found in loaded stories.");
+                return;
+            }
+
+
+            //New isntance to avoid modifying the original sriptableObject
+            CurrentStory = Instantiate(loadingStory);
+
+            //Restore `isCompleted` states
+            foreach (var savedLevel in StoryProgress.levels)
+            {
+                LevelDefinition matchingLevel = CurrentStory.levels.FirstOrDefault(l => l.uniqueLevelID == savedLevel.uniqueLevelID);
+                if (matchingLevel != null)
+                {
+                    matchingLevel.isCompleted = savedLevel.isCompleted;
+                }
+            }
+
+            //Fix: Use `FindLevelRecursive()` to find `currentLevelUniqueID`
+            CurrentLevel = FindLevelRecursive(CurrentStory.levels[0], StoryProgress.currentLevelUniqueID);
+
+            if (CurrentLevel == null)
+            {
+                Debug.LogWarning($"Could not determine last played level. Defaulting to first level.");
+                CurrentLevel = CurrentStory.levels[0];
+            }
+
+            StoryCompleted = StoryProgress.isStoryComplete;
+        }
+        else
+        {
+            Debug.LogWarning("No story name found in saved progress.");
+            StoryCompleted = false;
+        }
+    }
     /// <summary>
     /// Saves current progress to DataManager’s GameData.
     /// Usually called right after changing levels or completing objectives.
@@ -120,7 +161,22 @@ public class StoryManager : MonoBehaviour
     public void SaveStoryProgress()
     {
         DataManager.Instance.CurrentGameData.storyProgress.storyName = currentStory ? currentStory.storyName : "";
-        DataManager.Instance.CurrentGameData.storyProgress.currentLevel = currentLevel?.levelID ?? Levels.Title;
+        DataManager.Instance.CurrentGameData.storyProgress.currentLevelUniqueID = currentLevel?.uniqueLevelID ?? "";
+        DataManager.Instance.CurrentGameData.storyProgress.isStoryComplete = storyComplete;
+
+        DataManager.Instance.CurrentGameData.storyProgress.levels = new List<SavedLevelData>();
+
+        foreach (var level in CurrentStory.levels)
+        {
+            DataManager.Instance.CurrentGameData.storyProgress.levels.Add(new SavedLevelData
+            {
+                uniqueLevelID = level.uniqueLevelID,
+                levelID = level.levelID,
+                isCompleted = level.isCompleted
+            });
+        }
+
+        DataManager.Instance.CurrentGameData.storyProgress.currentLevel = currentLevel != null ? currentLevel.levelID : 0;
     }
     /// <summary>
     /// Update the story with next level the player choose.
@@ -134,7 +190,9 @@ public class StoryManager : MonoBehaviour
             Debug.LogError("StoryManager: No current story loaded!");
             return;
         }
-        else
+
+        // Mark the current level as completed before switching
+        if (CurrentLevel != null)
         {
             CurrentLevel.isCompleted = true;
         }
@@ -144,15 +202,20 @@ public class StoryManager : MonoBehaviour
         if (nextLevelDef != null)
         {
             CurrentLevel = nextLevelDef;
-            Debug.Log($"StoryManager: Current Level set to {CurrentLevel.levelID}");
+            Debug.Log($"StoryManager: Current Level set to {CurrentLevel.levelID}");            
+
+            if (CurrentLevel.NextLevels == null || CurrentLevel.NextLevels.Count == 0)
+            {
+                StoryCompleted = true;  
+                Debug.Log("StoryManager: Story complete!");
+                SaveStoryProgress();
+            }
         }
         else
         {
             Debug.LogError($"StoryManager: Level {nextLevel} not found in the story! Check story setup.");
         }
     }
-
-
     private void SceneChange(Levels newLevel)
     {
         switch (newLevel)
@@ -212,6 +275,36 @@ public class StoryManager : MonoBehaviour
                 break;
         }
     }
+    private void LoadAllStories()
+    {
+        Story[] loadedStories = Resources.LoadAll<Story>("Scriptables/Stories");
+        if (loadedStories.Length == 0)
+        {
+            Debug.LogWarning("No stories found in Resources/Scriptables/Stories.");
+        }
+        allStories = loadedStories.ToList();
+        Debug.Log($"Loaded {allStories.Count} stories from Resources.");
+    }
+    /// <summary>
+    /// Recursively searches for a level in the story by its levelID.
+    /// </summary>
+    /// <param name="current"></param>
+    /// <param name="targetLevel"></param>
+    /// <returns></returns>
+    private LevelDefinition FindLevelRecursive(LevelDefinition current, string targetUniqueID)
+    {
+        if (current.uniqueLevelID == targetUniqueID)
+            return current;
+
+        foreach (var nextLevel in current.NextLevels)
+        {
+            LevelDefinition foundLevel = FindLevelRecursive(nextLevel, targetUniqueID);
+            if (foundLevel != null)
+                return foundLevel;
+        }
+        return null;
+    }
+
     void OnDestroy()
     {
         // Unsubscribe to avoid memory leaks

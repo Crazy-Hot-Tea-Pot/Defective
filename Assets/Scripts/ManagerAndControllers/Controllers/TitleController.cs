@@ -167,14 +167,6 @@ public class TitleController : MonoBehaviour
         GameData startData = new GameData();
 
         startData.SaveName = "Beginning";
-        //startData.Level = Levels.Tutorial;
-        //startData.MaxHealth = 50;
-        //startData.Health = 50;
-        //startData.Scraps = 100;
-        //startData.TimeStamp = DateTime.Now;
-
-        //startData.storyProgress.storyName = "Tutorial";
-        //startData.storyProgress.currentLevel = Levels.Tutorial;
 
         startData.MaxHealth=MaxHealth;
         startData.Health = MaxHealth;
@@ -207,7 +199,9 @@ public class TitleController : MonoBehaviour
 
         DataManager.Instance.Save(startData.SaveName);
 
-        GameManager.Instance.RequestScene(Levels.Tutorial);
+        // Request the scene from StoryManager (instead of latestSave)
+        GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
+        //GameManager.Instance.RequestScene(Levels.Tutorial);
 
     }
     /// <summary>
@@ -221,8 +215,12 @@ public class TitleController : MonoBehaviour
         // Load the save data into the game
         DataManager.Instance.LoadData(latestSave.SaveName);
 
+        StoryManager.Instance.LoadStoryProgress();
+
         // Request the scene from GameManager
-        GameManager.Instance.RequestScene(latestSave.Level);
+        // Request the scene from StoryManager (instead of latestSave)
+        GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
+        //GameManager.Instance.RequestScene(latestSave.storyProgress.currentLevel);
     }
     private IEnumerator OpenOptions()
     {
@@ -249,16 +247,28 @@ public class TitleController : MonoBehaviour
         List<GameData> allSaves = DataManager.Instance.GetAllSaves();
 
         if (allSaves != null && allSaves.Count > 0)
-            ResumeButton.interactable = true;        
+        {
+            // Find the latest save by timestamp
+            foreach (var save in allSaves)
+            {
+                if (latestSave == null || save.TimeStamp > latestSave.TimeStamp)
+                    latestSave = save;
+            }
+
+            // Check if the story is complete
+            if (latestSave != null && latestSave.storyProgress.isStoryComplete)
+            {
+                Debug.Log("Story is complete. Disabling Resume button.");
+                ResumeButton.interactable = false;
+            }
+            else
+            {
+                ResumeButton.interactable = true;
+            }
+        }     
         else
             ResumeButton.interactable = false;
 
-        // Find the latest save by timestamp        
-        foreach (var save in allSaves)
-        {
-            if (latestSave == null || save.TimeStamp > latestSave.TimeStamp)
-                latestSave = save;
-        }
         Debug.Log("Checked for save data");
     }    
     private void OnVideoEnd(VideoPlayer source)

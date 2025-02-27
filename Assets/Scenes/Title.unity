@@ -1437,7 +1437,7 @@ MonoBehaviour:
   OptionsButton: {fileID: 7001422712445478700}
   QuitButton: {fileID: 3720112114893829648}
   ButtonSelectSound: 40
-  ButtonClickSound: 40
+  ButtonClickSound: 38
   VersionText: {fileID: 4622310774376628093}
   CurrentStory: {fileID: 11400000, guid: 764e66970b0c37a41bfad07684f35465, type: 2}
   MaxHealth: 50
@@ -1480,9 +1480,10 @@ MonoBehaviour:
     Scraps: 0
     storyProgress:
       storyName: 
+      currentLevelUniqueID: 
       currentLevel: 0
       isStoryComplete: 0
-      zoneStates: []
+      levels: []
     Chips: []
     Gear: []
     TimeStampString: 
@@ -1860,6 +1861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1604af42aff30394d838099460ef2fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Debugging: 0
   currentGameMode: 0
   currentLevel: 0
 --- !u!224 &3469125420759469666

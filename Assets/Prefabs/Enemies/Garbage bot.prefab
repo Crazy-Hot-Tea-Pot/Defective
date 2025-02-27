@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7924106112585289715}
   - component: {fileID: 7275581635128340530}
   - component: {fileID: 3419500869265954236}
+  - component: {fileID: 8791733095705212926}
   m_Layer: 8
   m_Name: Garbage bot
   m_TagString: Enemy
@@ -104,7 +105,7 @@ MonoBehaviour:
   thisEnemyUI: {fileID: 6137250837617735189}
   CombatController: {fileID: 0}
   agent: {fileID: 0}
-  Animator: {fileID: 0}
+  Animator: {fileID: 8791733095705212926}
   playerCamera: {fileID: 0}
   enemyName: Garbage
   enemyDifficulty: 2
@@ -135,6 +136,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.015328, y: 12.425961, z: 14.715926}
   m_Center: {x: -0.039877355, y: -1.6114666, z: 0.016588211}
+--- !u!95 &8791733095705212926
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407424128530659705}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &413023485752186495
 PrefabInstance:
   m_ObjectHideFlags: 0

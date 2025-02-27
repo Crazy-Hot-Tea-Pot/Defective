@@ -573,14 +573,20 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual IEnumerator PrepareToEndTurn()
-    {
+    {        
         AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
 
-
-        while (stateInfo.normalizedTime < 1f)
+        if (Animator.GetCurrentAnimatorClipInfo(0).Length == 0)
         {
-            stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
             yield return null;
+        }
+        else
+        {
+            while (stateInfo.normalizedTime < 1f)
+            {
+                stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+                yield return null;
+            }
         }
 
         EnemyUIObject.SetActive(true);

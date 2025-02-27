@@ -5496,7 +5496,7 @@ GameObject:
   - component: {fileID: 3649557987580711635}
   - component: {fileID: 6639140435810088358}
   m_Layer: 5
-  m_Name: CombatEnterAnimation
+  m_Name: CombatAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

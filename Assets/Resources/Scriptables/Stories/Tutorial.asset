@@ -16,7 +16,8 @@ MonoBehaviour:
   pathType: 0
   difficulty: 1
   levels:
-  - levelID: 1
+  - uniqueLevelID: fb2c3541-2cd2-47a4-97cc-131dc6f29db5
+    levelID: 1
     terminalSpawnChance: 100
     enemySpawns:
     - enemyType: 1
@@ -31,6 +32,7 @@ MonoBehaviour:
     - rid: 6737146676237303808
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
+        uniqueLevelID: d8e505e4-8b21-4e35-88b5-7e007ea12f90
         levelID: 2
         terminalSpawnChance: 0
         enemySpawns: []
@@ -41,6 +43,7 @@ MonoBehaviour:
     - rid: 6737146676237303809
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
+        uniqueLevelID: 67239b59-20be-4b5a-b244-de785451d2c4
         levelID: 3
         terminalSpawnChance: 0
         enemySpawns: []
@@ -51,6 +54,7 @@ MonoBehaviour:
     - rid: 6737146676237303810
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
+        uniqueLevelID: c4b4ea3e-2be2-43e4-ad0d-4b69c91c2dba
         levelID: 4
         terminalSpawnChance: 0
         enemySpawns: []
@@ -61,6 +65,7 @@ MonoBehaviour:
     - rid: 6737146676237303811
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
+        uniqueLevelID: bf09c66c-ff9a-4f76-8edd-7c287449d964
         levelID: 5
         terminalSpawnChance: 0
         enemySpawns: []
@@ -71,6 +76,7 @@ MonoBehaviour:
     - rid: 6737146676237303812
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
+        uniqueLevelID: d37ec2bc-ee21-4ed1-8326-b7663aa3d04b
         levelID: 6
         terminalSpawnChance: 0
         enemySpawns: []
@@ -81,6 +87,7 @@ MonoBehaviour:
     - rid: 6737146676237303813
       type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
       data:
+        uniqueLevelID: 44a6b4ad-c4e9-4f4b-8138-6453112e14c3
         levelID: 10
         terminalSpawnChance: 0
         enemySpawns: []
