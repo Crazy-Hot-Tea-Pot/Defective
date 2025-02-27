@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemEffectDescription: Gain 10 Scrap at the end of every combat.
   energyCost: 0
-  ItemActivate: 37
+  ItemActivate: 23
   ItemDeactivate: 37
   ItemFail: 0
   SpecialConditionEffect: 0
