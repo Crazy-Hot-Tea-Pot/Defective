@@ -89,8 +89,8 @@ public class StoryManager : MonoBehaviour
     /// </summary>
     /// <param name="story"></param>
     public void LoadStory(Story story)
-    {
-        CurrentStory = story;
+    {        
+        CurrentStory = Instantiate(story);
         CurrentLevel = CurrentStory.levels[0];
     }
     /// <summary>

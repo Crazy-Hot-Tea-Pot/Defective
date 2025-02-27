@@ -25,7 +25,7 @@ MonoBehaviour:
     nextLevels:
     - rid: 4628064565296627712
     - rid: 4628064565296627713
-    isCompleted: 1
+    isCompleted: 0
     questCondition: {fileID: 0}
   references:
     version: 2

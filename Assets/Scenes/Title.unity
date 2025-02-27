@@ -467,7 +467,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useUnityDefaultCursor: 0
-  cursorMappings: []
+  cursorMappings:
+  - layerIndex: 7
+    cursorTexture: {fileID: 2800000, guid: c9d8bd1ce4b8cef4da27ff20439a9e82, type: 3}
+    hotspot: {x: 0, y: 0}
+  - layerIndex: 8
+    cursorTexture: {fileID: 2800000, guid: b76ca731e19a16447b4e8b62b9488494, type: 3}
+    hotspot: {x: 0, y: 0}
   defaultCursor: {fileID: 0}
   defaultHotspot: {x: 0, y: 0}
 --- !u!1 &829852516
