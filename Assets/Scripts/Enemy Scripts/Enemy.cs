@@ -63,6 +63,7 @@ public class Enemy : MonoBehaviour
     /// Reference to combat controller.
     /// </summary>
     public CombatController CombatController;
+    public GameObject Model;
     public NavMeshAgent agent;    
     public Animator Animator;
     /// <summary>
@@ -202,15 +203,24 @@ public class Enemy : MonoBehaviour
             {
                 newLayer = 8;   
             }
-            foreach (Transform child in transform)
+           foreach(Transform child in Model.transform)
             {
                 child.gameObject.layer = newLayer;
 
-                foreach (Transform grandchild in child.transform)
+                foreach(Transform grandchild in child.transform)
                 {
                     grandchild.gameObject.layer = newLayer;
-                };
-            };
+                }
+            }
+            //foreach (Transform child in transform)
+            //{
+            //    child.gameObject.layer = newLayer;
+
+            //    foreach (Transform grandchild in child.transform)
+            //    {
+            //        grandchild.gameObject.layer = newLayer;
+            //    };
+            //};
 
             //TargetIcon.SetActive(value);
         }
