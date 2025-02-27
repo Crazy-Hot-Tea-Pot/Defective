@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using static Effects;
+using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName = "NewEquipmentEffect", menuName = "Gear/Effects/EquipmentEffect")]
 public class EquipmentEffect : ItemEffect
@@ -12,7 +13,7 @@ public class EquipmentEffect : ItemEffect
     /// </summary>
     public bool HasPassiveEffect;
 
-    public Effects.SpecialEffects passiveEffect;
+    public SpecialEffects passiveEffect;
 
     public bool IsPassiveEffectActive
     {
@@ -27,18 +28,20 @@ public class EquipmentEffect : ItemEffect
     }
 
     private bool isPassiveEffectActive = false;
+    private Item linkedItem;
 
     public override void Activate(PlayerController player, Item item, Enemy enemy = null)
     {
         if (player.SpendEnergy(energyCost))
         {
+            linkedItem = item;
+
             //Play Item Effect
-            SoundManager.PlayFXSound(ItemActivate);
             base.Activate(player, item, enemy);
         }
         else
         {
-            SoundManager.PlayFXSound(ItemFail);
+            SoundManager.PlayFXSound(item.ItemFailSound);
 
             Debug.Log("Not enough energy to use Equipment.");
         }
@@ -49,15 +52,16 @@ public class EquipmentEffect : ItemEffect
 
         if (HasPassiveEffect && IsEquipped)
         {
-                if (!IsPassiveEffectActive)
-                {
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().AddEffect(passiveEffect);
-                    IsPassiveEffectActive = true;
-                }
-                else if(IsPassiveEffectActive)
-                {
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().RemoveEffect(passiveEffect);
-                }            
+            if (!IsPassiveEffectActive)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().AddEffect(passiveEffect);
+                IsPassiveEffectActive = true;
+            }
+            else if(IsPassiveEffectActive)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().RemoveEffect(passiveEffect);
+                SoundManager.PlayFXSound(linkedItem.ItemDeactivateSound);
+            }            
         }
     }
 }

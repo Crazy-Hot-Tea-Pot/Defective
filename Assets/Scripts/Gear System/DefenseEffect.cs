@@ -16,7 +16,6 @@ public class DefenseEffect : ItemEffect
 
         if (player.SpendEnergy(adjustedEnergyCost))
         {
-            SoundManager.PlayFXSound(ItemActivate);
 
             // Adjust shield based on debuffs
             if (player.IsWornDown)
@@ -31,7 +30,7 @@ public class DefenseEffect : ItemEffect
         }
         else
         {
-            SoundManager.PlayFXSound(ItemFail);
+            SoundManager.PlayFXSound(item.ItemFailSound);
         }
     }
 }
