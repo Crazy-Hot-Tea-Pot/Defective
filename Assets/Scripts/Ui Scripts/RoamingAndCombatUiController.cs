@@ -88,7 +88,8 @@ public class RoamingAndCombatUiController : UiController
         PlayerHandContainer.SetActive(isInteractable);
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
 
-        CombatAnimation.SetActive(isInteractable);
+        CombatAnimation.SetActive(!isInteractable);
+        //CombatAnimation.GetComponent<Animator>().SetTrigger("EnemyTurn");
 
         StartCoroutine(RedrawPlayerHand());
     }
