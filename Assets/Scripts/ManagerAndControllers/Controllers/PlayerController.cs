@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -951,27 +950,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Call when Player is dead.
-    /// Does stuff for game over.
-    /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
-    private void PlayerDie()
-    {
-        Debug.Log("Player died, game over.");
-
-        //Reset HealthBar, energy and other stuff for now.
-        Health = maxHealth;
-        Energy = maxEnergy;
-        //GainScrap(200);
-
-        GameManager.Instance.EndCombat();
-
-        // for now just restart the scene.
-        GameManager.Instance.RequestScene(Levels.Title);
-
-    }
-
-    /// <summary>
     /// Anything for player to do at combat end
     /// </summary>
     public void TriggerPassiveEffectsOnCombatEnd()
@@ -1006,6 +984,28 @@ public class PlayerController : MonoBehaviour
     public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f)
     {
         uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay);
+    }
+
+    /// <summary>
+    /// Call when Player is dead.
+    /// Does stuff for game over.
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    private void PlayerDie()
+    {
+        Debug.Log("Player died, game over.");
+
+        //Reset HealthBar, energy and other stuff for now.
+        Health = maxHealth;
+        Energy = maxEnergy;
+        //GainScrap(200);
+
+        // Stop player actions
+        this.enabled = false;
+
+        // Show Game Over UI
+        UiManager.Instance.ShowGameOverScreen();        
+
     }
 
     void OnDestroy()

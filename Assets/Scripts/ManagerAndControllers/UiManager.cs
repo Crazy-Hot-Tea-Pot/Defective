@@ -30,6 +30,7 @@ public class UiManager : MonoBehaviour
         get;
         set;
     }
+
     /// <summary>
     /// List of Prefabs UI.
     /// </summary>
@@ -39,6 +40,7 @@ public class UiManager : MonoBehaviour
     public GameObject TerminalUI;
     public GameObject LootUI;
     public GameObject SettingsUI;
+    public GameObject GameOverUI;
 
     private UiController currentController;
     private static UiManager instance;
@@ -48,6 +50,7 @@ public class UiManager : MonoBehaviour
         playerInputActions.Player.Inventory.performed += ToggleInventory;
         playerInputActions.Player.Settings.performed += ToggleSettings;
     }
+
     void Awake()
     {
         if (Instance == null)
@@ -64,6 +67,7 @@ public class UiManager : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         playerInputActions.Enable();
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -122,6 +126,20 @@ public class UiManager : MonoBehaviour
         {
             controller.UpdateGearButtonStates(energy);
         }
+    }
+    /// <summary>
+    /// Setup screen for CombatMode
+    /// </summary>
+    private void StartCombat()
+    {
+        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(true);
+    }
+    /// <summary>
+    /// Remove combat screen for roaming
+    /// </summary>
+    private void EndCombat()
+    {
+        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
     }
     #endregion
     #region InventoryUI
@@ -262,6 +280,13 @@ public class UiManager : MonoBehaviour
         Destroy(CurrentUI);
     }
     #endregion
+    #region GameOver
+    public void ShowGameOverScreen()
+    {
+        // Switch UI to Game Over Screen
+        SwitchScreen(GameOverUI);
+    }
+    #endregion
     /// <summary>
     /// Get Current controller for UI.
     /// </summary>
@@ -295,8 +320,10 @@ public class UiManager : MonoBehaviour
                 if (CurrentUI != null)
                     Destroy(CurrentUI);
                 break;
-            case GameManager.GameMode.Settings:
             case GameManager.GameMode.Credits:
+                //Delete current UI from scene
+                if (CurrentUI != null)
+                    Destroy(CurrentUI);
                 break;
             case GameManager.GameMode.Combat:
             case GameManager.GameMode.Roaming:
@@ -353,17 +380,7 @@ public class UiManager : MonoBehaviour
         CurrentUI.transform.localPosition = Vector3.zero;
         CurrentUI.transform.localRotation = Quaternion.identity;
         CurrentUI.transform.localScale = Vector3.one;
-    }
-    private void StartCombat()
-    {
-        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(true);
-    }
-
-    private void EndCombat()
-    {
-        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
-    }
-
+    }    
     private void SceneChange(Levels newLevel)
     {
 

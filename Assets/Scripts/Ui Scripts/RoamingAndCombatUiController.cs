@@ -40,7 +40,7 @@ public class RoamingAndCombatUiController : UiController
     public GameObject EndTurn;
     public Button EndTurnButton;
     public GameObject CombatAnimation;
-    public GameObject DeathAnimation;
+    public GameObject DeathAnimation;    
 
     // Start is called before the first frame update
     void Start()
