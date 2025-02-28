@@ -139,7 +139,7 @@ public class UiManager : MonoBehaviour
     /// </summary>
     private void EndCombat()
     {
-        //GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
+        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
     }
     #endregion
     #region InventoryUI
