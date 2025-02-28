@@ -76,5 +76,7 @@ public class PuzzleManager : MonoBehaviour
 
         CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
         PuzzleController.Target = target;
+
+        ChipManager.Instance.PuzzleResetDeck();
     }
 }

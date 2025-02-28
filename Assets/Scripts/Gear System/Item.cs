@@ -111,11 +111,11 @@ public class Item : ScriptableObject
         }
     }
 
-    public void ItemActivate(PlayerController player, PuzzleRange TargetPuzzle)
+    public void ItemActivate(PlayerController player, PuzzleRange TargetPuzzle = null)
     {
         foreach (ItemEffect effect in itemEffects)
         {
-            effect.Activate(player, TargetPuzzle);
+            effect.Activate(player, this, TargetPuzzle);
         }
     }
 
