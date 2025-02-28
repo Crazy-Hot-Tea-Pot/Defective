@@ -471,7 +471,7 @@ MonoBehaviour:
   useUnityDefaultCursor: 0
   cursorMappings:
   - layerIndex: 8
-    cursorTexture: {fileID: 2800000, guid: b76ca731e19a16447b4e8b62b9488494, type: 3}
+    cursorTexture: {fileID: 2800000, guid: d1ef0c5a89dd2314fa9dd5ebe1a4d2fd, type: 3}
     hotspot: {x: 0, y: 0}
   defaultCursor: {fileID: 0}
   defaultHotspot: {x: 0, y: 0}
@@ -661,6 +661,8 @@ MonoBehaviour:
   lineDelay: 1.5
   glitchStartTime: 30
   glitchDuration: 20
+  specialMessage: 
+  convertToBinary: 0
 --- !u!114 &926421409
 MonoBehaviour:
   m_ObjectHideFlags: 0
