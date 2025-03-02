@@ -45,6 +45,8 @@ public class MaintenanceBot : Enemy
             DroppedChips.Add(commonChips[secondIndex]);
         }
 
+        EnemyType = EnemyManager.EnemyType.GangLeader;
+
         base.Start();
     }
     public override void EndTurn()

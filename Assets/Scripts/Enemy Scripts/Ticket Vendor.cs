@@ -18,7 +18,12 @@ public class TicketVendor : Enemy
             EnemyName = "Ticket Vendor";
 
         //Add Common Chips Todrop
-        DroppedChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Common);
+        var tempChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Common);
+        int tempRandom = Random.Range(1, tempChips.Count);
+        DroppedChips.Add(tempChips[tempRandom]);
+
+
+        EnemyType = EnemyManager.EnemyType.TicketVendor;
 
         base.Start();
     }
