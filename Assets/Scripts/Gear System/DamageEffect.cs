@@ -59,4 +59,34 @@ public class DamageEffect : ItemEffect
             Debug.Log("Not enough energy to use Weapon.");
         }
     }
+
+    public override void Activate(PlayerController player, Item item, PuzzleRange puzzle)
+    {
+        int adjustedDamage = baseDamage + item.GetValueIncreaseBy();
+
+        // decrease for energy cost
+        int adjustedEnergyCost = energyCost - item.GetEnergyCostDecreaseBy();
+
+        if (player.SpendEnergy(adjustedEnergyCost))
+        {
+            //Play Item Effect
+            SoundManager.PlayFXSound(ItemActivate);
+
+            if (player.IsPowered)
+                adjustedDamage += player.PoweredStacks;
+
+            if (player.IsDrained)
+                adjustedDamage = Mathf.FloorToInt(adjustedDamage * 0.8f); // Reduce damage by 20%
+
+            //Do Damage to enemy
+            puzzle?.TakeDamage(adjustedDamage);
+
+        }
+        else
+        {
+            SoundManager.PlayFXSound(ItemFail);
+
+            Debug.Log("Not enough energy to use Weapon.");
+        }
+    }
 }

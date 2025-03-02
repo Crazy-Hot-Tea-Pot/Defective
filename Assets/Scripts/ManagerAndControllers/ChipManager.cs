@@ -230,6 +230,16 @@ public class ChipManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// A method to call a private method
+    /// </summary>
+    public void PuzzleResetDeck()
+    {
+        EndCombat();
+        
+    }
+
     private void EndCombat()
     {
         // Move unused chips back to the deck

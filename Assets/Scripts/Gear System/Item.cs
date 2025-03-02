@@ -109,13 +109,13 @@ public class Item : ScriptableObject
         }
     }
 
-    public void ItemActivate(PlayerController player, PuzzleRange TargetPuzzle)
+    public void ItemActivate(PlayerController player, PuzzleRange TargetPuzzle = null)
     {
         SoundManager.PlayFXSound(ItemActivateSound);
 
         foreach (ItemEffect effect in itemEffects)
         {
-            effect.Activate(player, TargetPuzzle);
+            effect.Activate(player, this, TargetPuzzle);
         }
     }
 

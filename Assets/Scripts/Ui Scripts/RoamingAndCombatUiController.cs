@@ -264,6 +264,7 @@ public class RoamingAndCombatUiController : UiController
         // Hide CombatAnimation if it's temporary
         CombatAnimation.SetActive(false);
     }
+
     private IEnumerator UpdateHealthOverTime(float targetFillAmount)
     {
         // While the bar is not at the target fill amount, update it

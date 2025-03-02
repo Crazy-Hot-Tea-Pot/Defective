@@ -60,7 +60,6 @@ public class PuzzleManager : MonoBehaviour
     /// </summary>
     public void OpenPuzzle(GameObject target)
     {
-        Debug.Log("Opened");
         //Open combat UI
         CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
         PuzzleController.Target = target;
@@ -71,10 +70,10 @@ public class PuzzleManager : MonoBehaviour
     /// </summary>
     public void ClosePuzzle(GameObject target)
     {
-        Debug.Log("Cosed");
-        //Close combat UI
-
+        UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
         CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
         PuzzleController.Target = target;
+
+        ChipManager.Instance.PuzzleResetDeck();
     }
 }

@@ -380,7 +380,46 @@ public class UiManager : MonoBehaviour
         CurrentUI.transform.localPosition = Vector3.zero;
         CurrentUI.transform.localRotation = Quaternion.identity;
         CurrentUI.transform.localScale = Vector3.one;
-    }    
+    }
+
+    public void SwichScreenPuzzle(GameObject targetScreen)
+    {
+        if (listOfUis.Count == 0)
+        {
+            Debug.LogError("Ui list is empty!");
+            return;
+        }
+        if (targetScreen == null)
+        {
+            Debug.LogError($"[UiManager] No UI prefab found for mode: {GameManager.Instance.CurrentGameMode}");
+            return;
+        }
+
+        // Check if the target screen is already active
+        if (CurrentUI != null && CurrentUI.name == targetScreen.name)
+        {
+            Debug.Log($"[UiManager] Target screen '{targetScreen.name}' is already active.");
+        }
+
+        // Destroy current UI if it exists
+        if (CurrentUI != null)
+        {
+            Destroy(CurrentUI);
+        }
+        // Instantiate the target UI prefab under this object's transform (Canvas)
+        CurrentUI = Instantiate(targetScreen, transform);
+
+        CurrentUI.name = targetScreen.name;
+
+        currentController = CurrentUI.GetComponent<UiController>();
+        currentController?.Initialize();
+
+        // Optionally reset the local position, rotation, and scale
+        CurrentUI.transform.localPosition = Vector3.zero;
+        CurrentUI.transform.localRotation = Quaternion.identity;
+        CurrentUI.transform.localScale = Vector3.one;
+    }
+    
     private void SceneChange(Levels newLevel)
     {
 

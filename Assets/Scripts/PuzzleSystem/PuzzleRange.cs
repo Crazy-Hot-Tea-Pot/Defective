@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PuzzleRange : MonoBehaviour
 {
-    private float currentHealth;
+    public float currentHealth;
     public float maxHealth;
     public Quest newQuest;
     public Material mat;
