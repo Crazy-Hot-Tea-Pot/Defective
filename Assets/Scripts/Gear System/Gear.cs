@@ -128,7 +128,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, I
                 {
                     if (CombatController.Target == null)
                     {
-                        Item.ItemActivate(Player.GetComponent<PlayerController>());
+                        //Item.ItemActivate(Player.GetComponent<PlayerController>());
                     }
                     else
                     {
