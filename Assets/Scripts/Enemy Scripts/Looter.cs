@@ -41,6 +41,8 @@ public class Looter : Enemy
         swipeCount = 0;
         StolenScrap = 0;
 
+        EnemyType = EnemyManager.EnemyType.Looter;
+
         base.Start();
     }
     public override void PerformIntentTrigger(string intentName)

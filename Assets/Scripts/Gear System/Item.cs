@@ -78,6 +78,11 @@ public class Item : ScriptableObject
     [Tooltip("How much scrap value for each Teir")]
     public List<int> scrapValueForEachTeir = new() { 0, 1, 2, 3, 4, 5 };
 
+    [Header("Sound Effects")]
+    public SoundFX ItemActivateSound;
+    public SoundFX ItemDeactivateSound;
+    public SoundFX ItemFailSound;
+
     private bool isEquipped = false;
 
     private bool playerOwned = false;
@@ -89,15 +94,6 @@ public class Item : ScriptableObject
         playerOwned = false;
         ItemTeir=Teir.Base;
     }
-
-    /// <summary>
-    /// Use item out of combat
-    /// </summary>
-    /// <param name="player"></param>
-    public void ItemActivate(PlayerController player)
-    {
-        Debug.LogError("This is for quest use.");
-    }
     /// <summary>
     /// Item use in combat
     /// </summary>
@@ -105,17 +101,21 @@ public class Item : ScriptableObject
     /// <param name="targetEnemy"></param>
     public void ItemActivate(PlayerController player,Enemy targetEnemy = null)
     {
+        SoundManager.PlayFXSound(ItemActivateSound);
+
         foreach (ItemEffect effect in itemEffects)
         {
             effect.Activate(player,this, targetEnemy);
         }
     }
 
-    public void ItemActivate(PlayerController player, PuzzleRange TargetPuzzle)
+    public void ItemActivate(PlayerController player, PuzzleRange TargetPuzzle = null)
     {
+        SoundManager.PlayFXSound(ItemActivateSound);
+
         foreach (ItemEffect effect in itemEffects)
         {
-            effect.Activate(player, TargetPuzzle);
+            effect.Activate(player, this, TargetPuzzle);
         }
     }
 

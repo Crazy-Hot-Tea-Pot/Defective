@@ -73,6 +73,8 @@ public class LoadingController : MonoBehaviour
     /// </summary>
     private void GenerateStoryGraph()
     {
+        string currentLevelUniqueID = StoryManager.Instance.CurrentLevel.uniqueLevelID;
+
         // Clear previous graph before generating
         foreach (GameObject obj in nodes)
         {
@@ -95,7 +97,9 @@ public class LoadingController : MonoBehaviour
         // Step 1: First Create All Nodes
         void CreateNodes(LevelDefinition level, Vector2 position, int depth)
         {
-            if (levelPositions.ContainsKey(level)) return; // Prevent duplicates
+            // Prevent duplicates
+            if (levelPositions.ContainsKey(level)) 
+                return;
 
             GameObject node = Instantiate(nodePrefab, graphContainer.transform);
             node.GetComponent<RectTransform>().anchoredPosition = position;
@@ -114,7 +118,7 @@ public class LoadingController : MonoBehaviour
                 }
             }
 
-            if (level == currentLevel)
+            if (level.uniqueLevelID == currentLevelUniqueID)
             {
                 nodeImage.color = currentColor;
                 StartCoroutine(PulseEffect(node.transform));

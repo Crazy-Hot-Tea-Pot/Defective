@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +42,11 @@ public class RoamingAndCombatUiController : UiController
     public Button EndTurnButton;
     public GameObject CombatAnimation;
     public GameObject DeathAnimation;
+
+    [Header("Effects")]
+    public GameObject EffectPrefab;
+    public GameObject EffectsContainer;
+    public List<Sprite> EffectImages;     
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +93,9 @@ public class RoamingAndCombatUiController : UiController
         // Proceed with enabling combat UI
         PlayerHandContainer.SetActive(isInteractable);
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
+
+        CombatAnimation.SetActive(!isInteractable);
+        //CombatAnimation.GetComponent<Animator>().SetTrigger("EnemyTurn");
 
         StartCoroutine(RedrawPlayerHand());
     }
@@ -207,6 +216,50 @@ public class RoamingAndCombatUiController : UiController
         EquipmentButton.interactable = (equipment != null && CanUseItem(equipment, currentEnergy));
     }
     /// <summary>
+    /// Update the Player Effects Panel
+    /// </summary>
+    /// <param name="activeEffects"></param>
+    public void UpdateEffects(List<Effects.StatusEffect> activeEffects)
+    {
+        // Clear the panel
+        foreach (Transform effect in EffectsContainer.transform)
+        {
+            Destroy(effect.gameObject);
+        }
+        // Repopulate the panel with new effects
+        foreach (var statusEffect in activeEffects)
+        {
+            string effectName = null;
+            // Determine which effect type is active
+            if (statusEffect.BuffEffect != Effects.Buff.None)
+            {
+                effectName = statusEffect.BuffEffect.ToString();
+            }
+            else if (statusEffect.DebuffEffect != Effects.Debuff.None)
+            {
+                effectName = statusEffect.DebuffEffect.ToString();
+            }
+            else if (statusEffect.SpecialEffect != Effects.SpecialEffects.None)
+            {
+                effectName = statusEffect.SpecialEffect.ToString();
+            }
+            // Only proceed if a valid effect name was found
+            if (!string.IsNullOrEmpty(effectName))
+            {
+                GameObject effectPrefab = Instantiate(EffectPrefab,EffectsContainer.transform);
+                effectPrefab.name = effectName;
+                try
+                {
+                    effectPrefab.GetComponent<Image>().sprite = EffectImages.Find(sprite => sprite.name == effectName);
+                }
+                catch
+                {
+                    Debug.LogWarning("Could not find Effect Image");
+                }
+            }
+        }
+    }
+    /// <summary>
     /// Close hand and reopen with new cards or just draw hand with cards.
     /// </summary>
     private IEnumerator RedrawPlayerHand()
@@ -261,6 +314,7 @@ public class RoamingAndCombatUiController : UiController
         // Hide CombatAnimation if it's temporary
         CombatAnimation.SetActive(false);
     }
+
     private IEnumerator UpdateHealthOverTime(float targetFillAmount)
     {
         // While the bar is not at the target fill amount, update it

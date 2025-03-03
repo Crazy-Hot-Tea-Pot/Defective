@@ -8,12 +8,6 @@ using UnityEngine;
 /// </summary>
 public class PlayerUiController : MonoBehaviour
 {
-    [Header("Effects UI")]
-    //Panel to hold the effect icons
-    public GameObject effectsPanel;
-    //List of effect prefabs
-    public List<GameObject> effectPrefabs;
-    private List<GameObject> activeEffects = new List<GameObject>();
 
     [Header("ChatBox UI")]
     public GameObject ChatBox;
@@ -25,60 +19,6 @@ public class PlayerUiController : MonoBehaviour
     public float wordRevealSpeed = 0.2f;
 
     private Coroutine chatboxCoroutine;
-    /// <summary>
-    /// Update the Player Effects Panel
-    /// </summary>
-    /// <param name="activeEffects"></param>
-    /// <summary>
-    /// Update the Player Effects Panel
-    /// </summary>
-    /// <param name="activeEffects"></param>
-    public void UpdateEffectsPanel(List<Effects.StatusEffect> activeEffects)
-    {
-        // Clear the panel
-        foreach (var effect in this.activeEffects)
-        {
-            Destroy(effect);
-        }
-        this.activeEffects.Clear();
-
-        // Repopulate the panel with new effects
-        foreach (var statusEffect in activeEffects)
-        {
-            string effectName = null;
-
-            // Determine which effect type is active
-            if (statusEffect.BuffEffect != Effects.Buff.None)
-            {
-                effectName = statusEffect.BuffEffect.ToString();
-            }
-            else if (statusEffect.DebuffEffect != Effects.Debuff.None)
-            {
-                effectName = statusEffect.DebuffEffect.ToString();
-            }
-            else if (statusEffect.SpecialEffect != Effects.SpecialEffects.None)
-            {
-                effectName = statusEffect.SpecialEffect.ToString();
-            }
-
-            // Only proceed if a valid effect name was found
-            if (!string.IsNullOrEmpty(effectName))
-            {
-                GameObject effectPrefab = effectPrefabs.Find(prefab => prefab.name == effectName);
-
-                if (effectPrefab != null)
-                {
-                    GameObject effectInstance = Instantiate(effectPrefab, effectsPanel.transform);
-                    effectInstance.name = effectName;
-                    this.activeEffects.Add(effectInstance);
-                }
-                else
-                {
-                    Debug.LogError($"[PlayerUiController] Effect prefab not found for {effectName}");
-                }
-            }
-        }
-    }
 
 
     /// <summary>

@@ -30,6 +30,7 @@ public class UiManager : MonoBehaviour
         get;
         set;
     }
+
     /// <summary>
     /// List of Prefabs UI.
     /// </summary>
@@ -39,6 +40,7 @@ public class UiManager : MonoBehaviour
     public GameObject TerminalUI;
     public GameObject LootUI;
     public GameObject SettingsUI;
+    public GameObject GameOverUI;
 
     private UiController currentController;
     private static UiManager instance;
@@ -48,6 +50,7 @@ public class UiManager : MonoBehaviour
         playerInputActions.Player.Inventory.performed += ToggleInventory;
         playerInputActions.Player.Settings.performed += ToggleSettings;
     }
+
     void Awake()
     {
         if (Instance == null)
@@ -64,6 +67,7 @@ public class UiManager : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         playerInputActions.Enable();
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -122,6 +126,34 @@ public class UiManager : MonoBehaviour
         {
             controller.UpdateGearButtonStates(energy);
         }
+    }
+    /// <summary>
+    /// Update the Player Effects Panel
+    /// </summary>
+    /// <param name="activeEffects"></param>
+    public void UpdateEffects(List<Effects.StatusEffect> activeEffects)
+    {
+        var controller = GetCurrentController<RoamingAndCombatUiController>();
+        if (controller != null)
+        {
+            controller.UpdateEffects(activeEffects);
+        }
+
+    }
+    /// <summary>
+    /// Setup screen for CombatMode
+    /// </summary>
+    private void StartCombat()
+    {
+        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(true);
+    }
+    /// <summary>
+    /// Remove combat screen for roaming
+    /// </summary>
+    private void EndCombat()
+    {
+        if(GameManager.Instance.CurrentGameMode != GameManager.GameMode.GameOver)
+            GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
     }
     #endregion
     #region InventoryUI
@@ -262,6 +294,13 @@ public class UiManager : MonoBehaviour
         Destroy(CurrentUI);
     }
     #endregion
+    #region GameOver
+    public void ShowGameOverScreen()
+    {
+        // Switch UI to Game Over Screen
+        SwitchScreen(GameOverUI);
+    }
+    #endregion
     /// <summary>
     /// Get Current controller for UI.
     /// </summary>
@@ -295,8 +334,10 @@ public class UiManager : MonoBehaviour
                 if (CurrentUI != null)
                     Destroy(CurrentUI);
                 break;
-            case GameManager.GameMode.Settings:
             case GameManager.GameMode.Credits:
+                //Delete current UI from scene
+                if (CurrentUI != null)
+                    Destroy(CurrentUI);
                 break;
             case GameManager.GameMode.Combat:
             case GameManager.GameMode.Roaming:
@@ -354,16 +395,45 @@ public class UiManager : MonoBehaviour
         CurrentUI.transform.localRotation = Quaternion.identity;
         CurrentUI.transform.localScale = Vector3.one;
     }
-    private void StartCombat()
-    {
-        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(true);
-    }
 
-    private void EndCombat()
+    public void SwichScreenPuzzle(GameObject targetScreen)
     {
-        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
-    }
+        if (listOfUis.Count == 0)
+        {
+            Debug.LogError("Ui list is empty!");
+            return;
+        }
+        if (targetScreen == null)
+        {
+            Debug.LogError($"[UiManager] No UI prefab found for mode: {GameManager.Instance.CurrentGameMode}");
+            return;
+        }
 
+        // Check if the target screen is already active
+        if (CurrentUI != null && CurrentUI.name == targetScreen.name)
+        {
+            Debug.Log($"[UiManager] Target screen '{targetScreen.name}' is already active.");
+        }
+
+        // Destroy current UI if it exists
+        if (CurrentUI != null)
+        {
+            Destroy(CurrentUI);
+        }
+        // Instantiate the target UI prefab under this object's transform (Canvas)
+        CurrentUI = Instantiate(targetScreen, transform);
+
+        CurrentUI.name = targetScreen.name;
+
+        currentController = CurrentUI.GetComponent<UiController>();
+        currentController?.Initialize();
+
+        // Optionally reset the local position, rotation, and scale
+        CurrentUI.transform.localPosition = Vector3.zero;
+        CurrentUI.transform.localRotation = Quaternion.identity;
+        CurrentUI.transform.localScale = Vector3.one;
+    }
+    
     private void SceneChange(Levels newLevel)
     {
 

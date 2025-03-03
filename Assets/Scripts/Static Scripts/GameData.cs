@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using static Cinemachine.DocumentationSortingAttribute;
 
 /// <summary>
 /// Data we would be saving for the Player.
@@ -38,32 +39,31 @@ public class GameData
     [System.Serializable]
     public class StoryProgress
     {
-        public string storyName;               // Which story is active?
-        public Levels currentLevel;            // The current 'level' from that story
-        public bool isStoryComplete;           // Example: Are we done?
-
-        // Optional: Track zone states, branching choices, or next level indexes
-        public List<ZoneState> zoneStates = new List<ZoneState>();
+        // Which story is active?
+        public string storyName;
+        // Store unique ID instead of just Levels enum
+        public string currentLevelUniqueID;
+        // The current 'level' from that story
+        public Levels currentLevel;            
+        // Example: Are we done?
+        public bool isStoryComplete;           
+        //Store all levels with their completion status
+        public List<SavedLevelData> levels = new List<SavedLevelData>();
 
         public StoryProgress()
         {
             storyName = "";
-            currentLevel = Levels.Title;
+            currentLevelUniqueID = "";
             isStoryComplete = false;
-            zoneStates = new List<ZoneState>();
+            levels = new List<SavedLevelData>();
         }
     }
     [System.Serializable]
-    public class ZoneState
+    public class SavedLevelData
     {
-        public string zoneID;   // Some unique ID for the zone/combat area
-        public bool isCleared;
-
-        public ZoneState(string id)
-        {
-            zoneID = id;
-            isCleared = false;
-        }
+        public string uniqueLevelID;
+        public Levels levelID;
+        public bool isCompleted;
     }
 
     //Name of Save

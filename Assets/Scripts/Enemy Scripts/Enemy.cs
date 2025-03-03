@@ -39,20 +39,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Range enemy must be to attack the Player.
-    /// </summary>
-    public float AttackRange;     
-
-    public float DistanceToPlayer
-    {
-        get
-        {
-            distanceToPlayer= Vector3.Distance(transform.position, EnemyTarget.transform.position); ;
-            return distanceToPlayer;
-        }               
-    }
-
     [Header("Enemy Components")]
     public GameObject EnemyUIObject;
     /// <summary>
@@ -63,6 +49,7 @@ public class Enemy : MonoBehaviour
     /// Reference to combat controller.
     /// </summary>
     public CombatController CombatController;
+    public GameObject Model;
     public NavMeshAgent agent;    
     public Animator Animator;
     /// <summary>
@@ -123,6 +110,22 @@ public class Enemy : MonoBehaviour
             enemyDifficulty = value;
         }
     }
+
+    /// <summary>
+    /// What type is the enemy
+    /// </summary>
+    public EnemyManager.EnemyType EnemyType
+    {
+        get
+        {
+            return enemyType;
+        }
+        protected set
+        {
+            enemyType = value;
+        }
+    }
+    private EnemyManager.EnemyType enemyType;
     /// <summary>
     /// Max Hp of Enemy
     /// </summary>
@@ -202,15 +205,24 @@ public class Enemy : MonoBehaviour
             {
                 newLayer = 8;   
             }
-            foreach (Transform child in transform)
+           foreach(Transform child in Model.transform)
             {
                 child.gameObject.layer = newLayer;
 
-                foreach (Transform grandchild in child.transform)
+                foreach(Transform grandchild in child.transform)
                 {
                     grandchild.gameObject.layer = newLayer;
-                };
-            };
+                }
+            }
+            //foreach (Transform child in transform)
+            //{
+            //    child.gameObject.layer = newLayer;
+
+            //    foreach (Transform grandchild in child.transform)
+            //    {
+            //        grandchild.gameObject.layer = newLayer;
+            //    };
+            //};
 
             //TargetIcon.SetActive(value);
         }
@@ -577,14 +589,20 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual IEnumerator PrepareToEndTurn()
-    {
+    {        
         AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
 
-
-        while (stateInfo.normalizedTime < 1f)
+        if (Animator.GetCurrentAnimatorClipInfo(0).Length == 0)
         {
-            stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
             yield return null;
+        }
+        else
+        {
+            while (stateInfo.normalizedTime < 1f)
+            {
+                stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+                yield return null;
+            }
         }
 
         EnemyUIObject.SetActive(true);

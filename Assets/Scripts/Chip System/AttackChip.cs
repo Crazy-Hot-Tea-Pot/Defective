@@ -17,6 +17,10 @@ public class AttackChip : NewChip
     public int debuffStacks = 0;
     public int upgradedDebuffStacksByAmout;
 
+    [Header("Attack Chip Sounds")]
+    public SoundFX ChipHitFlesh;
+    public SoundFX ChipHitMetal;
+
     public override bool IsUpgraded
     {
         get
@@ -55,7 +59,26 @@ public class AttackChip : NewChip
 
         //Play sound for damage
         if (Target.Shield <= 0)
-            SoundManager.PlayFXSound(ChipActivate);
+        {
+            //Play sound for enemyType
+            switch (Target.EnemyType)
+            {
+                case EnemyManager.EnemyType.Looter:
+                case EnemyManager.EnemyType.GangLeader:
+                case EnemyManager.EnemyType.TicketVendor:
+                case EnemyManager.EnemyType.Inspector:
+                    SoundManager.PlayFXSound(ChipHitFlesh);
+                    break;
+                case EnemyManager.EnemyType.SecurityDrone:
+                case EnemyManager.EnemyType.Maintenancebot:
+                case EnemyManager.EnemyType.Garbagebot:
+                    SoundManager.PlayFXSound(ChipHitMetal);
+                    break;                
+                default:
+                    SoundManager.PlayFXSound(ChipActivate);
+                    break;
+            }            
+        }
         else
             SoundManager.PlayFXSound(ChipHitShield);
 

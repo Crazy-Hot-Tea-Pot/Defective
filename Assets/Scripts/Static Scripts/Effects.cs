@@ -72,16 +72,6 @@ public static class Effects
     [System.Serializable]
     public class StatusEffect
     {
-        ////Effect(buff, Debuff or SpecialEffect)
-        //public Enum Effect;
-        ////Stack count for buffs/debuffs(if applicable)
-        //public int StackCount;
-
-        //public StatusEffect(Enum effect, int stackCount)
-        //{
-        //    Effect = effect;
-        //    StackCount = stackCount;
-        //}
             public Buff BuffEffect;  
             public Debuff DebuffEffect;
             public SpecialEffects SpecialEffect;

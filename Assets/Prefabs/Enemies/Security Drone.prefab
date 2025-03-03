@@ -52,6 +52,7 @@ MonoBehaviour:
   EnemyUIObject: {fileID: 9223046558604698389}
   thisEnemyUI: {fileID: 6396867329242295756}
   CombatController: {fileID: 0}
+  Model: {fileID: 4785376030717266363}
   agent: {fileID: 0}
   Animator: {fileID: 4171905935683426061}
   playerCamera: {fileID: 0}
@@ -93,8 +94,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 2, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5, y: 8.492107, z: 4}
+  m_Center: {x: 0, y: 3.2460532, z: 0}
 --- !u!1001 &600811925751893414
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,6 +16,8 @@ public class GarbageBot : Enemy
         //Add Rare Chips Todrop
         DroppedChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Rare);
 
+        EnemyType = EnemyManager.EnemyType.Garbagebot;
+
         base.Start();
     }
     public override void CombatStart()

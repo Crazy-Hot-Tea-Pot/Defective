@@ -5,6 +5,8 @@ public class Inspector : Enemy
         if (EnemyName == null)
             EnemyName = "Inspector";
 
+        EnemyType = EnemyManager.EnemyType.Inspector;
+
         base.Start();
     }
     protected override void PerformIntent()

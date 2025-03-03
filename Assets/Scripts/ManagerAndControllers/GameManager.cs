@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
         Combat,
         CombatLoot,
         Settings,
+        GameOver,
         Credits,
         Loading
     }

@@ -34,8 +34,11 @@ public class TerminalController : MonoBehaviour
         {
             isInteracting = value;           
         }
-    }  
-
+    }
+    /// <summary>
+    /// Position for player to stand;
+    /// </summary>
+    public GameObject InteractionPosition;
     /// <summary>
     /// Chip Player has selected
     /// </summary>
@@ -422,8 +425,12 @@ public class TerminalController : MonoBehaviour
     {
         IsInteractingWithMe = true;
 
+        PlayerController playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         //Rotate player
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().StartSmoothRotate(DefaultScreen.transform.position);
+        playerController.StartSmoothRotate(DefaultScreen.transform.position);
+
+        //Move player
+        playerController.MovePlayerToPosition(InteractionPosition.transform.position);
 
         //Change player Camera
         Camera.SwitchCamera(CameraController.CameraState.FirstPerson);
