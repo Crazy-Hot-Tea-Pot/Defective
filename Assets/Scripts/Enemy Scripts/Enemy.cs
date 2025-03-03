@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using TMPro;
-using System.Linq;
-using System;
 public class Enemy : MonoBehaviour
 {   
     public enum EnemyDifficulty
@@ -23,6 +23,11 @@ public class Enemy : MonoBehaviour
         Buff,
         Debuff,
         Unique
+    }
+    public enum IsEnemy
+    {
+        Human,
+        Robot
     }
 
 
@@ -112,7 +117,21 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// What type is the enemy
+    /// IsEnemy Human Or Robot
+    /// </summary>
+    public IsEnemy EnemyIs
+    {
+        get
+        {
+            return enemyIs;
+        }
+    }
+
+    [SerializeField]
+    private IsEnemy enemyIs;
+
+    /// <summary>
+    /// What type is the enemy.
     /// </summary>
     public EnemyManager.EnemyType EnemyType
     {

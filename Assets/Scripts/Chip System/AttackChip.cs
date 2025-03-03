@@ -61,17 +61,12 @@ public class AttackChip : NewChip
         if (Target.Shield <= 0)
         {
             //Play sound for enemyType
-            switch (Target.EnemyType)
+            switch (Target.EnemyIs)
             {
-                case EnemyManager.EnemyType.Looter:
-                case EnemyManager.EnemyType.GangLeader:
-                case EnemyManager.EnemyType.TicketVendor:
-                case EnemyManager.EnemyType.Inspector:
+                case Enemy.IsEnemy.Human:
                     SoundManager.PlayFXSound(ChipHitFlesh);
                     break;
-                case EnemyManager.EnemyType.SecurityDrone:
-                case EnemyManager.EnemyType.Maintenancebot:
-                case EnemyManager.EnemyType.Garbagebot:
+                case Enemy.IsEnemy.Robot:
                     SoundManager.PlayFXSound(ChipHitMetal);
                     break;                
                 default:
