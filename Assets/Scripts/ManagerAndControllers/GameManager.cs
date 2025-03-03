@@ -180,6 +180,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(Levels.Loading.ToString());        
     }
 
+    public void GameOver()
+    {
+        CurrentGameMode = GameMode.GameOver;
+    }
+
     /// <summary>
     /// Load Data after level loads
     /// </summary>

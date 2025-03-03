@@ -1003,6 +1003,8 @@ public class PlayerController : MonoBehaviour
         // Stop player actions
         this.enabled = false;
 
+        GameManager.Instance.GameOver();
+
         // Show Game Over UI
         UiManager.Instance.ShowGameOverScreen();        
 
