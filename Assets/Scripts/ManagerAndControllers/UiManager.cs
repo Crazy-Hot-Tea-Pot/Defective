@@ -253,6 +253,7 @@ public class UiManager : MonoBehaviour
     {
         if (CurrentUI.name == InventoryUI.name)
         {
+            StartCoroutine(DetermineCombat());
             SwitchScreen(RoamingAndCombatUI);
         }
         else
@@ -273,7 +274,28 @@ public class UiManager : MonoBehaviour
     /// </summary>
     public void CloseSettingsOnClick()
     {
+        StartCoroutine(DetermineCombat());
         SwitchScreen(RoamingAndCombatUI);
+    }
+
+    /// <summary>
+    /// A method to determine if the combat UI should be in combat when exiting the settings ui
+    /// </summary>
+    private IEnumerator DetermineCombat()
+    {
+        yield return new WaitForSecondsRealtime(0.3f);
+        //If we are in combat put us in combat mode
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
+        {
+            //This mode will make sure combat resumes properly
+            CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
+        }
+        //If anything else
+        else
+        {
+            //Do not put us in combat
+            CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
+        }
     }
     public void CloseSettingsOnClickTitle()
     {
