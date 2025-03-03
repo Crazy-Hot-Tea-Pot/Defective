@@ -82,6 +82,9 @@ public class Item : ScriptableObject
     public SoundFX ItemActivateSound;
     public SoundFX ItemDeactivateSound;
     public SoundFX ItemFailSound;
+    public SoundFX ItemHitShield;
+    public SoundFX ItemHitFlesh;
+    public SoundFX ItemHitMetal;
 
     private bool isEquipped = false;
 
@@ -102,6 +105,25 @@ public class Item : ScriptableObject
     public void ItemActivate(PlayerController player,Enemy targetEnemy = null)
     {
         SoundManager.PlayFXSound(ItemActivateSound);
+        //Play sound for damage
+        if (targetEnemy.Shield <= 0)
+        {
+            //Play sound for enemyType
+            switch (targetEnemy.EnemyIs)
+            {
+                case Enemy.IsEnemy.Human:
+                    SoundManager.PlayFXSound(ItemHitFlesh);
+                    break;
+                case Enemy.IsEnemy.Robot:
+                    SoundManager.PlayFXSound(ItemHitMetal);
+                    break;
+                default:
+                    SoundManager.PlayFXSound(ItemActivateSound);
+                    break;
+            }
+        }
+        else
+            SoundManager.PlayFXSound(ItemHitShield);
 
         foreach (ItemEffect effect in itemEffects)
         {

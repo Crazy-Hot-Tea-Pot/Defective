@@ -12,7 +12,7 @@ public class GarbageBot : Enemy
         //Add Rare Chips Todrop
         DroppedChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Rare);
 
-        EnemyType = EnemyManager.EnemyType.Garbagebot;
+        EnemyType = EnemyManager.TypeOfEnemies.Garbagebot;
 
         base.Start();
     }

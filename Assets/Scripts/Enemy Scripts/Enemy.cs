@@ -133,7 +133,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// What type is the enemy.
     /// </summary>
-    public EnemyManager.EnemyType EnemyType
+    public EnemyManager.TypeOfEnemies EnemyType
     {
         get
         {
@@ -144,7 +144,7 @@ public class Enemy : MonoBehaviour
             enemyType = value;
         }
     }
-    private EnemyManager.EnemyType enemyType;
+    private EnemyManager.TypeOfEnemies enemyType;
     /// <summary>
     /// Max Hp of Enemy
     /// </summary>

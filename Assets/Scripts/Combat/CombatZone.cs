@@ -9,10 +9,10 @@ public class CombatZone : MonoBehaviour
     public class EnemyPlacementData
     {
         public GameObject enemyObject;
-        public EnemyManager.EnemyType enemyType;
+        public EnemyManager.TypeOfEnemies enemyType;
         public Vector3 position;
 
-        public EnemyPlacementData(GameObject obj, EnemyManager.EnemyType type)
+        public EnemyPlacementData(GameObject obj, EnemyManager.TypeOfEnemies type)
         {
             enemyObject = obj;
             enemyType = type;
@@ -241,9 +241,9 @@ public class CombatZone : MonoBehaviour
     /// Get data from combat zone to spawn enemies
     /// </summary>
     /// <returns></returns>
-    public List<(Vector3 position, EnemyManager.EnemyType type)> GetEnemySpawnData()
+    public List<(Vector3 position, EnemyManager.TypeOfEnemies type)> GetEnemySpawnData()
     {
-        List<(Vector3, EnemyManager.EnemyType)> spawnData = new();
+        List<(Vector3, EnemyManager.TypeOfEnemies)> spawnData = new();
 
         foreach (var enemyData in EnemiesInZone)
         {

@@ -18,6 +18,7 @@ public class AttackChip : NewChip
     public int upgradedDebuffStacksByAmout;
 
     [Header("Attack Chip Sounds")]
+    public SoundFX ChipHitShield;
     public SoundFX ChipHitFlesh;
     public SoundFX ChipHitMetal;
 

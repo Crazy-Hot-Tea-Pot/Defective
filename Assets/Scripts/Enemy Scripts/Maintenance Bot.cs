@@ -45,7 +45,7 @@ public class MaintenanceBot : Enemy
             DroppedChips.Add(commonChips[secondIndex]);
         }
 
-        EnemyType = EnemyManager.EnemyType.GangLeader;
+        EnemyType = EnemyManager.TypeOfEnemies.GangLeader;
 
         base.Start();
     }

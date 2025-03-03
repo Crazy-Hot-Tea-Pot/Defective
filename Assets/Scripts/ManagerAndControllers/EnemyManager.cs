@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
     /// Have to manually Update this for now.
     /// TODO add a generator that auto populates list of enemy types.
     /// </summary>
-    public enum EnemyType
+    public enum TypeOfEnemies
     {
         Looter,
         SecurityDrone,
@@ -49,7 +49,7 @@ public class EnemyManager : MonoBehaviour
     private List<GameObject> combatEnemies = new();
     [SerializeField] 
     private List<GameObject> enemyPrefabs;
-    private Dictionary<EnemyType, GameObject> enemyPrefabDict = new();
+    private Dictionary<TypeOfEnemies, GameObject> enemyPrefabDict = new();
 
     void Awake()
     {
@@ -92,7 +92,7 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public GameObject GetEnemyPrefab(EnemyType type)
+    public GameObject GetEnemyPrefab(TypeOfEnemies type)
     {
         return enemyPrefabDict.ContainsKey(type) ? enemyPrefabDict[type] : null;
     }
@@ -117,7 +117,7 @@ public class EnemyManager : MonoBehaviour
             if (prefab != null)
             {
                 string normalizedPrefabName = prefab.name.Replace(" ", "").ToLower();
-                foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
+                foreach (TypeOfEnemies type in System.Enum.GetValues(typeof(TypeOfEnemies)))
                 {
                     string normalizedEnumName = type.ToString().ToLower(); // Normalize enum name (lowercase)
                     if (normalizedPrefabName == normalizedEnumName)

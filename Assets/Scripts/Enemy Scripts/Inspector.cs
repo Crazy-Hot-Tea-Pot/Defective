@@ -5,7 +5,7 @@ public class Inspector : Enemy
         if (EnemyName == null)
             EnemyName = "Inspector";
 
-        EnemyType = EnemyManager.EnemyType.Inspector;
+        EnemyType = EnemyManager.TypeOfEnemies.Inspector;
 
         base.Start();
     }
