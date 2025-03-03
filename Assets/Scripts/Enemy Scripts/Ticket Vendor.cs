@@ -23,7 +23,7 @@ public class TicketVendor : Enemy
         DroppedChips.Add(tempChips[tempRandom]);
 
 
-        EnemyType = EnemyManager.EnemyType.TicketVendor;
+        EnemyType = EnemyManager.TypeOfEnemies.TicketVendor;
 
         base.Start();
     }

@@ -57,6 +57,7 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   enemyName: Drone
   enemyDifficulty: 0
+  enemyIs: 1
   maxHP: 60
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}

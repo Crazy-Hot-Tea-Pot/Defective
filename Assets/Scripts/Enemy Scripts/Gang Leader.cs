@@ -34,7 +34,7 @@ public class GangLeader : Enemy
         if (EnemyName == null)
             EnemyName = "Gang Leader";
 
-        EnemyType = EnemyManager.EnemyType.GangLeader;
+        EnemyType = EnemyManager.TypeOfEnemies.GangLeader;
 
         base.Start();
     }

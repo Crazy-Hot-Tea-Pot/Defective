@@ -41,7 +41,7 @@ public class Looter : Enemy
         swipeCount = 0;
         StolenScrap = 0;
 
-        EnemyType = EnemyManager.EnemyType.Looter;
+        EnemyType = EnemyManager.TypeOfEnemies.Looter;
 
         base.Start();
     }
