@@ -628,7 +628,7 @@ public class PlayerController : MonoBehaviour
         else if (effect is SpecialEffects specialEffect)
             ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks));
 
-        uiController.UpdateEffectsPanel(ListOfActiveEffects);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);        
 
     }
 
@@ -718,7 +718,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        uiController.UpdateEffectsPanel(listOfActiveEffects);
+        UiManager.Instance.UpdateEffects(listOfActiveEffects);        
     }
 
     #endregion
