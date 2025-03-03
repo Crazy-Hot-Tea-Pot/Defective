@@ -1443,8 +1443,8 @@ MonoBehaviour:
   ResumeButton: {fileID: 2085399598711015237}
   OptionsButton: {fileID: 7001422712445478700}
   QuitButton: {fileID: 3720112114893829648}
-  ButtonSelectSound: 40
-  ButtonClickSound: 38
+  ButtonSelectSound: 32
+  ButtonClickSound: 31
   VersionText: {fileID: 4622310774376628093}
   CurrentStory: {fileID: 11400000, guid: 764e66970b0c37a41bfad07684f35465, type: 2}
   MaxHealth: 50

@@ -22,7 +22,7 @@ MonoBehaviour:
   ChipRareityWeight: 0.2
   hitAllTargets: 0
   chipType: 1
-  ChipActivate: 3
+  ChipActivate: 2
   ChipHitShield: 0
   damage: 5
   upgradedDamageByAmount: 0
@@ -30,3 +30,5 @@ MonoBehaviour:
   debuffToApply: 0
   debuffStacks: 0
   upgradedDebuffStacksByAmout: 0
+  ChipHitFlesh: 0
+  ChipHitMetal: 0

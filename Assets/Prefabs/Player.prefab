@@ -932,17 +932,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc969061e584b4c4f9e037e521413b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectsPanel: {fileID: 7310763695845278986}
-  effectPrefabs:
-  - {fileID: 8724220798877620809, guid: cede0f028bad1a148baa1cb79d5559b5, type: 3}
-  - {fileID: 7839586207813239809, guid: aea73f56854f5874c8f489a05484267b, type: 3}
-  - {fileID: 388897534641274333, guid: f2c78a6393a76204680e00caa066441a, type: 3}
-  - {fileID: 9129874559953162845, guid: fa951bb273e083846b115d07a62012dc, type: 3}
-  - {fileID: 3198590763560356794, guid: 31b3fd2c977ab8f4e952f9c8a448da11, type: 3}
-  - {fileID: 32853026164306056, guid: ff016982a5353d04bacce9a244d7f0fa, type: 3}
-  - {fileID: 6419293263820415179, guid: f2ce8619b89cd8d4cb4db6f184fb3a2a, type: 3}
-  - {fileID: 8398288055641616892, guid: be434cbf2732f6241913387621db5ba3, type: 3}
-  - {fileID: 3198590763560356794, guid: bfb1e73ed5731d245b1eb5f38c57525b, type: 3}
   ChatBox: {fileID: 8803893824479678300}
   chatboxText: {fileID: 5400978810274714048}
   letterRevealSpeed: 0.05
@@ -2037,8 +2026,8 @@ MonoBehaviour:
   SoundWhenPlayerClicks: 7
   listOfActiveEffects: []
   DamageTakenSound: 17
-  GainShieldSound: 22
-  EnterLevelSound: 9
+  GainShieldSound: 24
+  EnterLevelSound: 11
 --- !u!136 &613447968063264353
 CapsuleCollider:
   m_ObjectHideFlags: 0
