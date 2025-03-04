@@ -66,12 +66,12 @@ MonoBehaviour:
   DroppedItems:
   - {fileID: 11400000, guid: 973ffdfa52080df418e8e09c0fc909fa, type: 2}
   DroppedScrap: 15
-  EnemyDeathSound: 7
+  EnemyDeathSound: 13
   EnemyDamageTakenSound: 0
   AdditionalDrone: {fileID: 8879099704411737662}
-  NeutralizeSound: 28
-  RamSound: 9
-  AlertSound: 6
+  NeutralizeSound: 14
+  RamSound: 15
+  AlertSound: 12
   intentsPerformed: 0
   numberOfAlertDrones: 0
   isAlertDrone: 0

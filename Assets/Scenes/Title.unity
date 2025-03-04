@@ -1445,8 +1445,8 @@ MonoBehaviour:
   ResumeButton: {fileID: 2085399598711015237}
   OptionsButton: {fileID: 7001422712445478700}
   QuitButton: {fileID: 3720112114893829648}
-  ButtonSelectSound: 32
-  ButtonClickSound: 31
+  ButtonSelectSound: 40
+  ButtonClickSound: 39
   VersionText: {fileID: 4622310774376628093}
   CurrentStory: {fileID: 11400000, guid: 764e66970b0c37a41bfad07684f35465, type: 2}
   MaxHealth: 50
@@ -3010,7 +3010,7 @@ MonoBehaviour:
     boarderMouseMovement: 0
   soundSettings:
     bgmVolume: 100
-    sfxVolume: 31
+    sfxVolume: 30.1
     bgmMute: 0
     sfxMute: 0
   dataSettings:
