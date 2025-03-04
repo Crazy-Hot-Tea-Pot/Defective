@@ -72,7 +72,7 @@ public class PuzzleManager : MonoBehaviour
     {
         UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
         CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
-        PuzzleController.Target = target;
+        PuzzleController.Target = null;
 
         ChipManager.Instance.PuzzleResetDeck();
     }
