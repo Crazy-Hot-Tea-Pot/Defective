@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -107,6 +108,13 @@ public class CombatController : MonoBehaviour
     [SerializeField]
     private GameObject combatArea;
 
+
+    [Header("Combat Sounds")]
+    public SoundFX CombatStartSound;
+    public BgSound CombatSound;
+    public SoundFX CombatWinSound;
+    private BgSound previousSound;
+
     void OnEnable()
     {
         selectTargetAction = playerInputActions.PlayerCombat.SelectTarget;
@@ -141,6 +149,12 @@ public class CombatController : MonoBehaviour
         this.CombatZone = CombatZone;
 
         GameManager.Instance.StartCombat();
+
+        // Store the previous background sound before changing it
+        previousSound = SoundManager.GetCurrentBackgroundSound();
+
+        // Play the combat start sound first, then switch to combat background music
+        StartCoroutine(PlayCombatStartThenBG());
 
         RoundCounter = 1;
 
@@ -317,6 +331,8 @@ public class CombatController : MonoBehaviour
 
         UiManager.Instance.EndTurnButtonVisibility(false);
 
+        SoundManager.PlayFXSound(CombatWinSound);
+
         // Notify GameManager or handle loot distribution
         GameManager.Instance.EndCombat();
 
@@ -338,6 +354,20 @@ public class CombatController : MonoBehaviour
 
         Reset();
     }
+    private IEnumerator PlayCombatStartThenBG()
+    {
+        // Play CombatStart sound effect
+        AudioClip combatStartClip = SoundManager.GetSoundFxClip(CombatStartSound);
+        if (combatStartClip != null)
+        {
+            SoundManager.PlayFXSound(CombatStartSound);
+            yield return new WaitForSeconds(combatStartClip.length);
+        }
+
+        // Change to Combat Background Music
+        SoundManager.ChangeBackground(CombatSound);
+    }
+
 
     /// <summary>
     /// Resets combat-related data to prepare for a new combat encounter.
@@ -354,6 +384,9 @@ public class CombatController : MonoBehaviour
         ScrapLootForCurrentCombat = 0;
         ItemsLootForCurrentCombat.Clear();
         NewChipLootForCurrentCombat.Clear();
+
+        // Restore the previous background sound
+        SoundManager.ChangeBackground(previousSound);
     }
     #region Targeting
     /// <summary>

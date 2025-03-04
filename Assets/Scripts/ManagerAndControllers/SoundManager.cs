@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class SoundManager
@@ -143,6 +144,35 @@ public static class SoundManager
         //trying this
         AudioSource.PlayClipAtPoint(GetAudio(sound),parent.position);                
     }
+    /// <summary>
+    /// Gets the current Bg Sound playing.
+    /// </summary>
+    /// <returns></returns>
+    public static BgSound GetCurrentBackgroundSound()
+    {
+        GameObject bgSoundObject = GameObject.Find("BgSound");
+        if (bgSoundObject != null)
+        {
+            AudioSource audioSource = bgSoundObject.GetComponent<AudioSource>();
+            BgSound? bgSound = SoundAsset.soundAssets.soundBGArray
+                .FirstOrDefault(bg => bg.audioClip == audioSource.clip)?.bgSound;
+
+            return bgSound ?? BgSound.Background; 
+        }
+        return BgSound.Background;
+    }
+
+    /// <summary>
+    /// Gets clip of the sfx thats about to be played
+    /// </summary>
+    /// <param name="sound"></param>
+    /// <returns></returns>
+    public static AudioClip GetSoundFxClip(SoundFX sound)
+    {
+        return SoundAsset.soundAssets.soundFXClipArray
+            .FirstOrDefault(s => s.soundFX == sound)?.audioClip;
+    }
+
 
     private static AudioClip GetBGAudio(BgSound sound)
     {
