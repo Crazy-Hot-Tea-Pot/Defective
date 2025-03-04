@@ -46,7 +46,7 @@ public class RoamingAndCombatUiController : UiController
     [Header("Effects")]
     public GameObject EffectPrefab;
     public GameObject EffectsContainer;
-    public List<Sprite> EffectImages;     
+    public List<Sprite> EffectImages;
 
     // Start is called before the first frame update
     void Start()
