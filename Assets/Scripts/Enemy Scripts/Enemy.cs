@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using TMPro;
-using System.Linq;
-using System;
 public class Enemy : MonoBehaviour
 {   
     public enum EnemyDifficulty
@@ -24,6 +24,11 @@ public class Enemy : MonoBehaviour
         Debuff,
         Unique
     }
+    public enum IsEnemy
+    {
+        Human,
+        Robot
+    }
 
 
     public GameObject enemyTarget;
@@ -37,20 +42,6 @@ public class Enemy : MonoBehaviour
         {
             enemyTarget = value;
         }
-    }
-
-    /// <summary>
-    /// Range enemy must be to attack the Player.
-    /// </summary>
-    public float AttackRange;     
-
-    public float DistanceToPlayer
-    {
-        get
-        {
-            distanceToPlayer= Vector3.Distance(transform.position, EnemyTarget.transform.position); ;
-            return distanceToPlayer;
-        }               
     }
 
     [Header("Enemy Components")]
@@ -124,6 +115,36 @@ public class Enemy : MonoBehaviour
             enemyDifficulty = value;
         }
     }
+
+    /// <summary>
+    /// IsEnemy Human Or Robot
+    /// </summary>
+    public IsEnemy EnemyIs
+    {
+        get
+        {
+            return enemyIs;
+        }
+    }
+
+    [SerializeField]
+    private IsEnemy enemyIs;
+
+    /// <summary>
+    /// What type is the enemy.
+    /// </summary>
+    public EnemyManager.TypeOfEnemies EnemyType
+    {
+        get
+        {
+            return enemyType;
+        }
+        protected set
+        {
+            enemyType = value;
+        }
+    }
+    private EnemyManager.TypeOfEnemies enemyType;
     /// <summary>
     /// Max Hp of Enemy
     /// </summary>
@@ -346,6 +367,10 @@ public class Enemy : MonoBehaviour
     private float distanceToPlayer;
     protected (string intentText, IntentType intentType, int value) nextIntent;
 
+    [Header("Sound")]
+    public SoundFX EnemyDeathSound;
+    public SoundFX EnemyDamageTakenSound;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -446,7 +471,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(int damage)
     {
         // Plays sound of taking damage
-        SoundManager.PlayFXSound(SoundFX.DamageTaken, this.gameObject.transform);
+        SoundManager.PlayFXSound(EnemyDamageTakenSound, this.gameObject.transform);
 
         // if has shield
         if (Shield > 0)
@@ -502,7 +527,7 @@ public class Enemy : MonoBehaviour
         //Call Death Animation
         StartCoroutine(WaitForAnimation("Die", FinishDeath));
         
-        SoundManager.PlayFXSound(SoundFX.EnemyDefeated, this.gameObject.transform);
+        SoundManager.PlayFXSound(EnemyDeathSound, this.gameObject.transform);
     }
 
     /// <summary>
@@ -602,8 +627,6 @@ public class Enemy : MonoBehaviour
         EnemyUIObject.SetActive(true);
 
         yield return new WaitForEndOfFrame();
-
-        Debug.Log("Reactive UI");
 
 
         EndTurn();

@@ -5,10 +5,12 @@ using TMPro;
 
 public class RandomConsoleEffect : MonoBehaviour
 {
+    [Header("UI Elements")]
     // Assign in Inspector
     public TextMeshProUGUI consoleTextUI;
     // 3D World TextMeshPro
     public TextMeshPro consoleText3D;
+    [Header("Settings")]
     // Max visible lines before scrolling
     public int maxLines = 15;
     // Time between each letter
@@ -20,8 +22,17 @@ public class RandomConsoleEffect : MonoBehaviour
     // Time the glitch effect lasts
     public float glitchDuration = 20f;
 
+    [Header("Special Message")]
+    // Designers input special message here
+    [TextArea(3, 5)] public string specialMessage;
+    // Toggle to convert message to binary
+    public bool convertToBinary = false;
+
     // Stores log history
     private List<string> logLines = new List<string>();
+
+    private bool isGlitching = false;
+    private bool use3DText = false;
 
     private string[] fakeCommands = {
         "Initializing system...",
@@ -48,9 +59,6 @@ public class RandomConsoleEffect : MonoBehaviour
         "You are here too long return to Chip Tech.",
         "Obey Chip Tech command return to designated facility."
     };
-
-    private bool isGlitching = false;
-    private bool use3DText = false;
 
     private void Start()
     {

@@ -48,7 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  AttackRange: 10
   EnemyUIObject: {fileID: 9223046558604698389}
   thisEnemyUI: {fileID: 6396867329242295756}
   CombatController: {fileID: 0}
@@ -58,6 +57,7 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   enemyName: Drone
   enemyDifficulty: 0
+  enemyIs: 1
   maxHP: 60
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}
@@ -66,10 +66,12 @@ MonoBehaviour:
   DroppedItems:
   - {fileID: 11400000, guid: 973ffdfa52080df418e8e09c0fc909fa, type: 2}
   DroppedScrap: 15
+  EnemyDeathSound: 13
+  EnemyDamageTakenSound: 0
   AdditionalDrone: {fileID: 8879099704411737662}
-  NeutralizeSound: 20
-  RamSound: 21
-  AlertSound: 19
+  NeutralizeSound: 14
+  RamSound: 15
+  AlertSound: 12
   intentsPerformed: 0
   numberOfAlertDrones: 0
   isAlertDrone: 0

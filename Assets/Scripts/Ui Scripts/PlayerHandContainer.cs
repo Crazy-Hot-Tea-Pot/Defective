@@ -30,7 +30,7 @@ public class PlayerHandContainer : MonoBehaviour
     {
         isVisible = !isVisible;
 
-        if(isVisible)
+        if(!isVisible)
                 FillPlayerHand();
 
         if(animator==null)
@@ -50,8 +50,8 @@ public class PlayerHandContainer : MonoBehaviour
         }
 
         //Change this so it only draws new cards via the combat controller
-        if(GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-            ChipManager.Instance.RefreshPlayerHand();
+        //if(GameManager.Instance.CurrentGameMode = GameManager.GameMode.Combat)
+        ChipManager.Instance.RefreshPlayerHand();
 
         foreach (var chip in ChipManager.Instance.PlayerHand)
         {

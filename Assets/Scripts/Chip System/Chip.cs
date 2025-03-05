@@ -97,9 +97,11 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /// </summary>
     public void ChipSelected()
     {
-        #region combatStuff
-        try
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
         {
+            #region combatStuff
+            try
+            {
                 // Check if there is a target available
                 if (CombatController.Target == null)
                 {
@@ -116,7 +118,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 if (newChip != null)
                 {
                     //Plays chip use sound
-                    SoundManager.PlayFXSound(SoundFX.ChipPlayed);
+                    SoundManager.PlayFXSound(NewChip.ChipActivate);
 
                     newChip.IsActive = true;
 
@@ -142,8 +144,8 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             }
                             else
                             {
-                                    newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
-                                    newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
 
                             }
                         }
@@ -165,9 +167,9 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             }
                             else
                             {
-                                    newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
                             }
-                               
+
                         }
 
                     }
@@ -177,40 +179,44 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 else
                 {
                     throw new NullReferenceException("No chip script attached.");
-                }           
-        }
-        catch (NullReferenceException ex)
-        {
-            Debug.LogWarning($"Null reference error: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Generic catch for any other exceptions that may occur
-            Debug.LogError($"An unexpected error occurred: {ex.Message}");
-        }
-#endregion
-        #region puzzlestuff
-        try
-        {
-            //Check if targeted
-            if (PuzzleController.Target == null)
-            {
-                throw new NullReferenceException("No target assigned for puzzles.");
+                }
             }
-
-            //Check if Player is jammed
-            if (Player.GetComponent<PlayerController>().IsJammed)
+            catch (NullReferenceException ex)
             {
-                return;
+                Debug.LogWarning($"Null reference error: {ex.Message}");
             }
-
-            //Check if newChip is assigned
-            if (newChip != null)
+            catch (Exception ex)
             {
+                // Generic catch for any other exceptions that may occur
+                Debug.LogError($"An unexpected error occurred: {ex.Message}");
+            }
+            #endregion
+        }
+        else { 
+            #region puzzlestuff
+            try
+            {
+                //Check if targeted
+                if (PuzzleController.Target == null)
+                {
+                    throw new NullReferenceException("No target assigned for puzzles.");
+                }
                 //Plays chip use sound
-                SoundManager.PlayFXSound(SoundFX.ChipPlayed);
+                SoundManager.PlayFXSound(NewChip.ChipActivate);
 
-                newChip.IsActive = true;
+                //Check if Player is jammed
+                if (Player.GetComponent<PlayerController>().IsJammed)
+                {
+                    return;
+                }
+
+                //Check if newChip is assigned
+                if (newChip != null)
+                {
+                    //Plays chip use sound
+                    SoundManager.PlayFXSound(SoundFX.ChipsPlay);
+
+                    newChip.IsActive = true;
 
                     if (newChip is DefenseChip defenseChip)
                         newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
@@ -233,25 +239,26 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
                     }
 
-                
 
-                ChipManager.Instance.AddToUsedChips(this.gameObject);
+
+                    ChipManager.Instance.AddToUsedChips(this.gameObject);
+                }
+                else
+                {
+                    throw new NullReferenceException("No chip script attached.");
+                }
             }
-            else
+            catch (NullReferenceException ex)
             {
-                throw new NullReferenceException("No chip script attached.");
+                Debug.LogWarning($"Null reference error: {ex.Message}");
             }
+            catch (Exception ex)
+            {
+                // Generic catch for any other exceptions that may occur
+                Debug.LogError($"An unexpected error occurred: {ex.Message}");
+            }
+            #endregion
         }
-        catch (NullReferenceException ex)
-        {
-            Debug.LogWarning($"Null reference error: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Generic catch for any other exceptions that may occur
-            Debug.LogError($"An unexpected error occurred: {ex.Message}");
-        }
-        #endregion
     }
     /// <summary>
     /// Set chip prefab to different mode so it can be used in multiple different enviroments.

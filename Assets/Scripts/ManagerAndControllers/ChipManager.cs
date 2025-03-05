@@ -234,8 +234,9 @@ public class ChipManager : MonoBehaviour
     /// <summary>
     /// A method to call a private method
     /// </summary>
-    public void PuzzleResetDeck()
+    public IEnumerator PuzzleResetDeck()
     {
+        yield return new WaitForSeconds(1f);
         EndCombat();
         
     }

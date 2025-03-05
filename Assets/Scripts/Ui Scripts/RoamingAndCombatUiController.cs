@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +41,12 @@ public class RoamingAndCombatUiController : UiController
     public GameObject EndTurn;
     public Button EndTurnButton;
     public GameObject CombatAnimation;
-    public GameObject DeathAnimation;    
+    public GameObject DeathAnimation;
+
+    [Header("Effects")]
+    public GameObject EffectPrefab;
+    public GameObject EffectsContainer;
+    public List<Sprite> EffectImages;
 
     // Start is called before the first frame update
     void Start()
@@ -84,14 +90,12 @@ public class RoamingAndCombatUiController : UiController
     public void ChangeCombatScreenTemp(bool isInteractable)
     {
         EndTurnButton.interactable = isInteractable;
-        // Proceed with enabling combat UI
-        PlayerHandContainer.SetActive(isInteractable);
+
+        StartCoroutine(RedrawPlayerHand(isInteractable));
+
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
 
-        CombatAnimation.SetActive(!isInteractable);
-        //CombatAnimation.GetComponent<Animator>().SetTrigger("EnemyTurn");
-
-        StartCoroutine(RedrawPlayerHand());
+        CombatAnimation.SetActive(!isInteractable);      
     }
 
     /// <summary>
@@ -210,24 +214,67 @@ public class RoamingAndCombatUiController : UiController
         EquipmentButton.interactable = (equipment != null && CanUseItem(equipment, currentEnergy));
     }
     /// <summary>
+    /// Update the Player Effects Panel
+    /// </summary>
+    /// <param name="activeEffects"></param>
+    public void UpdateEffects(List<Effects.StatusEffect> activeEffects)
+    {
+        // Clear the panel
+        foreach (Transform effect in EffectsContainer.transform)
+        {
+            Destroy(effect.gameObject);
+        }
+        // Repopulate the panel with new effects
+        foreach (var statusEffect in activeEffects)
+        {
+            string effectName = null;
+            // Determine which effect type is active
+            if (statusEffect.BuffEffect != Effects.Buff.None)
+            {
+                effectName = statusEffect.BuffEffect.ToString();
+            }
+            else if (statusEffect.DebuffEffect != Effects.Debuff.None)
+            {
+                effectName = statusEffect.DebuffEffect.ToString();
+            }
+            else if (statusEffect.SpecialEffect != Effects.SpecialEffects.None)
+            {
+                effectName = statusEffect.SpecialEffect.ToString();
+            }
+            // Only proceed if a valid effect name was found
+            if (!string.IsNullOrEmpty(effectName))
+            {
+                GameObject effectPrefab = Instantiate(EffectPrefab,EffectsContainer.transform);
+                effectPrefab.name = effectName;
+                try
+                {
+                    effectPrefab.GetComponent<Image>().sprite = EffectImages.Find(sprite => sprite.name == effectName);
+                }
+                catch
+                {
+                    Debug.LogWarning("Could not find Effect Image");
+                }
+            }
+        }
+    }
+    /// <summary>
     /// Close hand and reopen with new cards or just draw hand with cards.
     /// </summary>
-    private IEnumerator RedrawPlayerHand()
+    private IEnumerator RedrawPlayerHand(bool Interactable)
     {
-        if (PlayerHandContainer.GetComponent<PlayerHandContainer>().PanelIsVisible)
+        yield return new WaitForSeconds(1f);
+        if (Interactable)
+        {
+            PlayerHandContainer.SetActive(Interactable);
+            yield return new WaitForSeconds(0.5f);
+            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();            
+        }
+        else
+        {
+            PlayerHandContainer.SetActive(Interactable);
+            yield return new WaitForSeconds(0.5f);
             PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
-
-        yield return new WaitForSeconds(1f);
-
-        ChipManager.Instance.RefreshPlayerHand();
-
-        yield return new WaitForSeconds(1f);
-
-        if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-            yield break;
-
-        //if (!PlayerHandContainer.GetComponent<PlayerHandContainer>().PanelIsVisible && ChipManager.Instance.PlayerHand.Count != 0)
-        //    PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
+        }
     }
     /// <summary>
     /// Checks if item can be used.
@@ -258,7 +305,8 @@ public class RoamingAndCombatUiController : UiController
         yield return new WaitForSeconds(2f);
 
         // Proceed with enabling combat UI
-        PlayerHandContainer.SetActive(true);
+        StartCoroutine(RedrawPlayerHand(true));
+
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
 
         // Hide CombatAnimation if it's temporary

@@ -32,8 +32,10 @@ public class GangLeader : Enemy
     public override void Start()
     {
         if (EnemyName == null)
-            EnemyName = "Looter";
-        
+            EnemyName = "Gang Leader";
+
+        EnemyType = EnemyManager.TypeOfEnemies.GangLeader;
+
         base.Start();
     }
 

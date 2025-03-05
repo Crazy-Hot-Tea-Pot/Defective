@@ -3,7 +3,7 @@
 [System.Serializable]
 public class EnemySpawn
 {
-    public EnemyManager.EnemyType enemyType;
+    public EnemyManager.TypeOfEnemies enemyType;
     public string enemyName;
 
     public GameObject GetEnemyPrefab()

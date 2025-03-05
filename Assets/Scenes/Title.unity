@@ -471,7 +471,7 @@ MonoBehaviour:
   useUnityDefaultCursor: 0
   cursorMappings:
   - layerIndex: 8
-    cursorTexture: {fileID: 2800000, guid: b76ca731e19a16447b4e8b62b9488494, type: 3}
+    cursorTexture: {fileID: 2800000, guid: d1ef0c5a89dd2314fa9dd5ebe1a4d2fd, type: 3}
     hotspot: {x: 0, y: 0}
   defaultCursor: {fileID: 0}
   defaultHotspot: {x: 0, y: 0}
@@ -661,6 +661,8 @@ MonoBehaviour:
   lineDelay: 1.5
   glitchStartTime: 30
   glitchDuration: 20
+  specialMessage: 
+  convertToBinary: 0
 --- !u!114 &926421409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,6 +795,8 @@ MonoBehaviour:
   - {fileID: 634410278766046006, guid: 77d81e61f13a24a428f905d45c2bfe45, type: 3}
   - {fileID: 1612628656415722534, guid: 4c11e6462662d8e4d9e80bc55196d819, type: 3}
   - {fileID: 8879099704411737662, guid: b362acb277673ec4c85f3b171b5ef174, type: 3}
+  - {fileID: 2742929685568245920, guid: 475e36bc35418334bab9d1a050c6ea67, type: 3}
+  - {fileID: 5064890787760938529, guid: eceaeefaa39dc2741833f88cdba9555a, type: 3}
 --- !u!4 &929724930
 Transform:
   m_ObjectHideFlags: 0
@@ -1442,7 +1446,7 @@ MonoBehaviour:
   OptionsButton: {fileID: 7001422712445478700}
   QuitButton: {fileID: 3720112114893829648}
   ButtonSelectSound: 40
-  ButtonClickSound: 38
+  ButtonClickSound: 39
   VersionText: {fileID: 4622310774376628093}
   CurrentStory: {fileID: 11400000, guid: 764e66970b0c37a41bfad07684f35465, type: 2}
   MaxHealth: 50
@@ -3006,7 +3010,7 @@ MonoBehaviour:
     boarderMouseMovement: 0
   soundSettings:
     bgmVolume: 100
-    sfxVolume: 31
+    sfxVolume: 30.1
     bgmMute: 0
     sfxMute: 0
   dataSettings:

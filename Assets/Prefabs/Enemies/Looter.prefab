@@ -48,15 +48,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  AttackRange: 10
   EnemyUIObject: {fileID: 1709112387564072826}
   thisEnemyUI: {fileID: 3499041421513826723}
   CombatController: {fileID: 0}
+  Model: {fileID: 0}
   agent: {fileID: 0}
   Animator: {fileID: 8895841024513928323}
   playerCamera: {fileID: 0}
   enemyName: Looter
   enemyDifficulty: 1
+  enemyIs: 0
   maxHP: 50
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}
@@ -65,6 +66,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 981e6c8c2ec18ae46afc4e05d23ab248, type: 2}
   - {fileID: 11400000, guid: 2d213ab2834cc1348bf06d8ea2e71b18, type: 2}
   DroppedScrap: 15
+  EnemyDeathSound: 0
+  EnemyDamageTakenSound: 0
 --- !u!136 &684236413309906426
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class PuzzleManager : MonoBehaviour
             }
             catch
             {
-
+                Debug.LogError("Why this try catch?");
             }
         }
     }
@@ -67,13 +67,16 @@ public class PuzzleManager : MonoBehaviour
 
     /// <summary>
     /// This method called from PuzzleRange collison closes the combat UI so the puzzle is impossble
+    /// removed parameters
     /// </summary>
-    public void ClosePuzzle(GameObject target)
+    public void ClosePuzzle()
     {
         UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
         CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
+        //Set target to null
+        //PuzzleController.Target = target;
         PuzzleController.Target = null;
 
-        ChipManager.Instance.PuzzleResetDeck();
+        StartCoroutine(ChipManager.Instance.PuzzleResetDeck());
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemEffectDescription: Spend 10 Energy and Deal 4 Damage to (Single Target)
   energyCost: 10
-  ItemActivate: 36
+  ItemActivate: 22
   ItemDeactivate: 36
   ItemFail: 0
   SpecialConditionEffect: 1

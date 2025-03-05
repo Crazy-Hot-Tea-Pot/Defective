@@ -17,8 +17,6 @@ public class DamageEffect : ItemEffect
 
         if (player.SpendEnergy(adjustedEnergyCost))
         {
-            //Play Item Effect
-            SoundManager.PlayFXSound(ItemActivate);
 
             if (player.IsPowered)
                 adjustedDamage += player.PoweredStacks;
@@ -56,7 +54,7 @@ public class DamageEffect : ItemEffect
         }
         else
         {
-            SoundManager.PlayFXSound(ItemFail);
+            SoundManager.PlayFXSound(item.ItemFailSound);
 
             Debug.Log("Not enough energy to use Weapon.");
         }
@@ -72,7 +70,7 @@ public class DamageEffect : ItemEffect
         if (player.SpendEnergy(adjustedEnergyCost))
         {
             //Play Item Effect
-            SoundManager.PlayFXSound(ItemActivate);
+            SoundManager.PlayFXSound(item.ItemActivateSound);
 
             if (player.IsPowered)
                 adjustedDamage += player.PoweredStacks;
@@ -86,7 +84,7 @@ public class DamageEffect : ItemEffect
         }
         else
         {
-            SoundManager.PlayFXSound(ItemFail);
+            SoundManager.PlayFXSound(item.ItemFailSound);
 
             Debug.Log("Not enough energy to use Weapon.");
         }

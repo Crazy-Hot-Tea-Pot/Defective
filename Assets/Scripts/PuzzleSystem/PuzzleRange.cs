@@ -46,7 +46,7 @@ public class PuzzleRange : MonoBehaviour
         if (other.tag == "Player")
         {
             this.gameObject.GetComponent<Renderer>().material = save;
-            PuzzleManager.Instance.ClosePuzzle(this.gameObject);
+            PuzzleManager.Instance.ClosePuzzle();
         }
     }
 
@@ -60,7 +60,7 @@ public class PuzzleRange : MonoBehaviour
             {
                 QuestMarker.SetActive(true);
             }
-            PuzzleManager.Instance.ClosePuzzle(this.gameObject);
+            PuzzleManager.Instance.ClosePuzzle();
             DestroyMe();
         }
     }

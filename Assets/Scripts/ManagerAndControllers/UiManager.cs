@@ -128,6 +128,19 @@ public class UiManager : MonoBehaviour
         }
     }
     /// <summary>
+    /// Update the Player Effects Panel
+    /// </summary>
+    /// <param name="activeEffects"></param>
+    public void UpdateEffects(List<Effects.StatusEffect> activeEffects)
+    {
+        var controller = GetCurrentController<RoamingAndCombatUiController>();
+        if (controller != null)
+        {
+            controller.UpdateEffects(activeEffects);
+        }
+
+    }
+    /// <summary>
     /// Setup screen for CombatMode
     /// </summary>
     private void StartCombat()
@@ -139,7 +152,8 @@ public class UiManager : MonoBehaviour
     /// </summary>
     private void EndCombat()
     {
-        //GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
+        if(GameManager.Instance.CurrentGameMode != GameManager.GameMode.GameOver)
+            GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
     }
     #endregion
     #region InventoryUI

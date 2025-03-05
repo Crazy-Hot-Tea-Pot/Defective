@@ -48,15 +48,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  AttackRange: 10
   EnemyUIObject: {fileID: 1881496537187192454}
   thisEnemyUI: {fileID: 4405787257033179231}
   CombatController: {fileID: 0}
+  Model: {fileID: 0}
   agent: {fileID: 0}
   Animator: {fileID: 9104214479895525382}
   playerCamera: {fileID: 0}
   enemyName: Maintenance
   enemyDifficulty: 1
+  enemyIs: 1
   maxHP: 80
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}
@@ -64,6 +65,10 @@ MonoBehaviour:
   DroppedItems:
   - {fileID: 11400000, guid: d9fe00d134e9ea34e98c128921fbd533, type: 2}
   DroppedScrap: 30
+  EnemyDeathSound: 38
+  EnemyDamageTakenSound: 0
+  RepairBotSound: 42
+  GalvanizeBotSound: 31
 --- !u!136 &2074716340593231451
 CapsuleCollider:
   m_ObjectHideFlags: 0

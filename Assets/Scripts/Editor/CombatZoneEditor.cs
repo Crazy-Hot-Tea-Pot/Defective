@@ -72,7 +72,7 @@ public class CombatZoneEditor : Editor
                 EditorGUILayout.BeginHorizontal();
 
                 enemyData.enemyObject = (GameObject)EditorGUILayout.ObjectField($"Enemy {i + 1}", enemyData.enemyObject, typeof(GameObject), true);
-                enemyData.enemyType = (EnemyManager.EnemyType)EditorGUILayout.EnumPopup(enemyData.enemyType);
+                enemyData.enemyType = (EnemyManager.TypeOfEnemies)EditorGUILayout.EnumPopup(enemyData.enemyType);
 
                 if (GUILayout.Button("Remove", GUILayout.Width(70)))
                 {
@@ -134,14 +134,14 @@ public class CombatZoneEditor : Editor
     private void ShowAddEnemyMenu(CombatZone combatZone)
     {
         GenericMenu menu = new GenericMenu();
-        foreach (EnemyManager.EnemyType type in System.Enum.GetValues(typeof(EnemyManager.EnemyType)))
+        foreach (EnemyManager.TypeOfEnemies type in System.Enum.GetValues(typeof(EnemyManager.TypeOfEnemies)))
         {
             menu.AddItem(new GUIContent(type.ToString()), false, () => AddEnemyToCombatZone(combatZone, type));
         }
         menu.ShowAsContext();
     }
 
-    private void AddEnemyToCombatZone(CombatZone combatZone, EnemyManager.EnemyType type)
+    private void AddEnemyToCombatZone(CombatZone combatZone, EnemyManager.TypeOfEnemies type)
     {
         GameObject enemyPlaceholderPrefab = combatZone.EnemyPlaceholder;
 

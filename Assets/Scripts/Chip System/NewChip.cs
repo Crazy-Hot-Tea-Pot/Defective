@@ -150,8 +150,7 @@ public class NewChip : ScriptableObject
     private TypeOfChips chipType;
 
     [Header("Chip Sound")]
-    public SoundFX ChipActivate;
-    public SoundFX ChipHitShield;
+    public SoundFX ChipActivate;    
 
     void OnEnable()
     {

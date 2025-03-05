@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
         Combat,
         CombatLoot,
         Settings,
+        GameOver,
         Credits,
         Loading
     }
@@ -177,6 +178,11 @@ public class GameManager : MonoBehaviour
         
         TargetScene = level;
         SceneManager.LoadScene(Levels.Loading.ToString());        
+    }
+
+    public void GameOver()
+    {
+        CurrentGameMode = GameMode.GameOver;
     }
 
     /// <summary>
