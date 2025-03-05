@@ -24,8 +24,8 @@ MonoBehaviour:
   energyCostDecreaseBy: 0000000000000000000000000000000000000000
   scrapValueForEachTeir: 0f00000014000000190000001e0000002300000005000000
   ItemActivateSound: 37
-  ItemDeactivateSound: 34
-  ItemFailSound: 34
+  ItemDeactivateSound: 37
+  ItemFailSound: 37
   ItemHitShield: 37
   ItemHitFlesh: 37
   ItemHitMetal: 37

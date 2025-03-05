@@ -48,8 +48,10 @@ MonoBehaviour:
   - bgSound: 0
     audioClip: {fileID: 8300000, guid: 32f3214d11061a945bdfbef177f18b12, type: 3}
   - bgSound: 1
-    audioClip: {fileID: 8300000, guid: 8ccad41dedb4910419b8325c84412c5c, type: 3}
+    audioClip: {fileID: 8300000, guid: bda5c61a16b31d84aadbed2ff6bf1aec, type: 3}
   - bgSound: 2
+    audioClip: {fileID: 8300000, guid: 8ccad41dedb4910419b8325c84412c5c, type: 3}
+  - bgSound: 3
     audioClip: {fileID: 8300000, guid: 44810c864c0798e4fa04aad50f0ed50f, type: 3}
   soundFXClipArray:
   - soundFX: 0
@@ -112,8 +114,6 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 139904adf7a29c04d95b2c4341c11ace, type: 3}
   - soundFX: 29
     audioClip: {fileID: 8300000, guid: 2c054c3471d76f44d8e69916cfef227b, type: 3}
-  - soundFX: 30
-    audioClip: {fileID: 8300000, guid: 2fd65566520e07c4ab76d4a07de3c587, type: 3}
   - soundFX: 31
     audioClip: {fileID: 8300000, guid: 3a5b3dc74c09b9e408400df443a59e0d, type: 3}
   - soundFX: 32

@@ -1,6 +1,7 @@
 public enum BgSound
 {
     Background,
+    BattleBM,
     MainMenuAmbient,
     TutorialBackground,
 }
@@ -37,7 +38,6 @@ public enum SoundFX
     FootStepGlitch3,
     FootStepGlitch4,
     FootStepGlitch5,
-    FootStepGlitch5V1,
     Galvanize,
     GameOver,
     GuardSound,
