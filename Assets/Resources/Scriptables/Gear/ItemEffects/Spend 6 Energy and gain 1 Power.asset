@@ -9,19 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d80e112095c1b64bb5ed13de03c004a, type: 3}
-  m_Name: Spend 5 Energy and gain 1 Shield
+  m_Script: {fileID: 11500000, guid: a6a7624a4f4de7445b93d5a3dbf689a4, type: 3}
+  m_Name: Spend 6 Energy and gain 1 Power
   m_EditorClassIdentifier: 
-  ItemEffectDescription: Spend 5 Energy and gain 1 Shield
-  energyCost: 5
-  ItemActivate: 20
-  ItemDeactivate: 33
-  ItemFail: 0
+  ItemEffectDescription: Spend 6 Energy and gain 1 Power
+  energyCost: 30
   SpecialConditionEffect: 0
   Condition: 0
   deBuffEffectToApplyToEnemy: []
-  buffToApplyToPlayer: []
+  buffToApplyToPlayer:
+  - Buff: 2
+    AmountToBuff: 1
   debuffToApplyToPlayer: []
   effectToApplyToPlayer: 0
   HitAllTargets: 0
-  baseShieldAmount: 1
+  SpecialEffectName: 
+  HasPassiveEffect: 0
+  passiveEffect: 0

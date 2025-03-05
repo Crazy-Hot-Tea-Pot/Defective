@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Punch
-  itemDescription: Deal 1 Damage.
+  itemDescription: Spend 1 Energy, and do 1 Damage.
   itemImage: {fileID: 21300000, guid: 39c5d1485cb89bc4b9d329546effce5e, type: 3}
   itemType: 0
   itemEffects:
@@ -24,8 +24,8 @@ MonoBehaviour:
   energyCostDecreaseBy: 0000000001000000020000000300000004000000
   scrapValueForEachTeir: 050000000a0000000f000000140000001900000005000000
   ItemActivateSound: 45
-  ItemDeactivateSound: 45
-  ItemFailSound: 45
+  ItemDeactivateSound: 34
+  ItemFailSound: 34
   ItemHitShield: 45
   ItemHitFlesh: 45
   ItemHitMetal: 47
