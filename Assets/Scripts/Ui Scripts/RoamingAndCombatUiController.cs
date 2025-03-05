@@ -90,14 +90,12 @@ public class RoamingAndCombatUiController : UiController
     public void ChangeCombatScreenTemp(bool isInteractable)
     {
         EndTurnButton.interactable = isInteractable;
-        // Proceed with enabling combat UI
-        PlayerHandContainer.SetActive(isInteractable);
+
+        StartCoroutine(RedrawPlayerHand(isInteractable));
+
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
 
-        CombatAnimation.SetActive(!isInteractable);
-        //CombatAnimation.GetComponent<Animator>().SetTrigger("EnemyTurn");
-
-        StartCoroutine(RedrawPlayerHand());
+        CombatAnimation.SetActive(!isInteractable);      
     }
 
     /// <summary>
@@ -262,22 +260,21 @@ public class RoamingAndCombatUiController : UiController
     /// <summary>
     /// Close hand and reopen with new cards or just draw hand with cards.
     /// </summary>
-    private IEnumerator RedrawPlayerHand()
+    private IEnumerator RedrawPlayerHand(bool Interactable)
     {
-        if (PlayerHandContainer.GetComponent<PlayerHandContainer>().PanelIsVisible)
+        yield return new WaitForSeconds(1f);
+        if (Interactable)
+        {
+            PlayerHandContainer.SetActive(Interactable);
+            yield return new WaitForSeconds(0.5f);
+            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();            
+        }
+        else
+        {
+            PlayerHandContainer.SetActive(Interactable);
+            yield return new WaitForSeconds(0.5f);
             PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
-
-        yield return new WaitForSeconds(1f);
-
-        ChipManager.Instance.RefreshPlayerHand();
-
-        yield return new WaitForSeconds(1f);
-
-        if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-            yield break;
-
-        //if (!PlayerHandContainer.GetComponent<PlayerHandContainer>().PanelIsVisible && ChipManager.Instance.PlayerHand.Count != 0)
-        //    PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
+        }
     }
     /// <summary>
     /// Checks if item can be used.

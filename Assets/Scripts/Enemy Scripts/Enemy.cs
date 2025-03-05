@@ -624,8 +624,6 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        Debug.Log("Reactive UI");
-
 
         EndTurn();
     }

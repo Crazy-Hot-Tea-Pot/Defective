@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Power Booster
-  itemDescription: Spend 30 Energy and gain 1 Power
+  itemDescription: Spend 6 Energy and gain 1 Power
   itemImage: {fileID: 21300000, guid: 106bfc780d3de39469518220a8a621b3, type: 3}
   itemType: 2
   itemEffects:
@@ -23,3 +23,9 @@ MonoBehaviour:
   valueIncreaseBy: 0000000000000000000000000000000001000000
   energyCostDecreaseBy: 00000000050000000a0000000f00000014000000
   scrapValueForEachTeir: 050000000a0000000f000000140000001900000005000000
+  ItemActivateSound: 0
+  ItemDeactivateSound: 0
+  ItemFailSound: 0
+  ItemHitShield: 0
+  ItemHitFlesh: 0
+  ItemHitMetal: 0

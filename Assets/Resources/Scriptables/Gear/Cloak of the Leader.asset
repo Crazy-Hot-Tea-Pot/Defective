@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Cloak of the Leader
-  itemDescription: '(dropped by Gang Leader) Guard: Spend 25 Energy, and gain 2 Galvanize. '
+  itemDescription: '(dropped by Gang Leader) Guard: Spend 2.5 Energy, and gain 2
+    Galvanize. '
   itemImage: {fileID: 0}
   itemType: 1
   itemEffects:
@@ -23,3 +24,9 @@ MonoBehaviour:
   valueIncreaseBy: 0000000000000000000000000000000000000000
   energyCostDecreaseBy: 0000000000000000000000000000000000000000
   scrapValueForEachTeir: 4b0000004b0000004b0000004b0000004b00000005000000
+  ItemActivateSound: 0
+  ItemDeactivateSound: 0
+  ItemFailSound: 0
+  ItemHitShield: 0
+  ItemHitFlesh: 0
+  ItemHitMetal: 0
