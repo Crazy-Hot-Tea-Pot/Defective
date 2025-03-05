@@ -118,7 +118,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 if (newChip != null)
                 {
                     //Plays chip use sound
-                    SoundManager.PlayFXSound(SoundFX.ChipPlayed);
+                    SoundManager.PlayFXSound(NewChip.ChipActivate);
 
                     newChip.IsActive = true;
 
@@ -201,6 +201,8 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 {
                     throw new NullReferenceException("No target assigned for puzzles.");
                 }
+                //Plays chip use sound
+                SoundManager.PlayFXSound(NewChip.ChipActivate);
 
                 //Check if Player is jammed
                 if (Player.GetComponent<PlayerController>().IsJammed)

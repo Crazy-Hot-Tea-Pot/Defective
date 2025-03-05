@@ -355,8 +355,11 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #endregion    
-
+    #endregion
+    [Header("Sound")]
+    public SoundFX DamageTakenSound;
+    public SoundFX GainShieldSound;
+    public SoundFX EnterLevelSound;
     // Awake is called when instance is being loaded
     void Awake()
     {
@@ -380,6 +383,7 @@ public class PlayerController : MonoBehaviour
         Initialize();
 
         CharacterSpeak("Made it\nhere we go.", false, 0.5f,2f);
+        SoundManager.PlayFXSound(EnterLevelSound);
     }
 
     /// <summary>
@@ -504,7 +508,7 @@ public class PlayerController : MonoBehaviour
 
 
             //Play Sound
-            SoundManager.PlayFXSound(SoundFX.DamageTaken, this.transform);
+            SoundManager.PlayFXSound(DamageTakenSound, this.transform);
         }
     }
 

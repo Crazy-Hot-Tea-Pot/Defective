@@ -169,6 +169,8 @@ MonoBehaviour:
   DroppedChips: []
   DroppedItems: []
   DroppedScrap: 0
+  EnemyDeathSound: 0
+  EnemyDamageTakenSound: 0
 --- !u!136 &371243886294766885
 CapsuleCollider:
   m_ObjectHideFlags: 0

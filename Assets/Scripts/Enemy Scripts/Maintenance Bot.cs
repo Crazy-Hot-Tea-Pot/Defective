@@ -18,6 +18,13 @@ public class MaintenanceBot : Enemy
             repairUsed = value;
         }
     }
+
+    [Header("Sound")]
+    public SoundFX RepairBotSound;
+    public SoundFX GalvanizeBotSound;
+ 
+    
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -127,7 +134,7 @@ public class MaintenanceBot : Enemy
     private void Galvanize()
     {
         //PlaySound
-        SoundManager.PlayFXSound(SoundFX.GalvanizeMainenanceBot, this.gameObject.transform);
+        SoundManager.PlayFXSound(GalvanizeBotSound, this.gameObject.transform);
 
         AddEffect(Effects.Buff.Galvanize, 4);        
     }
@@ -137,7 +144,7 @@ public class MaintenanceBot : Enemy
     private void Repair()
     {        
         //Play sound
-        SoundManager.PlayFXSound(SoundFX.RepairMaintenaceBot, this.gameObject.transform);
+        SoundManager.PlayFXSound(RepairBotSound, this.gameObject.transform);
 
         int tempHealAmount = Mathf.RoundToInt(maxHP * 0.3f);
         CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, maxHP);        

@@ -1,9 +1,13 @@
-using UnityEngine;
+ using UnityEngine;
 
 public class GarbageBot : Enemy
 {
     // Store the roll for consistency
     private int nextIntentRoll;
+
+    [Header("Sound")]
+    public SoundFX ShredGarbageSound;
+
     public override void Start()
     {
         if (EnemyName == null)
@@ -108,7 +112,7 @@ public class GarbageBot : Enemy
     private void Shred()
     {
         //Play Sound
-        SoundManager.PlayFXSound(SoundFX.ShredGarbageBot,this.gameObject.transform);
+        SoundManager.PlayFXSound(ShredGarbageSound,this.gameObject.transform);
 
         ApplyShield(7);
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(7);

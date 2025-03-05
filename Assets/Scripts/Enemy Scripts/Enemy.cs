@@ -367,6 +367,10 @@ public class Enemy : MonoBehaviour
     private float distanceToPlayer;
     protected (string intentText, IntentType intentType, int value) nextIntent;
 
+    [Header("Sound")]
+    public SoundFX EnemyDeathSound;
+    public SoundFX EnemyDamageTakenSound;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -467,7 +471,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(int damage)
     {
         // Plays sound of taking damage
-        SoundManager.PlayFXSound(SoundFX.DamageTaken, this.gameObject.transform);
+        SoundManager.PlayFXSound(EnemyDamageTakenSound, this.gameObject.transform);
 
         // if has shield
         if (Shield > 0)
@@ -523,7 +527,7 @@ public class Enemy : MonoBehaviour
         //Call Death Animation
         StartCoroutine(WaitForAnimation("Die", FinishDeath));
         
-        SoundManager.PlayFXSound(SoundFX.EnemyDefeated, this.gameObject.transform);
+        SoundManager.PlayFXSound(EnemyDeathSound, this.gameObject.transform);
     }
 
     /// <summary>
