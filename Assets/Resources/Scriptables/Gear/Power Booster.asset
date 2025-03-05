@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Power Booster
-  itemDescription: ' Power 6 Energy and gain 1 Power'
+  itemDescription: Gain 1 Power.     (Power increases your Damage Dealt by your amount
+    of Power)
   itemImage: {fileID: 21300000, guid: 106bfc780d3de39469518220a8a621b3, type: 3}
   itemType: 2
   itemEffects:

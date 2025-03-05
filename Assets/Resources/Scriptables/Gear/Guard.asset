@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Guard
-  itemDescription: Spend 1 Energy, and gain 1 Shield
+  itemDescription: '  Gain 1 Shield.        (Shield reduces Damage Taken by your
+    amount of Shield. Wears off at the Beginning of your Turn.)'
   itemImage: {fileID: 21300000, guid: 879d015f1f230b449b8c286cc0e327bd, type: 3}
   itemType: 1
   itemEffects:
