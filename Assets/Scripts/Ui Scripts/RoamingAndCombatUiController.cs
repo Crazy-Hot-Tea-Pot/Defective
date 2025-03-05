@@ -305,7 +305,8 @@ public class RoamingAndCombatUiController : UiController
         yield return new WaitForSeconds(2f);
 
         // Proceed with enabling combat UI
-        PlayerHandContainer.SetActive(true);
+        StartCoroutine(RedrawPlayerHand(true));
+
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
 
         // Hide CombatAnimation if it's temporary

@@ -214,7 +214,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 if (newChip != null)
                 {
                     //Plays chip use sound
-                    SoundManager.PlayFXSound(SoundFX.ChipPlayed);
+                    SoundManager.PlayFXSound(SoundFX.ChipsPlay);
 
                     newChip.IsActive = true;
 

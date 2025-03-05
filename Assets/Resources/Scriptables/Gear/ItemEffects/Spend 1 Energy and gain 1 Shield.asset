@@ -10,13 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d80e112095c1b64bb5ed13de03c004a, type: 3}
-  m_Name: Spend 5 Energy and gain 1 Shield
+  m_Name: Spend 1 Energy and gain 1 Shield
   m_EditorClassIdentifier: 
-  ItemEffectDescription: Spend 5 Energy and gain 1 Shield
+  ItemEffectDescription: Spend 1 Energy and gain 1 Shield
   energyCost: 5
-  ItemActivate: 20
-  ItemDeactivate: 33
-  ItemFail: 0
   SpecialConditionEffect: 0
   Condition: 0
   deBuffEffectToApplyToEnemy: []

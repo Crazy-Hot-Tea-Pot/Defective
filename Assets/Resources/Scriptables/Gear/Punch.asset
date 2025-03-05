@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Punch
-  itemDescription: Spend 5 Energy, and do 1 Damage.
+  itemDescription: Spend 1 Energy, and do 1 Damage.
   itemImage: {fileID: 21300000, guid: 39c5d1485cb89bc4b9d329546effce5e, type: 3}
   itemType: 0
   itemEffects:
