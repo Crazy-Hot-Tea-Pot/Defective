@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using static Effects;
-using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName = "NewEquipmentEffect", menuName = "Gear/Effects/EquipmentEffect")]
 public class EquipmentEffect : ItemEffect
