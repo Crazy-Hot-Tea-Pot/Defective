@@ -29,7 +29,6 @@ public class DataManager : MonoBehaviour
 
     [SerializeField]
     private string saveDirectory;
-    private string footageDirectory;
 
 
     [SerializeField]
@@ -51,13 +50,6 @@ public class DataManager : MonoBehaviour
             if (!Directory.Exists(saveDirectory))
             {
                 Directory.CreateDirectory(saveDirectory);
-            }
-
-            // Ensure SecurityCamFootage subfolder exists
-            footageDirectory = Path.Combine(saveDirectory, "SecurityCamFootage");
-            if (!Directory.Exists(footageDirectory))
-            {
-                Directory.CreateDirectory(footageDirectory);
             }
         }
         else
@@ -306,12 +298,5 @@ public class DataManager : MonoBehaviour
         }
         Debug.LogWarning($"Attempted to delete a save that does not exist: {saveName}");
         return false;
-    }
-    /// <summary>
-    /// Returns the directory where Security Camera footage is stored.
-    /// </summary>
-    public string GetFootageDirectory()
-    {
-        return footageDirectory;
-    }
+    }    
 }
