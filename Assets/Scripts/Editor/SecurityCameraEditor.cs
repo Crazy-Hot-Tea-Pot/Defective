@@ -40,12 +40,29 @@ public class SecurityCameraEditor : Editor
                 }
             }
         }
-        else
+        else if(script.TriggerZone != null)
         {
+            GUILayout.Space(10);
             GUILayout.Label("Trigger Zone Settings", EditorStyles.boldLabel);
-            script.TriggerZone.transform.localPosition = EditorGUILayout.Vector3Field("Position", script.TriggerZone.transform.localPosition);
-            script.TriggerZone.transform.localEulerAngles = EditorGUILayout.Vector3Field("Rotation", script.TriggerZone.transform.localEulerAngles);
-            script.TriggerZone.transform.localScale = EditorGUILayout.Vector3Field("Size", script.TriggerZone.transform.localScale);
+            SerializedProperty triggerZonePosition = serializedObject.FindProperty("triggerZonePosition");
+            SerializedProperty triggerZoneRotation = serializedObject.FindProperty("triggerZoneRotation");
+            SerializedProperty triggerZoneSize = serializedObject.FindProperty("triggerZoneSize");
+
+            // Draw fields properly so Unity tracks changes
+            EditorGUILayout.PropertyField(triggerZonePosition, new GUIContent("Position"));
+            EditorGUILayout.PropertyField(triggerZoneRotation, new GUIContent("Rotation"));
+            EditorGUILayout.PropertyField(triggerZoneSize, new GUIContent("Size"));
+
+            // Apply the changes
+            serializedObject.ApplyModifiedProperties();
+
+
+            //if (script.TriggerZone != null)
+            //{
+            //    script.TriggerZone.transform.localPosition = script.triggerZonePosition;
+            //    script.TriggerZone.transform.localEulerAngles = script.TriggerZoneRotation;
+            //    script.TriggerZone.transform.localScale = script.TriggerZoneSize;
+            //}
             //BoxCollider collider = script.TriggerZone.GetComponent<BoxCollider>();
             //if (collider != null)
             //{

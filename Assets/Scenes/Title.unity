@@ -1496,6 +1496,7 @@ MonoBehaviour:
     Chips: []
     Gear: []
     TimeStampString: 
+    SecurityCamRecordings: []
 --- !u!4 &1829154760
 Transform:
   m_ObjectHideFlags: 0

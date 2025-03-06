@@ -83,7 +83,10 @@ public class GameData
     public List<ChipData> Chips = new List<ChipData>();
     // Save Gears
     public List<GearData> Gear = new List<GearData>();
+    // Time stamp
     public string TimeStampString;
+
+    public List<string> SecurityCamRecordings = new List<string>();
 
     //Default Constructor
     public GameData()
