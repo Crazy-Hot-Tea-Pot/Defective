@@ -27,8 +27,7 @@ public class EnemyManager : MonoBehaviour
         Maintenancebot,
         TicketVendor,
         Garbagebot,
-        GangLeader,
-        Inspector
+        GangLeader
     }
 
     public List<GameObject> EnemiesInLevel;

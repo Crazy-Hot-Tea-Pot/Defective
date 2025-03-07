@@ -32,9 +32,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WorkShop.unity
     guid: b82e0eba7d8e2d0439c0825f124b505f
-  - enabled: 0
-    path: Assets/Scenes/Settings.unity
-    guid: 23ca2c66ba9ec14409061645077139e8
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: dc1a91fc2bf8cd84a8ffab2e2ad64993

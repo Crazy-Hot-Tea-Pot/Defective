@@ -61,27 +61,6 @@ public class MaintenanceBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
-    public override void PerformIntentTrigger(string intentName)
-    {
-        base.PerformIntentTrigger(intentName);
-
-        switch (intentName)
-        {
-            case "Repair":
-                Repair();
-                repairUsed = true;
-                break;
-            case "Galvanize":
-                Galvanize();
-                break;
-            case "Disassemble":
-                Disassemble();
-                break;
-            default:
-                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
-                break;
-        }
-    }
     protected override void PerformIntent()
     {
         base.PerformIntent();
@@ -105,7 +84,6 @@ public class MaintenanceBot : Enemy
                 Animator.SetTrigger("Intent 2");
             }
         }
-        StartCoroutine(PrepareToEndTurn());
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
@@ -122,7 +100,7 @@ public class MaintenanceBot : Enemy
     /// and
     /// Apply Worn
     /// </summary>
-    private void Disassemble()
+    public void Disassemble()
     {
         Debug.Log("Maintenance Bot uses Disassemble!");
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(9);
@@ -131,7 +109,7 @@ public class MaintenanceBot : Enemy
     /// <summary>
     /// Gains 4 stacks of Galvanize.
     /// </summary>
-    private void Galvanize()
+    public void Galvanize()
     {
         //PlaySound
         SoundManager.PlayFXSound(GalvanizeBotSound, this.gameObject.transform);
@@ -141,7 +119,7 @@ public class MaintenanceBot : Enemy
     /// <summary>
     /// heals 30% of its Max Hp
     /// </summary>
-    private void Repair()
+    public void Repair()
     {        
         //Play sound
         SoundManager.PlayFXSound(RepairBotSound, this.gameObject.transform);

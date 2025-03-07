@@ -82,6 +82,9 @@ public class UiManager : MonoBehaviour
     #region RoamingAndCombatUI
     public void UpdateCameraIndicator(CameraController.CameraState cameraState)
     {
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
+            return;
+
         //Activate UI Obejct        
         GetCurrentController<RoamingAndCombatUiController>().CameraIndicator.SetActive(true);
 
@@ -89,6 +92,8 @@ public class UiManager : MonoBehaviour
     }
     public void UpdateHealth(int currentHealth, int MaxHealth)
     {
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
+            return;
         GetCurrentController<RoamingAndCombatUiController>().UpdateHealth(currentHealth, MaxHealth);
     }
     public void UpdateShield(int currentShield, int MaxShield)
@@ -105,6 +110,9 @@ public class UiManager : MonoBehaviour
     }
     public void ChangeCombatScreenTemp(bool Interact)
     {
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
+            return;
+
         GetCurrentController<RoamingAndCombatUiController>().ChangeCombatScreenTemp(Interact);
     }
     /// <summary>

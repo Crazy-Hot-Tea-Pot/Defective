@@ -224,7 +224,10 @@ public class Enemy : MonoBehaviour
             {
                 newLayer = 8;   
             }
-           foreach(Transform child in Model.transform)
+
+            Model.layer = newLayer;
+
+            foreach(Transform child in Model.transform)
             {
                 child.gameObject.layer = newLayer;
 
@@ -371,6 +374,8 @@ public class Enemy : MonoBehaviour
     public SoundFX EnemyDeathSound;
     public SoundFX EnemyDamageTakenSound;
 
+    private Coroutine rotateCoroutine;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -389,6 +394,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void Initialize()
     {
+        EnemyUIObject.SetActive(true);
         CurrentHP = maxHP;
         gameObject.name = EnemyName;
         thisEnemyUI.SetEnemyName(EnemyName);
@@ -414,6 +420,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void EndTurn()
     {
+        EnemyUIObject.SetActive(true);
+
         //Remove debuffs by 1
         RemoveEffect(Effects.Debuff.Drained, 1);        
 
@@ -470,6 +478,7 @@ public class Enemy : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void TakeDamage(int damage)
     {
+
         // Plays sound of taking damage
         SoundManager.PlayFXSound(EnemyDamageTakenSound, this.gameObject.transform);
 
@@ -494,6 +503,8 @@ public class Enemy : MonoBehaviour
 
         DisplayDamageTaken(damage);
 
+        RotateToPlayer(EnemyTarget.transform.position);
+
         Animator.SetTrigger("Hit");
     }
 
@@ -502,6 +513,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void MyTurn()
     {
+        RotateToPlayer(EnemyTarget.transform.position);
+
         StartTurn();
     }
 
@@ -523,9 +536,7 @@ public class Enemy : MonoBehaviour
         {
 
         }
-
-        //Call Death Animation
-        StartCoroutine(WaitForAnimation("Die", FinishDeath));
+        Animator.SetTrigger("Die");
         
         SoundManager.PlayFXSound(EnemyDeathSound, this.gameObject.transform);
     }
@@ -533,7 +544,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Finish death stuff after animation plays
     /// </summary>
-    private void FinishDeath()
+    public void FinishDeath()
     {
         Debug.Log($"{enemyName} has been defeated!");
 
@@ -573,9 +584,35 @@ public class Enemy : MonoBehaviour
     {
         EnemyUIObject.SetActive(false);
     }
-    public virtual void PerformIntentTrigger(string intentName)
+
+    /// <summary>
+    /// Rotate enemy to player
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    protected void RotateToPlayer(Vector3 targetPosition)
     {
-        Debug.Log($"{EnemyName} triggered intent effect at correct animation timing.");
+        if (rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);
+
+        rotateCoroutine = StartCoroutine(SmoothRoatePlayerToTarget(targetPosition));
+    }
+    protected IEnumerator SmoothRoatePlayerToTarget(Vector3 target)
+    {
+        // Keep rotation only on the horizontal axis
+        target.y = transform.position.y;
+
+        Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
+
+        // Loop until the rotation is almost complete
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+        {
+            // 180 degrees per second rotation speed
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 180f);
+            yield return null;
+        }
+
+        // Ensure final rotation is exactly at the target
+        transform.rotation = targetRotation;
     }
 
 
@@ -605,49 +642,7 @@ public class Enemy : MonoBehaviour
     protected virtual (string intentText, IntentType intentType, int value) GetNextIntent()
     {
         return ("Unknown", IntentType.None, 0);
-    }
-
-    protected virtual IEnumerator PrepareToEndTurn()
-    {        
-        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-
-        if (Animator.GetCurrentAnimatorClipInfo(0).Length == 0)
-        {
-            yield return null;
-        }
-        else
-        {
-            while (stateInfo.normalizedTime < 1f)
-            {
-                stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-                yield return null;
-            }
-        }
-
-        EnemyUIObject.SetActive(true);
-
-        yield return new WaitForEndOfFrame();
-
-
-        EndTurn();
-    }
-
-    protected IEnumerator WaitForAnimation(string triggerName, Action onComplete)
-    {
-        Animator.SetTrigger(triggerName);
-
-        yield return null;
-
-        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-
-        while (stateInfo.normalizedTime < 1f)
-        {
-            stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-            yield return null;
-        }
-
-        onComplete?.Invoke();
-    }
+    }    
     #endregion   
 
     #region Effects

@@ -32,23 +32,23 @@ public class GarbageBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
-    public override void PerformIntentTrigger(string intentName)
-    {
-        base.PerformIntentTrigger(intentName);
+    //public override void PerformIntentTrigger(string intentName)
+    //{
+    //    base.PerformIntentTrigger(intentName);
 
-        switch (intentName)
-        {
-            case "Compact": 
-                Compact(); 
-                break;
-            case "Shred": 
-                Shred(); 
-                break;
-            case "PileOn": 
-                PileOn(); 
-                break;
-        }
-    }
+    //    switch (intentName)
+    //    {
+    //        case "Compact": 
+    //            Compact(); 
+    //            break;
+    //        case "Shred": 
+    //            Shred(); 
+    //            break;
+    //        case "PileOn": 
+    //            PileOn(); 
+    //            break;
+    //    }
+    //}
     protected override void PerformIntent()
     {
         base.PerformIntent();
@@ -70,8 +70,6 @@ public class GarbageBot : Enemy
                 Debug.LogWarning("Should never hit here!");
                 break;
         }
-
-        StartCoroutine(PrepareToEndTurn());
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
