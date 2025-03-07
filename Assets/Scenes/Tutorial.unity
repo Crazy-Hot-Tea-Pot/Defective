@@ -7876,50 +7876,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7581543975682484590, guid: ee6f5c86ecf9a7e46893315da5d77d1c, type: 3}
   m_PrefabInstance: {fileID: 707820103}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &720152176
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 720152178}
-  - component: {fileID: 720152177}
-  m_Layer: 0
-  m_Name: PuzzleController
-  m_TagString: PuzzleController
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &720152177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 720152176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 400f2caa97fc05c49b869c9ca46f08e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &720152178
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 720152176}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9717215, y: 5.4783936, z: 9.206035}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &728503944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10870,50 +10826,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 246348389334773432, guid: 7e3419aa89083154ca4cc37153121c53, type: 3}
   m_PrefabInstance: {fileID: 989276576}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &995203526
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 995203528}
-  - component: {fileID: 995203527}
-  m_Layer: 0
-  m_Name: PuzzleManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &995203527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 995203526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b75ef4fb2bb7d942aab721505193430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &995203528
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 995203526}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.976401, y: 10.407751, z: 27.43371}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &996489847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24843,6 +24755,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61a075074ed283b438b62401a84f760b, type: 3}
+--- !u!1001 &2031517540498823381
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.9717215
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.4783936
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.206035
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228533807533379461, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340773660292048836, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
+      propertyPath: m_Name
+      value: PuzzleController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: be2f81a5ab4ac7b4282b287c0ed9968d, type: 3}
 --- !u!4 &2692292857662259724
 Transform:
   m_ObjectHideFlags: 0
@@ -25698,8 +25667,7 @@ SceneRoots:
   - {fileID: 424938453}
   - {fileID: 1426853962}
   - {fileID: 2075320407}
-  - {fileID: 995203528}
-  - {fileID: 720152178}
+  - {fileID: 2031517540498823381}
   - {fileID: 2692292857662259724}
   - {fileID: 4879496146572571877}
   - {fileID: 4879496148503014953}

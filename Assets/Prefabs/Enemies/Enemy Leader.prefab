@@ -94,7 +94,7 @@ Animator:
   m_GameObject: {fileID: 604180217217377024}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 6b5b2ac2defc5ad409db6d4434973749, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -132,7 +132,7 @@ Transform:
   m_GameObject: {fileID: 2742929685568245920}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.1879683, y: 3.5680811, z: 3.1580594}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -248,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_LocalRotation.x
@@ -256,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_LocalRotation.z
@@ -276,7 +276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

@@ -39,29 +39,29 @@ public class GangLeader : Enemy
         base.Start();
     }
 
-    public override void PerformIntentTrigger(string intentName)
-    {
-        base.PerformIntentTrigger(intentName);
+    //public override void PerformIntentTrigger(string intentName)
+    //{
+    //    base.PerformIntentTrigger(intentName);
 
-        switch (intentName)
-        {
-            case "Threaten": 
-                Threaten(); 
-                break;
-            case "Intimidate": 
-                Intimidate(); 
-                break;
-            case "Disorient": 
-                Disorient(); 
-                break;
-            case "Cower": 
-                Cower(); 
-                break;
-            default:
-                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
-                break;
-        }
-    }
+    //    switch (intentName)
+    //    {
+    //        case "Threaten": 
+    //            Threaten(); 
+    //            break;
+    //        case "Intimidate": 
+    //            Intimidate(); 
+    //            break;
+    //        case "Disorient": 
+    //            Disorient(); 
+    //            break;
+    //        case "Cower": 
+    //            Cower(); 
+    //            break;
+    //        default:
+    //            Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+    //            break;
+    //    }
+    //}
 
     protected override void PerformIntent()
     {
@@ -73,13 +73,11 @@ public class GangLeader : Enemy
             {
                 //Threaten();
                 Animator.SetTrigger("Intent 1");
-                StartCoroutine(PrepareToEndTurn());
             }                
             else
             {
                 //Intimidate();
                 Animator.SetTrigger("Intent 2");
-                StartCoroutine(PrepareToEndTurn());
             }
         }
         //Once Looters are defeated
@@ -89,13 +87,11 @@ public class GangLeader : Enemy
             {
                 //Disorient();
                 Animator.SetTrigger("Intent 3");
-                StartCoroutine(PrepareToEndTurn());
             }
             else
             {
                 //Cower();
                 Animator.SetTrigger("Intent 4");
-                StartCoroutine(PrepareToEndTurn());
             }
         }
     }

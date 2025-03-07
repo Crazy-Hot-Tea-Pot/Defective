@@ -4,8 +4,6 @@ public class SecurityDrone : Enemy
 {
     [Header("Custom for Enemy type")]
 
-    public GameObject AdditionalDrone;
-
     public SoundFX NeutralizeSound;
     public SoundFX RamSound;
     public SoundFX AlertSound;
@@ -94,26 +92,6 @@ public class SecurityDrone : Enemy
 
         base.EndTurn();
     }
-    public override void PerformIntentTrigger(string intentName)
-    {
-        base.PerformIntentTrigger(intentName);
-
-        switch (intentName) {
-            case "Ram":
-                Ram();
-                break;
-            case "Neutralize":
-                Neutralize(); 
-            break;
-            case "Alert":
-                Alert();
-                break;
-            default:
-                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
-                break;
-
-        }
-    }
     protected override void PerformIntent()
     {
         base.PerformIntent();
@@ -121,8 +99,7 @@ public class SecurityDrone : Enemy
         if (IntentsPerformed > 5 && NumberOfAlertDrones < 3)
         {
             //Alert();
-            Animator.SetTrigger("Intent 3");
-            StartCoroutine(PrepareToEndTurn());
+            Animator.SetTrigger("Intent 3");    
         }
         else
         {
@@ -130,13 +107,12 @@ public class SecurityDrone : Enemy
             {
                 Animator.SetTrigger("Intent 1");
                 //Neutralize();
-                StartCoroutine(PrepareToEndTurn());
+
             }
             else
             {
                 Animator.SetTrigger("Intent 2");
                 //Ram();            
-                StartCoroutine(PrepareToEndTurn());
             }
         }
 
@@ -162,7 +138,7 @@ public class SecurityDrone : Enemy
     /// Deals 12 Damage.
     /// Has a 70% chance of being called.
     /// </summary>
-    private void Ram()
+    public void Ram()
     {
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(12);
         SoundManager.PlayFXSound(RamSound);
@@ -172,7 +148,7 @@ public class SecurityDrone : Enemy
     /// Applys Drain.
     /// Has a 30% chance of being called.
     /// </summary>
-    private void Neutralize()
+    public void Neutralize()
     {
         // Play Sound
         SoundManager.PlayFXSound(NeutralizeSound);
@@ -186,75 +162,79 @@ public class SecurityDrone : Enemy
     /// Calls another Security Drone to the Combat Zone.
     /// Try to spawn one near by safely.
     /// </summary>
-    private void Alert()
+    public void Alert()
     {
-
-        if (CombatController != null && CombatController.CombatArea != null)
+        if (NumberOfAlertDrones < 3)
         {
-            // Loop to find a clear position for the new drone
-            BoxCollider areaCollider = CombatController.CombatArea.GetComponent<BoxCollider>();
-
-            if (areaCollider == null)
+            if (CombatController != null && CombatController.CombatArea != null)
             {
-                Debug.LogWarning("CombatArea does not have a BoxCollider component.");
-                return;
-            }
+                // Loop to find a clear position for the new drone
+                BoxCollider areaCollider = CombatController.CombatArea.GetComponent<BoxCollider>();
 
-            Vector3 areaCenter = areaCollider.bounds.center;
-            Vector3 areaSize = areaCollider.bounds.size;
-            Vector3 spawnPosition;
-            int maxAttempts = 20;
-            int attempt = 0;
-            bool foundValidPosition = false;
-
-            do
-            {
-                // Generate a random position within the CombatArea
-                float x = Random.Range(areaCenter.x - areaSize.x / 2, areaCenter.x + areaSize.x / 2);
-                float z = Random.Range(areaCenter.z - areaSize.z / 2, areaCenter.z + areaSize.z / 2);
-                spawnPosition = new Vector3(x, areaCenter.y, z);
-
-                // Define a LayerMask that only includes Player (6) and Enemy (8)
-                LayerMask collisionMask = (1 << 6) | (1 << 8);
-
-                // Check if the position is clear
-                if (Physics.OverlapSphere(spawnPosition, 0.5f, collisionMask).Length == 0)
+                if (areaCollider == null)
                 {
-                    foundValidPosition = true;
+                    Debug.LogWarning("CombatArea does not have a BoxCollider component.");
+                    return;
                 }
 
-                //Leaving this here for in the future if this intent give problems again.
-                //Collider[] hitColliders = Physics.OverlapSphere(spawnPosition, 0.5f);
+                Vector3 areaCenter = areaCollider.bounds.center;
+                Vector3 areaSize = areaCollider.bounds.size;
+                Vector3 spawnPosition;
+                int maxAttempts = 20;
+                int attempt = 0;
+                bool foundValidPosition = false;
 
-                //if (hitColliders.Length > 0)
-                //{
-                //    foreach (var col in hitColliders)
-                //    {
-                //        Debug.Log($"Overlap detected with: {col.gameObject.name} on Layer: {LayerMask.LayerToName(col.gameObject.layer)} at {spawnPosition}");
-                //    }
-                //}
+                do
+                {
+                    // Generate a random position within the CombatArea
+                    float x = Random.Range(areaCenter.x - areaSize.x / 2, areaCenter.x + areaSize.x / 2);
+                    float z = Random.Range(areaCenter.z - areaSize.z / 2, areaCenter.z + areaSize.z / 2);
+                    spawnPosition = new Vector3(x, areaCenter.y, z);
 
-                attempt++;
+                    // Define a LayerMask that only includes Player (6) and Enemy (8)
+                    LayerMask collisionMask = (1 << 6) | (1 << 8);
 
-            } while (!foundValidPosition && attempt < maxAttempts);
+                    // Check if the position is clear
+                    if (Physics.OverlapSphere(spawnPosition, 0.5f, collisionMask).Length == 0)
+                    {
+                        foundValidPosition = true;
+                    }
 
-            if (foundValidPosition)
-            {
-                GameObject additionalDrone = Instantiate(AdditionalDrone, spawnPosition, Quaternion.identity);
-                additionalDrone.GetComponent<SecurityDrone>().IAmAlertDrone();
+                    //Leaving this here for in the future if this intent give problems again.
+                    //Collider[] hitColliders = Physics.OverlapSphere(spawnPosition, 0.5f);
 
-                CombatController.AddEnemyToCombat(additionalDrone);
-                NumberOfAlertDrones++;
+                    //if (hitColliders.Length > 0)
+                    //{
+                    //    foreach (var col in hitColliders)
+                    //    {
+                    //        Debug.Log($"Overlap detected with: {col.gameObject.name} on Layer: {LayerMask.LayerToName(col.gameObject.layer)} at {spawnPosition}");
+                    //    }
+                    //}
 
-                SoundManager.PlayFXSound(AlertSound);
+                    attempt++;
+
+                } while (!foundValidPosition && attempt < maxAttempts);
+
+                if (foundValidPosition)
+                {
+                    GameObject additionalDrone = Instantiate(EnemyManager.Instance.GetEnemyPrefab(EnemyManager.TypeOfEnemies.SecurityDrone), spawnPosition, Quaternion.identity);
+                    additionalDrone.GetComponent<SecurityDrone>().IAmAlertDrone();
+
+                    CombatController.AddEnemyToCombat(additionalDrone);
+                    NumberOfAlertDrones++;
+
+                    SoundManager.PlayFXSound(AlertSound);
+                }
+                else
+                {
+                    Debug.LogWarning("Failed to find valid spawn position Jayce -_- fix ya code.\n This is complicated I know but thats what testing is for.");
+                }
             }
             else
-            {
-                Debug.LogWarning("Failed to find valid spawn position Jayce -_- fix ya code.\n This is complicated I know but thats what testing is for.");
-            }
+                Debug.LogError("CombatZone Missing!!");
         }
         else
-            Debug.LogError("CombatZone Missing!!");
+            Debug.Log(this.gameObject.name + " has max alert drones spawned.");
     }
     /// <summary>
     /// Different stuff for Alerted Drone

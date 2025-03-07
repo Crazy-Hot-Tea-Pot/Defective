@@ -45,26 +45,6 @@ public class Looter : Enemy
 
         base.Start();
     }
-    public override void PerformIntentTrigger(string intentName)
-    {
-        base.PerformIntentTrigger(intentName);
-
-        switch (intentName)
-        {
-            case "Swipe":
-                Swipe();
-                break;
-            case "Shroud":
-                Shroud();
-                break;
-            case "Escape":
-                Escape();
-                break;
-            default:
-                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
-                break;
-        }
-    }
     protected override void PerformIntent()
     {
         base.PerformIntent();
@@ -86,8 +66,6 @@ public class Looter : Enemy
             //Escape();
             Animator.SetTrigger("Intent 3");
         }
-
-        StartCoroutine(PrepareToEndTurn());
     }
     /// <summary>
     /// Return all stolen Scraps upon killing
@@ -124,7 +102,7 @@ public class Looter : Enemy
     /// <summary>
     ///  After the 3rd Swipe, perform Shroud
     /// </summary>
-    private void Swipe()
+    public void Swipe()
     {
         Debug.Log($"{EnemyName} performs Swipe, dealing 4 damage and stealing 5 Scrap.");
         swipeCount++;
@@ -151,7 +129,7 @@ public class Looter : Enemy
 
     }
 
-    private void Shroud()
+    public void Shroud()
     {
         Debug.Log($"{EnemyName} performs Shroud, gaining 10 Shield.");
         Shield += 10;
@@ -159,7 +137,7 @@ public class Looter : Enemy
         isShrouded = true;
     }
 
-    private void Escape()
+    public void Escape()
     {
         Debug.Log($"{EnemyName} performs Escape, exiting the fight with {StolenScrap} Scrap.");
 

@@ -38,19 +38,22 @@ public class PuzzleManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        //Potentially needs to be modified for skipping tutorial
-        if (GameManager.Instance.CurrentLevel == Levels.Tutorial)
+    {            
+        if(GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming)
         {
-            //It is possible to load this script before this object exits
-            try
+            //Potentially needs to be modified for skipping tutorial
+            if (GameManager.Instance.CurrentLevel == Levels.Tutorial)
             {
-                CombatUI = GameObject.Find("UiManager").transform.Find("Roaming And Combat UI").gameObject;
-                PuzzleController = GameObject.Find("PuzzleController").GetComponent<PuzzleController>();
-            }
-            catch
-            {
-                Debug.LogError("Why this try catch?");
+                //It is possible to load this script before this object exits
+                try
+                {
+                    CombatUI = GameObject.Find("UiManager").transform.Find("Roaming And Combat UI").gameObject;
+                    PuzzleController = GameObject.Find("PuzzleController").GetComponent<PuzzleController>();
+                }
+                catch
+                {
+                    Debug.LogError("Why this try catch?");
+                }
             }
         }
     }
