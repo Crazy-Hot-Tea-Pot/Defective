@@ -221,6 +221,7 @@ public class StoryManager : MonoBehaviour
         switch (newLevel)
         {
             case Levels.Title:
+            case Levels.Settings:
             case Levels.Credits:
             case Levels.Loading:
                 break;

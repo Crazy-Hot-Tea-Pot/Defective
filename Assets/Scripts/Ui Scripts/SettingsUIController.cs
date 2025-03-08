@@ -94,10 +94,10 @@ public class SettingsUIController : UiController
         BackBtn.onClick.AddListener(ReturnToMiniMenu);
 
         //If title screen skip mini menu
-        if (GameManager.Instance.CurrentLevel == Levels.Title)
+        if (UiManager.Instance.TitleCheck())
         {
             SkipMiniMenu();
-            titleScreenUI = GameObject.Find("TitleController");
+            titleScreenUI = UiManager.Instance.FindTitleController("TitleController");
 
             //Make UI Manager above the title canvas.
             UiManager.Instance.GetComponent<Canvas>().sortingOrder = 1;
@@ -143,7 +143,7 @@ public class SettingsUIController : UiController
         {
             largeSettingMenu.SetActive(false);
             //If we aren't skipping main menu open it again
-            if (GameManager.Instance.CurrentLevel != Levels.Title)
+            if (UiManager.Instance.TitleCheck() == false)
             {
                 smallSettingMenu.SetActive(true);
             }
@@ -498,10 +498,11 @@ public class SettingsUIController : UiController
     public void ReturnToMiniMenu()
     {
         //Skip this menu if applicable
-        if (GameManager.Instance.CurrentLevel == Levels.Title)
+        if (UiManager.Instance.TitleCheck())
         {
             titleScreenUI.SetActive(true);
             largeSettingMenu.SetActive(false);
+            smallSettingMenu.SetActive(false);
             UiManager.Instance.CloseSettingsOnClickTitle();
         }
         else
@@ -514,16 +515,6 @@ public class SettingsUIController : UiController
 
     public void SkipMiniMenu()
     {
-        //For some reason it is running skip menu way too much
-        try
-        {
-            titleScreenUI = GameObject.Find("Canvas");
-            titleScreenUI.SetActive(false);
-        }
-        catch
-        {
-            Debug.Log("Not Title");
-        }
         largeSettingMenu.SetActive(true);
         smallSettingMenu.SetActive(false);
     }

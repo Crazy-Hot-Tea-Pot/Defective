@@ -225,6 +225,7 @@ public class EnemyManager : MonoBehaviour
         switch (newLevel)
         {
             case Levels.Title:
+            case Levels.Settings:
             case Levels.Loading:
             case Levels.WorkShop:
             case Levels.Credits:

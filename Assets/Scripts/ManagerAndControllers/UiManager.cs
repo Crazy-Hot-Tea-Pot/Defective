@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -39,7 +40,6 @@ public class UiManager : MonoBehaviour
     public GameObject InventoryUI;
     public GameObject TerminalUI;
     public GameObject LootUI;
-    public GameObject SettingsUI;
     public GameObject GameOverUI;
 
     private UiController currentController;
@@ -256,14 +256,22 @@ public class UiManager : MonoBehaviour
         {
             if (CurrentUI.name == InventoryUI.name)
             {
-                SwitchScreen(RoamingAndCombatUI);
+                AdditiveSceneLoadandUnload("Settings", true);
             }
             else
             {
-                SwitchScreen(SettingsUI);
+                AdditiveSceneLoadandUnload("Settings", false);
             }
         }
 
+    }
+
+    /// <summary>
+    /// Just straight up remove the UI
+    /// </summary>
+    public void DeleteScreen()
+    {
+        Destroy(CurrentUI);
     }
 
     /// <summary>
@@ -276,11 +284,13 @@ public class UiManager : MonoBehaviour
         if (CurrentUI.name == InventoryUI.name)
         {
             StartCoroutine(DetermineCombat());
+            AdditiveSceneLoadandUnload("Settings", true);
             SwitchScreen(RoamingAndCombatUI);
         }
         else
         {
-            SwitchScreen(SettingsUI);
+            AdditiveSceneLoadandUnload("Settings", false);
+            DeleteScreen();
         }
     }
     /// <summary>
@@ -288,7 +298,33 @@ public class UiManager : MonoBehaviour
     /// </summary>
     private void ToggleSettingsAtTitle()
     {
-        SwitchScreen(SettingsUI);
+        AdditiveSceneLoadandUnload("Settings", false);
+    }
+
+    /// <summary>
+    /// A check for if we are in the title screen for settings UI mainly
+    /// </summary>
+    /// <returns></returns>
+    public bool TitleCheck()
+    {
+        //Are we in the title sceen
+        if (GameObject.Find("Player") == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// We need a way to find title controller in the correct scene for settings UI
+    /// </summary>
+    /// <param name="name"></param>
+    public GameObject FindTitleController(string name)
+    {
+        return GameObject.Find(name);
     }
 
     /// <summary>
@@ -296,8 +332,9 @@ public class UiManager : MonoBehaviour
     /// </summary>
     public void CloseSettingsOnClick()
     {
-        StartCoroutine(DetermineCombat());
+        AdditiveSceneLoadandUnload("Settings", true);
         SwitchScreen(RoamingAndCombatUI);
+        StartCoroutine(DetermineCombat());
     }
 
     /// <summary>
@@ -317,6 +354,20 @@ public class UiManager : MonoBehaviour
         {
             //Do not put us in combat
             CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
+        }
+    }
+
+    private void AdditiveSceneLoadandUnload(string scene, bool unload)
+    {
+        if(unload)
+        {
+            SceneManager.UnloadSceneAsync(scene);
+            //Allows the character to move
+            GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
+        }
+        else
+        {
+            SceneManager.LoadScene(scene, LoadSceneMode.Additive);
         }
     }
     public void CloseSettingsOnClickTitle()
