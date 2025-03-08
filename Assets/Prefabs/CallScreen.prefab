@@ -307,9 +307,9 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3271190457384177661}
-  - {fileID: 2761766108649219996}
   - {fileID: 3571044516342288685}
   - {fileID: 1528365565071992935}
+  - {fileID: 2761766108649219996}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7454903237566938869
@@ -443,7 +443,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8526074306461682276}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -452,8 +452,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.3085, y: -0.0909}
-  m_SizeDelta: {x: 0.7829, y: 0.7193}
+  m_AnchoredPosition: {x: 0.30850002, y: -0.13270001}
+  m_SizeDelta: {x: 0.7829, y: 0.6357}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5842799638494467068
 MeshRenderer:
@@ -517,7 +517,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ' Examaple of Text'
+  m_text: "Examaple of Text\nExamaple of Text\nExamaple of Text\nExamaple of Text\nExamaple
+    of Text\nExamaple of Text \nExamaple of Text\nExamaple of Text \nExamaple of
+    Text \nExamaple of Text \nExamaple of Text"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -544,11 +546,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.7
-  m_fontSizeBase: 1
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
-  m_enableAutoSizing: 1
-  m_fontSizeMin: 0.01
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 0.7
   m_fontSizeMax: 0.7
   m_fontStyle: 0
   m_HorizontalAlignment: 1
