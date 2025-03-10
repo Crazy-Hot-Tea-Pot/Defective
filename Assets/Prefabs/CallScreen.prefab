@@ -286,6 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7258951050753727831}
+  - component: {fileID: 789548016640510345}
   m_Layer: 0
   m_Name: CallScreen
   m_TagString: Untagged
@@ -312,6 +313,22 @@ Transform:
   - {fileID: 2761766108649219996}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &789548016640510345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7019986965785004766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3dab00684f859e4f8d49d7103b69c25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueText: {fileID: 3082974513739492670}
+  speakerNameText: {fileID: 8599650311417759386}
+  speakerImageQuad: {fileID: 1324080893284670389}
+  maxLinesDisplayed: 5
 --- !u!1 &7454903237566938869
 GameObject:
   m_ObjectHideFlags: 0
