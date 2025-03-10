@@ -65,7 +65,7 @@ public class CursorManager : MonoBehaviour
         {
             case Levels.Title:
             case Levels.Loading:
-            case Levels.Settings:
+            //case Levels.Settings:
             case Levels.Credits:
                 mainCamera = null;
                 break;

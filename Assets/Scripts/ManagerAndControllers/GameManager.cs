@@ -210,9 +210,9 @@ public class GameManager : MonoBehaviour
                 case Levels.Loading:
                     CurrentGameMode = GameMode.Loading;
                     break;
-                case Levels.Settings:
-                    CurrentGameMode = GameMode.Settings;
-                    break;
+                //case Levels.Settings:
+                //    CurrentGameMode = GameMode.Settings;
+                //    break;
                 case Levels.Credits:
                     CurrentGameMode = GameMode.Credits;
                     break;
