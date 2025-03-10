@@ -260,6 +260,8 @@ public class UiManager : MonoBehaviour
             }
             else
             {
+                SwitchScreen(RoamingAndCombatUI);
+                StartCoroutine(DetermineCombat());
                 AdditiveSceneLoadandUnload("Settings", false);
             }
         }
@@ -276,16 +278,15 @@ public class UiManager : MonoBehaviour
 
     /// <summary>
     /// Override for open settings ui
-    ///If settings breaks it's 10000% this but I think it's working
     /// </summary>
     /// <param name="context"></param>
     public void ToggleSettings()
     {
         if (CurrentUI.name == InventoryUI.name)
         {
-            StartCoroutine(DetermineCombat());
             AdditiveSceneLoadandUnload("Settings", true);
             SwitchScreen(RoamingAndCombatUI);
+            StartCoroutine(DetermineCombat());
         }
         else
         {
