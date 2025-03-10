@@ -260,20 +260,10 @@ public class UiManager : MonoBehaviour
             }
             else
             {
-                SwitchScreen(RoamingAndCombatUI);
-                StartCoroutine(DetermineCombat());
                 AdditiveSceneLoadandUnload("Settings", false);
             }
         }
 
-    }
-
-    /// <summary>
-    /// Just straight up remove the UI
-    /// </summary>
-    public void DeleteScreen()
-    {
-        Destroy(CurrentUI);
     }
 
     /// <summary>
@@ -285,13 +275,10 @@ public class UiManager : MonoBehaviour
         if (CurrentUI.name == InventoryUI.name)
         {
             AdditiveSceneLoadandUnload("Settings", true);
-            SwitchScreen(RoamingAndCombatUI);
-            StartCoroutine(DetermineCombat());
         }
         else
         {
             AdditiveSceneLoadandUnload("Settings", false);
-            DeleteScreen();
         }
     }
     /// <summary>
@@ -334,28 +321,6 @@ public class UiManager : MonoBehaviour
     public void CloseSettingsOnClick()
     {
         AdditiveSceneLoadandUnload("Settings", true);
-        SwitchScreen(RoamingAndCombatUI);
-        StartCoroutine(DetermineCombat());
-    }
-
-    /// <summary>
-    /// A method to determine if the combat UI should be in combat when exiting the settings ui
-    /// </summary>
-    private IEnumerator DetermineCombat()
-    {
-        yield return new WaitForSecondsRealtime(0.3f);
-        //If we are in combat put us in combat mode
-        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
-        {
-            //This mode will make sure combat resumes properly
-            CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
-        }
-        //If anything else
-        else
-        {
-            //Do not put us in combat
-            CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
-        }
     }
 
     private void AdditiveSceneLoadandUnload(string scene, bool unload)

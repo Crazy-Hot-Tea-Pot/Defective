@@ -525,7 +525,6 @@ public class SettingsUIController : UiController
     public void MainMenu()
     {
         smallSettingMenu.SetActive(false);
-        Destroy(UiManager.Instance.CurrentUI);
         UnityEngine.Time.timeScale = 1;
         GameManager.Instance.RequestScene(Levels.Title);
     }
