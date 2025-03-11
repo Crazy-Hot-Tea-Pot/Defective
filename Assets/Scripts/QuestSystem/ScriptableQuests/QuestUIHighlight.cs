@@ -7,7 +7,10 @@ public class QuestUIHighlight : Quest
     public Material mat;
     [Header("This will find and utalize a button")]
     public string UIElementPath;
-    private GameObject UIElement = null;
+    private GameObject UIElement;
+    public GameObject curserArrow;
+    public int xOffset;
+    public int yOffset;
 
     private void Awake()
     {
@@ -19,8 +22,7 @@ public class QuestUIHighlight : Quest
         try
         {
             //Find the UIElementPath
-            UIElement = GameObject.Find(UIElementPath);
-            //Debug.Log(UIElement);
+            UIElement = GameObject.Find(UIElementPath).gameObject;
 
             //If we have a button to change
             if (UIElement.GetComponent<Button>() == true)
@@ -31,6 +33,14 @@ public class QuestUIHighlight : Quest
                 //Add a button component
                 UIElement.GetComponent<Button>().onClick.RemoveListener(ButtonCheck);
                 UIElement.GetComponent<Button>().onClick.AddListener(ButtonCheck);
+            }
+
+            if (GameObject.Find(UIElementPath).transform.Find(curserArrow.name) == null)
+            {
+                curserArrow = Instantiate(curserArrow, UIElement.transform.parent.Find(UIElement.name));
+                curserArrow.transform.position = new Vector3(curserArrow.transform.position.x + xOffset, curserArrow.transform.position.y + yOffset, curserArrow.transform.position.z);
+
+                QuestManager.Instance.CreateConfirmationWindow("You can access quest by following the arrow above", null);
             }
 
         }
@@ -45,6 +55,7 @@ public class QuestUIHighlight : Quest
     {
         UIElement.GetComponent<Button>().onClick.RemoveListener(ButtonCheck);
         UIElement.GetComponent<Image>().material = null;
+        Destroy(curserArrow);
         CompleteQuest();
     }
 }

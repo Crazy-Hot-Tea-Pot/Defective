@@ -26,6 +26,8 @@ public class QuestManager : MonoBehaviour
 
     public List<Quest> CurrentQuest;
 
+    public GameObject ConfirmationWindow;
+
     private bool automatic = false;
 
     private void Awake()
@@ -117,6 +119,12 @@ public class QuestManager : MonoBehaviour
                     }
             }
         }
+    }
+
+    public void CreateConfirmationWindow(string text, System.Action action)
+    {
+        GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+        window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, action);
     }
 
     /// <summary>
