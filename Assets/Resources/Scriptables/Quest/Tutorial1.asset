@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8010b8586079d2a4bb732fcf67619446, type: 3}
-  m_Name: tutorialtest
+  m_Name: Tutorial1
   m_EditorClassIdentifier: 
   questName: Show Quests
   ccQuestName: Show Quests
@@ -23,3 +23,4 @@ MonoBehaviour:
   xOffset: 0
   yOffset: 0
   PopupText: You can access quest by following the arrow above
+  PopUp: 1

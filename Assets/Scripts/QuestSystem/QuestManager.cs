@@ -27,6 +27,7 @@ public class QuestManager : MonoBehaviour
     public List<Quest> CurrentQuest;
 
     public GameObject ConfirmationWindow;
+    private int index;
 
     private bool automatic = false;
 
@@ -125,6 +126,30 @@ public class QuestManager : MonoBehaviour
     {
         GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
         window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, action);
+    }
+
+    public void IncreaseWindowIndex()
+    {
+        index += 1;
+        Debug.Log("Window Index: " + index);
+    }
+
+    public void IndexReset()
+    {
+        index = 0;
+    }
+
+    public void CreateConfirmationWindow(string text, System.Action action, int TopIndex, int CurrentIndex)
+    {
+        if (index != CurrentIndex)
+        {
+            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, action);
+        }
+        else if (index == TopIndex)
+        {
+            IndexReset();
+        }
     }
 
     /// <summary>

@@ -12,6 +12,11 @@ public class QuestUIHighlight : Quest
     public int xOffset;
     public int yOffset;
     public string PopupText;
+    public bool PopUp;
+    public bool InCombat;
+    public bool Index;
+    public int TopIndex;
+    public int CurrentIndex;
 
     private void Awake()
     {
@@ -36,12 +41,39 @@ public class QuestUIHighlight : Quest
                 UIElement.GetComponent<Button>().onClick.AddListener(ButtonCheck);
             }
 
-            if (GameObject.Find(UIElementPath).transform.Find(curserArrow.name) == null)
+            if (GameObject.Find(UIElementPath).transform.Find(curserArrow.name) == null && UIElement.activeSelf == true && InCombat == false)
             {
                 curserArrow = Instantiate(curserArrow, UIElement.transform.parent.Find(UIElement.name));
                 curserArrow.transform.position = new Vector3(curserArrow.transform.position.x + xOffset, curserArrow.transform.position.y + yOffset, curserArrow.transform.position.z);
 
-                QuestManager.Instance.CreateConfirmationWindow(PopupText, null);
+                if (PopUp)
+                {
+                    if (Index)
+                    {
+                        QuestManager.Instance.CreateConfirmationWindow(PopupText, QuestManager.Instance.IncreaseWindowIndex, TopIndex, CurrentIndex);
+                    }
+                    else
+                    {
+                        QuestManager.Instance.CreateConfirmationWindow(PopupText, null);
+                    }
+                }
+            }
+            else if (GameObject.Find(UIElementPath).transform.Find(curserArrow.name) == null && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
+            {
+                curserArrow = Instantiate(curserArrow, UIElement.transform.parent.Find(UIElement.name));
+                curserArrow.transform.position = new Vector3(curserArrow.transform.position.x + xOffset, curserArrow.transform.position.y + yOffset, curserArrow.transform.position.z);
+
+                if (PopUp)
+                {
+                    if(Index)
+                    {
+                        QuestManager.Instance.CreateConfirmationWindow(PopupText, QuestManager.Instance.IncreaseWindowIndex, TopIndex, CurrentIndex);
+                    }
+                    else
+                    {
+                        QuestManager.Instance.CreateConfirmationWindow(PopupText, null);
+                    }
+                }
             }
 
         }
