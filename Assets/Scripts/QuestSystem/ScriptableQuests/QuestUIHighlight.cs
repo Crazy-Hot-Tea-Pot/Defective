@@ -11,6 +11,7 @@ public class QuestUIHighlight : Quest
     public GameObject curserArrow;
     public int xOffset;
     public int yOffset;
+    public string PopupText;
 
     private void Awake()
     {
@@ -27,8 +28,8 @@ public class QuestUIHighlight : Quest
             //If we have a button to change
             if (UIElement.GetComponent<Button>() == true)
             {
-                //Get the image component and apply our material
-                UIElement.GetComponent<Image>().material = mat;
+                ////Get the image component and apply our material
+                //UIElement.GetComponent<Image>().material = mat;
 
                 //Add a button component
                 UIElement.GetComponent<Button>().onClick.RemoveListener(ButtonCheck);
@@ -40,7 +41,7 @@ public class QuestUIHighlight : Quest
                 curserArrow = Instantiate(curserArrow, UIElement.transform.parent.Find(UIElement.name));
                 curserArrow.transform.position = new Vector3(curserArrow.transform.position.x + xOffset, curserArrow.transform.position.y + yOffset, curserArrow.transform.position.z);
 
-                QuestManager.Instance.CreateConfirmationWindow("You can access quest by following the arrow above", null);
+                QuestManager.Instance.CreateConfirmationWindow(PopupText, null);
             }
 
         }
