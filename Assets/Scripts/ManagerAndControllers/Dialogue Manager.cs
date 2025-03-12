@@ -52,6 +52,8 @@ public class DialogueManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().SwitchCamera(CameraController.CameraState.Call);
 
         // Reset CallScreen before starting
+        CallScreen.gameObject.SetActive(true);
+
         CallScreen.ClearDialogue();
 
         ShowNextLine();
@@ -70,12 +72,20 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine line = dialogueQueue.Dequeue();
 
-        // Set speaker name and image through CallScreen properties
-        CallScreen.SpeakerName = line.isPlayerSpeaking ? "Player" : line.speakerName;
-        CallScreen.SpeakerImage = line.speakerImage != null ? line.speakerImage.texture : null;
-
-        // Send text to CallScreen for handling
-        CallScreen.NextText(line.dialogueText, line.revealByLetter, line.textSpeed, line.timeBetweenLines);
+        if (line.isPlayerSpeaking)
+        {
+            // If the player is speaking, use PlayerSpeak() instead of CallScreen
+            GameObject.Find("Player").GetComponent<PlayerController>().CharacterSpeak(
+                line.dialogueText, line.revealByLetter, line.textSpeed, line.timeBetweenLines, true
+            );
+        }
+        else
+        {
+            // If an NPC is speaking, show it on CallScreen
+            CallScreen.SpeakerName = line.speakerName;
+            CallScreen.SpeakerImage = line.speakerImage != null ? line.speakerImage.texture : null;
+            CallScreen.NextText(line.dialogueText, line.revealByLetter, line.textSpeed, line.timeBetweenLines);
+        }
     }
 
     /// <summary>
@@ -84,8 +94,11 @@ public class DialogueManager : MonoBehaviour
     private void EndDialogue()
     {
         CallScreen.ClearDialogue();
+        CallScreen.gameObject.SetActive(false);
 
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().SwitchCamera(CameraController.CameraState.Default);
+
+        GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
     }
     private void SceneChange(Levels newLevel)
     {
@@ -97,7 +110,7 @@ public class DialogueManager : MonoBehaviour
             case Levels.Credits:
                 break;
             default:
-                CallScreen = GameObject.Find("CallScreen").GetComponent<CallScreen>();
+                CallScreen = GameObject.Find("Player").GetComponent<PlayerController>().CallScreen.GetComponent<CallScreen>();
                     break;
         }
     }

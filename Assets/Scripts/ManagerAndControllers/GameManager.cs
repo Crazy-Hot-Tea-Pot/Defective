@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         Title,
         Pause,
         Interacting,
+        Dialogue,
         Roaming,
         Combat,
         CombatLoot,

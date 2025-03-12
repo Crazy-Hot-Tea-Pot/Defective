@@ -10,7 +10,7 @@ public class DialogueLine
     public Sprite speakerImage;
 
     // Text content
-    [TextArea(3, 5)]
+    [TextArea(1,3)]
     public string dialogueText;
 
     // If true, uses PlayerSpeak()

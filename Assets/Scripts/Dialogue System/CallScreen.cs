@@ -49,18 +49,6 @@ public class CallScreen : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Starts revealing text dynamically.
     /// </summary>
@@ -68,6 +56,7 @@ public class CallScreen : MonoBehaviour
     {
         if (revealCoroutine != null)
             StopCoroutine(revealCoroutine);
+
         revealCoroutine = StartCoroutine(RevealText(text, revealByLetter, textSpeed, timeBetweenLines));
     }
     /// <summary>
@@ -86,24 +75,45 @@ public class CallScreen : MonoBehaviour
     private IEnumerator RevealText(string fullText, bool revealByLetter, float revealSpeed, float timeBetweenLines)
     {
         isRevealingText = true;
-        string displayedText = "";
 
+        // Set the full text but make it hidden initially
+        dialogueText.SetText(fullText);
+
+        dialogueText.maxVisibleCharacters = 0;
+        dialogueText.ForceMeshUpdate(); // Ensure TextMesh updates
+
+        int totalVisibleCharacters = dialogueText.textInfo.characterCount;
+        int visibleCount = 0;
+
+        // Reveal text letter-by-letter
         if (revealByLetter)
         {
-            foreach (char letter in fullText)
+            for (visibleCount = 0; visibleCount <= totalVisibleCharacters; visibleCount++)
             {
-                displayedText += letter;
-                UpdateText(displayedText);
+                dialogueText.maxVisibleCharacters = visibleCount;
                 yield return new WaitForSeconds(revealSpeed);
             }
         }
         else
         {
-            string[] words = fullText.Split(' ');
-            foreach (string word in words)
+            // Reveal text word-by-word
+            TMP_TextInfo textInfo = dialogueText.textInfo;
+            int totalWordCount = textInfo.wordCount;
+            int currentWord = 0;
+
+            while (currentWord <= totalWordCount)
             {
-                displayedText += word + " ";
-                UpdateText(displayedText);
+                if (currentWord < totalWordCount)
+                {
+                    visibleCount = textInfo.wordInfo[currentWord].lastCharacterIndex + 1;
+                }
+                else
+                {
+                    visibleCount = totalVisibleCharacters;
+                }
+
+                dialogueText.maxVisibleCharacters = visibleCount;
+                currentWord++;
                 yield return new WaitForSeconds(revealSpeed * 2);
             }
         }
@@ -111,20 +121,7 @@ public class CallScreen : MonoBehaviour
         isRevealingText = false;
         yield return new WaitForSeconds(timeBetweenLines);
 
-        // Inform DialogueManager that the line is done
+        // Move to the next line
         DialogueManager.Instance.ShowNextLine();
-    }
-    /// <summary>
-    /// Adds a new line of dialogue and removes the oldest if limit is reached.
-    /// </summary>
-    private void UpdateText(string newLine)
-    {
-        if (dialogueQueue.Count >= maxLinesDisplayed)
-        {
-            dialogueQueue.Dequeue(); // Remove the oldest dialogue line
-        }
-
-        dialogueQueue.Enqueue(newLine);
-        dialogueText.text = string.Join("\n", dialogueQueue);
     }
 }

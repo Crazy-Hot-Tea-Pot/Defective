@@ -1080,6 +1080,7 @@ MonoBehaviour:
   chatboxText: {fileID: 5400978810274714048}
   letterRevealSpeed: 0.05
   wordRevealSpeed: 0.2
+  CallScreen: {fileID: 1162072742413497410}
 --- !u!222 &7499345129164253127
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1943,8 +1944,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.6519, y: 6.271}
-  m_SizeDelta: {x: 6.3039, y: 2}
+  m_AnchoredPosition: {x: 2.5366, y: 4.9021}
+  m_SizeDelta: {x: 3.3831, y: 0.5558}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6099418988112801703
 MeshRenderer:
@@ -2040,10 +2041,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2.6
-  m_fontSizeBase: 36
+  m_fontSize: 1
+  m_fontSizeBase: 1
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 1
   m_fontSizeMax: 3
   m_fontStyle: 8
@@ -2165,6 +2166,7 @@ MonoBehaviour:
   animator: {fileID: 2076073105753185607}
   RipplePrefab: {fileID: 8841478494395001973, guid: 839c72b8383e95e4eb6ad82977d126f0, type: 3}
   RippleRunPrefab: {fileID: 8841478494395001973, guid: 07b8dbdcdf4367d47b76789d7411ff8c, type: 3}
+  CallScreen: {fileID: 1162072742413497410}
   walkSpeed: 3.5
   runSpeed: 7
   runThreshold: 5
@@ -2407,6 +2409,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CallScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 7019986965785004766, guid: b09f9d2434904564d8ea445e591c5600, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7258951050753727831, guid: b09f9d2434904564d8ea445e591c5600, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2452,6 +2458,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b09f9d2434904564d8ea445e591c5600, type: 3}
+--- !u!1 &1162072742413497410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7019986965785004766, guid: b09f9d2434904564d8ea445e591c5600, type: 3}
+  m_PrefabInstance: {fileID: 8164045305185353372}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1580898118039987147 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7258951050753727831, guid: b09f9d2434904564d8ea445e591c5600, type: 3}

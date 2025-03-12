@@ -52,8 +52,14 @@ public class CursorManager : MonoBehaviour
                 }
             }
         }
-    }
 
+        // If nothing was hit or no matching layer was found, reset to default cursor
+        ResetCursor();
+    }
+    private void ResetCursor()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
     private void SetCursor(Texture2D texture)
     {
         Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
