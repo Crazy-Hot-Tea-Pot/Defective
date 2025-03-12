@@ -296,6 +296,24 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    public void tutorialTrigger(string questName)
+    {
+        for (int i = 0; i < CurrentQuest.Count; i++)
+        {
+            if(CurrentQuest[i].questName == questName)
+            {
+                CurrentQuest[i].TriggerPopup();
+            }
+        }
+    }
+
+    public void tutorialMoveTrigger()
+    {
+        for (int i = 0; i < CurrentQuest.Count; i++)
+        {
+            CurrentQuest[i].TriggerMovement();
+        }
+    }
 
 
     #endregion

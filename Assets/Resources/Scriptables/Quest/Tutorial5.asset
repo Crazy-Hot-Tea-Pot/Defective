@@ -28,3 +28,4 @@ MonoBehaviour:
   Index: 1
   TopIndex: 3
   CurrentIndex: 3
+  canPop: 0

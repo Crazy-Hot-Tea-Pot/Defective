@@ -50,5 +50,14 @@ public class Quest : ScriptableObject
         Debug.Log("EnemyCounterBase");
     }
 
+    public virtual void TriggerPopup()
+    {
+
+    }
+
+    public virtual void TriggerMovement()
+    {
+
+    }
 }
 

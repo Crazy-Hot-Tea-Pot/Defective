@@ -24,3 +24,8 @@ MonoBehaviour:
   yOffset: 0
   PopupText: You can access quest by following the arrow above
   PopUp: 1
+  InCombat: 0
+  Index: 0
+  TopIndex: 1
+  CurrentIndex: 1
+  canPop: 0

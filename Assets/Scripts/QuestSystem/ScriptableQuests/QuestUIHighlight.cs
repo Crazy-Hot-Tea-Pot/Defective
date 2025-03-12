@@ -17,6 +17,7 @@ public class QuestUIHighlight : Quest
     public bool Index;
     public int TopIndex;
     public int CurrentIndex;
+    public bool canPop = false;
 
     private void Awake()
     {
@@ -46,17 +47,6 @@ public class QuestUIHighlight : Quest
                 curserArrow = Instantiate(curserArrow, UIElement.transform.parent.Find(UIElement.name));
                 curserArrow.transform.position = new Vector3(curserArrow.transform.position.x + xOffset, curserArrow.transform.position.y + yOffset, curserArrow.transform.position.z);
 
-                if (PopUp)
-                {
-                    if (Index)
-                    {
-                        QuestManager.Instance.CreateConfirmationWindow(PopupText, QuestManager.Instance.IncreaseWindowIndex, TopIndex, CurrentIndex);
-                    }
-                    else
-                    {
-                        QuestManager.Instance.CreateConfirmationWindow(PopupText, null);
-                    }
-                }
             }
             else if (GameObject.Find(UIElementPath).transform.Find(curserArrow.name) == null && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
             {
@@ -65,7 +55,7 @@ public class QuestUIHighlight : Quest
 
                 if (PopUp)
                 {
-                    if(Index)
+                    if (Index)
                     {
                         QuestManager.Instance.CreateConfirmationWindow(PopupText, QuestManager.Instance.IncreaseWindowIndex, TopIndex, CurrentIndex);
                     }
@@ -90,5 +80,13 @@ public class QuestUIHighlight : Quest
         UIElement.GetComponent<Image>().material = null;
         Destroy(curserArrow);
         CompleteQuest();
+    }
+
+    public override void TriggerPopup()
+    {
+        if (PopUp)
+        {
+            QuestManager.Instance.CreateConfirmationWindow(PopupText, null);
+        }
     }
 }
