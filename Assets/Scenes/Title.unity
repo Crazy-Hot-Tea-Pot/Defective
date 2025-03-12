@@ -1479,7 +1479,7 @@ MonoBehaviour:
   ButtonSelectSound: 40
   ButtonClickSound: 39
   VersionText: {fileID: 4622310774376628093}
-  CurrentStory: {fileID: 11400000, guid: 764e66970b0c37a41bfad07684f35465, type: 2}
+  CurrentStory: {fileID: 11400000, guid: df82934511e9bb14da24d6345b79b7d3, type: 2}
   MaxHealth: 50
   StartingScrap: 100
 --- !u!1 &1829154758
