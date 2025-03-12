@@ -10,8 +10,9 @@ using static Effects;
 
 // Controller for Player this class is not the input class that is generated.
 public class PlayerController : MonoBehaviour
-{    
-    public PlayerUiController uiController;
+{
+    [SerializeField]
+    private PlayerUiController uiController;
 
     //Camera in the scene
     private Camera mainCamera;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject RipplePrefab;
     public GameObject RippleRunPrefab;
+    public GameObject CallScreen;
 
 
     [Header("Player stats")]
@@ -985,9 +987,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="revealByLetter">true if you want to reveal speech by letter or false by word</param>
     /// <param name="howFastToTalk"></param>
     /// <param name="howLongToDisplay">default is 3</param>
-    public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f)
+    public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f, bool isDialogue = false)
     {
-        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay);
+        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay, isDialogue);
     }
 
     /// <summary>

@@ -53,6 +53,7 @@ public class LootUiController : UiController
     [Header("Selection stuff")]
     public GameObject SelectionDisplay;
     public GameObject SelectionContainer;
+    public GameObject SelectedChipInfo;
     public Button CancelButton;
 
     [Header("Animation values")]
@@ -127,6 +128,11 @@ public class LootUiController : UiController
         this.selectedChip = selectedChip;
 
         SelectionDisplay.SetActive(true);
+
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipImage.sprite=selectedChip.chipImage;
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipName.SetText(selectedChip.chipName);
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipDescription.SetText(selectedChip.description);
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipType.SetText(selectedChip.ChipType.ToString());
 
         foreach (Transform child in SelectionContainer.transform)
         {

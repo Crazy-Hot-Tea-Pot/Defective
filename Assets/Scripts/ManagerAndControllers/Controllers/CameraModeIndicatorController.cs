@@ -84,7 +84,8 @@ public class CameraModeIndicatorController : MonoBehaviour
             case CameraController.CameraState.BorderMovement:
                 StartCoroutine(SwitchImage(BoarderCameraImage));
                 break;
-            case CameraController.CameraState.FirstPerson:
+            case CameraController.CameraState.Call:
+            case CameraController.CameraState.FirstPerson:                
                 StartCoroutine(SwitchImage(FirstPersonCameraImage));
                 break;
             default:

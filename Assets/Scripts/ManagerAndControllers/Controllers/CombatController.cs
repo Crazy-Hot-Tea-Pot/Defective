@@ -204,7 +204,9 @@ public class CombatController : MonoBehaviour
 
         Debug.Log($"{enemy.name} has left combat!");
         CombatEnemies.Remove(enemy);
-        turnQueue = new Queue<GameObject>(CombatEnemies); // Rebuild the queue without the enemy
+
+        // Rebuild the queue without the enemy
+        turnQueue = new Queue<GameObject>(CombatEnemies);
 
         // Add loot
         ScrapLootForCurrentCombat += scrapLoot;

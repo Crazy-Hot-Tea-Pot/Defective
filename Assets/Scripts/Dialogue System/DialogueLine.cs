@@ -10,7 +10,7 @@ public class DialogueLine
     public Sprite speakerImage;
 
     // Text content
-    [TextArea(3, 5)]
+    [TextArea(1,3)]
     public string dialogueText;
 
     // If true, uses PlayerSpeak()
@@ -21,4 +21,7 @@ public class DialogueLine
 
     // Only for Player dialogue
     public float textSpeed = 0.05f;
+
+    // Time before the next line appears automatically
+    public float timeBetweenLines = 1.0f;
 }

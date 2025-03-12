@@ -32,7 +32,8 @@ public class CameraController : MonoBehaviour
         Free,
         BorderMovement,
         Combat,
-        FirstPerson
+        FirstPerson,
+        Call
     }
 
     [Header("Cameras")]
@@ -44,6 +45,7 @@ public class CameraController : MonoBehaviour
     public CinemachineVirtualCamera freeCamera;
     public CinemachineVirtualCamera BorderCamera;
     public CinemachineVirtualCamera FirstPersonCamera;
+    public CinemachineVirtualCamera CallCamera;
     public CinemachineVirtualCamera CombatCamera
     {
         get
@@ -200,7 +202,9 @@ public class CameraController : MonoBehaviour
     void Start()
     {
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();                
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        CallCamera = GameObject.Find("CallCamera").GetComponent<CinemachineVirtualCamera>();
 
         Target = player;
 
@@ -366,6 +370,7 @@ public class CameraController : MonoBehaviour
         freeCamera.Priority = 0;
         BorderCamera.Priority = 0;
         FirstPersonCamera.Priority = 0;
+        CallCamera.Priority = 0;
 
         if(CombatCamera!=null)
             CombatCamera.Priority = 0;
@@ -390,6 +395,9 @@ public class CameraController : MonoBehaviour
                 break;
             case CameraState.Combat:
                 CombatCamera.Priority = 10;
+                break;
+            case CameraState.Call:
+                CallCamera.Priority = 10;
                 break;
             default:
                 DefaultCamera.Priority = 10;
