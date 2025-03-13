@@ -435,7 +435,6 @@ MonoBehaviour:
   InventoryUI: {fileID: 6835000082307060844, guid: 371ef51de7d326049a99e9bc62f20284, type: 3}
   TerminalUI: {fileID: 6349382813320215569, guid: cfbd80ae571d42d43a53c68c995e54ac, type: 3}
   LootUI: {fileID: 1381671455956049504, guid: 596489b2d96bc5641b385a1185919f3b, type: 3}
-  SettingsUI: {fileID: 1381671455956049504, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
   GameOverUI: {fileID: 5166662099906460939, guid: 0ba943c57af47054e8e49e399f8fa2d9, type: 3}
   Popup: {fileID: 6654585115194486891, guid: bedc5ff0893fce440b88f9a3aca91a78, type: 3}
 --- !u!224 &684417308
