@@ -61,6 +61,15 @@ public class SecurityCameraController : MonoBehaviour
         if(followPlayer)
             StartCoroutine(FollowPlayer());
     }
+    /// <summary>
+    /// Turn off monitor and follow player.
+    /// </summary>
+    public void StopRecording()
+    {
+        StopCoroutine(FollowPlayer());
+
+        SecurityMonitor.SetActive(false);        
+    }
     private void ApplySettings()
     {
         if (securityCamera)

@@ -64,7 +64,7 @@ public class PuzzleManager : MonoBehaviour
     public void OpenPuzzle(GameObject target)
     {
         //Open combat UI
-        CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
+        CombatUI.GetComponent<RoamingAndCombatUiController>().StartPrepCombatStart();
         PuzzleController.Target = target;
     }
 
@@ -74,12 +74,15 @@ public class PuzzleManager : MonoBehaviour
     /// </summary>
     public void ClosePuzzle()
     {
+        //Change this to call the new method and removed coroutines
+
         UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
-        CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
+        CombatUI.GetComponent<RoamingAndCombatUiController>().RemoveCombatUI();
         //Set target to null
         //PuzzleController.Target = target;
         PuzzleController.Target = null;
 
-        StartCoroutine(ChipManager.Instance.PuzzleResetDeck());
+        
+        ChipManager.Instance.PuzzleResetDeck();
     }
 }

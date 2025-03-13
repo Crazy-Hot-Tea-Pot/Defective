@@ -437,6 +437,7 @@ MonoBehaviour:
   LootUI: {fileID: 1381671455956049504, guid: 596489b2d96bc5641b385a1185919f3b, type: 3}
   SettingsUI: {fileID: 1381671455956049504, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
   GameOverUI: {fileID: 5166662099906460939, guid: 0ba943c57af47054e8e49e399f8fa2d9, type: 3}
+  Popup: {fileID: 6654585115194486891, guid: bedc5ff0893fce440b88f9a3aca91a78, type: 3}
 --- !u!224 &684417308
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1586,6 +1587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d751df7d08429b34c895518c9535c2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UsedChips: []
   startingChips:
   - {fileID: 11400000, guid: 8ca1dd9622ef24b4cb647a971bf2c04f, type: 2}
   - {fileID: 11400000, guid: 8ca1dd9622ef24b4cb647a971bf2c04f, type: 2}
@@ -1595,8 +1597,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af8d67b61375d7a4b9e92b3f514d9917, type: 2}
   - {fileID: 11400000, guid: 80bd3d30c595bec48b1f376b6f3736f1, type: 2}
   - {fileID: 11400000, guid: 1f04b1f225942644bbf7c1f01ca2418e, type: 2}
-  PlayerHand: []
-  UsedChips: []
   chipPrefab: {fileID: 7436777728557001682, guid: d9849c1ec37ff6e499ec76c0fe76af67, type: 3}
   deckLimit: 8
   handLimit: 4

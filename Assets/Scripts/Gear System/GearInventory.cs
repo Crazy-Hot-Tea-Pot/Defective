@@ -142,11 +142,10 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     /// </summary>
     private void VerifyScrapItem()
     {
-        GameObject temp = Instantiate(ConfirmationWindow,UiManager.Instance.transform);
-        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow("You are about to scrap the item " 
-            + item.itemName + 
+        UiManager.Instance.PopUpMessage("You are about to scrap the item "
+            + item.itemName +
             " for the scrap value of "
-            + item.GetScrapValue(),ConfirmScrap);        
+            + item.GetScrapValue(), ConfirmScrap);       
     }
     private void ConfirmScrap()
     {

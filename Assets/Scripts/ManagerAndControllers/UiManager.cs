@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -41,6 +42,8 @@ public class UiManager : MonoBehaviour
     public GameObject LootUI;
     public GameObject SettingsUI;
     public GameObject GameOverUI;
+
+    public GameObject Popup;
 
     private UiController currentController;
     private static UiManager instance;
@@ -104,10 +107,6 @@ public class UiManager : MonoBehaviour
     {
         GetCurrentController<RoamingAndCombatUiController>().UpdateEnergy(currentEnergy, MaxEnergy);
     }
-    public void EndTurnButtonVisibility(bool Visiable)
-    {
-        GetCurrentController<RoamingAndCombatUiController>().ChangeEndButtonVisibility(Visiable);
-    }
     public void ChangeCombatScreenTemp(bool Interact)
     {
         if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
@@ -149,19 +148,34 @@ public class UiManager : MonoBehaviour
 
     }
     /// <summary>
+    /// Check if player can make anymore moves.
+    /// </summary>
+    public void CanMakeAnyMoreMoves()
+    {
+        if (
+            GameObject.Find("Player").GetComponent<PlayerController>().Energy == 0
+            &&
+            ChipManager.Instance.IsHandEmpty
+            )
+        {
+            GetCurrentController<RoamingAndCombatUiController>().PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
+            GetCurrentController<RoamingAndCombatUiController>().EndTurnButtonAnimator.SetTrigger("Click Me");
+        }
+    }
+    /// <summary>
     /// Setup screen for CombatMode
     /// </summary>
     private void StartCombat()
     {
-        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(true);
+        GetCurrentController<RoamingAndCombatUiController>().StartPrepCombatStart();
     }
     /// <summary>
     /// Remove combat screen for roaming
     /// </summary>
     private void EndCombat()
     {
-        if(GameManager.Instance.CurrentGameMode != GameManager.GameMode.GameOver)
-            GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
+        if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.GameOver)
+            GetCurrentController<RoamingAndCombatUiController>().RemoveCombatUI();
     }
     #endregion
     #region InventoryUI
@@ -275,7 +289,7 @@ public class UiManager : MonoBehaviour
     {
         if (CurrentUI.name == InventoryUI.name)
         {
-            StartCoroutine(DetermineCombat());
+            //StartCoroutine(DetermineCombat());
             SwitchScreen(RoamingAndCombatUI);
         }
         else
@@ -296,28 +310,8 @@ public class UiManager : MonoBehaviour
     /// </summary>
     public void CloseSettingsOnClick()
     {
-        StartCoroutine(DetermineCombat());
+        //StartCoroutine(DetermineCombat());
         SwitchScreen(RoamingAndCombatUI);
-    }
-
-    /// <summary>
-    /// A method to determine if the combat UI should be in combat when exiting the settings ui
-    /// </summary>
-    private IEnumerator DetermineCombat()
-    {
-        yield return new WaitForSecondsRealtime(0.3f);
-        //If we are in combat put us in combat mode
-        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
-        {
-            //This mode will make sure combat resumes properly
-            CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
-        }
-        //If anything else
-        else
-        {
-            //Do not put us in combat
-            CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
-        }
     }
     public void CloseSettingsOnClickTitle()
     {
@@ -462,6 +456,12 @@ public class UiManager : MonoBehaviour
         CurrentUI.transform.localPosition = Vector3.zero;
         CurrentUI.transform.localRotation = Quaternion.identity;
         CurrentUI.transform.localScale = Vector3.one;
+    }
+
+    public void PopUpMessage(string message,Action MethodToCallOnConfirm=null)
+    {
+        GameObject temp = Instantiate(Popup, Instance.transform);
+        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(message, MethodToCallOnConfirm);
     }
     
     private void SceneChange(Levels newLevel)

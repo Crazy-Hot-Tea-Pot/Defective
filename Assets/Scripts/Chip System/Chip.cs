@@ -86,6 +86,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private PuzzleController PuzzleController;
     private GameObject Player;
     private TerminalController UpgradeController;
+    private int attemptCounter=0;
 
     void Start()
     {        
@@ -105,7 +106,14 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 // Check if there is a target available
                 if (CombatController.Target == null)
                 {
-                    throw new NullReferenceException("No target assigned for combat.");
+                    attemptCounter++;
+
+                    if (attemptCounter > 3)
+                    {
+                        UiManager.Instance.PopUpMessage("Must select target to attack.");
+                    }
+
+                    return;
                 }
 
                 //Check if Player is jammed
@@ -122,6 +130,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
                     newChip.IsActive = true;
 
+                    //If motivated to play chip twice
                     if (Player.GetComponent<PlayerController>().IsMotivated)
                     {
                         if (newChip is DefenseChip defenseChip)
@@ -175,10 +184,8 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     }
 
                     ChipManager.Instance.AddToUsedChips(this.gameObject);
-                }
-                else
-                {
-                    throw new NullReferenceException("No chip script attached.");
+
+                    UiManager.Instance.CanMakeAnyMoreMoves();
                 }
             }
             catch (NullReferenceException ex)

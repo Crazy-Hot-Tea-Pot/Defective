@@ -36,10 +36,11 @@ public class RoamingAndCombatUiController : UiController
     public Button EquipmentButton;
 
     [Header("Combat Mode Stuff")]
-    public GameObject PlayerHandContainer;
+    public GameObject PlayerHand;
     public GameObject EnergyAndGearContainer;
     public GameObject EndTurn;
     public Button EndTurnButton;
+    public Animator EndTurnButtonAnimator;
     public GameObject CombatAnimation;
     public GameObject DeathAnimation;
 
@@ -56,7 +57,7 @@ public class RoamingAndCombatUiController : UiController
         EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>().EndTurn(GameObject.FindGameObjectWithTag("Player")));        
         
         EndTurn.SetActive(false);
-        PlayerHandContainer.SetActive(false);
+        PlayerHand.SetActive(false);
         CameraIndicator.SetActive(false);
 
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -78,11 +79,6 @@ public class RoamingAndCombatUiController : UiController
         Debug.Log("RoamingAndCombatUiController initialized");        
     }
 
-
-    public void ChangeEndButtonVisibility(bool visibility)
-    {
-        EndTurn.SetActive(visibility);
-    }
     /// <summary>
     /// Temp remove combat screen
     /// </summary>
@@ -91,7 +87,16 @@ public class RoamingAndCombatUiController : UiController
     {
         EndTurnButton.interactable = isInteractable;
 
-        StartCoroutine(RedrawPlayerHand(isInteractable));
+        if (isInteractable)
+        {
+            if(ChipManager.Instance.UsedChips.Count!=8)
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+        }
+        else
+        {
+            PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
+            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+        }
 
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
 
@@ -177,21 +182,46 @@ public class RoamingAndCombatUiController : UiController
     }
 
     /// <summary>
-    /// switch UI Modes
+    /// Remove Combat UI
     /// </summary>
-    /// <param name="CombatMode"></param>
-    public void SwitchMode(bool CombatMode)
+    public void RemoveCombatUI()
     {
-        if (CombatMode)
+        // Directly disable Combat UI without delay
+        PlayerHand.SetActive(false);
+        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
+        EndTurn.SetActive(false);
+    }
+    /// <summary>
+    /// Prepare screen for CombatStart
+    /// </summary>
+    public void StartPrepCombatStart()
+    {
+        CombatAnimation.SetActive(true);
+        PlayerHand.SetActive(true);
+
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
         {
-            StartCoroutine(EnableCombatMode());
+            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+            EndTurn.SetActive(true);
         }
-        else
-        {
-            // Directly disable Combat UI without delay
-            PlayerHandContainer.SetActive(false);
-            EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
-        }
+    }
+    /// <summary>
+    /// After aniamtor gets half way this is called.
+    /// </summary>
+    public void ContPrepCombatStart()
+    {
+        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
+        PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+        
+        if (ChipManager.Instance.UsedChips.Count != 8)
+            PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+
+        Invoke("FinishCombatStart", 1f);
+    }
+    private void FinishCombatStart()
+    {
+        // Hide CombatAnimation if it's temporary
+        CombatAnimation.SetActive(false);
     }
 
     public void MakeGearInteractable(bool Interactable)
@@ -258,25 +288,6 @@ public class RoamingAndCombatUiController : UiController
         }
     }
     /// <summary>
-    /// Close hand and reopen with new cards or just draw hand with cards.
-    /// </summary>
-    private IEnumerator RedrawPlayerHand(bool Interactable)
-    {
-        yield return new WaitForSeconds(1f);
-        if (Interactable)
-        {
-            PlayerHandContainer.SetActive(Interactable);
-            yield return new WaitForSeconds(0.5f);
-            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();            
-        }
-        else
-        {
-            PlayerHandContainer.SetActive(Interactable);
-            yield return new WaitForSeconds(0.5f);
-            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
-        }
-    }
-    /// <summary>
     /// Checks if item can be used.
     /// </summary>
     /// <param name="item"></param>
@@ -293,24 +304,6 @@ public class RoamingAndCombatUiController : UiController
         }
 
         return currentEnergy >= energyCost;
-    }
-    /// <summary>
-    /// play combat entrance animation and then continue.
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator EnableCombatMode()
-    {
-        // Show CombatAnimation and wait
-        CombatAnimation.SetActive(true);
-        yield return new WaitForSeconds(2f);
-
-        // Proceed with enabling combat UI
-        StartCoroutine(RedrawPlayerHand(true));
-
-        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
-
-        // Hide CombatAnimation if it's temporary
-        CombatAnimation.SetActive(false);
     }
 
     private IEnumerator UpdateHealthOverTime(float targetFillAmount)

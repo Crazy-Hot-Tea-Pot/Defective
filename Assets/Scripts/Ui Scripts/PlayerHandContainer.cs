@@ -3,42 +3,68 @@ using UnityEngine.UI;
 
 public class PlayerHandContainer : MonoBehaviour
 {
+    public enum PlayerHandState
+    {
+        Open,
+        Close
+    }
+
     public GameObject PlayerHand;
     public Button SliderButton;
-    public bool PanelIsVisible
+
+    [Header("Sounds")]
+    public SoundFX OpenDeck;
+    public SoundFX CloseDeck;
+    public PlayerHandState HandIsVisible
     {
         get
         {
-            return isVisible;
+            return handStatus;
         }
         set
         {
-            isVisible = value;
+            handStatus = value;
         }
     }
+
     private Animator animator;
-    private bool isVisible = false;
+    private PlayerHandState handStatus=PlayerHandState.Close;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        SliderButton.onClick.AddListener(TogglePanel);
+        SliderButton.onClick.AddListener(OpenOrCloseHandByButtonClick);
     }
+    /// <summary>
+    /// Open or close player hand.
+    /// </summary>
+    /// <param name="WhatStateYouwantItToBe">Open or Close</param>
+    public void TogglePanel(PlayerHandState WhatStateYouwantItToBe)
+    {        
 
-    public void TogglePanel()
-    {
-        isVisible = !isVisible;
-
-        if(!isVisible)
-                FillPlayerHand();
-
-        if(animator==null)
+        if (animator == null)
             animator = GetComponent<Animator>();
 
-        animator.SetTrigger("Slide");
-
-
+        switch (WhatStateYouwantItToBe)
+        {
+            case PlayerHandState.Open:
+                if (HandIsVisible == PlayerHandState.Close)
+                {                    
+                    SoundManager.PlayFXSound(OpenDeck);
+                    animator.SetTrigger("SlideInScreen");
+                    HandIsVisible = PlayerHandState.Open;
+                }
+                break;
+            case PlayerHandState.Close:
+                if(HandIsVisible == PlayerHandState.Open)
+                {
+                    SoundManager.PlayFXSound(CloseDeck);
+                    animator.SetTrigger("SlideOutScreen");
+                    HandIsVisible = PlayerHandState.Close;                    
+                }                
+                break;
+        }        
     }
     public void FillPlayerHand()
     {
@@ -61,5 +87,16 @@ public class PlayerHandContainer : MonoBehaviour
 
             tempNewChip.GetComponent<Chip>().NewChip = chip;
         }
+    }
+    private void OpenOrCloseHandByButtonClick()
+    {
+        if(HandIsVisible == PlayerHandState.Open)
+            TogglePanel(PlayerHandState.Close);
+        else
+            TogglePanel(PlayerHandState.Open);
+    }
+    void OnDestroy()
+    {
+        SliderButton.onClick.RemoveListener(OpenOrCloseHandByButtonClick);
     }
 }

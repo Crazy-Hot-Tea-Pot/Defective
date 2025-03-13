@@ -10,6 +10,11 @@ public class SecurityCameraTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             controller.StartRecording();
-        }
+        }      
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Player"))
+            controller.StopRecording();
     }
 }

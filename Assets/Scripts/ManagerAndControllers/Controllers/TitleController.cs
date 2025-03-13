@@ -107,7 +107,6 @@ public class TitleController : MonoBehaviour
 
     /// <summary>
     /// Plays Sound for when mouse over Button.
-    /// 0 references because from inspector.
     /// </summary>
     public void PlaySelectButtonSound()
     {

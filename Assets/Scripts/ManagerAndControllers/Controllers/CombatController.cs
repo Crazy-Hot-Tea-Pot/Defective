@@ -174,9 +174,6 @@ public class CombatController : MonoBehaviour
             enemy.GetComponent<Enemy>().CombatStart();
         }
 
-        // Enable the end-turn button
-        UiManager.Instance.EndTurnButtonVisibility(true);
-
         StartTurn();
     }
 
@@ -329,9 +326,7 @@ public class CombatController : MonoBehaviour
     /// </summary>
     private void EndCombat()
     {
-        Debug.Log("Combat has ended.");
-
-        UiManager.Instance.EndTurnButtonVisibility(false);
+        Debug.Log("Combat has ended.");        
 
         SoundManager.PlayFXSound(CombatWinSound);
 

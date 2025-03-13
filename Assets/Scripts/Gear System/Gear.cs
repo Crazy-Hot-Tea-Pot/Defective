@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, IPointerEnterHandler, IPointerExitHandler
+public class Gear : MonoBehaviour, ICanvasRaycastFilter, IPointerEnterHandler, IPointerExitHandler
 {
     public PolygonCollider2D polygonCollider;
     public CombatController CombatController;
@@ -43,6 +43,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, I
 
     private Item item;
     private string gearName;
+    private int attemps=0;
 
     void Awake()
     {
@@ -98,16 +99,16 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, I
         }
     }
     // Handle clicks within the collider area
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(eventData.position);
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    Vector2 worldPoint = Camera.main.ScreenToWorldPoint(eventData.position);
 
-        if (polygonCollider.OverlapPoint(worldPoint))
-        {
-            //Debug.Log("Button clicked within Polygon Collider of "+this.gameObject.name);
-            PerformButtonAction();
-        }
-    }
+    //    if (polygonCollider.OverlapPoint(worldPoint))
+    //    {
+    //        //Debug.Log("Button clicked within Polygon Collider of "+this.gameObject.name);
+    //        PerformButtonAction();
+    //    }
+    //}
     public void UseItem()
     {
         try
@@ -115,12 +116,21 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, I
             if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
             {
                 if (CombatController.Target == null)
-                    throw new NullReferenceException("No Combat target assigned.");
+                {
+                    attemps++;
+
+                    if(attemps > 3)
+                        UiManager.Instance.PopUpMessage("Must select target to attack first!");
+
+                    return;
+                }
 
                 if (Item == null)
                     throw new NullReferenceException("No Item equipped.");
 
                 Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+
+                UiManager.Instance.CanMakeAnyMoreMoves();
             }
             else
             {
@@ -136,70 +146,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, I
         catch (NullReferenceException ex)
         {
             Debug.LogWarning($"Null reference error: {ex.Message}");
-        }
-        //try
-        //{
-        //    // Check if there is a target available
-        //    if (
-        //        (CombatController.Target == null) 
-        //        && 
-        //        (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat))
-        //        throw new NullReferenceException("No target assigned.");
-
-        //    if (Item == null)
-        //        throw new NullReferenceException("No Item equipped.");
-        //    else
-        //    {
-        //        //  THIS IS A TEMP FIX AND MUST BE DONE FOR CASES SO THE FIRST IF STATEMENT ALWAYS RUN NO MATTER THE MODE
-        //        if(GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
-        //        {
-        //            if (CombatController.Target == null)
-        //            {
-        //                //Item.ItemActivate(Player.GetComponent<PlayerController>());
-        //            }
-        //            else
-        //            {
-        //                Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (PuzzleController.Target == null)
-        //            {
-        //                //Don't want nulls in our itemactivate but don't have a use for them and I don't think it's valuable to warn the devs about
-        //            }
-        //            else if (PuzzleController.Target.tag == "Puzzle")
-        //            {
-        //                Item.ItemActivate(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
-        //            }
-        //        }
-        //        //if (CombatController.Target == null)
-        //        //{
-        //        //    Item.ItemActivate(Player.GetComponent<PlayerController>());
-        //        //}
-        //        //else if (PuzzleController.Target == null && GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-        //        //{
-        //        //    //Don't want nulls in our itemactivate but don't have a use for them and I don't think it's valuable to warn the devs about
-        //        //}
-        //        //else if (PuzzleController.Target.tag == "Puzzle" && GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-        //        //{
-        //        //    Item.ItemActivate(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
-        //        //}
-        //        //else
-        //        //{
-        //        //    Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
-        //        //}
-        //    }
-        //}
-        //catch (NullReferenceException ex)
-        //{
-        //    Debug.LogWarning($"Null reference error: {ex.Message}");
-        //}
-        //catch (Exception ex)
-        //{
-        //    // Generic catch for any other exceptions that may occur
-        //    Debug.LogError($"An unexpected error occurred: {ex.Message}");
-        //}
+        }        
     }
     public void EquipItem(Item newItem)
     {
@@ -221,9 +168,9 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter, I
         GearImage.sprite=Item.itemImage;
     }
 
-    private void PerformButtonAction()
-    {
-        // Add your button logic here
-        Debug.Log("Performing button action...");
-    }
+    //private void PerformButtonAction()
+    //{
+    //    // Add your button logic here
+    //    Debug.Log("Performing button action...");
+    //}
 }
