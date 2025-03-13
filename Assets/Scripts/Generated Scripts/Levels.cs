@@ -12,6 +12,7 @@ public enum Levels
     Level6,
     Loading,
     WorkShop,
-    Settings,
     Credits,
+    Settings,
+    TestLevel,
 }

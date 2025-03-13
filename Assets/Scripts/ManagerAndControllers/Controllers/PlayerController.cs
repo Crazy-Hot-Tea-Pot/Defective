@@ -384,7 +384,7 @@ public class PlayerController : MonoBehaviour
 
         Initialize();
 
-        CharacterSpeak("Made it\nhere we go.", false, 0.5f,2f);
+        //CharacterSpeak("Scanning Area, I seem to be in the *InsertSceneName*", false, 0.5f,2f); 
         SoundManager.PlayFXSound(EnterLevelSound);
     }
 

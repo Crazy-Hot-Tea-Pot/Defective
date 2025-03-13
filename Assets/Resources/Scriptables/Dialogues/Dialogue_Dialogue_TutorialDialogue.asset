@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c112f3aee6477b642855d7e9a4ccbd31, type: 3}
+  m_Name: Dialogue_Dialogue_TutorialDialogue
+  m_EditorClassIdentifier: 
+  lines:
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: Welcome back to the land of the living! Though given where we are,
+      it might have been better that you stay dead.
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: Did that fall damage your voice box? Hellooooooo
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: Who are you? How are you speaking directly into my head?
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: "It speaks! Or should I say he? She? It\u2019s hard to tell with
+      you robots, I\u2019ll just call you a he to be safe."
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: "While watching the security feed, I saw them dump you here. I\u2019m
+      using a special radio frequency to tune into your head."
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "I have no memory of this \u201Cdumping\u201D. I have no memory
+      of anything\u2026 What happened? And again, who are you? Where am I?"
+    isPlayerSpeaking: 1
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: "Call me\u2026 Ignotus. You could say I\u2019m a soon-to-be former
+      \u201Cresident\u201D of your current whereabouts. The long abandoned Labyr
+      subway system, home to the largest group of Looters this side of the city."
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: '**CONNECTING TO NETWORK**'
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "Yes, my scans do seem to indicate that I\u2019m deep underground."
+    isPlayerSpeaking: 1
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "Deep underground, and deep in trouble I\u2019d say. We need to
+      get out of here."
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "\u201CWe\u201D?"
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "I know we\u2019ve just met, but our goals align. I want out of
+      here, and you probably want answers, which I can provide. I know who left you
+      here to die."
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "That doesn\u2019t sound like alignment to me."
+    isPlayerSpeaking: 1
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "\u2026but it does seem that we can be of use to each other."
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "Great! I\u2019m glad we\u2019re on the same page!"
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: ...
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "Now, I could have left this stink hole whenever I wanted to, but
+      there is a certain item that I need, and unfortunately I\u2019m not strong
+      enough to defeat the person who has it. But I think with your help, I\u2019d
+      be able to finally get my hands on what I need.."
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "So, if you can make your way to the hideout and get rid of the
+      Looter Boss, we should be golden!  Help me out, and I\u2019ll tell you exactly
+      who left you here to rot."
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "I\u2019ll keep in touch. Good Luck."
+    isPlayerSpeaking: 0
+    revealByLetter: 0
+    textSpeed: 0.05
+    timeBetweenLines: 1
