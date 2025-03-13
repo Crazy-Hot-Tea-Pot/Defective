@@ -45,6 +45,8 @@ public class UiManager : MonoBehaviour
     private UiController currentController;
     private static UiManager instance;
 
+    private GameManager.GameMode GameMode;
+
     void OnEnable()
     {
         playerInputActions.Player.Inventory.performed += ToggleInventory;
@@ -329,10 +331,11 @@ public class UiManager : MonoBehaviour
         {
             SceneManager.UnloadSceneAsync(scene);
             //Allows the character to move
-            GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
+            GameManager.Instance.UpdateGameMode(GameMode);
         }
         else
         {
+            GameMode = GameManager.Instance.CurrentGameMode;
             SceneManager.LoadScene(scene, LoadSceneMode.Additive);
         }
     }
