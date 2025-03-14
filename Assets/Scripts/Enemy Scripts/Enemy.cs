@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
         Debuff,
         Unique
     }
+
     public enum IsEnemy
     {
         Human,
@@ -582,6 +583,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected virtual void PerformIntent()
     {
+        //Don't do anything wait for death
+        if (CurrentHP <= 0)
+            return;
+
         EnemyUIObject.SetActive(false);
     }
 

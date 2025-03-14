@@ -169,7 +169,7 @@ public class LootController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             GameObject temp = null;
             temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);
-            temp.GetComponent<TextMeshProUGUI>().SetText(effect.ItemEffectDescription);
+            temp.GetComponent<TextMeshProUGUI>().SetText(effect.GetEffectDescription(newItem));
         }
 
 

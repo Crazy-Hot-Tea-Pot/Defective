@@ -1,20 +1,21 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Rendering;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewDefenseEffect", menuName = "Gear/Effects/DefenseEffect")]
 public class DefenseEffect : ItemEffect
 {
     [Header("Armor values")]
+
+    public bool specialEffectOnly;
+
     [Tooltip("Shield Amount")]
     public int baseShieldAmount;
 
     public override void Activate(PlayerController player, Item item, Enemy enemy = null)
     {
-        int adjustedShieldAmount = baseShieldAmount + item.GetValueIncreaseBy();
+        int adjustedShieldAmount = baseShieldAmount + item.GetValueIncreaseBy();        
 
-        // decrease for energy cost
-        int adjustedEnergyCost = energyCost - item.GetEnergyCostDecreaseBy();
-
-        if (player.SpendEnergy(adjustedEnergyCost))
+        if (player.SpendEnergy(energyCost))
         {
 
             // Adjust shield based on debuffs
@@ -33,4 +34,24 @@ public class DefenseEffect : ItemEffect
             SoundManager.PlayFXSound(item.ItemFailSound);
         }
     }
+    public override string GetEffectDescription(Item item)
+    {
+        if (specialEffectOnly)
+        {
+            string tempString = "";
+            // Corrected Loop
+            foreach (Effects.TempBuffs effect in buffToApplyToPlayer)
+            {
+                tempString += $"Grants {effect.AmountToBuff} {effect.Buff.ToString()}. ";
+            }
+            // Remove trailing space
+            return tempString.Trim();
+        }
+        else
+        {
+            int adjustedShield = baseShieldAmount + item.GetValueIncreaseBy();
+            return $"Grants {adjustedShield} shield.";
+        }
+    }
+
 }

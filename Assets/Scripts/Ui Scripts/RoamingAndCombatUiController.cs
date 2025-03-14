@@ -167,18 +167,11 @@ public class RoamingAndCombatUiController : UiController
     /// </summary>
     /// <param name="currentEnergy"></param>
     /// <param name="maxEnergy"></param>
-    public void UpdateEnergy(int currentEnergy, int maxEnergy)
+    public void UpdateEnergy(float currentEnergy, float maxEnergy)
     {
         // Directly update the energy bar
-        float energyPercentage = (float)currentEnergy / maxEnergy;
+        float energyPercentage = currentEnergy / maxEnergy;
         EnergyBar.fillAmount = energyPercentage;
-        //// Normalize the energy value to a 0-1 range
-        //float tempTargetFillAmount = (float)currentEnergy / maxEnergy;
-
-
-        //StopCoroutine(FillEnergyOverTime(tempTargetFillAmount));
-
-        //StartCoroutine(FillEnergyOverTime(tempTargetFillAmount));
     }
 
     /// <summary>
@@ -231,7 +224,7 @@ public class RoamingAndCombatUiController : UiController
         EquipmentButton.interactable = Interactable;
     }
 
-    public void UpdateGearButtonStates(int currentEnergy)
+    public void UpdateGearButtonStates(float currentEnergy)
     {
         // Get all equipped items
         Item armor = GearManager.Instance.GetEquippedItem(Item.ItemType.Armor);
@@ -293,78 +286,17 @@ public class RoamingAndCombatUiController : UiController
     /// <param name="item"></param>
     /// <param name="currentEnergy"></param>
     /// <returns></returns>
-    private bool CanUseItem(Item item, int currentEnergy)
+    private bool CanUseItem(Item item, float currentEnergy)
     {
         if (item == null) return false;
 
-        int energyCost = 0;
+        float energyCost = 0f;
         foreach (ItemEffect effect in item.itemEffects)
         {
-            energyCost += effect.energyCost - item.GetEnergyCostDecreaseBy();
+            energyCost += effect.energyCost;
         }
 
         return currentEnergy >= energyCost;
-    }
-
-    private IEnumerator UpdateHealthOverTime(float targetFillAmount)
-    {
-        // While the bar is not at the target fill amount, update it
-        while (Mathf.Abs(HealthBar.fillAmount - targetFillAmount) > 0.001f)
-        {
-            // Lerp between current fill and target fill by the fill speed
-            HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, targetFillAmount, SpeedOfFill * Time.deltaTime);
-
-            // Lerp the color based on the health percentage
-            HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, HealthBar.fillAmount);
-
-            // Display percentage as an integer (0 to 100)
-            int percentage = Mathf.RoundToInt(HealthBar.fillAmount * 100);
-            HealthText.SetText(percentage + "%");
-
-            // Ensure the fill value gradually updates each frame
-            yield return null;
-        }
-
-        // Ensure it snaps to the exact target amount at the end
-        HealthBar.fillAmount = targetFillAmount;
-        HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, HealthBar.fillAmount);
-
-        // Display percentage as an integer (0 to 100)
-        int finalPercentage = Mathf.RoundToInt(targetFillAmount * 100);
-        HealthText.SetText(finalPercentage + "%");
-    }
-
-    private IEnumerator UpdateShieldOverTime(float targetFillAmount, int Shield, int MaxShield)
-    {      
-
-        int initialCurrentShield = Mathf.RoundToInt(ShieldBar.fillAmount * MaxShield);
-        int targetCurrentShield = Shield;
-
-        int initialMaxShield = MaxShield;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < SpeedOfFill)
-        {
-            elapsedTime += Time.deltaTime;
-
-            // Lerp the ShieldAmount bar fill amount
-            float newFillAmount = Mathf.Lerp(ShieldBar.fillAmount, targetFillAmount, elapsedTime / SpeedOfFill);
-            ShieldBar.fillAmount = newFillAmount;
-
-            // Dynamically calculate ShieldAmount values
-            int currentShield = Mathf.RoundToInt(Mathf.Lerp(initialCurrentShield, targetCurrentShield, elapsedTime / SpeedOfFill));
-            int maxShield = Mathf.RoundToInt(Mathf.Lerp(initialMaxShield, MaxShield, elapsedTime / SpeedOfFill));
-
-            // Update the ShieldAmount text
-            ShieldText.SetText($"{currentShield}/{maxShield}");
-
-            yield return null;
-        }
-
-        // Snap to final values
-        ShieldBar.fillAmount = targetFillAmount;
-        ShieldText.SetText($"{targetCurrentShield}/{MaxShield}");
     }
 
     /// <summary>

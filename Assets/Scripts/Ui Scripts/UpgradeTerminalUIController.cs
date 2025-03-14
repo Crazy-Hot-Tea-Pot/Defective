@@ -96,6 +96,8 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
     public override void Initialize()
     {
         Debug.Log("Upgrade Terminal Initalize");
+
+        UpdateScrapDisplay(GameObject.Find("Player").GetComponent<PlayerController>().Scrap);
     }
     /// <summary>
     /// When Player clicks one of the links.

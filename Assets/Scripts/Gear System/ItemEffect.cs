@@ -27,10 +27,8 @@ public class ItemEffect : ScriptableObject
         /// </summary>
         LessThanHalfHealth 
     }
-
-    public string ItemEffectDescription;
     [Tooltip("Cost to use the ItemEffect")]
-    public int energyCost;
+    public float energyCost;
 
     [Space(20)]
 
@@ -76,6 +74,10 @@ public class ItemEffect : ScriptableObject
     public virtual void Activate(PlayerController player, Item item, PuzzleRange puzzle = null)
     {
         //Put a sound here
+    }
+    public virtual string GetEffectDescription(Item item)
+    {
+        return "fail";
     }
 
     protected virtual void Equipped()

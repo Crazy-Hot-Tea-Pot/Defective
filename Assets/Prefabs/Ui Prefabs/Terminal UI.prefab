@@ -1676,8 +1676,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -18}
+  m_SizeDelta: {x: 0, y: -164}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &774942306600752153
 CanvasRenderer:
@@ -4103,8 +4103,8 @@ MonoBehaviour:
     <color=#0000FF><link="Items"><u>Scrap Items</u></link></color>
 
 
-    <color=#0000FF><link="DataServer"><u>Connect
-    to Data Server</u></link></color>
+    <color=#0000FF><link="DataServer"><u>Save
+    Game</u></link></color>
 
 
     <color=#0000FF><link="Exit"><u>Exit</u></link></color>
@@ -4688,7 +4688,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cancel
+  m_text: Finish
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6a7624a4f4de7445b93d5a3dbf689a4, type: 3}
   m_Name: Spend 6 Energy and gain 1 Power
   m_EditorClassIdentifier: 
-  ItemEffectDescription: Spend 6 Energy and gain 1 Power
-  energyCost: 30
+  energyCost: 6
   SpecialConditionEffect: 0
   Condition: 0
   deBuffEffectToApplyToEnemy: []
@@ -23,6 +22,6 @@ MonoBehaviour:
   debuffToApplyToPlayer: []
   effectToApplyToPlayer: 0
   HitAllTargets: 0
-  SpecialEffectName: 
+  SpecialEffectName: Charge Up
   HasPassiveEffect: 0
   passiveEffect: 0

@@ -12,10 +12,7 @@ public class DamageEffect : ItemEffect
     {
         int adjustedDamage = baseDamage + item.GetValueIncreaseBy();
 
-        // decrease for energy cost
-        int adjustedEnergyCost = energyCost - item.GetEnergyCostDecreaseBy();
-
-        if (player.SpendEnergy(adjustedEnergyCost))
+        if (player.SpendEnergy(energyCost))
         {
 
             if (player.IsPowered)
@@ -62,12 +59,9 @@ public class DamageEffect : ItemEffect
 
     public override void Activate(PlayerController player, Item item, PuzzleRange puzzle)
     {
-        int adjustedDamage = baseDamage + item.GetValueIncreaseBy();
+        int adjustedDamage = baseDamage + item.GetValueIncreaseBy();        
 
-        // decrease for energy cost
-        int adjustedEnergyCost = energyCost - item.GetEnergyCostDecreaseBy();
-
-        if (player.SpendEnergy(adjustedEnergyCost))
+        if (player.SpendEnergy(energyCost))
         {
             //Play Item Effect
             SoundManager.PlayFXSound(item.ItemActivateSound);
@@ -89,4 +83,11 @@ public class DamageEffect : ItemEffect
             Debug.Log("Not enough energy to use Weapon.");
         }
     }
+
+    public override string GetEffectDescription(Item item)
+    {
+        int adjustedDamage = baseDamage + item.GetValueIncreaseBy();
+        return $"Deals {adjustedDamage} damage.";
+    }
+
 }

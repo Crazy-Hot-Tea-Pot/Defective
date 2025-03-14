@@ -97,15 +97,22 @@ public class UiManager : MonoBehaviour
     }
     public void UpdateHealth(int currentHealth, int MaxHealth)
     {
-        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
-            return;
-        GetCurrentController<RoamingAndCombatUiController>().UpdateHealth(currentHealth, MaxHealth);
+        switch (GameManager.Instance.CurrentGameMode)
+        {
+            case GameManager.GameMode.Interacting:
+            case GameManager.GameMode.GameOver:
+            case GameManager.GameMode.Credits:
+                break;
+            default:
+                GetCurrentController<RoamingAndCombatUiController>().UpdateHealth(currentHealth, MaxHealth);
+                break;
+        }        
     }
     public void UpdateShield(int currentShield, int MaxShield)
     {
         GetCurrentController<RoamingAndCombatUiController>().UpdateShield(currentShield, MaxShield);
     }
-    public void UpdateEnergy(int currentEnergy, int MaxEnergy)
+    public void UpdateEnergy(float currentEnergy, float MaxEnergy)
     {
         GetCurrentController<RoamingAndCombatUiController>().UpdateEnergy(currentEnergy, MaxEnergy);
     }
@@ -128,7 +135,7 @@ public class UiManager : MonoBehaviour
     /// Update gear buttons
     /// </summary>
     /// <param name="energy"></param>
-    public void UpdateGearButtonsStates(int energy)
+    public void UpdateGearButtonsStates(float energy)
     {
         var controller = GetCurrentController<RoamingAndCombatUiController>();
         if (controller != null)

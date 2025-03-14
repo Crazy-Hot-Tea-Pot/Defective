@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class GangLeader : Enemy
@@ -39,29 +40,11 @@ public class GangLeader : Enemy
         base.Start();
     }
 
-    //public override void PerformIntentTrigger(string intentName)
-    //{
-    //    base.PerformIntentTrigger(intentName);
-
-    //    switch (intentName)
-    //    {
-    //        case "Threaten": 
-    //            Threaten(); 
-    //            break;
-    //        case "Intimidate": 
-    //            Intimidate(); 
-    //            break;
-    //        case "Disorient": 
-    //            Disorient(); 
-    //            break;
-    //        case "Cower": 
-    //            Cower(); 
-    //            break;
-    //        default:
-    //            Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
-    //            break;
-    //    }
-    //}
+    public override void CombatStart()
+    {
+        base.CombatStart();
+        AssignLooters();
+    }
 
     protected override void PerformIntent()
     {
@@ -124,8 +107,8 @@ public class GangLeader : Enemy
         //Come back and remove this for better logic
         try
         {
-            Looter1.GetComponent<Looter>().AddEffect(Effects.Buff.Power, 2);
-            Looter2.GetComponent<Looter>().AddEffect(Effects.Buff.Power, 2);
+            Looter1.GetComponent<Enemy>().AddEffect(Effects.Buff.Power, 2);
+            Looter2.GetComponent<Enemy>().AddEffect(Effects.Buff.Power, 2);
         }
         catch
         {
@@ -140,6 +123,24 @@ public class GangLeader : Enemy
     {
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.WornDown, 1);
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.Drained, 1);
+    }
+
+    private void AssignLooters()
+    {        
+        // Find all Looter enemies in the same combat zone
+        var looters = GameObject.FindGameObjectWithTag("CombatController")
+            .GetComponent<CombatController>().CombatEnemies
+            .Where(enemy => enemy.GetComponent<Enemy>().EnemyType == EnemyManager.TypeOfEnemies.Looter)
+            .Take(2)
+            .ToList();
+
+        if (looters.Count > 0)
+            Looter1 = looters[0];
+
+        if (looters.Count > 1)
+            Looter2 = looters[1];
+
+        Debug.Log($"Gang Leader assigned Looters: {Looter1?.name}, {Looter2?.name}");
     }
 
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()

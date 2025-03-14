@@ -127,6 +127,8 @@ public class TerminalController : MonoBehaviour
         StopAndClearCoroutine(ref activeScreenCoroutine);
         StopAndClearCoroutine(ref activeTextRevealCoroutine);
 
+        SelectedChip = null;
+
         OnScreenChanged?.Invoke(screen);
         
 
@@ -347,13 +349,10 @@ public class TerminalController : MonoBehaviour
             tempPlayer.Heal(10);
 
             //Display new info
-            SwitchToScreen(TerminalController.Screens.HealthUpgrade);
+            SwitchToScreen(Screens.HealthUpgrade);
 
             //Refresh Scrap Amount
-            UiManager.Instance.UpdateScrapDisplay(
-            GameObject.FindGameObjectWithTag("Player")
-            .GetComponent<PlayerController>().Scrap
-            );
+            UiManager.Instance.UpdateScrapDisplay(tempPlayer.Scrap);
         }
         else
         {
@@ -376,6 +375,8 @@ public class TerminalController : MonoBehaviour
             var Bank = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().TakeScrap(SelectedChip.costToUpgrade);
 
             ChipManager.Instance.PlayerDeck.Find(item => item == SelectedChip).IsUpgraded = true;
+
+            SelectedChip = null;
 
             // FOr now lets go back to main menu.
             SwitchToScreen(Screens.Intro);

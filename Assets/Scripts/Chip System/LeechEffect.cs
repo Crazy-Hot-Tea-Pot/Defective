@@ -8,6 +8,7 @@ public class LeechEffect : SkillEffects
     protected override void ChipUpgraded()
     {
         base.ChipUpgraded();
+
         if (IsUpgraded)
             damageAmount += amountToUpgradeBy;
         else

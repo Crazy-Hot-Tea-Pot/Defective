@@ -53,7 +53,7 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     void Start()
     {
         GearImage.sprite = Item.itemImage;
-        GearName.SetText(Item.itemName);        
+        GearName.SetText(Item.itemName+" - "+Item.ItemTeir);        
 
         switch(PrefabMode)
         {
@@ -115,7 +115,7 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         string gearDesriptionText="";
         foreach(var effect in Item.itemEffects)
         {
-            gearDesriptionText += effect.ItemEffectDescription;            
+            gearDesriptionText += effect.GetEffectDescription(Item);            
             gearDesriptionText += "\n=====\n";
             //GameObject temp = null;
             //temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);

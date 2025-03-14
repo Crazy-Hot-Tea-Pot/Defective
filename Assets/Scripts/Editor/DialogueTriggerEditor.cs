@@ -3,8 +3,7 @@ using UnityEngine;
 
 [CustomEditor(typeof(DialogueTrigger))]
 public class DialogueTriggerEditor : Editor
-{
-    private bool showPositionSettings = true;
+{    
     public override void OnInspectorGUI()
     {
         serializedObject.Update();

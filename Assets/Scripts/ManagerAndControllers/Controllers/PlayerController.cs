@@ -107,11 +107,11 @@ public class PlayerController : MonoBehaviour
             maxShield = value;
         }
     }
-    private int energy;
+    private float energy;
     /// <summary>
     /// Returns PlayerEnergy
     /// </summary>
-    public int Energy
+    public float Energy
     {
         get { return energy; }
         private set
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
             if (energy > maxEnergy)
                 energy = maxEnergy;
-            else if (energy <= 0)
+            else if (energy <= 0.0f)
                 energy = 0;
 
             UiManager.Instance.UpdateEnergy(Energy, MaxEnergy);
@@ -128,11 +128,11 @@ public class PlayerController : MonoBehaviour
             UiManager.Instance.UpdateGearButtonsStates(energy);
         }
     }
-    private readonly int maxEnergy=50;
+    private readonly float maxEnergy = 10.0f;
     /// <summary>
     /// Returns max energy
     /// </summary>
-    public int MaxEnergy
+    public float MaxEnergy
     {
         get { return maxEnergy; }
     }
@@ -558,12 +558,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="energyAmount"></param>
     /// <returns></returns>
-    public bool SpendEnergy(int energyAmount)
+    public bool SpendEnergy(float energyAmount)
     {
         if(energyAmount>Energy)
             return false;
         
-        Energy-= energyAmount;
+        Energy -= energyAmount;
         return true;
     }
 
@@ -1036,6 +1036,11 @@ public class PlayerController : MonoBehaviour
     private void TestSpeak()
     {
         CharacterSpeak("I have a voice.\nI realy do have a voice !!", true, 0.1f, 5f);
+    }
+    [ContextMenu("Give scrap")]
+    private void GivePlayerScrap()
+    {
+        GainScrap(1000);
     }
     [ContextMenu("Test Damage 5")]
     private void TestDamage()

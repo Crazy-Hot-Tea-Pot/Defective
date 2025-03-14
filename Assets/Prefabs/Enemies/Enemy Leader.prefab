@@ -167,8 +167,9 @@ MonoBehaviour:
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}
   DroppedChips: []
-  DroppedItems: []
-  DroppedScrap: 0
+  DroppedItems:
+  - {fileID: 11400000, guid: 09225dfc3a3b775418484898667860f5, type: 2}
+  DroppedScrap: 55
   EnemyDeathSound: 0
   EnemyDamageTakenSound: 0
 --- !u!136 &371243886294766885

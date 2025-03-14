@@ -120,11 +120,16 @@ public class MaintenanceBot : Enemy
     /// heals 30% of its Max Hp
     /// </summary>
     public void Repair()
-    {        
+    {
+        //Make UI true to prevent error.
+        EnemyUIObject.SetActive(true);
+
         //Play sound
-        SoundManager.PlayFXSound(RepairBotSound, this.gameObject.transform);
+        SoundManager.PlayFXSound(RepairBotSound);
 
         int tempHealAmount = Mathf.RoundToInt(maxHP * 0.3f);
-        CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, maxHP);        
+        CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, maxHP);
+
+        RepairUsed = true;
     }
 }

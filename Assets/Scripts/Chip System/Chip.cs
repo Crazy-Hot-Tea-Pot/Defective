@@ -110,7 +110,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
                     if (attemptCounter > 3)
                     {
-                        UiManager.Instance.PopUpMessage("Must select target to attack.");
+                        UiManager.Instance.PopUpMessage("You must select a target by clicking them with you mouse to attack first!");
                     }
 
                     return;

@@ -18,7 +18,6 @@ public class CallScreen : MonoBehaviour
     public int maxLinesDisplayed = 5;
     // Stores active lines
     private Queue<string> dialogueQueue = new Queue<string>();
-    private bool isRevealingText = false;
     private Coroutine revealCoroutine;
 
     /// <summary>
@@ -49,6 +48,7 @@ public class CallScreen : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Starts revealing text dynamically.
     /// </summary>
@@ -74,7 +74,6 @@ public class CallScreen : MonoBehaviour
     /// </summary>
     private IEnumerator RevealText(string fullText, bool revealByLetter, float revealSpeed, float timeBetweenLines)
     {
-        isRevealingText = true;
 
         // Set the full text but make it hidden initially
         dialogueText.SetText(fullText);
@@ -117,8 +116,6 @@ public class CallScreen : MonoBehaviour
                 yield return new WaitForSeconds(revealSpeed * 2);
             }
         }
-
-        isRevealingText = false;
         yield return new WaitForSeconds(timeBetweenLines);
 
         // Move to the next line

@@ -120,7 +120,7 @@ public class Gear : MonoBehaviour, ICanvasRaycastFilter, IPointerEnterHandler, I
                     attemps++;
 
                     if(attemps > 3)
-                        UiManager.Instance.PopUpMessage("Must select target to attack first!");
+                        UiManager.Instance.PopUpMessage("You must select a target by clicking them with you mouse to attack first!");
 
                     return;
                 }

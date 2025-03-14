@@ -45,6 +45,11 @@ public class EquipmentEffect : ItemEffect
             Debug.Log("Not enough energy to use Equipment.");
         }
     }
+    public override string GetEffectDescription(Item item)
+    {
+        return $"Special Effect: {SpecialEffectName}";
+    }
+
     protected override void Equipped()
     {
         base.Equipped();

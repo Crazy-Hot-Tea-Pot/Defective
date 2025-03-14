@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d80e112095c1b64bb5ed13de03c004a, type: 3}
-  m_Name: Spend 25 Energy and gain 2 Galvanize
+  m_Name: Spend 2.5 Energy and gain 2 Galvanize
   m_EditorClassIdentifier: 
-  ItemEffectDescription: Spend 2.5 Energy and gain 2 Galvanize
-  energyCost: 25
+  energyCost: 2.5
   SpecialConditionEffect: 0
   Condition: 0
   deBuffEffectToApplyToEnemy: []
@@ -23,4 +22,5 @@ MonoBehaviour:
   debuffToApplyToPlayer: []
   effectToApplyToPlayer: 0
   HitAllTargets: 0
+  specialEffectOnly: 1
   baseShieldAmount: 0
