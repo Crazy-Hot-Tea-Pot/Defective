@@ -27,6 +27,4 @@ MonoBehaviour:
   PopUp: 1
   InCombat: 1
   Index: 1
-  TopIndex: 3
-  CurrentIndex: 1
-  canPop: 0
+  nextQuest: {fileID: 11400000, guid: d164e3d0a11e35b4db6222b5de188778, type: 2}

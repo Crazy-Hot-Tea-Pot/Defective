@@ -7,18 +7,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8010b8586079d2a4bb732fcf67619446, type: 3}
   m_Name: Tutorial4
   m_EditorClassIdentifier: 
-  questName: Use Punch
-  ccQuestName: Use Punch
-  modifiedQuestName: Use Punch
+  questName: '
+
+
+    Use Punch (Complete) (Complete)'
+  ccQuestName: '
+
+    Use Punch (Complete)'
+  modifiedQuestName: '
+
+    Use Punch (Complete)'
   questDesc: Use abilities to fight the enemy
   complete: 0
   mat: {fileID: 2100000, guid: 62c19d139bcf4904aadad5c0f0b575d4, type: 2}
-  UIElementPath: UiManager/Roaming And Combat UI/Energy And Gear Container/WeaponArea/WeaponButton
+  UIElementPath: UiManager/Roaming And Combat UI/Energy And Gear Container/Punch/WeaponButton
   curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
   xOffset: 0
   yOffset: 15
@@ -26,6 +33,4 @@ MonoBehaviour:
   PopUp: 1
   InCombat: 1
   Index: 1
-  TopIndex: 3
-  CurrentIndex: 2
-  canPop: 0
+  nextQuest: {fileID: 11400000, guid: ea099b3aa91050d41a514f873005baf1, type: 2}

@@ -7,12 +7,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8010b8586079d2a4bb732fcf67619446, type: 3}
   m_Name: Tutorial5
   m_EditorClassIdentifier: 
-  questName: End Turn
+  questName: '
+
+    End Turn (Complete)'
   ccQuestName: End Turn
   modifiedQuestName: End Turn
   questDesc: Press the end turn button
@@ -25,7 +27,5 @@ MonoBehaviour:
   PopupText: Last to end turn and regenerate cards press the indicated button
   PopUp: 1
   InCombat: 1
-  Index: 1
-  TopIndex: 3
-  CurrentIndex: 3
-  canPop: 0
+  Index: 0
+  nextQuest: {fileID: 0}

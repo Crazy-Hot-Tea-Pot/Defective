@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,9 +16,8 @@ public class QuestUIHighlight : Quest
     public bool PopUp;
     public bool InCombat;
     public bool Index;
-    public int TopIndex;
-    public int CurrentIndex;
-    public bool canPop = false;
+    public Quest nextQuest = null;
+    private bool IExist = false;
 
     private void Awake()
     {
@@ -42,34 +42,30 @@ public class QuestUIHighlight : Quest
                 UIElement.GetComponent<Button>().onClick.AddListener(ButtonCheck);
             }
 
-            if (GameObject.Find(UIElementPath).transform.Find(curserArrow.name) == null && UIElement.activeSelf == true && InCombat == false)
+            if(GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
             {
+                TriggerPopup();
+                PopUp = false;
+            }
+
+            if (IExist == false && UIElement.activeSelf == true && InCombat == false)
+            {
+                IExist = true;
                 curserArrow = Instantiate(curserArrow, UIElement.transform.parent.Find(UIElement.name));
                 curserArrow.transform.position = new Vector3(curserArrow.transform.position.x + xOffset, curserArrow.transform.position.y + yOffset, curserArrow.transform.position.z);
 
             }
-            else if (GameObject.Find(UIElementPath).transform.Find(curserArrow.name) == null && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
+            else if (IExist == false && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
             {
+                IExist = true;
                 curserArrow = Instantiate(curserArrow, UIElement.transform.parent.Find(UIElement.name));
                 curserArrow.transform.position = new Vector3(curserArrow.transform.position.x + xOffset, curserArrow.transform.position.y + yOffset, curserArrow.transform.position.z);
-
-                if (PopUp)
-                {
-                    if (Index)
-                    {
-                        QuestManager.Instance.CreateConfirmationWindow(PopupText, QuestManager.Instance.IncreaseWindowIndex, TopIndex, CurrentIndex);
-                    }
-                    else
-                    {
-                        QuestManager.Instance.CreateConfirmationWindow(PopupText, null);
-                    }
-                }
             }
 
         }
         catch
         {
-
+            Debug.Log("We Failed");
         }
 
     }
@@ -86,7 +82,14 @@ public class QuestUIHighlight : Quest
     {
         if (PopUp)
         {
-            QuestManager.Instance.CreateConfirmationWindow(PopupText, null);
+            if (Index)
+            {
+                QuestManager.Instance.CreateConfirmationWindow(PopupText, nextQuest, this);
+            }
+            else
+            {
+                QuestManager.Instance.CreateNullConfirmationWindow(PopupText, this);
+            }
         }
     }
 }

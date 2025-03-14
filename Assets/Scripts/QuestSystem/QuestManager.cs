@@ -27,7 +27,7 @@ public class QuestManager : MonoBehaviour
     public List<Quest> CurrentQuest;
 
     public GameObject ConfirmationWindow;
-    private int index;
+    private Quest nextSpawnQuest;
 
     private bool automatic = false;
 
@@ -122,34 +122,37 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void CreateConfirmationWindow(string text, System.Action action)
+    public void CreateConfirmationWindow(string text, Quest nextQuest, Quest questToComplete)
     {
-        GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-        window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, action);
-    }
-
-    public void IncreaseWindowIndex()
-    {
-        index += 1;
-        Debug.Log("Window Index: " + index);
-    }
-
-    public void IndexReset()
-    {
-        index = 0;
-    }
-
-    public void CreateConfirmationWindow(string text, System.Action action, int TopIndex, int CurrentIndex)
-    {
-        if (index != CurrentIndex)
+        if(nextQuest != null)
+        {
+            nextSpawnQuest = nextQuest;
+            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
+            questToComplete.CompleteQuest();
+        }
+        else
         {
             GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, action);
+            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, null);
         }
-        else if (index == TopIndex)
-        {
-            IndexReset();
-        }
+    }
+
+    public void CreateNullConfirmationWindow(string text, Quest completedQuest)
+    {
+        nextSpawnQuest = completedQuest;
+        GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+        window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, ForceComplete);
+    }
+
+    public void ForceComplete()
+    {
+        nextSpawnQuest.CompleteQuest();
+    }
+
+    public void SummonQuest()
+    {
+        AddCurrentQuest(nextSpawnQuest);
     }
 
     /// <summary>
@@ -271,10 +274,12 @@ public class QuestManager : MonoBehaviour
 
     public void AddCurrentQuest(Quest quest)
     {
-        CurrentQuest.Add(quest);
-        if(futureQuestList.Contains(quest))
+        Quest Temp = Instantiate(quest);
+        quest = Temp;
+        CurrentQuest.Add(Temp);
+        if (futureQuestList.Contains(Temp))
         {
-            futureQuestList.Remove(quest);
+            futureQuestList.Remove(Temp);
         }
     }
 
