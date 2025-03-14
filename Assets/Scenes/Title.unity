@@ -517,14 +517,10 @@ MonoBehaviour:
   futureQuestList: []
   completeList: []
   CurrentQuest:
-  - {fileID: 11400000, guid: c5cd610022017ff45a4b73e4004eb84c, type: 2}
-  - {fileID: 11400000, guid: a489a11fdd60eab438d501d46cec1cbd, type: 2}
-  - {fileID: 11400000, guid: d1e06b5dcc5a7ab448cd4943dd78a4d6, type: 2}
-  - {fileID: 11400000, guid: 4136d1fd6a0031d4fbc4ceb7760e3859, type: 2}
   - {fileID: 11400000, guid: 6992558d3053be648a37677715f32b78, type: 2}
   - {fileID: 11400000, guid: 5723bce4388334846aa05449eeea8ebd, type: 2}
+  - {fileID: 11400000, guid: a489a11fdd60eab438d501d46cec1cbd, type: 2}
   - {fileID: 11400000, guid: daefb3e4d7d0f5c46946535a21314e39, type: 2}
-  ConfirmationWindow: {fileID: 6654585115194486891, guid: bedc5ff0893fce440b88f9a3aca91a78, type: 3}
 --- !u!4 &829852518
 Transform:
   m_ObjectHideFlags: 0

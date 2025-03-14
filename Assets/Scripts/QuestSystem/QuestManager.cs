@@ -26,9 +26,6 @@ public class QuestManager : MonoBehaviour
 
     public List<Quest> CurrentQuest;
 
-    public GameObject ConfirmationWindow;
-    private Quest nextSpawnQuest;
-
     private bool automatic = false;
 
     private void Awake()
@@ -120,39 +117,6 @@ public class QuestManager : MonoBehaviour
                     }
             }
         }
-    }
-
-    public void CreateConfirmationWindow(string text, Quest nextQuest, Quest questToComplete)
-    {
-        if(nextQuest != null)
-        {
-            nextSpawnQuest = nextQuest;
-            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
-            questToComplete.CompleteQuest();
-        }
-        else
-        {
-            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, null);
-        }
-    }
-
-    public void CreateNullConfirmationWindow(string text, Quest completedQuest)
-    {
-        nextSpawnQuest = completedQuest;
-        GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-        window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, ForceComplete);
-    }
-
-    public void ForceComplete()
-    {
-        nextSpawnQuest.CompleteQuest();
-    }
-
-    public void SummonQuest()
-    {
-        AddCurrentQuest(nextSpawnQuest);
     }
 
     /// <summary>
@@ -274,12 +238,10 @@ public class QuestManager : MonoBehaviour
 
     public void AddCurrentQuest(Quest quest)
     {
-        Quest Temp = Instantiate(quest);
-        quest = Temp;
-        CurrentQuest.Add(Temp);
-        if (futureQuestList.Contains(Temp))
+        CurrentQuest.Add(quest);
+        if(futureQuestList.Contains(quest))
         {
-            futureQuestList.Remove(Temp);
+            futureQuestList.Remove(quest);
         }
     }
 
@@ -301,24 +263,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void tutorialTrigger(string questName)
-    {
-        for (int i = 0; i < CurrentQuest.Count; i++)
-        {
-            if(CurrentQuest[i].questName == questName)
-            {
-                CurrentQuest[i].TriggerPopup();
-            }
-        }
-    }
-
-    public void tutorialMoveTrigger()
-    {
-        for (int i = 0; i < CurrentQuest.Count; i++)
-        {
-            CurrentQuest[i].TriggerMovement();
-        }
-    }
 
 
     #endregion
