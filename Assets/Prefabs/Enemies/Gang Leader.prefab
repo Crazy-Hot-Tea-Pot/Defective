@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 245958100996589650}
   - component: {fileID: 371243886294766885}
   m_Layer: 8
-  m_Name: Enemy Leader
+  m_Name: Gang Leader
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
