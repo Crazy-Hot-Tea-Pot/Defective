@@ -42,8 +42,11 @@ public class GangLeader : Enemy
 
     public override void CombatStart()
     {
-        base.CombatStart();
+        Debug.Log("Enemy Combat Start");
+        
+        Debug.Log("Assigning Looters");
         AssignLooters();
+        base.CombatStart();
     }
 
     protected override void PerformIntent()

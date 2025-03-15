@@ -22,6 +22,10 @@ MonoBehaviour:
     enemySpawns:
     - enemyType: 5
       enemyName: GangLeader
+    - enemyType: 0
+      enemyName: Looter J
+    - enemyType: 0
+      enemyName: Looter K
     nextLevels: []
     isCompleted: 0
     questCondition: {fileID: 0}
