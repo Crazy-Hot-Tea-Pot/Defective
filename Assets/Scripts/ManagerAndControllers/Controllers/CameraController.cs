@@ -349,6 +349,9 @@ public class CameraController : MonoBehaviour
             case GameManager.GameMode.Combat:
                 SwitchCamera(CameraState.Combat);
                 break;
+            case GameManager.GameMode.Dialogue:
+                SwitchCamera(CameraState.Call);
+                break;
         }        
     }
 

@@ -168,10 +168,46 @@ public class RoamingAndCombatUiController : UiController
     /// <param name="currentEnergy"></param>
     /// <param name="maxEnergy"></param>
     public void UpdateEnergy(float currentEnergy, float maxEnergy)
-    {
-        // Directly update the energy bar
-        float energyPercentage = currentEnergy / maxEnergy;
-        EnergyBar.fillAmount = energyPercentage;
+    {            
+
+        switch (currentEnergy)
+        {
+            case 10f:
+                EnergyBar.fillAmount = 1f;
+                break;
+            case 9f:
+                EnergyBar.fillAmount = 0.94f;
+                break;
+            case 8f:
+                EnergyBar.fillAmount = 0.843f;
+                break;
+            case 7f:
+                EnergyBar.fillAmount = 0.720f;
+                break;
+            case 6f:
+                EnergyBar.fillAmount = 0.618f;
+                break;
+            case 5f:
+                EnergyBar.fillAmount = 0.51f;
+                break;
+            case 4f:
+                EnergyBar.fillAmount = 0.406f;
+                break;
+            case 3f:
+                EnergyBar.fillAmount = 0.308f;
+                break;
+            case 2f:
+                EnergyBar.fillAmount = 0.19f;
+                break;
+            case 1f:
+                EnergyBar.fillAmount = 0.072f;
+                break;
+            case 0f:
+                EnergyBar.fillAmount = 0.0f;
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
@@ -297,29 +333,6 @@ public class RoamingAndCombatUiController : UiController
         }
 
         return currentEnergy >= energyCost;
-    }
-
-    /// <summary>
-    /// Fill EnergyBar by amount over time.
-    /// </summary>
-    /// <param name="targetFillAmount"></param>
-    /// <returns></returns>
-    private IEnumerator FillEnergyOverTime(float targetFillAmount)
-    {
-
-        // While the bar is not at the target fill amount, update it
-        while (Mathf.Abs(EnergyBar.fillAmount - targetFillAmount) > 0.001f)
-        {
-            // Lerp between current fill and target fill by the fill speed
-            EnergyBar.fillAmount = Mathf.Lerp(EnergyBar.fillAmount, targetFillAmount, SpeedOfFill * Time.deltaTime);            
-           
-
-            // Ensure the fill value gradually updates each frame
-            yield return null;
-        }
-
-        // Ensure it snaps to the exact target amount at the end
-        EnergyBar.fillAmount = targetFillAmount;
     }
 
     void OnDestroy()
