@@ -149,7 +149,7 @@ public class LootController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         controller.ChipName.SetText(NewChip.chipName + " Chip");
         controller.ChipImage.sprite = NewChip.chipImage;
         controller.ChipType.SetText(NewChip.ChipType.ToString());
-        controller.ChipDescription.SetText(NewChip.description);
+        controller.ChipDescription.SetText(NewChip.ChipDescription);
 
         //Animate
 

@@ -361,7 +361,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 break;
         }
         controller.ChipType.SetText(NewChip.ChipType.ToString());
-        controller.ChipDescription.SetText(NewChip.description);
+        controller.ChipDescription.SetText(NewChip.ChipDescription);
 
         //Animate
 

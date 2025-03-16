@@ -131,7 +131,7 @@ public class LootUiController : UiController
 
         SelectedChipInfo.GetComponent<ChipInfoController>().ChipImage.sprite=selectedChip.chipImage;
         SelectedChipInfo.GetComponent<ChipInfoController>().ChipName.SetText(selectedChip.chipName);
-        SelectedChipInfo.GetComponent<ChipInfoController>().ChipDescription.SetText(selectedChip.description);
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipDescription.SetText(selectedChip.ChipDescription);
         SelectedChipInfo.GetComponent<ChipInfoController>().ChipType.SetText(selectedChip.ChipType.ToString());
 
         foreach (Transform child in SelectionContainer.transform)

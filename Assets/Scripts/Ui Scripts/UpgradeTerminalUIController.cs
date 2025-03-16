@@ -314,7 +314,7 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
                         "<color=#0000FF><b><u><link=\"UpgradeSelectedChip\">Upgrade Chip</color></link></u></b>\n" +
                         "<color=#0000FF><b><u><link=\"Exit2\">Exit</color></link></u></b>\n" +
                         "<color=#0000FF><u><link=\"Back\">Back</color></link></u>",
-                    controller.SelectedChip.chipRarity, controller.SelectedChip.chipName, controller.SelectedChip.description, controller.SelectedChip.costToUpgrade);
+                    controller.SelectedChip.chipRarity, controller.SelectedChip.chipName, controller.SelectedChip.ChipDescription, controller.SelectedChip.costToUpgrade);
 
 
 
