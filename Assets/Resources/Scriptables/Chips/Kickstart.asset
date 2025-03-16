@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 0
   chipName: KickStart
-  description: Refresh 50% of your Maximum Energy.
+  StartingDescription: Must replace new kickstart description
   chipImage: {fileID: 21300000, guid: 0f286f25018b87643bf378620f930a68, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
