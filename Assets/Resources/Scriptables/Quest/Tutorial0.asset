@@ -17,4 +17,4 @@ MonoBehaviour:
   modifiedQuestName: Click to move
   questDesc: Click the ground to move
   complete: 0
-  mouse: {fileID: 2667531412329394376, guid: 9701fcb3e4ba2c249bfc4ce9fec3cb23, type: 3}
+  questSpawn: {fileID: 11400000, guid: c487c5ce369373f44852621f8bc880d3, type: 2}

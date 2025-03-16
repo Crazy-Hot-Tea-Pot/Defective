@@ -5,18 +5,15 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "QuestUIHighlight", menuName = "Quest/QuestUIHighlight")]
 public class QuestUIHighlight : Quest
 {
-    public Material mat;
-    [Header("This will find and utalize a button")]
     public string UIElementPath;
     private GameObject UIElement;
     public GameObject curserArrow;
     public int xOffset;
     public int yOffset;
-    public string PopupText;
-    public bool PopUp;
-    public bool InCombat;
-    public bool Index;
+    [Tooltip("Option quests if you put nothing here or don't fill both variables it will not cause a problem")]
     public Quest nextQuest = null;
+    public Quest secondQuest = null;
+    public bool InCombat;
     private bool IExist = false;
 
     private void Awake()
@@ -34,18 +31,10 @@ public class QuestUIHighlight : Quest
             //If we have a button to change
             if (UIElement.GetComponent<Button>() == true)
             {
-                ////Get the image component and apply our material
-                //UIElement.GetComponent<Image>().material = mat;
 
                 //Add a button component
                 UIElement.GetComponent<Button>().onClick.RemoveListener(ButtonCheck);
                 UIElement.GetComponent<Button>().onClick.AddListener(ButtonCheck);
-            }
-
-            if(GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
-            {
-                TriggerPopup();
-                PopUp = false;
             }
 
             if (IExist == false && UIElement.activeSelf == true && InCombat == false)
@@ -73,23 +62,9 @@ public class QuestUIHighlight : Quest
     public void ButtonCheck()
     {
         UIElement.GetComponent<Button>().onClick.RemoveListener(ButtonCheck);
-        UIElement.GetComponent<Image>().material = null;
         Destroy(curserArrow);
+        QuestManager.Instance.AddCurrentQuest(nextQuest);
+        QuestManager.Instance.AddCurrentQuest(secondQuest);
         CompleteQuest();
-    }
-
-    public override void TriggerPopup()
-    {
-        if (PopUp)
-        {
-            if (Index)
-            {
-                QuestManager.Instance.CreateConfirmationWindow(PopupText, nextQuest, this);
-            }
-            else
-            {
-                QuestManager.Instance.CreateNullConfirmationWindow(PopupText, this);
-            }
-        }
     }
 }

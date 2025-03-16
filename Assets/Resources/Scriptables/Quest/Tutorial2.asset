@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c63a424e620530c40af44382ed685f99, type: 3}
-  m_Name: Tutorial1
+  m_Name: Tutorial2
   m_EditorClassIdentifier: 
-  questName: Tutorial1
-  ccQuestName: Tutorial1
-  modifiedQuestName: Tutorial1
-  questDesc: Tutorial1
+  questName: Tutorial2
+  ccQuestName: Tutorial2
+  modifiedQuestName: Tutorial2
+  questDesc: Tutorial2
   complete: 0
-  PopupText: You can view quests by pressing the quest bar above to expand the quests.
-  nextQuest: {fileID: 11400000, guid: 7bab6851afadbe04e911ffbddb9b79e9, type: 2}
-  InCombat: 0
+  PopupText: To attack you must first select the enemy by clicking them with your
+    mouse. Then you can use chips as located below. Chps work simialr to cards in
+    a deck and you have 8 chips total in your whole combat.
+  nextQuest: {fileID: 0}
+  InCombat: 1
   Index: 1

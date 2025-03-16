@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "QuestMovementCheck", menuName = "Quest/MovementCheck")]
 public class QuestMovementCheck : Quest
 {
+    public Quest questSpawn = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,7 @@ public class QuestMovementCheck : Quest
     public override void TriggerMovement()
     {
         Destroy(GameObject.Find("MouseClick"));
+        QuestManager.Instance.AddCurrentQuest(questSpawn);
         CompleteQuest();
     }
 }

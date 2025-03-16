@@ -9,22 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8010b8586079d2a4bb732fcf67619446, type: 3}
+  m_Script: {fileID: 11500000, guid: c63a424e620530c40af44382ed685f99, type: 3}
   m_Name: Tutorial3
   m_EditorClassIdentifier: 
-  questName: Combat
-  ccQuestName: Combat
-  modifiedQuestName: Combat
-  questDesc: Use the cards to fight the enemy
+  questName: Tutorial3
+  ccQuestName: Tutorial3
+  modifiedQuestName: Tutorial3
+  questDesc: Tutorial3
   complete: 0
-  mat: {fileID: 2100000, guid: 62c19d139bcf4904aadad5c0f0b575d4, type: 2}
-  UIElementPath: UiManager/Roaming And Combat UI/PlayerHandContainer/Button
-  curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
-  xOffset: 0
-  yOffset: 15
-  PopupText: To start Combat Select a target with a mouse click. You can then use
-    Cards found below
-  PopUp: 1
+  PopupText: You can also use abilites instead of cards located as indicated. They
+    spend energy and are switched when items are switched in your inventory (Tab
+    outside of combat)
+  nextQuest: {fileID: 0}
   InCombat: 1
   Index: 1
-  nextQuest: {fileID: 11400000, guid: d164e3d0a11e35b4db6222b5de188778, type: 2}

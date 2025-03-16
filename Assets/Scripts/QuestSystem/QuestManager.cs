@@ -274,12 +274,15 @@ public class QuestManager : MonoBehaviour
 
     public void AddCurrentQuest(Quest quest)
     {
-        Quest Temp = Instantiate(quest);
-        quest = Temp;
-        CurrentQuest.Add(Temp);
-        if (futureQuestList.Contains(Temp))
+        if(quest != null)
         {
-            futureQuestList.Remove(Temp);
+            Quest Temp = Instantiate(quest);
+            quest = Temp;
+            CurrentQuest.Add(Temp);
+            if (futureQuestList.Contains(Temp))
+            {
+                futureQuestList.Remove(Temp);
+            }
         }
     }
 
