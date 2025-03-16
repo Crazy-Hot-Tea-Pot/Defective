@@ -43,7 +43,7 @@ public class AttackChip : NewChip
     {
         base.OnChipPlayed(player,Target);
 
-        int tempDamage = damage;
+        float tempDamage = damage;
 
         // Apply buffs/debuffs to damage
         if (player.IsPowered)
@@ -53,7 +53,8 @@ public class AttackChip : NewChip
 
         if (player.IsDrained)
         {
-            tempDamage = Mathf.FloorToInt(tempDamage * 0.8f);
+            //Reduce damage by 20% for drained
+            tempDamage = Mathf.Round(tempDamage * 0.8f *100f)/100f;
         }
 
         Target.TakeDamage(tempDamage);

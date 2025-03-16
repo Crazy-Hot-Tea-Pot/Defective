@@ -234,7 +234,7 @@ public class TerminalController : MonoBehaviour
                         "<color=#0000FF><u><b><link=\"UpgradeSelectedChip\">Upgrade Chip</color></link></b></u>\n" +
                         "<color=#0000FF><u><b><link=\"Exit2\">Exit</color></link></b></u>\n" +
                         "<color=#0000FF><u><link=\"Back\">>Back</color></link></u>",
-                    SelectedChip.chipRarity, SelectedChip.chipName, SelectedChip.description, SelectedChip.costToUpgrade);
+                    SelectedChip.chipRarity, SelectedChip.chipName, SelectedChip.ChipDescription, SelectedChip.costToUpgrade);
 
                     chipUpgradeScreenText.SetText(tempText2);
 

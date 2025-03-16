@@ -10,7 +10,7 @@ public class DamageEffect : ItemEffect
 
     public override void Activate(PlayerController player, Item item, Enemy enemy)
     {
-        int adjustedDamage = baseDamage + item.GetValueIncreaseBy();
+        float adjustedDamage = baseDamage + item.GetValueIncreaseBy();
 
         if (player.SpendEnergy(energyCost))
         {
@@ -18,8 +18,11 @@ public class DamageEffect : ItemEffect
             if (player.IsPowered)
                 adjustedDamage += player.PoweredStacks;
 
-            if(player.IsDrained)
-                adjustedDamage = Mathf.FloorToInt(adjustedDamage * 0.8f); // Reduce damage by 20%
+            if (player.IsDrained)
+            {
+                //Reduce damage by 20% for drained
+                adjustedDamage = Mathf.Round(adjustedDamage * 0.8f * 100f) / 100f;
+            }
 
             //Do Damage to enemy
             enemy?.TakeDamage(adjustedDamage);

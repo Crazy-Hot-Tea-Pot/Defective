@@ -92,7 +92,7 @@ public class EnemyUI : MonoBehaviour
     /// </summary>
     /// <param name="currentHp"></param>
     /// <param name="maxHp"></param>
-    public void UpdateHealth(int currentHp, int maxHp)
+    public void UpdateHealth(float currentHp, float maxHp)
     {
 
         // Stop any currently running health update coroutine
@@ -105,7 +105,7 @@ public class EnemyUI : MonoBehaviour
     /// <summary>
     /// Update Enemy ShieldBar Bar
     /// </summary>
-    public void UpdateShield(int currentShield, int maxShield)
+    public void UpdateShield(float currentShield, float maxShield)
     {       
 
         if (currentShield == 0 && maxShield == 0)
@@ -114,10 +114,10 @@ public class EnemyUI : MonoBehaviour
         }
         else
         {
-            shieldContainer.SetActive(true);               
+            shieldContainer.SetActive(true);
 
             // Calculate the target shield percentage
-            float shieldPercentage = (float)currentShield / maxShield;
+            float shieldPercentage = currentShield / maxShield;
 
             //ShieldBar.fillAmount = shieldPercentage;
 
@@ -242,14 +242,17 @@ public class EnemyUI : MonoBehaviour
         }
     }
 
-    private IEnumerator UpdateHealthOverTime(int currentHp, int maxHp)
+    private IEnumerator UpdateHealthOverTime(float currentHp, float maxHp)
     {
         float initialFillAmount = healthBar.fillAmount;
-        float targetFillAmount = (float)currentHp / maxHp;
+        float targetFillAmount = currentHp / maxHp;
         float elapsedTime = 0f;
 
-        int initialHP = Mathf.RoundToInt(initialFillAmount * maxHp); // Correct initial HP
-        int displayedHP = initialHP;  // Track displayed HP separately
+        // Correct initial HP
+        float initialHP = Mathf.Round(initialFillAmount * maxHp * 100f) / 100f;
+
+        // Track displayed HP separately
+        float displayedHP = initialHP;
 
         while (elapsedTime < UiDuration)
         {

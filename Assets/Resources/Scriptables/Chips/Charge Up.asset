@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Charge Up
-  description: Gain 2 Power and 1 Drained.
+  StartingDescription: 
   chipImage: {fileID: 21300000, guid: 65b7045dc0ab75044817d4196f95941c, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150

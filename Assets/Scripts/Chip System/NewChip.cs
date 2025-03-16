@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -99,7 +100,8 @@ public class NewChip : ScriptableObject
     /// <summary>
     /// Description of card.
     /// </summary>
-    public string description;
+    [SerializeField]
+    private string StartingDescription;
     /// <summary>
     /// Image for card.
     /// </summary>
@@ -145,6 +147,16 @@ public class NewChip : ScriptableObject
     /// This chip hits all combatEnemies
     /// </summary>
     public bool hitAllTargets;
+    /// <summary>
+    /// Description of card.
+    /// </summary>
+    public string ChipDescription
+    {
+        get
+        {
+            return GetDynamicDescription();
+        }
+    }
 
     [SerializeField]
     private TypeOfChips chipType;
@@ -193,6 +205,67 @@ public class NewChip : ScriptableObject
                 IsActive = true;
             }
         }
+    }
+    /// <summary>
+    /// Generate a description for chip.
+    /// </summary>
+    /// <returns></returns>
+    public virtual string GetDynamicDescription()
+    {
+        string description = StartingDescription;
+
+        switch (ChipType) {
+            case TypeOfChips.Attack:
+                if (this is AttackChip attackChip)
+                {
+                    int baseDmg = attackChip.damage;
+                    int upgradedDmg = attackChip.damage + attackChip.upgradedDamageByAmount;
+                    description += $"\nDeals {baseDmg} damage{(attackChip.IsUpgraded ? $" {upgradedDmg}" : "")}.";
+
+                    if (attackChip.debuffStacks > 0)
+                    {
+                        description += $"\nApplies {attackChip.debuffToApply} ({attackChip.debuffStacks} stacks)";
+                        if (attackChip.IsUpgraded)
+                            description += $"{attackChip.debuffStacks + attackChip.upgradedDebuffStacksByAmout} stacks";
+                    }
+                }
+                break;
+            case TypeOfChips.Defense:
+                if (this is DefenseChip defenseChip)
+                {
+                    int baseShield = defenseChip.shieldAmount;
+                    int upgradedShield = baseShield + defenseChip.upgradedShieldAmountToApply;
+                    description += $"\nGrants {baseShield} Shield{(defenseChip.IsUpgraded ? $"{upgradedShield}" : "")}.";
+
+                    if (defenseChip.buffToApply != Effects.Buff.None)
+                    {
+                        description += $"\nGrants {defenseChip.buffStacks} {defenseChip.buffToApply}";
+                        if (defenseChip.IsUpgraded)
+                            description += $"{defenseChip.buffStacks + defenseChip.upgradedBuffStacksByAmout}";
+                    }
+
+                    if (defenseChip.deBuffsToRemove.Count > 0)
+                    {
+                        description += $"\nRemoves {defenseChip.deBuffsToRemove[0].debuffType}";
+                        if (defenseChip.IsUpgraded && defenseChip.deBuffsToRemove.Count > 1)
+                            description += $"\nAlso removes {defenseChip.deBuffsToRemove[1].debuffType}";
+                    }
+                }
+                break;
+            case TypeOfChips.Skill:
+                if (this is SkillChip skillChip && skillChip.specialEffect != null)
+                {
+                    description += $"\n{skillChip.specialEffect.name}";
+                    if (skillChip.IsUpgraded)
+                        description += $"\n(Upgraded: +{skillChip.specialEffect.amountToUpgradeBy})";
+                }
+                break;
+            default:
+                description += "mistake was made.";
+                break;
+        }
+
+        return description.Trim();
     }
 
     void OnValidate()
