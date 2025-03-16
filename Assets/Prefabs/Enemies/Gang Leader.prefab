@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 527091735984570285}
   - component: {fileID: 5287762653908336298}
   - component: {fileID: 7179783880809168420}
+  - component: {fileID: 6350871465004133244}
   m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
@@ -105,6 +106,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6350871465004133244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604180217217377024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f1ed9340e64ec488f0520e818233e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisScript: {fileID: 245958100996589650}
 --- !u!1 &2742929685568245920
 GameObject:
   m_ObjectHideFlags: 0
