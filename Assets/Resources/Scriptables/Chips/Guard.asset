@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 0
   chipName: Guard
-  description: Gain 5 Shield
+  StartingDescription: Gain 5 Shield
   chipImage: {fileID: 21300000, guid: 004b849f6cf77754eb13c13e01e1d7bc, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0

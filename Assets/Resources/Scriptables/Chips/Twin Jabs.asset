@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Twin Jabs
-  description: Deal 4 Damage twice.
+  StartingDescription: Deal 4 Damage, Twice
   chipImage: {fileID: 21300000, guid: cc80f92719f64374489e9c797285e716, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150

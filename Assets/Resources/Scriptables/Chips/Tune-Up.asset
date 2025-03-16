@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Tune-Up
-  description: Removes the effects of "Jammed"
+  StartingDescription: "Removes the effects of \u201CDrained\u201D"
   chipImage: {fileID: 21300000, guid: f1cf38e04655a6043ad55b6e7497a6c3, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
