@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c112f3aee6477b642855d7e9a4ccbd31, type: 3}
-  m_Name: Dialogue_Dialogue_TutorialDialogue
+  m_Name: Dialogue_Dialogue_Dialogue_TutorialDialogue
   m_EditorClassIdentifier: 
   lines:
   - speakerName: Unknown Person
@@ -18,14 +18,14 @@ MonoBehaviour:
     dialogueText: Welcome back to the land of the living! Though given where we are,
       it might have been better that you stay dead.
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Unknown Person
     speakerImage: {fileID: 0}
     dialogueText: Did that fall damage your voice box? Hellooooooo
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: 
@@ -40,7 +40,7 @@ MonoBehaviour:
     dialogueText: "It speaks! Or should I say he? She? It\u2019s hard to tell with
       you robots, I\u2019ll just call you a he to be safe."
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Unknown Person
@@ -48,7 +48,7 @@ MonoBehaviour:
     dialogueText: "While watching the security feed, I saw them dump you here. I\u2019m
       using a special radio frequency to tune into your head."
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: 
@@ -56,7 +56,7 @@ MonoBehaviour:
     dialogueText: "I have no memory of this \u201Cdumping\u201D. I have no memory
       of anything\u2026 What happened? And again, who are you? Where am I?"
     isPlayerSpeaking: 1
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Unknown Person
@@ -65,7 +65,7 @@ MonoBehaviour:
       \u201Cresident\u201D of your current whereabouts. The long abandoned Labyr
       subway system, home to the largest group of Looters this side of the city."
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: 
@@ -79,7 +79,7 @@ MonoBehaviour:
     speakerImage: {fileID: 0}
     dialogueText: "Yes, my scans do seem to indicate that I\u2019m deep underground."
     isPlayerSpeaking: 1
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Ignotus
@@ -87,7 +87,7 @@ MonoBehaviour:
     dialogueText: "Deep underground, and deep in trouble I\u2019d say. We need to
       get out of here."
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: 
@@ -103,14 +103,14 @@ MonoBehaviour:
       here, and you probably want answers, which I can provide. I know who left you
       here to die."
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: 
     speakerImage: {fileID: 0}
     dialogueText: "That doesn\u2019t sound like alignment to me."
     isPlayerSpeaking: 1
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: 
@@ -124,7 +124,7 @@ MonoBehaviour:
     speakerImage: {fileID: 0}
     dialogueText: "Great! I\u2019m glad we\u2019re on the same page!"
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: 
@@ -138,10 +138,17 @@ MonoBehaviour:
     speakerImage: {fileID: 0}
     dialogueText: "Now, I could have left this stink hole whenever I wanted to, but
       there is a certain item that I need, and unfortunately I\u2019m not strong
-      enough to defeat the person who has it. But I think with your help, I\u2019d
-      be able to finally get my hands on what I need.."
+      enough to defeat the person who has it. "
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "But I think with your help, I\u2019d be able to finally get my
+      hands on what I need."
+    isPlayerSpeaking: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Ignotus
@@ -150,13 +157,13 @@ MonoBehaviour:
       Looter Boss, we should be golden!  Help me out, and I\u2019ll tell you exactly
       who left you here to rot."
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Ignotus
     speakerImage: {fileID: 0}
     dialogueText: "I\u2019ll keep in touch. Good Luck."
     isPlayerSpeaking: 0
-    revealByLetter: 0
+    revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
