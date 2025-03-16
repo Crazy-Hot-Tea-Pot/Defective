@@ -130,9 +130,18 @@ public class QuestUIController : MonoBehaviour
                 //Go through our complete list
                 foreach (Quest quest in QuestManager.Instance.completeList)
                 {
-                    //Add one by one every item in the complete list
-                    textBox.text = textBox.text + "\n " + quest.questName + "\n " + quest.questDesc;
+                    if (quest.isTutorial != true)
+                    {
+                        //Add one by one every item in the complete list
+                        textBox.text = textBox.text + "\n " + quest.questName + "\n " + quest.questDesc;
+                    }
                 }
+            }
+
+            //A needed fail safe when quests run out especially if there is a tutorial quest in que
+            if (textBox.text == " ")
+            {
+                textBox.text = "No Completed Quests";
             }
         }
         //If the container is open
@@ -226,9 +235,18 @@ public class QuestUIController : MonoBehaviour
                 //Go through our complete list
                 foreach (Quest quest in QuestManager.Instance.CurrentQuest)
                 {
-                    //Add one by one every item in the complete list
-                    textBox.text = textBox.text + "\n " + quest.modifiedQuestName + "\n " + quest.questDesc + "\n";
+                    if(quest.isTutorial != true)
+                    {
+                        //Add one by one every item in the complete list
+                        textBox.text = textBox.text + "\n " + quest.modifiedQuestName + "\n " + quest.questDesc + "\n";
+                    }
                 }
+            }
+            
+            //A needed fail safe when quests run out especially if there is a tutorial quest in que
+            if(textBox.text == " ")
+            {
+                textBox.text = "No Active Quests";
             }
         }
     }

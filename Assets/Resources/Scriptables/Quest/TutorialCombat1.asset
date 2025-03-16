@@ -17,6 +17,7 @@ MonoBehaviour:
   modifiedQuestName: TutorialCombat1
   questDesc: TutorialCombat1
   complete: 0
+  isTutorial: 1
   UIElementPath: UiManager/Roaming And Combat UI/PlayerHandContainer/Button
   curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
   xOffset: 0

@@ -17,6 +17,7 @@ MonoBehaviour:
   modifiedQuestName: Tutorial3
   questDesc: Tutorial3
   complete: 0
+  isTutorial: 1
   PopupText: You can also use abilites instead of cards located as indicated. They
     spend energy and are switched when items are switched in your inventory (Tab
     outside of combat)

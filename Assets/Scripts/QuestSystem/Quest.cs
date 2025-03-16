@@ -10,6 +10,7 @@ public class Quest : ScriptableObject
     public string modifiedQuestName;
     public string questDesc;
     public bool complete = false;
+    public bool isTutorial;
 
     private void Awake()
     {

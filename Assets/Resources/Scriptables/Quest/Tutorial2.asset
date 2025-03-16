@@ -17,6 +17,7 @@ MonoBehaviour:
   modifiedQuestName: Tutorial2
   questDesc: Tutorial2
   complete: 0
+  isTutorial: 1
   PopupText: To attack you must first select the enemy by clicking them with your
     mouse. Then you can use chips as located below. Chps work simialr to cards in
     a deck and you have 8 chips total in your whole combat.

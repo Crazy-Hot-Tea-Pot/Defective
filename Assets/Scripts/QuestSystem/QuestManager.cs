@@ -193,6 +193,7 @@ public class QuestManager : MonoBehaviour
     }
 
     #region Quest Information
+    private string lastQuest;
     /// <summary>
     /// Retrieve the name and description of a quest based on a given index. Use -1 for current quest
     /// </summary>
@@ -200,30 +201,61 @@ public class QuestManager : MonoBehaviour
     /// <param name="quest"></param>
     public void RetrieveQuestInfo(int index, TMP_Text quest)
     {
-        //Try to collect a quest from the currentquest list
-        try
+        while (CurrentQuest[index].isTutorial || CurrentQuest[index].questName == lastQuest)
         {
-            quest.text = CurrentQuest[index].questName;
+            if(index + 1 <= CurrentQuest.Count)
+            {
+                index += 1;
+            }
+            else
+            {
+                break;
+            }
+            if (CurrentQuest.Count == index)
+            {
+                index -= 1;
+                break;
+            }
         }
-        //But if we can't that's ok just go to the complete list
-        catch
+
+        if (!CurrentQuest[index].isTutorial)
         {
-            //For some reason not having two try catches just will return null even with a != null check
+            //Try to collect a quest from the currentquest list
             try
             {
-                //If there is a value to show as a complete quest show it
-                if (completeList[0] != null)
-                {
-                    quest.text = completeList[0].questName;
-                }
+                quest.text = CurrentQuest[index].questName;
+                lastQuest = quest.text;
             }
-            //If there is only one quest then just hide the other text and make it nothing
+            //But if we can't that's ok just go to the complete list
             catch
             {
-                quest.text = " ";
-                Debug.Log("That quest doesn't exist at index: " + index);
+                //For some reason not having two try catches just will return null even with a != null check
+                try
+                {
+                    //If there is a value to show as a complete quest show it
+                    if (completeList[0] != null)
+                    {
+                        quest.text = completeList[0].questName;
+                    }
+                }
+                //If there is only one quest then just hide the other text and make it nothing
+                catch
+                {
+                    quest.text = " ";
+                    Debug.Log("That quest doesn't exist at index: " + index);
+                }
             }
         }
+        //Else if there is a tutorial and it's the last thing left show it.
+        else
+        {
+            //If there is a value to show as a complete quest show it
+            if (completeList[index] != null)
+            {
+                quest.text = "No Quest Assigned";
+            }
+        }
+       
     }
 
     /// <summary>
