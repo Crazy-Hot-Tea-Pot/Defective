@@ -80,6 +80,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skip Dialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd3d732e-1620-4131-a87d-5e930147eb5a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -168,6 +177,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Skip Animation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4f05a1a-0a05-41ff-9589-d3b690b64926"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip Dialogue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -488,6 +508,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Settings = m_Player.FindAction("Settings", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
         m_Player_SkipAnimation = m_Player.FindAction("Skip Animation", throwIfNotFound: true);
+        m_Player_SkipDialogue = m_Player.FindAction("Skip Dialogue", throwIfNotFound: true);
         // Camera Controls
         m_CameraControls = asset.FindActionMap("Camera Controls", throwIfNotFound: true);
         m_CameraControls_Look = m_CameraControls.FindAction("Look", throwIfNotFound: true);
@@ -569,6 +590,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Settings;
     private readonly InputAction m_Player_Escape;
     private readonly InputAction m_Player_SkipAnimation;
+    private readonly InputAction m_Player_SkipDialogue;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -579,6 +601,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Settings => m_Wrapper.m_Player_Settings;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputAction @SkipAnimation => m_Wrapper.m_Player_SkipAnimation;
+        public InputAction @SkipDialogue => m_Wrapper.m_Player_SkipDialogue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -606,6 +629,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SkipAnimation.started += instance.OnSkipAnimation;
             @SkipAnimation.performed += instance.OnSkipAnimation;
             @SkipAnimation.canceled += instance.OnSkipAnimation;
+            @SkipDialogue.started += instance.OnSkipDialogue;
+            @SkipDialogue.performed += instance.OnSkipDialogue;
+            @SkipDialogue.canceled += instance.OnSkipDialogue;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -628,6 +654,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SkipAnimation.started -= instance.OnSkipAnimation;
             @SkipAnimation.performed -= instance.OnSkipAnimation;
             @SkipAnimation.canceled -= instance.OnSkipAnimation;
+            @SkipDialogue.started -= instance.OnSkipDialogue;
+            @SkipDialogue.performed -= instance.OnSkipDialogue;
+            @SkipDialogue.canceled -= instance.OnSkipDialogue;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -809,6 +838,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSettings(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
         void OnSkipAnimation(InputAction.CallbackContext context);
+        void OnSkipDialogue(InputAction.CallbackContext context);
     }
     public interface ICameraControlsActions
     {

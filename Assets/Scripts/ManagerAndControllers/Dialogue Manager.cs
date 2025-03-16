@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -23,13 +24,21 @@ public class DialogueManager : MonoBehaviour
     private CallScreen callScreen;    
 
     private Queue<DialogueLine> dialogueQueue = new Queue<DialogueLine>();
+    private PlayerInputActions playerInput;
 
+    void OnEnable()
+    {
+        playerInput.Player.Enable();
+    }
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
+
+        playerInput = new PlayerInputActions();
+        playerInput.Player.SkipDialogue.performed += ctx => SkipDialogue();
     }
     void Start()
     {
@@ -100,6 +109,22 @@ public class DialogueManager : MonoBehaviour
 
         GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
     }
+
+    /// <summary>
+    /// Skips all remaining dialogue and ends immediately
+    /// </summary>
+    private void SkipDialogue()
+    {
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Dialogue)
+        {
+            if (currentDialogue != null)
+            {
+                dialogueQueue.Clear();
+                EndDialogue();
+            }
+        }
+    }
+
     private void SceneChange(Levels newLevel)
     {
         switch (newLevel)
@@ -113,6 +138,10 @@ public class DialogueManager : MonoBehaviour
                 CallScreen = GameObject.Find("Player").GetComponent<PlayerController>().CallScreen.GetComponent<CallScreen>();
                     break;
         }
+    }
+    void OnDisable()
+    {
+        playerInput.Player.Disable();    
     }
     void OnDestroy()
     {
