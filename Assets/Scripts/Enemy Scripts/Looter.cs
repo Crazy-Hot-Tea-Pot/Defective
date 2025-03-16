@@ -77,11 +77,6 @@ public class Looter : Enemy
         base.Die();
     }    
 
-    public override void TakeDamage(int damage)
-    {
-        base.TakeDamage(damage);
-    }
-
     public override void CombatStart()
     {
         base.CombatStart();               

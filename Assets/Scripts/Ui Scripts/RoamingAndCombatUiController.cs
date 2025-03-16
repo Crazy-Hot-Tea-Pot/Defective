@@ -47,7 +47,9 @@ public class RoamingAndCombatUiController : UiController
     [Header("Effects")]
     public GameObject EffectPrefab;
     public GameObject EffectsContainer;
-    public List<Sprite> EffectImages;
+    public GameObject EffectsInfoObject;
+    public TextMeshProUGUI EffectsInfo;
+    public List<Sprite> EffectImages;    
 
     // Start is called before the first frame update
     void Start()
@@ -315,6 +317,49 @@ public class RoamingAndCombatUiController : UiController
                 }
             }
         }
+    }
+    /// <summary>
+    /// Popup description of the effect
+    /// </summary>
+    /// <param name="effectName"></param>
+    public void DisplayEffectInfo(string effectName)
+    {
+        EffectsInfoObject.SetActive(true);
+
+        switch (effectName) {
+            case "Drained":
+                EffectsInfo.SetText("Drained: While <b>Drained</b>, your Attacks do 20% less damage.");
+                break;
+            case "Galvanize":
+                EffectsInfo.SetText("Galvanize: Gain <color=#3EF4D3>Shield</color> at the end of your turn, equal to your amount of Galvanize.<sub>(This stacks)</sub>");
+                break;
+            case "Impervious":
+                EffectsInfo.SetText("Impervious: Take no damage for a turn.");
+                break;
+            case "Jam":
+                EffectsInfo.SetText("Jam: While you are <b>Jammed</b>, you may not use Chips.");
+                break;
+            case "Motivation":
+                EffectsInfo.SetText("Motivation: When this effect appears, your next played chip will activate twice.");
+                break;
+            case "Power":
+                EffectsInfo.SetText("Attacks deal additional damage equal to your amount of <b>power</b>.<sub>(until end of combat)</sub>");
+                break;
+            case "Worn Down":
+                EffectsInfo.SetText("While <b>Worn Down</b>, your <color=#3EF4D3>Shield</color> provides 30% less <color=#3EF4D3>Shield</color>");
+                break;
+            default:
+                EffectsInfo.SetText("Error!");
+                EffectsInfo.color = Color.red;
+                break;
+        }
+    }
+    /// <summary>
+    /// Disable the InfoBox
+    /// </summary>
+    public void HideEffectInfo()
+    {
+        EffectsInfoObject.SetActive(false);
     }
     /// <summary>
     /// Checks if item can be used.

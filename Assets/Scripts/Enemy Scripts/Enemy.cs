@@ -150,11 +150,11 @@ public class Enemy : MonoBehaviour
     /// Max Hp of Enemy
     /// </summary>
     public int maxHP;
-    private int currentHp;
+    private float currentHp;
     /// <summary>
     /// Enemy Current Hp
     /// </summary>
-    public int CurrentHP
+    public float CurrentHP
     {
         get
         {
@@ -175,11 +175,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private int shield;
+    private float shield;
     /// <summary>
     /// Enemy ShieldBar Amount.
     /// </summary>
-    public int Shield
+    public float Shield
     {
         get
         {
@@ -201,7 +201,7 @@ public class Enemy : MonoBehaviour
             thisEnemyUI.UpdateShield(shield,maxShield);
         }
     }
-    private int maxShield = 0;
+    private float maxShield = 0f;
     private bool isTargeted;
     /// <summary>
     /// Is enemy being targeted by Player.
@@ -477,7 +477,7 @@ public class Enemy : MonoBehaviour
     /// Is called when enemy is attacked by Player.
     /// </summary>
     /// <param name="damage"></param>
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
 
         // Plays sound of taking damage
@@ -625,7 +625,7 @@ public class Enemy : MonoBehaviour
     /// Display damage taken in game.
     /// </summary>
     /// <param name="damage"></param>
-    protected virtual void DisplayDamageTaken(int damage)
+    protected virtual void DisplayDamageTaken(float damage)
     {
         // Instantiate the damage text prefab
         // Calculate the position in front of the object
