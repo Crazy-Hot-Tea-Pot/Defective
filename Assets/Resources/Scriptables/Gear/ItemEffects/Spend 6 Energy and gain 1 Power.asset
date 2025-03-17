@@ -22,6 +22,6 @@ MonoBehaviour:
   debuffToApplyToPlayer: []
   effectToApplyToPlayer: 0
   HitAllTargets: 0
-  SpecialEffectName: Charge Up
+  SpecialEffectName: Double Damage
   HasPassiveEffect: 0
   passiveEffect: 0
