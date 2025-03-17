@@ -161,6 +161,8 @@ public class CombatController : MonoBehaviour
         // Setup player and enemies
         Player = GameObject.FindGameObjectWithTag("Player");
 
+        Player.GetComponent<PlayerController>().CombatStart();
+
         // Prepare turn queue: player always goes first
         turnQueue.Enqueue(Player);
         foreach (var enemy in CombatEnemies)

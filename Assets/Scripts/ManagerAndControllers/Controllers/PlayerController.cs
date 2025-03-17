@@ -673,6 +673,8 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.SpecialEffects specialEffect)
     {
         ListOfActiveEffects.RemoveAll(e => e.SpecialEffect.Equals(specialEffect));
+
+        UiManager.Instance.UpdateEffects(listOfActiveEffects);
     }
 
     /// <summary>
@@ -911,12 +913,24 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Combat
+    /// <summary>
+    /// Prepare for start combat
+    /// </summary>
+    public void CombatStart()
+    {
+        //Restore energy to full
+        RecoverFullEnergy();
 
+        ListOfActiveEffects.Clear();
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
+    }
     /// <summary>
     /// Stuff to do at start of players turn.
     /// </summary>
     public void StartTurn()
     {
+
         //Remove ShieldAmount
         if (Shield > 0)
             Shield = 0;

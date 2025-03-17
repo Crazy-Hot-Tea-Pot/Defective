@@ -137,6 +137,8 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         {
                             newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
                             newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
+
+                            Player.GetComponent<PlayerController>().RemoveEffect(Effects.SpecialEffects.Motivation);
                         }
                         else
                         {
