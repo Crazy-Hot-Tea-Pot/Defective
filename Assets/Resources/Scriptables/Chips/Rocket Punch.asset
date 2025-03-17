@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 2
   chipName: Rocket Punch
   StartingDescription: Deal 6 Damage to all enemies
-  chipImage: {fileID: 21300000, guid: 0b3f86c5b62a8e04da13e2ff654d9fcd, type: 3}
+  chipImage: {fileID: 21300000, guid: 6ef4f08965126e840a1c26e91015a3f1, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: A wide range attack that will deal serious damage to all foes on screen.

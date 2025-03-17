@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 1
   chipName: Charge Up
   StartingDescription: "Gain 2 \u201CPower\u201D and -1 \u201CDrained\u201D"
-  chipImage: {fileID: 21300000, guid: 65b7045dc0ab75044817d4196f95941c, type: 3}
+  chipImage: {fileID: 21300000, guid: 9720b3e0839d46442911bc77d8011afa, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Gain Power to increase your damage while cleansing yourself of debuffs!

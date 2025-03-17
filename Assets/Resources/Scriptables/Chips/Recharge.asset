@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 2
   chipName: Recharge
   StartingDescription: Refresh your Energy
-  chipImage: {fileID: 21300000, guid: 241bb260fec82d446b2ca559d1a63b95, type: 3}
+  chipImage: {fileID: 21300000, guid: 559e576586f39fa42a2ad1fb4572154d, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: What's better than another round of energy?

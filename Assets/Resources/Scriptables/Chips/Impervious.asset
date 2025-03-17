@@ -15,7 +15,7 @@ MonoBehaviour:
   chipRarity: 2
   chipName: Impervious
   StartingDescription: You take no Damage this Turn
-  chipImage: {fileID: 21300000, guid: 62b1868ece4d87647a86483247f698d6, type: 3}
+  chipImage: {fileID: 21300000, guid: ddca4a470d951b348acb58977cee00f6, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: You can't touch this! Take no damage for a turn when this is played.
