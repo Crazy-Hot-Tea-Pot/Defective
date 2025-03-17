@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Steel Plating
-  itemBeginningDescription: Piece of the maintence Bot steel body
+  itemBeginningDescription: Steel Plating
   itemImage: {fileID: 21300000, guid: dcca242108c4d5d4ca1f69129ceb5157, type: 3}
   itemType: 1
   itemEffects:

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Cloak of the Leader
-  itemBeginningDescription: Gang leader's cloak
+  itemBeginningDescription: Gang Leader's Cloak
   itemImage: {fileID: 0}
   itemType: 1
   itemEffects:
