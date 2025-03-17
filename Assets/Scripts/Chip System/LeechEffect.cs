@@ -10,9 +10,7 @@ public class LeechEffect : SkillEffects
         base.ChipUpgraded();
 
         if (IsUpgraded)
-            damageAmount += amountToUpgradeBy;
-        else
-            damageAmount -= amountToUpgradeBy;
+            damageAmount += amountToUpgradeBy;                    
     }
 
     public override void ApplyEffect(PlayerController player, Enemy target, NewChip card)

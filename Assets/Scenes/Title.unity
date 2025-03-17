@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UsedChips: []
   startingChips:
-  - {fileID: 11400000, guid: 8ca1dd9622ef24b4cb647a971bf2c04f, type: 2}
+  - {fileID: 11400000, guid: 27b83e771aa4f0a448abe213e528e05b, type: 2}
   - {fileID: 11400000, guid: 8ca1dd9622ef24b4cb647a971bf2c04f, type: 2}
   - {fileID: 11400000, guid: 8ca1dd9622ef24b4cb647a971bf2c04f, type: 2}
   - {fileID: 11400000, guid: af8d67b61375d7a4b9e92b3f514d9917, type: 2}
