@@ -65,7 +65,7 @@ public class MaintenanceBot : Enemy
     {
         base.PerformIntent();
 
-        if (CurrentHP <= maxHP / 2 && !RepairUsed)
+        if (CurrentHP <= MaxHp / 2 && !RepairUsed)
         {
             //Repair();
             //RepairUsed = true;
@@ -87,7 +87,7 @@ public class MaintenanceBot : Enemy
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        if (CurrentHP <= maxHP / 2 && !RepairUsed)
+        if (CurrentHP <= MaxHp / 2 && !RepairUsed)
             return ("Repair", IntentType.Buff, 0);
         else if (nextIntentRoll <= 4)
             return ("Galvanize", IntentType.Buff, 4);
@@ -127,8 +127,8 @@ public class MaintenanceBot : Enemy
         //Play sound
         SoundManager.PlayFXSound(RepairBotSound);
 
-        int tempHealAmount = Mathf.RoundToInt(maxHP * 0.3f);
-        CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, maxHP);
+        int tempHealAmount = Mathf.RoundToInt(MaxHp * 0.3f);
+        CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, MaxHp);
 
         RepairUsed = true;
     }

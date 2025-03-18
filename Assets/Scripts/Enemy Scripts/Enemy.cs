@@ -6,15 +6,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 public class Enemy : MonoBehaviour
-{   
+{    
     public enum EnemyDifficulty
     {
+        None,
         Easy,
         Medium,
         Hard,
         Boss
     }
-
     public enum IntentType
     {
         None,
@@ -24,14 +24,13 @@ public class Enemy : MonoBehaviour
         Debuff,
         Unique
     }
-
     public enum IsEnemy
     {
         Human,
         Robot
     }
 
-
+    [Header("Enemy Components")]
     public GameObject enemyTarget;
     /// <summary>
     /// Enemy current Target.
@@ -44,8 +43,9 @@ public class Enemy : MonoBehaviour
             enemyTarget = value;
         }
     }
-
-    [Header("Enemy Components")]
+    /// <summary>
+    /// Enemy Ui
+    /// </summary>
     public GameObject EnemyUIObject;
     /// <summary>
     /// reference to enemy canvas.
@@ -65,8 +65,23 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy status")]
     #region EnemyStatus
+
     [SerializeField]
-    private string enemyName;
+    protected string enemyName;
+    protected bool inCombat;
+    [SerializeField]
+    protected EnemyDifficulty enemyDifficulty;
+    [SerializeField]
+    protected IsEnemy enemyIs;
+    protected EnemyManager.TypeOfEnemies enemyType;
+    protected float currentHp;
+    /// <summary>
+    /// Max Hp of Enemy
+    /// </summary>
+    protected float maxHp;
+    protected float shield;
+    protected float maxShield = 0f;
+    protected bool isTargeted;
 
     /// <summary>
     /// Returns name of enemy
@@ -82,8 +97,7 @@ public class Enemy : MonoBehaviour
             enemyName = value;            
         }
     }
-
-    private bool inCombat;
+    
     /// <summary>
     /// Is the Enemy in Combat.
     /// </summary>
@@ -97,10 +111,7 @@ public class Enemy : MonoBehaviour
         {
             inCombat = value;            
         }
-    }
-
-    [SerializeField]
-    private EnemyDifficulty enemyDifficulty;
+    }  
 
     /// <summary>
     /// This Enemies Difficulty
@@ -114,6 +125,7 @@ public class Enemy : MonoBehaviour
         set
         {
             enemyDifficulty = value;
+            SetUpEnemy();
         }
     }
 
@@ -126,10 +138,7 @@ public class Enemy : MonoBehaviour
         {
             return enemyIs;
         }
-    }
-
-    [SerializeField]
-    private IsEnemy enemyIs;
+    }    
 
     /// <summary>
     /// What type is the enemy.
@@ -144,13 +153,7 @@ public class Enemy : MonoBehaviour
         {
             enemyType = value;
         }
-    }
-    private EnemyManager.TypeOfEnemies enemyType;
-    /// <summary>
-    /// Max Hp of Enemy
-    /// </summary>
-    public int maxHP;
-    private float currentHp;
+    }    
     /// <summary>
     /// Enemy Current Hp
     /// </summary>
@@ -165,7 +168,7 @@ public class Enemy : MonoBehaviour
             currentHp = value;
 
             //Update UI for enemy HealthBar
-            thisEnemyUI.UpdateHealth(currentHp,maxHP);
+            thisEnemyUI.UpdateHealth(currentHp,MaxHp);
 
             if (currentHp <= 0)
             {
@@ -173,9 +176,19 @@ public class Enemy : MonoBehaviour
                 Die();
             }
         }
-    }
+    }    
 
-    private float shield;
+    public float MaxHp
+    {
+        get
+        {
+            return maxHp;
+        }
+        protected set
+        {
+            maxHp = value;
+        }
+    }
     /// <summary>
     /// Enemy ShieldBar Amount.
     /// </summary>
@@ -200,9 +213,8 @@ public class Enemy : MonoBehaviour
 
             thisEnemyUI.UpdateShield(shield,maxShield);
         }
-    }
-    private float maxShield = 0f;
-    private bool isTargeted;
+    }    
+    
     /// <summary>
     /// Is enemy being targeted by Player.
     /// When enemy is targeted by CombatController to change boarder.
@@ -249,7 +261,7 @@ public class Enemy : MonoBehaviour
 
             //TargetIcon.SetActive(value);
         }
-    }
+    }    
     #endregion
 
     [Header("Status Effects")]
@@ -393,18 +405,23 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Initialize enemy
     /// </summary>
-    public virtual void Initialize()
+    protected virtual void Initialize()
     {
-        EnemyUIObject.SetActive(true);
-        CurrentHP = maxHP;
-        gameObject.name = EnemyName;
-        thisEnemyUI.SetEnemyName(EnemyName);
 
         CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
         enemyTarget = GameObject.FindGameObjectWithTag("Player");
 
     }
-
+    /// <summary>
+    /// Set up enemy based on difficulty.
+    /// name is already set in base.
+    /// </summary>
+    protected virtual void SetUpEnemy()
+    {
+        EnemyUIObject.SetActive(true);
+        gameObject.name = EnemyName;
+        thisEnemyUI.SetEnemyName(EnemyName);        
+    }
     #region Combat
 
     /// <summary>

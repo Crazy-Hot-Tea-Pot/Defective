@@ -1,3 +1,4 @@
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class SecurityDrone : Enemy
@@ -18,6 +19,10 @@ public class SecurityDrone : Enemy
     private bool isAlertDrone;
 
     private int nextIntentRoll;
+
+    private int ramDamage;
+    private int neutralizeDamage;
+    private bool alertEnabled;
 
     /// <summary>
     /// Amount of Intents done.
@@ -92,11 +97,51 @@ public class SecurityDrone : Enemy
 
         base.EndTurn();
     }
+
+    /// <summary>
+    /// set difficulty for security bot
+    /// </summary>
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.None:
+                Debug.LogError("Enemy difficulty not set.");
+                break;
+            case EnemyDifficulty.Easy:
+                MaxHp = 30;
+                ramDamage = 10;
+                neutralizeDamage = 5;
+                alertEnabled = false;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 45;
+                ramDamage = 10;
+                neutralizeDamage = 7;
+                alertEnabled = false;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 60;
+                ramDamage = 12;
+                neutralizeDamage = 7;
+                alertEnabled = true;
+                break;
+            case EnemyDifficulty.Boss:
+                break;
+            default:
+                Debug.LogError("Enemy difficulty not set.");
+                break;
+        }
+
+        CurrentHP = MaxHp;
+    }
     protected override void PerformIntent()
     {
         base.PerformIntent();
 
-        if (IntentsPerformed > 5 && NumberOfAlertDrones < 3)
+        if (IntentsPerformed > 5 && alertEnabled && NumberOfAlertDrones < 3)
         {
             //Alert();
             Animator.SetTrigger("Intent 3");    
@@ -126,11 +171,11 @@ public class SecurityDrone : Enemy
         }
         else if (nextIntentRoll <= 3)
         {
-            return ("Neutralize", IntentType.Attack, 7);
+            return ("Neutralize", IntentType.Attack, neutralizeDamage);
         }
         else
         {
-            return ("Ram", IntentType.Attack, 12);
+            return ("Ram", IntentType.Attack, ramDamage);
         }
     }
 
@@ -140,7 +185,7 @@ public class SecurityDrone : Enemy
     /// </summary>
     public void Ram()
     {
-        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(12);
+        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(ramDamage);
         SoundManager.PlayFXSound(RamSound);
     }
     /// <summary>
@@ -155,7 +200,7 @@ public class SecurityDrone : Enemy
 
         Debug.Log(this.gameObject.name + " is Neutralizing.");
 
-        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(7);
+        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(neutralizeDamage);
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.Drained, 1);
     }
     /// <summary>
@@ -164,7 +209,7 @@ public class SecurityDrone : Enemy
     /// </summary>
     public void Alert()
     {
-        if (NumberOfAlertDrones < 3)
+        if (NumberOfAlertDrones < 3 && alertEnabled)
         {
             if (CombatController != null && CombatController.CombatArea != null)
             {
@@ -200,17 +245,6 @@ public class SecurityDrone : Enemy
                         foundValidPosition = true;
                     }
 
-                    //Leaving this here for in the future if this intent give problems again.
-                    //Collider[] hitColliders = Physics.OverlapSphere(spawnPosition, 0.5f);
-
-                    //if (hitColliders.Length > 0)
-                    //{
-                    //    foreach (var col in hitColliders)
-                    //    {
-                    //        Debug.Log($"Overlap detected with: {col.gameObject.name} on Layer: {LayerMask.LayerToName(col.gameObject.layer)} at {spawnPosition}");
-                    //    }
-                    //}
-
                     attempt++;
 
                 } while (!foundValidPosition && attempt < maxAttempts);
@@ -218,7 +252,12 @@ public class SecurityDrone : Enemy
                 if (foundValidPosition)
                 {
                     GameObject additionalDrone = Instantiate(EnemyManager.Instance.GetEnemyPrefab(EnemyManager.TypeOfEnemies.SecurityDrone), spawnPosition, Quaternion.identity);
-                    additionalDrone.GetComponent<SecurityDrone>().IAmAlertDrone();
+
+                    //Set up alert drone
+                    additionalDrone.GetComponent<SecurityDrone>().EnemyName = "Alert Drone";
+                    additionalDrone.GetComponent<SecurityDrone>().IsAlertDrone = true;
+                    additionalDrone.GetComponent<SecurityDrone>().IntentsPerformed = 0;
+                    additionalDrone.GetComponent<SecurityDrone>().Difficulty = EnemyDifficulty.Easy;
 
                     CombatController.AddEnemyToCombat(additionalDrone);
                     NumberOfAlertDrones++;
@@ -232,21 +271,7 @@ public class SecurityDrone : Enemy
             }
             else
                 Debug.LogError("CombatZone Missing!!");
-        }
-        else
-            Debug.Log(this.gameObject.name + " has max alert drones spawned.");
-    }
-    /// <summary>
-    /// Different stuff for Alerted Drone
-    /// </summary>
-    public void IAmAlertDrone()
-    {
-        maxHP = 60;
-        EnemyName = "Alert Drone";
-        IsAlertDrone = true;
-        IntentsPerformed = 0;
-
-        base.Initialize();
+        }        
     }
 
     [ContextMenu("Force Next Intent Alert")]

@@ -34,7 +34,7 @@ public class DamageEffect : ItemEffect
                 {
                     case ConditionEffect.LessThanHalfHealth:
 
-                        if (enemy.CurrentHP <= (enemy.maxHP / 2))
+                        if (enemy.CurrentHP <= (enemy.MaxHp / 2))
                         {
                             foreach(Effects.TempDeBuffs debuff in deBuffEffectToApplyToEnemy)
                             {

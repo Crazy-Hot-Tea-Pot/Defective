@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
+using static GameEnums;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -189,11 +190,13 @@ public class EnemyManager : MonoBehaviour
                 }
 
                 string enemyName = "Unable to fetch name";
+                Enemy.EnemyDifficulty enemyDifficulty = Enemy.EnemyDifficulty.Medium;
                 EnemySpawn matchingEnemy = enemySpawns.Find(e => e.enemyType == enemyData.enemyType);
 
                 if(matchingEnemy != null)
                 {
                     enemyName = matchingEnemy.enemyName;
+                    enemyDifficulty = matchingEnemy.difficulty;
                     enemySpawns.Remove(matchingEnemy);
                 }
                 else
@@ -202,13 +205,22 @@ public class EnemyManager : MonoBehaviour
                 }
 
                 //Spawn enemy
-                GameObject enemy = Instantiate(enemyPrefab, enemyData.position, Quaternion.identity);                
-                enemy.GetComponent<Enemy>().SetEnemyName(enemyName);
+                GameObject enemy = Instantiate(enemyPrefab, enemyData.position, Quaternion.identity);
+                Enemy enemyComponent = enemy.GetComponent<Enemy>();                
                 enemy.SetActive(true);
+
+                if (enemyComponent != null)
+                {
+                    enemyComponent.SetEnemyName(enemyName);
+                    enemyComponent.Difficulty = (enemyDifficulty == Enemy.EnemyDifficulty.None) ? Enemy.EnemyDifficulty.Medium : enemyDifficulty;
+                }
+                else
+                {
+                    Debug.LogError("Spawned enemy is missing the Enemy component!");
+                }
             }
         }
     }
-
 
     private void StartCombat()
     {
