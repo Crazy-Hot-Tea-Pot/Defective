@@ -36,6 +36,12 @@ public class SettingsUIController : UiController
     private TMP_Dropdown aspectDropDown;
     private Toggle windowedOn;
 
+    //Buttons for audio settings
+    private Slider SoundEffectsSlider;
+    private Slider MusicSlider;
+    private Toggle MusicToggle;
+    private Toggle SFXToggle;
+
     //Apply&Discard buttons
     private Button Applybtn;
     private Button Discardbtn;
@@ -217,6 +223,7 @@ public class SettingsUIController : UiController
 
         //Set the values
         setVolumeValues();
+        setAudioValues();
 
         //Enable buttons
         RestoreDefaultsbtn.gameObject.SetActive(true);
@@ -234,6 +241,13 @@ public class SettingsUIController : UiController
     {
         audioSettingTab = AudioTabbtn.transform.parent.Find("AudioSettingsTab").gameObject;
         VideoTabbtn.transform.parent.Find("VideoSettingsTab").gameObject.SetActive(false);
+
+        //Find buttons for audio effect and assign them
+        SoundEffectsSlider = AudioTabbtn.transform.parent.Find("SoundEffectsSlider").GetComponent<Slider>();
+        MusicSlider = AudioTabbtn.transform.parent.Find("MusicSlider").GetComponent<Slider>();
+        MusicToggle = audioSettingTab.transform.parent.Find("MuteMusic").GetComponent<Toggle>();
+        SFXToggle = audioSettingTab.transform.parent.Find("MuteEffects").GetComponent<Toggle>();
+
         if (audioSettingTab.activeSelf)
         {
             audioSettingTab.SetActive(false);
@@ -244,14 +258,30 @@ public class SettingsUIController : UiController
         }
 
         //Enable buttons
-        RestoreDefaultsbtn.enabled = true;
-        Applybtn.enabled = true;
-        Discardbtn.enabled = true;
+        RestoreDefaultsbtn.gameObject.SetActive(true);
+        Applybtn.gameObject.SetActive(true);
+        Discardbtn.gameObject.SetActive(true);
 
         //Disable back button
-        BackBtn.enabled = false;
+        BackBtn.gameObject.SetActive(false);
     }
 
+    public void ChangeMusicVolume()
+    {
+
+    }
+
+    /// <summary>
+    /// Set the default values for audio
+    /// </summary>
+    public void setAudioValues()
+    {
+        //Audio settings
+        MusicSlider.value = SettingsManager.Instance.SoundSettings.BGMVolume;
+        SoundEffectsSlider.value = SettingsManager.Instance.SoundSettings.SFXVolume;
+        MusicToggle.isOn = SettingsManager.Instance.SoundSettings.BGMMute;
+        SFXToggle.isOn = SettingsManager.Instance.SoundSettings.SFXMute;
+    }
     /// <summary>
     ///Set all buttons values inside of video settings
     /// </summary>
@@ -429,6 +459,14 @@ public class SettingsUIController : UiController
         //}
 
         Debug.Log("Graphics settings applied");
+
+
+        //Audio settings
+        SettingsManager.Instance.SoundSettings.BGMVolume = MusicSlider.value;
+        SettingsManager.Instance.SoundSettings.SFXVolume = SoundEffectsSlider.value;
+        SettingsManager.Instance.SoundSettings.BGMMute = MusicToggle.isOn;
+        SettingsManager.Instance.SoundSettings.SFXMute = SFXToggle.isOn;
+
         Options();
         ReturnToMiniMenu();
     }
@@ -439,6 +477,7 @@ public class SettingsUIController : UiController
     public void DiscardSettings()
     {
         setVolumeValues();
+        setAudioValues();
         Options();
         ReturnToMiniMenu();
     }
@@ -489,6 +528,13 @@ public class SettingsUIController : UiController
         {
             Debug.Log("Developer error there must be as many volume profiles as defaults");
         }
+
+        //Audio Defaults
+        MusicSlider.value = 100f;
+        SoundEffectsSlider.value = 100f;
+        MusicToggle.isOn = false;
+        SFXToggle.isOn = false;
+
         DiscardSettings();
     }
 
