@@ -45,6 +45,26 @@ public class Looter : Enemy
 
         base.Start();
     }
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 20;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 30;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 45;
+                break;
+        }
+
+        CurrentHP = MaxHp;
+    }
+
     protected override void PerformIntent()
     {
         base.PerformIntent();

@@ -38,26 +38,26 @@ public class TicketVendor : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
-    //public override void PerformIntentTrigger(string intentName)
-    //{
-    //    base.PerformIntentTrigger(intentName);
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
 
-    //    switch (intentName)
-    //    {
-    //        case "Halt": 
-    //            Halt(); 
-    //            break;
-    //        case "Confiscate": 
-    //            Confiscate(); 
-    //            break;
-    //        case "Redirect": 
-    //            Redirect(); 
-    //            break;
-    //        default:
-    //            Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
-    //            break;
-    //    }
-    //}
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 60;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 90;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 120;
+                break;
+        }
+
+        CurrentHP = MaxHp;
+    }
+
     protected override void PerformIntent()
     {
         base.PerformIntent();

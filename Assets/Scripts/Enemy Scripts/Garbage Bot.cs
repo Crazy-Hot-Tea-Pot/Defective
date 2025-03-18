@@ -32,23 +32,26 @@ public class GarbageBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
-    //public override void PerformIntentTrigger(string intentName)
-    //{
-    //    base.PerformIntentTrigger(intentName);
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
 
-    //    switch (intentName)
-    //    {
-    //        case "Compact": 
-    //            Compact(); 
-    //            break;
-    //        case "Shred": 
-    //            Shred(); 
-    //            break;
-    //        case "PileOn": 
-    //            PileOn(); 
-    //            break;
-    //    }
-    //}
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 30;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 45;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 60;
+                break;
+        }
+
+        CurrentHP = MaxHp;
+    }
+
     protected override void PerformIntent()
     {
         base.PerformIntent();

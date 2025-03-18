@@ -49,6 +49,30 @@ public class GangLeader : Enemy
         base.CombatStart();
     }
 
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 60;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 80;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 100;
+                break;
+            case EnemyDifficulty.Boss:
+                MaxHp = 100;
+                break;
+        }
+
+        CurrentHP = MaxHp;
+    }
+
+
     protected override void PerformIntent()
     {
         base.PerformIntent();

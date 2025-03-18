@@ -61,6 +61,26 @@ public class MaintenanceBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 50;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 70;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 90;
+                break;
+        }
+
+        CurrentHP = MaxHp;
+    }
+
     protected override void PerformIntent()
     {
         base.PerformIntent();
