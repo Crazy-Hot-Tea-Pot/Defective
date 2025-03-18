@@ -1,0 +1,436 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cc3f0f3f73f624e9acf36bae9e783d, type: 3}
+  m_Name: GameconPath
+  m_EditorClassIdentifier: 
+  storyName: GameconPath
+  pathType: 1
+  difficulty: 1
+  levels:
+  - uniqueLevelID: d6cc61de-5b5f-4cf4-ab8a-176b09744da8
+    levelID: 1
+    terminalSpawnChance: 0
+    enemySpawns:
+    - enemyType: 1
+      enemyName: Alpha
+      difficulty: 1
+    nextLevels:
+    - rid: 1724621795032039424
+    - rid: 1724621795032039425
+    isCompleted: 0
+    questCondition: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 1724621795032039424
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 95989f68-d7aa-442d-8951-7f7e87315724
+        levelID: 2
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 1
+          enemyName: Beta
+          difficulty: 1
+        - enemyType: 1
+          enemyName: Capsa
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter A
+          difficulty: 1
+        - enemyType: 2
+          enemyName: Nuts
+          difficulty: 1
+        nextLevels:
+        - rid: 1724621795032039426
+        - rid: 1724621795032039427
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039425
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 23ff6a79-cd6a-4804-9976-fe9c86a1fb9a
+        levelID: 6
+        terminalSpawnChance: 100
+        enemySpawns: []
+        nextLevels:
+        - rid: 1724621795032039428
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039426
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: bad4e52b-8bab-4a6f-a9c9-9e1f7dacf77a
+        levelID: 3
+        terminalSpawnChance: 60
+        enemySpawns:
+        - enemyType: 0
+          enemyName: Looter B
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter C
+          difficulty: 2
+        nextLevels:
+        - rid: 1724621795032039429
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039427
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 48551099-12cb-4b86-85ec-e5812221fdb8
+        levelID: 6
+        terminalSpawnChance: 100
+        enemySpawns: []
+        nextLevels:
+        - rid: 1724621795032039430
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039428
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 5e69d0e7-b724-4bfd-be11-59b034927f61
+        levelID: 2
+        terminalSpawnChance: 50
+        enemySpawns:
+        - enemyType: 1
+          enemyName: Beta
+          difficulty: 1
+        - enemyType: 1
+          enemyName: Capsa
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter A
+          difficulty: 1
+        - enemyType: 2
+          enemyName: Nuts
+          difficulty: 1
+        nextLevels:
+        - rid: 1724621795032039431
+        - rid: 1724621795032039432
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039429
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 9619a75f-0fab-4c7c-b948-c7283d3ae263
+        levelID: 4
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 2
+          enemyName: Bolts
+          difficulty: 1
+        - enemyType: 2
+          enemyName: Crank
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter Q
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter W
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter E
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter R
+          difficulty: 1
+        - enemyType: 5
+          enemyName: Looter Boss
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter T
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter Y
+          difficulty: 1
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039430
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 3c7a9f0e-0c6b-42fa-91ba-5b53ceda280e
+        levelID: 3
+        terminalSpawnChance: 50
+        enemySpawns:
+        - enemyType: 0
+          enemyName: Looter B
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter C
+          difficulty: 2
+        nextLevels:
+        - rid: 1724621795032039433
+        - rid: 1724621795032039434
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039431
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: db1b9987-b7e1-4370-813c-43d73ac3d471
+        levelID: 4
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 2
+          enemyName: Bolts
+          difficulty: 1
+        - enemyType: 2
+          enemyName: Crank
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter Q
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter W
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter E
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter R
+          difficulty: 1
+        - enemyType: 5
+          enemyName: Looter Boss
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter T
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter Y
+          difficulty: 1
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039432
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: c5f402e9-ae1c-4d6f-be08-1828e920d1fe
+        levelID: 3
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 0
+          enemyName: Looter B
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter C
+          difficulty: 2
+        nextLevels:
+        - rid: 1724621795032039435
+        - rid: 1724621795032039436
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039433
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: d0832173-3eb4-4648-8455-cd77e049291e
+        levelID: 4
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 2
+          enemyName: Bolts
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Crank
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Q
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter W
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter E
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter R
+          difficulty: 2
+        - enemyType: 5
+          enemyName: Looter Boss
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter T
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Y
+          difficulty: 2
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039434
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: e23d3d0e-169a-474b-af36-cd315350920f
+        levelID: 5
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 1
+          enemyName: Delta
+          difficulty: 2
+        - enemyType: 1
+          enemyName: Epsilom
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter M
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter N
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Grime
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Hammer
+          difficulty: 2
+        nextLevels:
+        - rid: 1724621795032039437
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039435
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: ae4be75f-ea48-41cf-bb7c-c1b475e87ab8
+        levelID: 4
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 2
+          enemyName: Bolts
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Crank
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Q
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter W
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter E
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter R
+          difficulty: 2
+        - enemyType: 5
+          enemyName: Looter Boss
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter T
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Y
+          difficulty: 2
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039436
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: f53fd711-f295-497e-abbf-bf87a4744a60
+        levelID: 5
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 1
+          enemyName: Delta
+          difficulty: 2
+        - enemyType: 1
+          enemyName: Epsilom
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter M
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter N
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Grime
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Hammer
+          difficulty: 2
+        nextLevels:
+        - rid: 1724621795032039438
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039437
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: f217351b-5f6e-4256-8c81-88dc74c87b9b
+        levelID: 4
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 2
+          enemyName: Bolts
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Crank
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Q
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter W
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter E
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter R
+          difficulty: 2
+        - enemyType: 5
+          enemyName: Looter Boss
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter T
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Y
+          difficulty: 2
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1724621795032039438
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 4bf721c4-a6ce-49cd-a338-dc0c2a785ef1
+        levelID: 4
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 2
+          enemyName: Bolts
+          difficulty: 3
+        - enemyType: 2
+          enemyName: Crank
+          difficulty: 3
+        - enemyType: 0
+          enemyName: Looter Q
+          difficulty: 3
+        - enemyType: 0
+          enemyName: Looter W
+          difficulty: 3
+        - enemyType: 0
+          enemyName: Looter E
+          difficulty: 3
+        - enemyType: 0
+          enemyName: Looter R
+          difficulty: 3
+        - enemyType: 5
+          enemyName: Looter Boss
+          difficulty: 3
+        - enemyType: 0
+          enemyName: Looter T
+          difficulty: 3
+        - enemyType: 0
+          enemyName: Looter Y
+          difficulty: 3
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}
