@@ -60,7 +60,7 @@ public class PuzzleManager : MonoBehaviour
         //Find the variables needed for the project to function
         FindVariablesForPuzzleManager();
         //Open combat UI
-        CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
+        //CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
         PuzzleController.Target = target;
     }
 
@@ -73,7 +73,7 @@ public class PuzzleManager : MonoBehaviour
         //Switch ui screen
         UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
         //Switch combat mode to in combat
-        CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
+        //CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
         //Set target to null so that the target is cleared
         PuzzleController.Target = null;
 

@@ -498,6 +498,23 @@ public class SettingsUIController : UiController
     //Restore default values
     public void RestoreDefaults()
     {
+        if (audioSettingTab.activeSelf == false || audioSettingTab == null)
+        {
+            audioSettingTab = AudioTabbtn.transform.parent.Find("AudioSettingsTab").gameObject;
+
+            //Find buttons for audio effect and assign them
+            SoundEffectsSlider = audioSettingTab.transform.Find("SoundEffectsSlider").GetComponent<Slider>();
+            MusicSlider = audioSettingTab.transform.Find("MusicSlider").GetComponent<Slider>();
+            MusicToggle = audioSettingTab.transform.Find("MuteMusic").GetComponent<Toggle>();
+            SFXToggle = audioSettingTab.transform.Find("MuteEffects").GetComponent<Toggle>();
+        }
+
+        //Audio Defaults
+        MusicSlider.value = 100f;
+        SoundEffectsSlider.value = 100f;
+        MusicToggle.isOn = false;
+        SFXToggle.isOn = false;
+
         ApplySettings();
         if (SettingsManager.Instance.VolumeSettings.Count == SettingsManager.Instance.VolumeDefaults.Count)
         {
@@ -541,12 +558,6 @@ public class SettingsUIController : UiController
         {
             Debug.Log("Developer error there must be as many volume profiles as defaults");
         }
-
-        //Audio Defaults
-        MusicSlider.value = 100f;
-        SoundEffectsSlider.value = 100f;
-        MusicToggle.isOn = false;
-        SFXToggle.isOn = false;
 
         DiscardSettings();
     }
