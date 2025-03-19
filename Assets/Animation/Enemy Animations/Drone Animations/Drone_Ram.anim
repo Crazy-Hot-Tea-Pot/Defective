@@ -4822,7 +4822,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 4.5416665
+  - time: 4
     functionName: AnimationEndTurnTrigger
     data: 
     objectReferenceParameter: {fileID: 0}

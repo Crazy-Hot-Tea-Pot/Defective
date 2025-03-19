@@ -582,6 +582,8 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Buff buff, int stacks)
     {
         AddOrUpdateEffect(buff, stacks);
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
     /// Add Debuff to Player
@@ -591,6 +593,8 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Debuff debuff, int stacks)
     {
         AddOrUpdateEffect(debuff, stacks);
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
     /// Add Special effect to Player
@@ -598,11 +602,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="specialEffect"></param>
     public void AddEffect(Effects.SpecialEffects specialEffect)
     {
-        //if (!ListOfActiveEffects.Any(e => e.Effect.Equals(specialEffect)))
-        //{
-        //    ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 0));
-        //}
         AddOrUpdateEffect(specialEffect, 1);
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
