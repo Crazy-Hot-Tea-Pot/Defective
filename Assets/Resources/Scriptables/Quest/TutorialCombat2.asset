@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8010b8586079d2a4bb732fcf67619446, type: 3}
+  m_Name: TutorialCombat2
+  m_EditorClassIdentifier: 
+  questName: TutorialCombat2
+  ccQuestName: TutorialCombat2
+  modifiedQuestName: TutorialCombat2
+  questDesc: TutorialCombat2
+  complete: 0
+  isTutorial: 1
+  UIElementPath: UiManager/Roaming And Combat UI/Energy And Gear Container/Punch/WeaponButton
+  curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
+  xOffset: 0
+  yOffset: 10
+  nextQuest: {fileID: 11400000, guid: a074e8b6f0f84cd4db9dee632e9adad3, type: 2}
+  secondQuest: {fileID: 11400000, guid: 7f4a57f01dec88446945da9d7c750bc7, type: 2}
+  InCombat: 1

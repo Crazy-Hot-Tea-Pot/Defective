@@ -137,11 +137,6 @@ public class QuestManagerEditor : EditorWindow
                     currentQuest.questName = qName;
                     currentQuest.questDesc = description;
                     currentQuest.UIElementPath = "UiManager/Roaming And Combat UI/" + questPath;
-                    currentQuest.mat = (Material)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Ui Prefabs/QuestObjects/AssetsForQuests/" + materialPath + ".mat", typeof(Material));
-                    if(currentQuest.mat == null)
-                    {
-                        currentQuest.mat = (Material)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Ui Prefabs/QuestObjects/AssetsForQuests/TutorialShader.mat", typeof(Material));
-                    }
                     EditorUtility.SetDirty(currentQuest);
                 }
                 catch

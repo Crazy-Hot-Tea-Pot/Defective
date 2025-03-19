@@ -60,7 +60,7 @@ public class PuzzleManager : MonoBehaviour
         //Find the variables needed for the project to function
         FindVariablesForPuzzleManager();
         //Open combat UI
-        CombatUI.GetComponent<RoamingAndCombatUiController>().StartPrepCombatStart();
+        //CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
         PuzzleController.Target = target;
     }
 
@@ -70,15 +70,14 @@ public class PuzzleManager : MonoBehaviour
     /// </summary>
     public void ClosePuzzle()
     {
-        //Change this to call the new method and removed coroutines
-
+        //Switch ui screen
         UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
-        CombatUI.GetComponent<RoamingAndCombatUiController>().RemoveCombatUI();
-        //Set target to null
-        //PuzzleController.Target = target;
+        //Switch combat mode to in combat
+        //CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
+        //Set target to null so that the target is cleared
         PuzzleController.Target = null;
 
-        
-        ChipManager.Instance.PuzzleResetDeck();
+        //Start a coroutine to reset the player deck
+        StartCoroutine(ChipManager.Instance.PuzzleResetDeck());
     }
 }
