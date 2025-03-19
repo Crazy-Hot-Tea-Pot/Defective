@@ -234,6 +234,7 @@ public class RoamingAndCombatUiController : UiController
         {
             PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
             EndTurn.SetActive(true);
+            EndTurnButton.interactable = true;
         }
     }
     /// <summary>
@@ -310,6 +311,7 @@ public class RoamingAndCombatUiController : UiController
                 try
                 {
                     effectPrefab.GetComponent<Image>().sprite = EffectImages.Find(sprite => sprite.name == effectName);
+                    effectPrefab.GetComponent<EffectsInfo>().SetAmountOfEffect(statusEffect.StackCount);
                 }
                 catch
                 {
