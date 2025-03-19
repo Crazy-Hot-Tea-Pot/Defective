@@ -10,6 +10,7 @@ public class Quest : ScriptableObject
     public string modifiedQuestName;
     public string questDesc;
     public bool complete = false;
+    public bool isTutorial;
 
     private void Awake()
     {
@@ -50,5 +51,14 @@ public class Quest : ScriptableObject
         Debug.Log("EnemyCounterBase");
     }
 
+    public virtual void TriggerPopup()
+    {
+
+    }
+
+    public virtual void TriggerMovement()
+    {
+
+    }
 }
 
