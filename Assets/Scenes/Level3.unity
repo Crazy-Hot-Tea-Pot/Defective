@@ -18143,15 +18143,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.1800003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.8699994
+      value: -7.4999995
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.16
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19415,15 +19415,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.1800003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.8699985
+      value: -7.4999995
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.2299995
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 8006712779969092373, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -20449,10 +20449,10 @@ MonoBehaviour:
   EnemiesInZone:
   - enemyObject: {fileID: 1877390278}
     enemyType: 0
-    position: {x: -31, y: -8.23, z: 3.8600006}
+    position: {x: -28.82, y: -1.36, z: 8.02}
   - enemyObject: {fileID: 2032280879}
     enemyType: 0
-    position: {x: -31, y: -8.229999, z: 11.25}
+    position: {x: -28.82, y: -1.36, z: 8.02}
   EnemyPlaceholder: {fileID: 4914832572848079038, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
   SavedColor: {r: 0, g: 0.46666667, b: 0, a: 1}
   savedTransparicy: 0.7
@@ -20460,10 +20460,10 @@ MonoBehaviour:
   NotSaveTransparicy: 0.2
   InCombatColor: {r: 0.9150943, g: 0, b: 0, a: 0}
   CombatTransparicy: 1
-  areaSize: {x: 20, y: 15, z: 15}
+  areaSize: {x: 20, y: 15, z: 20}
   playerPositionXZOffset: {x: 7.62, y: -4.91}
-  cameraPositionOffset: {x: 9.6, y: -2.9, z: -7.38}
-  cameraTargetPositionOffset: {x: -0.03, y: -9.85, z: 0}
+  cameraPositionOffset: {x: 20, y: 0, z: -10}
+  cameraTargetPositionOffset: {x: -5, y: -9, z: 0}
   CombatArea: {fileID: 6928754125826825549}
   zoneCollider: {fileID: 8851671578262498672}
   enemyLayer:
@@ -20573,31 +20573,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.6
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.38
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8938922
+      value: 0.82581705
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07137663
+      value: 0.06100539
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.44115898
+      value: -0.5591053
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.035226215
+      value: 0.041302655
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20712,7 +20712,7 @@ Transform:
   m_GameObject: {fileID: 7219450634551358008}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.030000687, y: -9.85, z: 0}
+  m_LocalPosition: {x: -5, y: -9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20812,7 +20812,7 @@ GameObject:
   - component: {fileID: 7464414438610144773}
   - component: {fileID: 478217536931700425}
   m_Layer: 2
-  m_Name: Combat Zone
+  m_Name: wret4y5rtuygkuh
   m_TagString: CombatZone
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -21012,7 +21012,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 15, z: 15}
+  m_LocalScale: {x: 20, y: 15, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7464414438610144773}
