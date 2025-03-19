@@ -70,14 +70,15 @@ public class PuzzleManager : MonoBehaviour
     /// </summary>
     public void ClosePuzzle()
     {
-        //Switch ui screen
+        //Change this to call the new method and removed coroutines
+
         UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
-        //Switch combat mode to in combat
-        //CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
-        //Set target to null so that the target is cleared
+        CombatUI.GetComponent<RoamingAndCombatUiController>().RemoveCombatUI();
+        //Set target to null
+        //PuzzleController.Target = target;
         PuzzleController.Target = null;
 
-        //Start a coroutine to reset the player deck
-        StartCoroutine(ChipManager.Instance.PuzzleResetDeck());
+
+        ChipManager.Instance.PuzzleResetDeck();
     }
 }
