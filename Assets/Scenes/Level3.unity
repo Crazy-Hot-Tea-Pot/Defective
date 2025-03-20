@@ -1888,7 +1888,7 @@ PrefabInstance:
     - target: {fileID: 3277426169700704109, guid: e4ec4afaa5104ce4eb40d977851f4437, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 9060f07635b589642bb2d76f3077f46e, type: 2}
+      objectReference: {fileID: 2100000, guid: 1584a260aad90c049a7ad986abe6e032, type: 2}
     - target: {fileID: 3925799449388646072, guid: e4ec4afaa5104ce4eb40d977851f4437, type: 3}
       propertyPath: m_Name
       value: Entrance(exit) (1)
@@ -18900,7 +18900,7 @@ PrefabInstance:
     - target: {fileID: 3277426169700704109, guid: e4ec4afaa5104ce4eb40d977851f4437, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 9060f07635b589642bb2d76f3077f46e, type: 2}
+      objectReference: {fileID: 2100000, guid: 1584a260aad90c049a7ad986abe6e032, type: 2}
     - target: {fileID: 3925799449388646072, guid: e4ec4afaa5104ce4eb40d977851f4437, type: 3}
       propertyPath: m_Name
       value: Entrance(exit) (2)
@@ -20449,10 +20449,10 @@ MonoBehaviour:
   EnemiesInZone:
   - enemyObject: {fileID: 1877390278}
     enemyType: 0
-    position: {x: -28.82, y: -1.36, z: 8.02}
+    position: {x: -28.82, y: -8.86, z: 11.02}
   - enemyObject: {fileID: 2032280879}
     enemyType: 0
-    position: {x: -28.82, y: -1.36, z: 8.02}
+    position: {x: -28.82, y: -8.86, z: 0.020000458}
   EnemyPlaceholder: {fileID: 4914832572848079038, guid: 9a9de71630daafd45aa1c5c5aae3850d, type: 3}
   SavedColor: {r: 0, g: 0.46666667, b: 0, a: 1}
   savedTransparicy: 0.7
@@ -20485,7 +20485,7 @@ PrefabInstance:
     - target: {fileID: 3277426169700704109, guid: e4ec4afaa5104ce4eb40d977851f4437, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 9060f07635b589642bb2d76f3077f46e, type: 2}
+      objectReference: {fileID: 2100000, guid: 1584a260aad90c049a7ad986abe6e032, type: 2}
     - target: {fileID: 3925799449388646072, guid: e4ec4afaa5104ce4eb40d977851f4437, type: 3}
       propertyPath: m_Name
       value: Entrance(exit)
