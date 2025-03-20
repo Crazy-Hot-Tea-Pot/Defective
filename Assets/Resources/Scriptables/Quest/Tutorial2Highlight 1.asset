@@ -10,16 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8010b8586079d2a4bb732fcf67619446, type: 3}
-<<<<<<<< HEAD:Assets/Resources/Scriptables/Quest/tutorialtest.asset
-  m_Name: tutorialtest
-  m_EditorClassIdentifier: 
-  questName: Click the settings menu
-  questDesc: click the settings menu with your mouse highlighted on screen.
-  complete: 0
-  mat: {fileID: 2100000, guid: 62c19d139bcf4904aadad5c0f0b575d4, type: 2}
-  UIElementPath: UiManager/Roaming And Combat UI/MiniBarSettingAndUi/OpenSettingsbtn
-========
-  m_Name: Tutorial2Highlight
+  m_Name: Tutorial2Highlight 1
   m_EditorClassIdentifier: 
   questName: Tutorial2Highlight
   ccQuestName: Tutorial2Highlight
@@ -34,4 +25,3 @@ MonoBehaviour:
   nextQuest: {fileID: 11400000, guid: 52061b798fdb5f34badecdb7129b88ae, type: 2}
   secondQuest: {fileID: 0}
   InCombat: 0
->>>>>>>> main:Assets/Resources/Scriptables/Quest/Tutorial2Highlight.asset

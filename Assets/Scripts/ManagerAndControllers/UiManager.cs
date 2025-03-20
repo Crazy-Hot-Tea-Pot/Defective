@@ -173,14 +173,30 @@ public class UiManager : MonoBehaviour
     /// <summary>
     /// Setup screen for CombatMode
     /// </summary>
-    private void StartCombat()
+    public void StartCombat()
     {
         GetCurrentController<RoamingAndCombatUiController>().StartPrepCombatStart();
+    }
+
+    /// <summary>
+    /// Setup screen for puzzle combat mode
+    /// </summary>
+    public void StartPuzzleCombat()
+    {
+        GetCurrentController<RoamingAndCombatUiController>().StarPrepCombatStartPuzzle();
+    }
+
+    /// <summary>
+    /// Ends the screen for puzzle combat
+    /// </summary>
+    public void EndPuzzleCombat()
+    {
+        GetCurrentController<RoamingAndCombatUiController>().RemoveCombatUIPuzzle();
     }
     /// <summary>
     /// Remove combat screen for roaming
     /// </summary>
-    private void EndCombat()
+    public void EndCombat()
     {
         if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.GameOver)
             GetCurrentController<RoamingAndCombatUiController>().RemoveCombatUI();

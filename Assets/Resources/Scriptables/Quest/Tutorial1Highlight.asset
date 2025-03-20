@@ -22,6 +22,6 @@ MonoBehaviour:
   curserArrow: {fileID: 2724348012694028400, guid: a08fd00f82330b74f8dc0b621868d781, type: 3}
   xOffset: 0
   yOffset: 0
-  nextQuest: {fileID: 11400000, guid: 3436cdc800eba7943b6d6241061885da, type: 2}
+  nextQuest: {fileID: 11400000, guid: 63254f11417dfc44e9f2fa6fe5941219, type: 2}
   secondQuest: {fileID: 0}
   InCombat: 0

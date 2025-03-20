@@ -42,23 +42,19 @@ public class PuzzleManager : MonoBehaviour
 
     }
 
-    private void FindVariablesForPuzzleManager()
-    {
-        //Potentially needs to be modified for skipping tutorial
-        if (GameManager.Instance.CurrentLevel == Levels.Tutorial)
-        {
-            CombatUI = GameObject.Find("UiManager").transform.Find("Roaming And Combat UI").gameObject;
-            PuzzleController = GameObject.Find("PuzzleController").GetComponent<PuzzleController>();
-        }
-    }
-
     /// <summary>
     /// This method called from PuzzleRange collison opens the combat UI so the puzzle is possible.
     /// </summary>
     public void OpenPuzzle(GameObject target)
     {
         //Find the variables needed for the project to function
-        FindVariablesForPuzzleManager();
+        //Potentially needs to be modified for skipping tutorial
+        if (GameManager.Instance.CurrentLevel == Levels.Tutorial)
+        {
+            CombatUI = GameObject.Find("UiManager").transform.Find("Roaming And Combat UI").gameObject;
+            PuzzleController = GameObject.Find("PuzzleController").GetComponent<PuzzleController>();
+        }
+        UiManager.Instance.StartPuzzleCombat();
         //Open combat UI
         //CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
         PuzzleController.Target = target;
@@ -70,10 +66,11 @@ public class PuzzleManager : MonoBehaviour
     /// </summary>
     public void ClosePuzzle()
     {
-        //Change this to call the new method and removed coroutines
 
-        UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
-        CombatUI.GetComponent<RoamingAndCombatUiController>().RemoveCombatUI();
+        UiManager.Instance.EndPuzzleCombat();
+        //Change this to call the new method and removed coroutines
+        //UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
+        //CombatUI.GetComponent<RoamingAndCombatUiController>().RemoveCombatUI();
         //Set target to null
         //PuzzleController.Target = target;
         PuzzleController.Target = null;
