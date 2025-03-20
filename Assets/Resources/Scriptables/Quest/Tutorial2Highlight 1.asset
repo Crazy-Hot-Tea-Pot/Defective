@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8010b8586079d2a4bb732fcf67619446, type: 3}
   m_Name: Tutorial2Highlight 1
   m_EditorClassIdentifier: 
-  questName: Tutorial1Highlight
-  ccQuestName: Tutorial1Highlight
-  modifiedQuestName: Tutorial1Highlight
-  questDesc: Tutorial1Highlight
+  questName: Tutorial2Highlight
+  ccQuestName: Tutorial2Highlight
+  modifiedQuestName: Tutorial2Highlight
+  questDesc: Tutorial2Highlight
   complete: 0
   isTutorial: 1
-  UIElementPath: UiManager/Roaming And Combat UI/MiniBarSettingAndUi/OpenLogbtn
-  curserArrow: {fileID: 2724348012694028400, guid: a08fd00f82330b74f8dc0b621868d781, type: 3}
+  UIElementPath: UiManager/Roaming And Combat UI/MiniBarSettingAndUi/Mask/MiniLog/Morebtn
+  curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
   xOffset: 0
   yOffset: 10
   nextQuest: {fileID: 11400000, guid: 52061b798fdb5f34badecdb7129b88ae, type: 2}
