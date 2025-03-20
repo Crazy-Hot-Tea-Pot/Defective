@@ -14,13 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Leech
-  StartingDescription: Deal 5 Damage, and absorb an equal amount of energy from thr
-    enemy
+  StartingDescription: Absorb an equal amount of damage delt as energy from the enemy
   chipImage: {fileID: 21300000, guid: ac9593d5d54bf324bbe4fe404d86eb48, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Absorb energy from enemies as you deal damage.
-  ChipRareityWeight: 0.5
+  ChipRareityWeight: 0.1
   hitAllTargets: 0
   chipType: 3
   ChipActivate: 6
