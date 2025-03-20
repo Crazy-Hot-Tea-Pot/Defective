@@ -467,7 +467,7 @@ MonoBehaviour:
   SelectionContainer: {fileID: 1882492880423110567}
   SelectedChipInfo: {fileID: 7172945960862392205}
   CancelButton: {fileID: 9125883295523011117}
-  Duration: 1
+  Duration: 0.5
   distributionCheck: 1
   lootRunThroughCounter: 0
   lootTempItems: []
