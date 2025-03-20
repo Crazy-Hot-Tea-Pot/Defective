@@ -284,6 +284,17 @@
                 },
                 {
                     "name": "",
+                    "id": "1b83daf0-8fa3-4098-94d9-05e0d09a4950",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a3135fae-0dad-43df-8393-8152d6d49bdf",
                     "path": "<Mouse>/scroll",
                     "interactions": "",

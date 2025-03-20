@@ -184,8 +184,8 @@ public class CameraController : MonoBehaviour
         };
 
         // Handle rotation start and stop
-        playerInputActions.CameraControls.RotateCamera.started += ctx => SwitchCamera(CameraState.Rotation);
-        playerInputActions.CameraControls.RotateCamera.canceled += ctx => OnResetCamera();
+        //playerInputActions.CameraControls.RotateCamera.started += ctx => SwitchCamera(CameraState.Rotation);
+        //playerInputActions.CameraControls.RotateCamera.canceled += ctx => OnResetCamera();
 
 
         playerInputActions.CameraControls.FreeCam.performed += ctx => SwitchCamera(CameraState.Free);
@@ -368,6 +368,7 @@ public class CameraController : MonoBehaviour
             Debug.Log("Camera reset ignored because the player is interacting.");
             return;
         }
+
         DefaultCamera.Priority = 0;
         RotationCamera.Priority = 0;
         freeCamera.Priority = 0;
