@@ -4532,6 +4532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8162176088107257508}
   - component: {fileID: 3906440625480057806}
+  - component: {fileID: 2154717406464958288}
   m_Layer: 5
   m_Name: Terminal UI
   m_TagString: Untagged
@@ -4577,6 +4578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d3a9cfcfe8ccd540a7d4f572b495da8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TerminalAnimator: {fileID: 2154717406464958288}
   ScrapPanel: {fileID: 7679756084797869007}
   ScrapTextAmount: {fileID: 3578085457452705592}
   IntroPanel: {fileID: 3005961563541971096}
@@ -4623,6 +4625,27 @@ MonoBehaviour:
   - {fileID: 3122928914182226213}
   - {fileID: 3150312175565706070}
   - {fileID: 4815718924614792302}
+--- !u!95 &2154717406464958288
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6349382813320215569}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e7d9f981f7d70044daff4731a7a645f3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6450667347007793992
 GameObject:
   m_ObjectHideFlags: 0
@@ -5901,7 +5924,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.0000010591147}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3968053308203655488
@@ -6499,8 +6522,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 0, y: 690}
+  m_AnchoredPosition: {x: 0, y: -18}
+  m_SizeDelta: {x: 0, y: 626}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8948626218385641625
 CanvasRenderer:
@@ -6942,7 +6965,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -5}
+  m_AnchoredPosition: {x: 0, y: -939}
   m_SizeDelta: {x: -20, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8150919485674002241

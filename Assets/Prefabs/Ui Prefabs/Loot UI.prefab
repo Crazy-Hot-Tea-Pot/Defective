@@ -467,7 +467,7 @@ MonoBehaviour:
   SelectionContainer: {fileID: 1882492880423110567}
   SelectedChipInfo: {fileID: 7172945960862392205}
   CancelButton: {fileID: 9125883295523011117}
-  Duration: 0.5
+  Duration: 1
   distributionCheck: 1
   lootRunThroughCounter: 0
   lootTempItems: []
@@ -504,7 +504,7 @@ RectTransform:
   m_Father: {fileID: 5431709314810000078}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -978,7 +978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6408459857170137790
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1751,7 +1751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7686528043553461893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2829,7 +2829,7 @@ RectTransform:
   m_Father: {fileID: 4168052135464073443}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

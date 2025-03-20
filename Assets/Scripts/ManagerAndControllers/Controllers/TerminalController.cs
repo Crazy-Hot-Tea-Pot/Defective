@@ -48,7 +48,7 @@ public class TerminalController : MonoBehaviour
         {
             return selectedChip;
         }
-        private set
+        set
         {
             selectedChip = value;
         }
@@ -126,8 +126,7 @@ public class TerminalController : MonoBehaviour
         // Stop specific coroutines before starting new ones
         StopAndClearCoroutine(ref activeScreenCoroutine);
         StopAndClearCoroutine(ref activeTextRevealCoroutine);
-
-        SelectedChip = null;
+        
 
         OnScreenChanged?.Invoke(screen);
         
@@ -293,7 +292,7 @@ public class TerminalController : MonoBehaviour
     /// <param name="chip"></param>
     public void ChipSelectToUpgrade(NewChip chip)
     {
-        selectedChip = chip;
+        SelectedChip = chip;
         SwitchToScreen(Screens.ChipUpgrade);
     }
 
@@ -376,7 +375,9 @@ public class TerminalController : MonoBehaviour
 
             ChipManager.Instance.PlayerDeck.Find(item => item == SelectedChip).IsUpgraded = true;
 
-            SelectedChip = null;
+            UiManager.Instance.PopUpMessage("<b><u>" + SelectedChip.chipName + "</u></b> has been upgraded!");
+
+            SelectedChip = null;            
 
             // FOr now lets go back to main menu.
             SwitchToScreen(Screens.Intro);
@@ -460,8 +461,8 @@ public class TerminalController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ExitTerminal()
     {
-        //deactive Scrap Panel
-        //UiManager.Instance.SetScrapDisplay(false);
+
+        SelectedChip = null;
 
         GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
 
