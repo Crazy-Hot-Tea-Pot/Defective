@@ -222,6 +222,16 @@ public class RoamingAndCombatUiController : UiController
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
         EndTurn.SetActive(false);
     }
+
+    /// <summary>
+    /// Remove Combat UI for puzzles
+    /// </summary>
+    public void RemoveCombatUIPuzzle()
+    {
+        // Directly disable Combat UI without delay
+        PlayerHand.SetActive(false);
+        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
+    }
     /// <summary>
     /// Prepare screen for CombatStart
     /// </summary>
@@ -236,6 +246,16 @@ public class RoamingAndCombatUiController : UiController
             EndTurn.SetActive(true);
             EndTurnButton.interactable = true;
         }
+    }
+
+    /// <summary>
+    /// Start combat mode for puzzles
+    /// </summary>
+    public void StarPrepCombatStartPuzzle()
+    {
+        PlayerHand.SetActive(true);
+        PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
     }
     /// <summary>
     /// After aniamtor gets half way this is called.
