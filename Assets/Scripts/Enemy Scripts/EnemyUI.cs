@@ -98,8 +98,9 @@ public class EnemyUI : MonoBehaviour
         // Stop any currently running health update coroutine
         StopAllCoroutines();
 
-        // Start the coroutine to smoothly update the health bar
-        StartCoroutine(UpdateHealthOverTime(currentHp,maxHp));
+        if(this.gameObject.activeInHierarchy)
+            // Start the coroutine to smoothly update the health bar
+            StartCoroutine(UpdateHealthOverTime(currentHp,maxHp));
     }
 
     /// <summary>

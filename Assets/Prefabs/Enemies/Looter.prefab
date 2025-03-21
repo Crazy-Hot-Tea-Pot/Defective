@@ -58,7 +58,6 @@ MonoBehaviour:
   enemyName: Looter
   enemyDifficulty: 1
   enemyIs: 0
-  maxHP: 50
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}
   DroppedChips: []

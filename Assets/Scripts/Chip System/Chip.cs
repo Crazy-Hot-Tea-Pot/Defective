@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 
@@ -81,7 +82,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private string chipTitle;        
     private NewChip newChip;
-    private GameObject chipinfoDisplay;
+    private GameObject chipInfoDisplay;
     private CombatController CombatController;
     private PuzzleController PuzzleController;
     private GameObject Player;
@@ -305,22 +306,22 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (chipinfoDisplay == null)
+        if (chipInfoDisplay == null)
         {
 
-            chipinfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
+            chipInfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
 
 
-            ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
+            ChipInfoController controller = chipInfoDisplay.GetComponent<ChipInfoController>();
 
-            StartCoroutine(DelayForAnimator(controller));            
+            SetUpChipInfo(controller);           
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(chipinfoDisplay != null)
+        if(chipInfoDisplay != null)
         {
-            ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
+            ChipInfoController controller = chipInfoDisplay.GetComponent<ChipInfoController>();
 
             // Animate shrinking
             Vector3 targetPosition = this.transform.position;
@@ -329,7 +330,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             controller.Shrink(startPosition, targetPosition);
 
             // Optional: Delay destruction for animation
-            Destroy(chipinfoDisplay, 1f);
+            Destroy(chipInfoDisplay, 1f);
         }
     }
 
@@ -340,13 +341,11 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         UpgradeController.ChipSelectToUpgrade(newChip);
     }
-
-    private IEnumerator DelayForAnimator(ChipInfoController controller)
+    private void SetUpChipInfo(ChipInfoController controller)
     {
-        yield return null;
-
         controller.ChipName.SetText(ChipTitle);
         controller.ChipImage.sprite = NewChip.chipImage;
+
         switch (NewChip.ChipType)
         {
             case NewChip.TypeOfChips.Attack:
@@ -362,26 +361,21 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 controller.ChipType.color = Color.white;
                 break;
         }
-        controller.ChipType.SetText(NewChip.ChipType.ToString());
-        controller.ChipDescription.SetText(NewChip.ChipDescription);
 
-        //Animate
-
-        Vector3 targetPosition = UiManager.Instance.transform.position;
-        Vector3 startPosition = this.transform.position;
-        controller.Enlarge(startPosition, targetPosition);
-    }
+        controller.animator.SetBool("IsEnlarging", true);
+        controller.animator.SetBool("IsShrinking", false);
+    }   
     void OnDestroy()
     {
-        if(chipinfoDisplay != null)
-            Destroy(chipinfoDisplay);
+        if(chipInfoDisplay != null)
+            Destroy(chipInfoDisplay);
 
         chipButton.onClick.RemoveAllListeners();
     }
     void OnDisable()
     {
-        if (chipinfoDisplay != null)
-            Destroy(chipinfoDisplay);
+        if (chipInfoDisplay != null)
+            Destroy(chipInfoDisplay);
     }
 
 }

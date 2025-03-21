@@ -165,7 +165,8 @@ public class Enemy : MonoBehaviour
         }
         protected set
         {
-            currentHp = value;
+            //Make sure save as 1 decimal place
+            currentHp = (float)Math.Round((double)value,1);
 
             //Update UI for enemy HealthBar
             thisEnemyUI.UpdateHealth(currentHp,MaxHp);
