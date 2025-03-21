@@ -31,6 +31,8 @@ public class QuestManager : MonoBehaviour
 
     private bool automatic = false;
 
+    public int questIndex;
+
     private void Awake()
     {
         if(Instance == null)
@@ -88,6 +90,7 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }
+
     }
 
     // Update is called once per frame
@@ -105,6 +108,8 @@ public class QuestManager : MonoBehaviour
                         completeList.Add(CurrentQuest[i]);
                         //remove it from current
                         CurrentQuest.RemoveAt(i);
+                        //Run the next quest on ui (NEVER DELETE THIS IT'S WAY MORE ESSENTIAL THEN IT LOOKS)
+                        UpdateQuestHud(CurrentQuest[i]);
 
                         //Change the current quest if it's not null and it's automatic
                         if (futureQuestList.Count != 0 && automatic == true)
@@ -117,6 +122,7 @@ public class QuestManager : MonoBehaviour
                     else
                     {
                         CurrentQuest[i].RunQuest();
+                        UpdateQuestHud(CurrentQuest[i]);
                     }
             }
         }
@@ -201,24 +207,10 @@ public class QuestManager : MonoBehaviour
     /// <param name="quest"></param>
     public void RetrieveQuestInfo(int index, TMP_Text quest)
     {
-        while (CurrentQuest[index].isTutorial || CurrentQuest[index].questName == lastQuest)
-        {
-            if(index + 1 <= CurrentQuest.Count)
-            {
-                index += 1;
-            }
-            else
-            {
-                break;
-            }
-            if (CurrentQuest.Count == index)
-            {
-                index -= 1;
-                break;
-            }
-        }
 
-        if (!CurrentQuest[index].isTutorial)
+        index = IndexEditor(index);
+
+        if (!CurrentQuest[index].isTutorial && CurrentQuest[index].mainQuest)
         {
             //Try to collect a quest from the currentquest list
             try
@@ -229,21 +221,9 @@ public class QuestManager : MonoBehaviour
             //But if we can't that's ok just go to the complete list
             catch
             {
-                //For some reason not having two try catches just will return null even with a != null check
-                try
-                {
-                    //If there is a value to show as a complete quest show it
-                    if (completeList[0] != null)
-                    {
-                        quest.text = completeList[0].questName;
-                    }
-                }
-                //If there is only one quest then just hide the other text and make it nothing
-                catch
-                {
+
                     quest.text = " ";
                     Debug.Log("That quest doesn't exist at index: " + index);
-                }
             }
         }
         //Else if there is a tutorial and it's the last thing left show it.
@@ -256,6 +236,41 @@ public class QuestManager : MonoBehaviour
             }
         }
        
+    }
+
+    public void UpdateQuestHud(Quest quest)
+    {
+
+        Debug.Log("Quest Name: " + quest.name + "Last Quest: " + CurrentQuest[questIndex].name);
+        if (quest.mainQuest && quest.name == CurrentQuest[questIndex].name)
+        {
+            if(quest.complete)
+            {
+                GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog(quest);
+            }
+            else
+            {
+                GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog();
+            }
+            GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
+        }
+    }
+
+    public int IndexEditor(int index)
+    {
+        while (CurrentQuest[index].mainQuest == false || CurrentQuest[index].complete == true)
+        {
+            if (index + 1 < CurrentQuest.Count)
+            {
+                index += 1;
+                Debug.Log(index + "Break");
+            }
+            else
+            {
+                break;
+            }
+        }
+        return index;
     }
 
     /// <summary>

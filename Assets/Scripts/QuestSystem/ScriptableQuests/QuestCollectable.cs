@@ -33,6 +33,7 @@ public class QuestCollectable : Quest
         {
             questDesc = QuestDescHold;
             questName = QuestNameHold;
+            //QuestManager.Instance.UpdateQuestHud(this);
             CompleteQuest();
         }
     }
@@ -43,6 +44,7 @@ public class QuestCollectable : Quest
         if(tag == tagName)
         {
             currentCollectoin = currentCollectoin + 1;
+            //QuestManager.Instance.UpdateQuestHud(this);
         }
     }
 }

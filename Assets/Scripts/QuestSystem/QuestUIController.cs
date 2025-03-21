@@ -14,16 +14,17 @@ public class QuestUIController : MonoBehaviour
     public Animator animationController;
 
     //Text Variables
-    private TMP_Text Quest1;
+    public TMP_Text Quest1;
 
     // Start is called before the first frame update
     void Start()
     {
         //Locate containers
         QuestUIContanier = this.gameObject;
-        MiniLogContainer = QuestUIContanier.transform.Find("MiniLog").gameObject;
-        GenerateQuestLog();
 
+        MiniLogContainer = QuestUIContanier.transform.Find("MiniLog").gameObject;
+
+        GenerateQuestLog();
     }
 
     // Update is called once per frame
@@ -32,16 +33,10 @@ public class QuestUIController : MonoBehaviour
         
     }
 
-    /// <summary>
-    /// Meaninful for animation
-    /// </summary>
-    /// <param name="time"></param>
-    /// <returns></returns>
-    public IEnumerator WaitForMinilogContainerDIsable(float time)
+    public void AnimateLog()
     {
-        yield return new WaitForSeconds(time);
-        //Deactivate done in animator
-        MiniLogContainer.SetActive(false);
+        //Animate it to push in
+        animationController.SetTrigger("PopQuest");
     }
 
     public void GenerateQuestLog()
@@ -54,5 +49,13 @@ public class QuestUIController : MonoBehaviour
             //Quest2 = logContainer.transform.Find("Quest2").GetComponent<TMP_Text>();
             //QuestManager.Instance.RetrieveQuestInfo(1, Quest2);
         
+    }
+
+    public void GenerateQuestLog(Quest quest)
+    {
+        //Add a container for quest one
+        Quest1 = MiniLogContainer.transform.Find("Quest1").GetComponent<TMP_Text>();
+        Quest1.text = quest.questName;
+
     }
 }
