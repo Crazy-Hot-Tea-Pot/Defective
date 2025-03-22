@@ -517,8 +517,6 @@ MonoBehaviour:
   futureQuestList: []
   completeList: []
   CurrentQuest:
-  - {fileID: 11400000, guid: f90455cbd1cd736499729a2fe8f99b79, type: 2}
-  - {fileID: 11400000, guid: 1988edb20dbc7fa499902521b8bdd74c, type: 2}
   - {fileID: 11400000, guid: 6992558d3053be648a37677715f32b78, type: 2}
   - {fileID: 11400000, guid: 5723bce4388334846aa05449eeea8ebd, type: 2}
   - {fileID: 11400000, guid: daefb3e4d7d0f5c46946535a21314e39, type: 2}
