@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cc3f0f3f73f624e9acf36bae9e783d, type: 3}
+  m_Name: Level3Test
+  m_EditorClassIdentifier: 
+  storyName: Level3Test
+  pathType: 0
+  difficulty: 1
+  levels:
+  - uniqueLevelID: 6141fa88-bc8c-49b6-8d77-28a39142fc26
+    levelID: 3
+    terminalSpawnChance: 0
+    enemySpawns:
+    - enemyType: 0
+      enemyName: 
+      difficulty: 2
+    - enemyType: 0
+      enemyName: 
+      difficulty: 2
+    - enemyType: 2
+      enemyName: 
+      difficulty: 2
+    - enemyType: 2
+      enemyName: 
+      difficulty: 2
+    nextLevels: []
+    isCompleted: 0
+    questCondition: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
