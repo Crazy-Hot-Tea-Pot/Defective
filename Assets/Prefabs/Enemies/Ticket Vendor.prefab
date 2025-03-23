@@ -58,7 +58,6 @@ MonoBehaviour:
   enemyName: Ticket Vendor
   enemyDifficulty: 2
   enemyIs: 1
-  maxHP: 90
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}
   DroppedChips: []
@@ -326,6 +325,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4112317058377381678, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_text
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 5139836085644037944, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -353,6 +356,14 @@ PrefabInstance:
     - target: {fileID: 5999033585686323767, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032271459558298246, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_text
+      value: Ticket Vendor
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032271459558298246, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_fontSize
+      value: 55.6
       objectReference: {fileID: 0}
     - target: {fileID: 6488430225359736191, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer

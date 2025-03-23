@@ -7,14 +7,14 @@ public class EnemyAnimationHandler : MonoBehaviour
     public Enemy thisScript;
 
 
-    public void CallMethod(string methodName)
+    public void CallIntent(string methodName)   
     {
         thisScript.Invoke(methodName, 0f);
     }
     public void AnimationEndTurnTriggerForNoAnimaton(string method)
-    {
-        CallMethod(method);
-        StartCoroutine(EndAfterSecond());
+    { 
+        CallIntent(method);
+        StartCoroutine(AnimationEndsAfterAmountOfSeconds(1f));
     }
     public void AnimationEndTurnTrigger()
     {
@@ -24,9 +24,9 @@ public class EnemyAnimationHandler : MonoBehaviour
     {
         thisScript.FinishDeath();
     }
-    private IEnumerator EndAfterSecond()
+    private IEnumerator AnimationEndsAfterAmountOfSeconds(float seconds)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(seconds);
 
         AnimationEndTurnTrigger();
     }    

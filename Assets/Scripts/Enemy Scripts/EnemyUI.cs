@@ -48,12 +48,17 @@ public class EnemyUI : MonoBehaviour
     /// <summary>
     /// Prefabs of Effects enemy will use."Case sensitive"
     /// </summary>
-    public List<GameObject> effectPrefabs;
+    public GameObject EffectPrefab;
 
     /// <summary>
     /// list of active effects.
     /// </summary>
     public List<GameObject> activeEffects;
+
+    /// <summary>
+    /// list of sprite images of effects
+    /// </summary>
+    public List<Sprite> EffectImages;
 
     /// <summary>
     /// Container for intentTextBox
@@ -124,8 +129,9 @@ public class EnemyUI : MonoBehaviour
 
             StopAllCoroutines();
 
-            // Start the coroutine to smoothly update the shield bar
-            StartCoroutine(UpdateShieldOverTime(shieldPercentage, maxShield));
+            if (this.gameObject.activeInHierarchy)
+                // Start the coroutine to smoothly update the shield bar
+                StartCoroutine(UpdateShieldOverTime(shieldPercentage, maxShield));
         }
     }
 
@@ -139,10 +145,10 @@ public class EnemyUI : MonoBehaviour
     /// <param name="activeEffects"></param>
     public void UpdateEffectsPanel(List<Effects.StatusEffect> activeEffects)
     {
-        // Clear existing UI elements
-        foreach (var effect in this.activeEffects)
+        // Clear the panel
+        foreach (Transform effect in EffectsPanel.transform)
         {
-            Destroy(effect);
+            Destroy(effect.gameObject);
         }
         this.activeEffects.Clear();
 
@@ -168,17 +174,17 @@ public class EnemyUI : MonoBehaviour
             // Proceed if a valid effect name was found
             if (!string.IsNullOrEmpty(effectName))
             {
-                GameObject effectPrefab = effectPrefabs.Find(prefab => prefab.name == effectName);
+                GameObject effectPrefab = Instantiate(EffectPrefab, EffectsPanel.transform);
+                effectPrefab.name = effectName;
 
-                if (effectPrefab != null)
+                try
                 {
-                    GameObject effectInstance = Instantiate(effectPrefab, EffectsPanel.transform);
-                    effectInstance.name = effectName;
-                    this.activeEffects.Add(effectInstance);
+                    effectPrefab.GetComponent<Image>().sprite = EffectImages.Find(sprite => sprite.name == effectName);
+                    effectPrefab.GetComponent<EffectsInfo>().SetAmountOfEffect(statusEffect.StackCount);
                 }
-                else
+                catch
                 {
-                    Debug.LogError($"[EnemyUI] Effect prefab not found for {effectName}");
+                    Debug.LogWarning("Could not find Effect Image");
                 }
             }
         }
@@ -275,10 +281,6 @@ public class EnemyUI : MonoBehaviour
         healthBar.fillAmount = targetFillAmount;
         healthText.SetText($"{currentHp}");
     }
-
-
-
-
     private IEnumerator UpdateShieldOverTime(float targetFillAmount,float maxShield)
     {
         float initialFillAmount = shieldBar.fillAmount;

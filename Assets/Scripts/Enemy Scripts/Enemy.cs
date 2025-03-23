@@ -82,6 +82,7 @@ public class Enemy : MonoBehaviour
     protected float shield;
     protected float maxShield = 0f;
     protected bool isTargeted;
+    protected int nextIntentRoll;
 
     /// <summary>
     /// Returns name of enemy

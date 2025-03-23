@@ -36004,7 +36004,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.5833333
-    functionName: CallMethod
+    functionName: CallIntent
     data: Swipe
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -345,11 +345,13 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         controller.ChipName.SetText(ChipTitle);
         controller.ChipImage.sprite = NewChip.chipImage;
+        controller.ChipDescription.SetText(newChip.ChipDescription);
+        controller.ChipType.SetText(newChip.ChipType.ToString());
 
         switch (NewChip.ChipType)
         {
             case NewChip.TypeOfChips.Attack:
-                controller.ChipType.color = Color.red;
+                controller.ChipType.color = Color.red;                
                 break;
             case NewChip.TypeOfChips.Defense:
                 controller.ChipType.color = Color.blue;

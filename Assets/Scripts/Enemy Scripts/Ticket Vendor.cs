@@ -9,7 +9,6 @@ using UnityEngine;
 /// </summary>
 public class TicketVendor : Enemy
 {
-    private int nextIntentRoll;
 
     // Start is called before the first frame update
     public override void Start()

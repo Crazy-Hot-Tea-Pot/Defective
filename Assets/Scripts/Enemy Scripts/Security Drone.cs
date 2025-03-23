@@ -16,9 +16,7 @@ public class SecurityDrone : Enemy
     private int numberOfAlertDrones;
 
     [SerializeField]
-    private bool isAlertDrone;
-
-    private int nextIntentRoll;
+    private bool isAlertDrone;    
 
     private int ramDamage;
     private int neutralizeDamage;
@@ -85,6 +83,7 @@ public class SecurityDrone : Enemy
 
         base.Start();
     }
+
     public override void CombatStart()
     {
         nextIntentRoll = Random.Range(1, 11);

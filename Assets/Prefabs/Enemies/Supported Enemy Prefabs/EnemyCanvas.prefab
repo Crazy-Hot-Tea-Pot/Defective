@@ -1188,15 +1188,16 @@ MonoBehaviour:
   shieldText: {fileID: 688954988217840069}
   UiDuration: 0.5
   EffectsPanel: {fileID: 5999033585686323767}
-  effectPrefabs:
-  - {fileID: 8724220798877620809, guid: cede0f028bad1a148baa1cb79d5559b5, type: 3}
-  - {fileID: 7839586207813239809, guid: aea73f56854f5874c8f489a05484267b, type: 3}
-  - {fileID: 32853026164306056, guid: ff016982a5353d04bacce9a244d7f0fa, type: 3}
-  - {fileID: 388897534641274333, guid: f2c78a6393a76204680e00caa066441a, type: 3}
-  - {fileID: 9129874559953162845, guid: fa951bb273e083846b115d07a62012dc, type: 3}
-  - {fileID: 8398288055641616892, guid: be434cbf2732f6241913387621db5ba3, type: 3}
-  - {fileID: 6419293263820415179, guid: f2ce8619b89cd8d4cb4db6f184fb3a2a, type: 3}
-  - {fileID: 3198590763560356794, guid: 31b3fd2c977ab8f4e952f9c8a448da11, type: 3}
+  EffectPrefab: {fileID: 574781747826575752, guid: 92ab3e66630a362438532ffc7dba401f, type: 3}
   activeEffects: []
+  EffectImages:
+  - {fileID: 21300000, guid: 93341e3c588aa01478f20661dd632cc4, type: 3}
+  - {fileID: 21300000, guid: c866c7ec4cff1304db63e348447368c3, type: 3}
+  - {fileID: 21300000, guid: 5b6234199a378514c8af1ae9f2d64985, type: 3}
+  - {fileID: 21300000, guid: 0083a1d094936644aa0e062b8514568d, type: 3}
+  - {fileID: 21300000, guid: eda160bf2c2d0ff4faf73844331bc664, type: 3}
+  - {fileID: 21300000, guid: e852543f35f8f14489c7c90147c202c1, type: 3}
+  - {fileID: 21300000, guid: 9f2206ff0f3a75043ad04dbc389d326e, type: 3}
+  - {fileID: 21300000, guid: 90685feaf04a8bd4f86c2ef1334e2cc9, type: 3}
   IntentContainer: {fileID: 5139836085644037944}
   IntentText: {fileID: 6649264294314104044}

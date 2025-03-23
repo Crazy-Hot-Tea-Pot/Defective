@@ -5,8 +5,6 @@ public class MaintenanceBot : Enemy
     [Header("Custom for Enemy type")]
     private bool repairUsed;
 
-    private int nextIntentRoll;
-
     public bool RepairUsed
     {
         get

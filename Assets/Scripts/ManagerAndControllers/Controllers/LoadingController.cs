@@ -35,6 +35,7 @@ public class LoadingController : MonoBehaviour
     private string targetScene;
     private List<NewChip> Chips = new List<NewChip>();
     private NewChip choosenChip;
+    private Dictionary<int, float> verticalOffsetTracker = new Dictionary<int, float>();
 
     // Start is called before the first frame update
     void Start()
@@ -139,7 +140,16 @@ public class LoadingController : MonoBehaviour
             for (int i = 0; i < level.NextLevels.Count; i++)
             {
                 LevelDefinition nextLevel = level.NextLevels[i];
-                Vector2 nextPosition = new Vector2(position.x + spacingX, position.y - (i * spacingY));
+
+                //Vector2 nextPosition = new Vector2(position.x + spacingX, position.y - (i * spacingY));
+
+                if (!verticalOffsetTracker.ContainsKey(depth + 1))
+                    verticalOffsetTracker[depth + 1] = position.y;
+
+                float yOffset = verticalOffsetTracker[depth + 1];
+                Vector2 nextPosition = new Vector2(position.x + spacingX, yOffset);
+
+                verticalOffsetTracker[depth + 1] -= spacingY;
 
                 // Store connection pair for later
                 connectionPairs.Add((position, nextPosition));

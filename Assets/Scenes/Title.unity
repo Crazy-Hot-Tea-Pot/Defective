@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 684417305}
   - component: {fileID: 684417304}
   - component: {fileID: 684417310}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UiManager
   m_TagString: UiManager
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 870985129}
   - component: {fileID: 870985128}
   - component: {fileID: 870985130}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1460,7 +1460,7 @@ MonoBehaviour:
   ButtonSelectSound: 40
   ButtonClickSound: 39
   VersionText: {fileID: 4622310774376628093}
-  CurrentStory: {fileID: 11400000, guid: 0e7e9adf1c8110e4ba1203168bfbdb4b, type: 2}
+  CurrentStory: {fileID: 11400000, guid: f8a2ba432277fc946bea0ae1103ecdf7, type: 2}
   MaxHealth: 50
   StartingScrap: 150
 --- !u!1 &1829154758
