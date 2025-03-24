@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Power Booster
-  itemBeginningDescription: Power Booster
+  itemBeginningDescription: 'Power Booster: Spend 6 Energy, '
   itemImage: {fileID: 21300000, guid: 106bfc780d3de39469518220a8a621b3, type: 3}
   itemType: 2
   itemEffects:

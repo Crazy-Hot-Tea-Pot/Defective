@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Shiv
-  itemBeginningDescription: Shiv
+  itemBeginningDescription: 'Shiv: Spend 1 Energy, '
   itemImage: {fileID: 21300000, guid: cbe08942c471b4e4d814eac890414bd3, type: 3}
   itemType: 0
   itemEffects:

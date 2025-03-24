@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Cloak of the Leader
-  itemBeginningDescription: Gang Leader's Cloak
+  itemBeginningDescription: 'Gang Leader''s Cloak: Spend 3 Energy, '
   itemImage: {fileID: 21300000, guid: d16b744f0dc3b84479e5c4a42fd6d244, type: 3}
   itemType: 1
   itemEffects:
