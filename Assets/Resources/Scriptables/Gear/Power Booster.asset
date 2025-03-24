@@ -14,15 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Power Booster
-  itemDescription: Gain 1 Power.     (Power increases your Damage Dealt by your amount
-    of Power)
+  itemBeginningDescription: Power Booster
   itemImage: {fileID: 21300000, guid: 106bfc780d3de39469518220a8a621b3, type: 3}
   itemType: 2
   itemEffects:
   - {fileID: 11400000, guid: fa8285e41d193e44cbd4982938f5fef7, type: 2}
   ItemRarityWeight: 0.2
   valueIncreaseBy: 0000000000000000000000000000000001000000
-  energyCostDecreaseBy: 00000000050000000a0000000f00000014000000
   scrapValueForEachTeir: 050000000a0000000f000000140000001900000005000000
   ItemActivateSound: 43
   ItemDeactivateSound: 52

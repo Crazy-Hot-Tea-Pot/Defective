@@ -2,8 +2,6 @@
 
 public class GarbageBot : Enemy
 {
-    // Store the roll for consistency
-    private int nextIntentRoll;
 
     [Header("Sound")]
     public SoundFX ShredGarbageSound;
@@ -32,23 +30,26 @@ public class GarbageBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
-    public override void PerformIntentTrigger(string intentName)
+    protected override void SetUpEnemy()
     {
-        base.PerformIntentTrigger(intentName);
+        base.SetUpEnemy();
 
-        switch (intentName)
+        switch (Difficulty)
         {
-            case "Compact": 
-                Compact(); 
+            case EnemyDifficulty.Easy:
+                MaxHp = 30;
                 break;
-            case "Shred": 
-                Shred(); 
+            case EnemyDifficulty.Medium:
+                MaxHp = 45;
                 break;
-            case "PileOn": 
-                PileOn(); 
+            case EnemyDifficulty.Hard:
+                MaxHp = 60;
                 break;
         }
+
+        CurrentHP = MaxHp;
     }
+
     protected override void PerformIntent()
     {
         base.PerformIntent();
@@ -70,8 +71,6 @@ public class GarbageBot : Enemy
                 Debug.LogWarning("Should never hit here!");
                 break;
         }
-
-        StartCoroutine(PrepareToEndTurn());
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {

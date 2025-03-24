@@ -38,21 +38,8 @@ public class PuzzleManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        //Potentially needs to be modified for skipping tutorial
-        if (GameManager.Instance.CurrentLevel == Levels.Tutorial)
-        {
-            //It is possible to load this script before this object exits
-            try
-            {
-                CombatUI = GameObject.Find("UiManager").transform.Find("Roaming And Combat UI").gameObject;
-                PuzzleController = GameObject.Find("PuzzleController").GetComponent<PuzzleController>();
-            }
-            catch
-            {
-                Debug.LogError("Why this try catch?");
-            }
-        }
+    {            
+
     }
 
     /// <summary>
@@ -60,8 +47,16 @@ public class PuzzleManager : MonoBehaviour
     /// </summary>
     public void OpenPuzzle(GameObject target)
     {
+        //Find the variables needed for the project to function
+        //Potentially needs to be modified for skipping tutorial
+        if (GameManager.Instance.CurrentLevel == Levels.Tutorial)
+        {
+            CombatUI = GameObject.Find("UiManager").transform.Find("Roaming And Combat UI").gameObject;
+            PuzzleController = GameObject.Find("PuzzleController").GetComponent<PuzzleController>();
+        }
+        UiManager.Instance.StartPuzzleCombat();
         //Open combat UI
-        CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
+        //CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
         PuzzleController.Target = target;
     }
 
@@ -71,12 +66,16 @@ public class PuzzleManager : MonoBehaviour
     /// </summary>
     public void ClosePuzzle()
     {
-        UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
-        CombatUI.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
+
+        UiManager.Instance.EndPuzzleCombat();
+        //Change this to call the new method and removed coroutines
+        //UiManager.Instance.SwichScreenPuzzle(UiManager.Instance.RoamingAndCombatUI);
+        //CombatUI.GetComponent<RoamingAndCombatUiController>().RemoveCombatUI();
         //Set target to null
         //PuzzleController.Target = target;
         PuzzleController.Target = null;
 
-        StartCoroutine(ChipManager.Instance.PuzzleResetDeck());
+
+        ChipManager.Instance.PuzzleResetDeck();
     }
 }

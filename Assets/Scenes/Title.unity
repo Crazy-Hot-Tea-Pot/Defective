@@ -341,7 +341,8 @@ GameObject:
   - component: {fileID: 684417306}
   - component: {fileID: 684417305}
   - component: {fileID: 684417304}
-  m_Layer: 0
+  - component: {fileID: 684417310}
+  m_Layer: 5
   m_Name: UiManager
   m_TagString: UiManager
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -434,8 +435,8 @@ MonoBehaviour:
   InventoryUI: {fileID: 6835000082307060844, guid: 371ef51de7d326049a99e9bc62f20284, type: 3}
   TerminalUI: {fileID: 6349382813320215569, guid: cfbd80ae571d42d43a53c68c995e54ac, type: 3}
   LootUI: {fileID: 1381671455956049504, guid: 596489b2d96bc5641b385a1185919f3b, type: 3}
-  SettingsUI: {fileID: 1381671455956049504, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
   GameOverUI: {fileID: 5166662099906460939, guid: 0ba943c57af47054e8e49e399f8fa2d9, type: 3}
+  Popup: {fileID: 6654585115194486891, guid: bedc5ff0893fce440b88f9a3aca91a78, type: 3}
 --- !u!224 &684417308
 RectTransform:
   m_ObjectHideFlags: 0
@@ -468,13 +469,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0acbfc0fc7b5faf4f97509c4242e37af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useUnityDefaultCursor: 0
   cursorMappings:
   - layerIndex: 8
     cursorTexture: {fileID: 2800000, guid: d1ef0c5a89dd2314fa9dd5ebe1a4d2fd, type: 3}
-    hotspot: {x: 0, y: 0}
-  defaultCursor: {fileID: 0}
-  defaultHotspot: {x: 0, y: 0}
+--- !u!114 &684417310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684417303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325605b56a1384e43984babed0b43990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDialogue: {fileID: 0}
 --- !u!1 &829852516
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,10 +517,12 @@ MonoBehaviour:
   futureQuestList: []
   completeList: []
   CurrentQuest:
+  - {fileID: 11400000, guid: f90455cbd1cd736499729a2fe8f99b79, type: 2}
+  - {fileID: 11400000, guid: 1988edb20dbc7fa499902521b8bdd74c, type: 2}
   - {fileID: 11400000, guid: 6992558d3053be648a37677715f32b78, type: 2}
   - {fileID: 11400000, guid: 5723bce4388334846aa05449eeea8ebd, type: 2}
-  - {fileID: 11400000, guid: a489a11fdd60eab438d501d46cec1cbd, type: 2}
   - {fileID: 11400000, guid: daefb3e4d7d0f5c46946535a21314e39, type: 2}
+  ConfirmationWindow: {fileID: 6654585115194486891, guid: bedc5ff0893fce440b88f9a3aca91a78, type: 3}
 --- !u!4 &829852518
 Transform:
   m_ObjectHideFlags: 0
@@ -537,7 +549,7 @@ GameObject:
   - component: {fileID: 870985129}
   - component: {fileID: 870985128}
   - component: {fileID: 870985130}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,11 +954,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -970,8 +982,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1118568611}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.49561813, y: -0.5043438, z: -0.4956174, w: 0.50434464}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1052,8 +1064,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24365c5b6b6082a4dbd2f4b6841a407e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playInScenes: 00000000070000000a000000
-  pauseInScenes: 0100000002000000030000000400000005000000060000000800000009000000
+  playInScenes: 00000000070000000a00000009000000
+  pauseInScenes: 01000000020000000300000004000000050000000600000008000000
 --- !u!114 &1259556925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,9 +1460,9 @@ MonoBehaviour:
   ButtonSelectSound: 40
   ButtonClickSound: 39
   VersionText: {fileID: 4622310774376628093}
-  CurrentStory: {fileID: 11400000, guid: 764e66970b0c37a41bfad07684f35465, type: 2}
+  CurrentStory: {fileID: 11400000, guid: 0e7e9adf1c8110e4ba1203168bfbdb4b, type: 2}
   MaxHealth: 50
-  StartingScrap: 100
+  StartingScrap: 150
 --- !u!1 &1829154758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,6 +1508,7 @@ MonoBehaviour:
     Chips: []
     Gear: []
     TimeStampString: 
+    SecurityCamRecordings: []
 --- !u!4 &1829154760
 Transform:
   m_ObjectHideFlags: 0
@@ -1540,6 +1553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d751df7d08429b34c895518c9535c2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UsedChips: []
   startingChips:
   - {fileID: 11400000, guid: 8ca1dd9622ef24b4cb647a971bf2c04f, type: 2}
   - {fileID: 11400000, guid: 8ca1dd9622ef24b4cb647a971bf2c04f, type: 2}
@@ -1549,8 +1563,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af8d67b61375d7a4b9e92b3f514d9917, type: 2}
   - {fileID: 11400000, guid: 80bd3d30c595bec48b1f376b6f3736f1, type: 2}
   - {fileID: 11400000, guid: 1f04b1f225942644bbf7c1f01ca2418e, type: 2}
-  PlayerHand: []
-  UsedChips: []
   chipPrefab: {fileID: 7436777728557001682, guid: d9849c1ec37ff6e499ec76c0fe76af67, type: 3}
   deckLimit: 8
   handLimit: 4
@@ -2186,7 +2198,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 94.95
+  m_fontSize: 96
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2222,7 +2234,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -3.4018555, y: -1.7805176, z: -2.2583008, w: -6.913208}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

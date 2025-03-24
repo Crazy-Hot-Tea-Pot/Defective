@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class CombatController : MonoBehaviour
@@ -161,6 +162,8 @@ public class CombatController : MonoBehaviour
         // Setup player and enemies
         Player = GameObject.FindGameObjectWithTag("Player");
 
+        Player.GetComponent<PlayerController>().CombatStart();
+
         // Prepare turn queue: player always goes first
         turnQueue.Enqueue(Player);
         foreach (var enemy in CombatEnemies)
@@ -173,9 +176,6 @@ public class CombatController : MonoBehaviour
         {
             enemy.GetComponent<Enemy>().CombatStart();
         }
-
-        // Enable the end-turn button
-        UiManager.Instance.EndTurnButtonVisibility(true);
 
         StartTurn();
     }
@@ -204,7 +204,9 @@ public class CombatController : MonoBehaviour
 
         Debug.Log($"{enemy.name} has left combat!");
         CombatEnemies.Remove(enemy);
-        turnQueue = new Queue<GameObject>(CombatEnemies); // Rebuild the queue without the enemy
+
+        // Rebuild the queue without the enemy
+        turnQueue = new Queue<GameObject>(CombatEnemies);
 
         // Add loot
         ScrapLootForCurrentCombat += scrapLoot;
@@ -320,6 +322,10 @@ public class CombatController : MonoBehaviour
             Debug.Log("All enemies defeated or escaped. Combat ends.");
             EndCombat();
         }
+        else
+        {
+            StartTurn();
+        }
     }
 
     /// <summary>
@@ -327,9 +333,7 @@ public class CombatController : MonoBehaviour
     /// </summary>
     private void EndCombat()
     {
-        Debug.Log("Combat has ended.");
-
-        UiManager.Instance.EndTurnButtonVisibility(false);
+        Debug.Log("Combat has ended.");        
 
         SoundManager.PlayFXSound(CombatWinSound);
 
@@ -367,7 +371,6 @@ public class CombatController : MonoBehaviour
         // Change to Combat Background Music
         SoundManager.ChangeBackground(CombatSound);
     }
-
 
     /// <summary>
     /// Resets combat-related data to prepare for a new combat encounter.
@@ -420,24 +423,30 @@ public class CombatController : MonoBehaviour
     /// <param name="context"></param>
     private void OnSelectTarget(InputAction.CallbackContext context)
     {
+        StartCoroutine(HandleTargetSelection());
+    }
+    private IEnumerator HandleTargetSelection()
+    {
+        yield return null; // Wait for UI to update this frame
+
         if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-        {
-            return;
-        }
+            yield break;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            yield break;
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
 
-
         if (Physics.Raycast(ray, out hit))
         {
-            // Check if the clicked object is an enemy combatant
             if (hit.collider.CompareTag("Enemy"))
             {
                 SetTarget(hit.collider.gameObject);
             }
         }
     }
+
 
     /// <summary>
     /// Method to cycle through combatEnemies using Tab key

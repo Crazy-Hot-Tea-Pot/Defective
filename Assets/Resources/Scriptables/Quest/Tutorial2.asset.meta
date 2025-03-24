@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animation/Enemy Animations/Looter Animations/Looter_Hurt.anim.meta
+guid: af3e87ae73b4e6a4fa23aad0373567d6
+========
+guid: 7bab6851afadbe04e911ffbddb9b79e9
+>>>>>>>> main:Assets/Resources/Scriptables/Quest/Tutorial2.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

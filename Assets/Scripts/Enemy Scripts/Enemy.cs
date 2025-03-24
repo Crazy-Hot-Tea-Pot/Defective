@@ -6,15 +6,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 public class Enemy : MonoBehaviour
-{   
+{    
     public enum EnemyDifficulty
     {
+        None,
         Easy,
         Medium,
         Hard,
         Boss
     }
-
     public enum IntentType
     {
         None,
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
         Robot
     }
 
-
+    [Header("Enemy Components")]
     public GameObject enemyTarget;
     /// <summary>
     /// Enemy current Target.
@@ -43,8 +43,9 @@ public class Enemy : MonoBehaviour
             enemyTarget = value;
         }
     }
-
-    [Header("Enemy Components")]
+    /// <summary>
+    /// Enemy Ui
+    /// </summary>
     public GameObject EnemyUIObject;
     /// <summary>
     /// reference to enemy canvas.
@@ -64,8 +65,24 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy status")]
     #region EnemyStatus
+
     [SerializeField]
-    private string enemyName;
+    protected string enemyName;
+    protected bool inCombat;
+    [SerializeField]
+    protected EnemyDifficulty enemyDifficulty;
+    [SerializeField]
+    protected IsEnemy enemyIs;
+    protected EnemyManager.TypeOfEnemies enemyType;
+    protected float currentHp;
+    /// <summary>
+    /// Max Hp of Enemy
+    /// </summary>
+    protected float maxHp;
+    protected float shield;
+    protected float maxShield = 0f;
+    protected bool isTargeted;
+    protected int nextIntentRoll;
 
     /// <summary>
     /// Returns name of enemy
@@ -81,8 +98,7 @@ public class Enemy : MonoBehaviour
             enemyName = value;            
         }
     }
-
-    private bool inCombat;
+    
     /// <summary>
     /// Is the Enemy in Combat.
     /// </summary>
@@ -96,10 +112,7 @@ public class Enemy : MonoBehaviour
         {
             inCombat = value;            
         }
-    }
-
-    [SerializeField]
-    private EnemyDifficulty enemyDifficulty;
+    }  
 
     /// <summary>
     /// This Enemies Difficulty
@@ -113,6 +126,7 @@ public class Enemy : MonoBehaviour
         set
         {
             enemyDifficulty = value;
+            SetUpEnemy();
         }
     }
 
@@ -125,10 +139,7 @@ public class Enemy : MonoBehaviour
         {
             return enemyIs;
         }
-    }
-
-    [SerializeField]
-    private IsEnemy enemyIs;
+    }    
 
     /// <summary>
     /// What type is the enemy.
@@ -143,17 +154,11 @@ public class Enemy : MonoBehaviour
         {
             enemyType = value;
         }
-    }
-    private EnemyManager.TypeOfEnemies enemyType;
-    /// <summary>
-    /// Max Hp of Enemy
-    /// </summary>
-    public int maxHP;
-    private int currentHp;
+    }    
     /// <summary>
     /// Enemy Current Hp
     /// </summary>
-    public int CurrentHP
+    public float CurrentHP
     {
         get
         {
@@ -161,10 +166,11 @@ public class Enemy : MonoBehaviour
         }
         protected set
         {
-            currentHp = value;
+            //Make sure save as 1 decimal place
+            currentHp = (float)Math.Round((double)value,1);
 
             //Update UI for enemy HealthBar
-            thisEnemyUI.UpdateHealth(currentHp,maxHP);
+            thisEnemyUI.UpdateHealth(currentHp,MaxHp);
 
             if (currentHp <= 0)
             {
@@ -172,13 +178,23 @@ public class Enemy : MonoBehaviour
                 Die();
             }
         }
-    }
+    }    
 
-    private int shield;
+    public float MaxHp
+    {
+        get
+        {
+            return maxHp;
+        }
+        protected set
+        {
+            maxHp = value;
+        }
+    }
     /// <summary>
     /// Enemy ShieldBar Amount.
     /// </summary>
-    public int Shield
+    public float Shield
     {
         get
         {
@@ -199,9 +215,8 @@ public class Enemy : MonoBehaviour
 
             thisEnemyUI.UpdateShield(shield,maxShield);
         }
-    }
-    private int maxShield = 0;
-    private bool isTargeted;
+    }    
+    
     /// <summary>
     /// Is enemy being targeted by Player.
     /// When enemy is targeted by CombatController to change boarder.
@@ -224,7 +239,10 @@ public class Enemy : MonoBehaviour
             {
                 newLayer = 8;   
             }
-           foreach(Transform child in Model.transform)
+
+            Model.layer = newLayer;
+
+            foreach(Transform child in Model.transform)
             {
                 child.gameObject.layer = newLayer;
 
@@ -245,7 +263,7 @@ public class Enemy : MonoBehaviour
 
             //TargetIcon.SetActive(value);
         }
-    }
+    }    
     #endregion
 
     [Header("Status Effects")]
@@ -371,6 +389,8 @@ public class Enemy : MonoBehaviour
     public SoundFX EnemyDeathSound;
     public SoundFX EnemyDamageTakenSound;
 
+    private Coroutine rotateCoroutine;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -387,17 +407,23 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Initialize enemy
     /// </summary>
-    public virtual void Initialize()
+    protected virtual void Initialize()
     {
-        CurrentHP = maxHP;
-        gameObject.name = EnemyName;
-        thisEnemyUI.SetEnemyName(EnemyName);
 
         CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
         enemyTarget = GameObject.FindGameObjectWithTag("Player");
 
     }
-
+    /// <summary>
+    /// Set up enemy based on difficulty.
+    /// name is already set in base.
+    /// </summary>
+    protected virtual void SetUpEnemy()
+    {
+        EnemyUIObject.SetActive(true);
+        gameObject.name = EnemyName;
+        thisEnemyUI.SetEnemyName(EnemyName);        
+    }
     #region Combat
 
     /// <summary>
@@ -414,6 +440,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void EndTurn()
     {
+        EnemyUIObject.SetActive(true);
+
         //Remove debuffs by 1
         RemoveEffect(Effects.Debuff.Drained, 1);        
 
@@ -468,8 +496,9 @@ public class Enemy : MonoBehaviour
     /// Is called when enemy is attacked by Player.
     /// </summary>
     /// <param name="damage"></param>
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
+
         // Plays sound of taking damage
         SoundManager.PlayFXSound(EnemyDamageTakenSound, this.gameObject.transform);
 
@@ -494,6 +523,8 @@ public class Enemy : MonoBehaviour
 
         DisplayDamageTaken(damage);
 
+        RotateToPlayer(EnemyTarget.transform.position);
+
         Animator.SetTrigger("Hit");
     }
 
@@ -502,6 +533,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void MyTurn()
     {
+        RotateToPlayer(EnemyTarget.transform.position);
+
         StartTurn();
     }
 
@@ -523,9 +556,7 @@ public class Enemy : MonoBehaviour
         {
 
         }
-
-        //Call Death Animation
-        StartCoroutine(WaitForAnimation("Die", FinishDeath));
+        Animator.SetTrigger("Die");
         
         SoundManager.PlayFXSound(EnemyDeathSound, this.gameObject.transform);
     }
@@ -533,7 +564,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Finish death stuff after animation plays
     /// </summary>
-    private void FinishDeath()
+    public void FinishDeath()
     {
         Debug.Log($"{enemyName} has been defeated!");
 
@@ -571,11 +602,41 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected virtual void PerformIntent()
     {
+        //Don't do anything wait for death
+        if (CurrentHP <= 0)
+            return;
+
         EnemyUIObject.SetActive(false);
     }
-    public virtual void PerformIntentTrigger(string intentName)
+
+    /// <summary>
+    /// Rotate enemy to player
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    protected void RotateToPlayer(Vector3 targetPosition)
     {
-        Debug.Log($"{EnemyName} triggered intent effect at correct animation timing.");
+        if (rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);
+
+        rotateCoroutine = StartCoroutine(SmoothRoatePlayerToTarget(targetPosition));
+    }
+    protected IEnumerator SmoothRoatePlayerToTarget(Vector3 target)
+    {
+        // Keep rotation only on the horizontal axis
+        target.y = transform.position.y;
+
+        Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
+
+        // Loop until the rotation is almost complete
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+        {
+            // 180 degrees per second rotation speed
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 180f);
+            yield return null;
+        }
+
+        // Ensure final rotation is exactly at the target
+        transform.rotation = targetRotation;
     }
 
 
@@ -583,7 +644,7 @@ public class Enemy : MonoBehaviour
     /// Display damage taken in game.
     /// </summary>
     /// <param name="damage"></param>
-    protected virtual void DisplayDamageTaken(int damage)
+    protected virtual void DisplayDamageTaken(float damage)
     {
         // Instantiate the damage text prefab
         // Calculate the position in front of the object
@@ -605,49 +666,7 @@ public class Enemy : MonoBehaviour
     protected virtual (string intentText, IntentType intentType, int value) GetNextIntent()
     {
         return ("Unknown", IntentType.None, 0);
-    }
-
-    protected virtual IEnumerator PrepareToEndTurn()
-    {        
-        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-
-        if (Animator.GetCurrentAnimatorClipInfo(0).Length == 0)
-        {
-            yield return null;
-        }
-        else
-        {
-            while (stateInfo.normalizedTime < 1f)
-            {
-                stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-                yield return null;
-            }
-        }
-
-        EnemyUIObject.SetActive(true);
-
-        yield return new WaitForEndOfFrame();
-
-
-        EndTurn();
-    }
-
-    protected IEnumerator WaitForAnimation(string triggerName, Action onComplete)
-    {
-        Animator.SetTrigger(triggerName);
-
-        yield return null;
-
-        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-
-        while (stateInfo.normalizedTime < 1f)
-        {
-            stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-            yield return null;
-        }
-
-        onComplete?.Invoke();
-    }
+    }    
     #endregion   
 
     #region Effects

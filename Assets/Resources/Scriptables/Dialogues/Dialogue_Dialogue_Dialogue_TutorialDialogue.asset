@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c112f3aee6477b642855d7e9a4ccbd31, type: 3}
+  m_Name: Dialogue_Dialogue_Dialogue_TutorialDialogue
+  m_EditorClassIdentifier: 
+  lines:
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: Hey, you there. Can you hear me?
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: I wonder if the fall damaged your voice box...
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: Who's there? How are we communicating?
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: "While watching the security feed, I saw them dump you here. I\u2019m
+      using a special radio frequency to tune into your head."
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "I have no memory of this \u201Cdumping\u201D. I have no memory
+      of anything\u2026 What happened? Who are you? Where am I?"
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Unknown Person
+    speakerImage: {fileID: 0}
+    dialogueText: Calm yourself, I am Ignotus, former resident of this home to the
+      largest group of Looters in the underground.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: '**CONNECTING TO NETWORK**'
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "My scans indicate that I\u2019m deep underground."
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "Deep underground, and deep in trouble I\u2019d say. We need to
+      get you out of here."
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "\u201CWe\u201D?"
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: "I know we\u2019ve just met, but our goals align. I want out of
+      here, and you probably want answers, which I can provide. I know who left you
+      here to die."
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "That doesn\u2019t sound like alignment to me."
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: "\u2026but it does seem that we can be of use to each other."
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: Now, I need your help retrieving an item from deep within this
+      subway. It will not be easy.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: What is it?
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: At the very end of this subway is the leader of a looter gang,
+      he holds the key to our survival.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: What might that be?
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 0}
+    dialogueText: It will be revealed in time, my friend. Now, go retrieve it, and
+      I will tell you more about your memories.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1

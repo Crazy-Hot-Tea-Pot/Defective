@@ -20,7 +20,6 @@ public class RoamingAndCombatUiController : UiController
     public Color lowHealthColor = Color.red;
 
     [Header("Shield")]
-    public GameObject ShieldContainer;
     public Image ShieldBar;
     public TextMeshProUGUI ShieldText;
 
@@ -36,17 +35,22 @@ public class RoamingAndCombatUiController : UiController
     public Button EquipmentButton;
 
     [Header("Combat Mode Stuff")]
-    public GameObject PlayerHandContainer;
+    public GameObject PlayerHand;
     public GameObject EnergyAndGearContainer;
     public GameObject EndTurn;
     public Button EndTurnButton;
+    public Animator EndTurnButtonAnimator;
     public GameObject CombatAnimation;
     public GameObject DeathAnimation;
 
     [Header("Effects")]
     public GameObject EffectPrefab;
     public GameObject EffectsContainer;
+    public GameObject EffectsInfoObject;
+    public TextMeshProUGUI EffectsInfo;
     public List<Sprite> EffectImages;
+
+    private bool introCombatAnimationFinish = false;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +60,7 @@ public class RoamingAndCombatUiController : UiController
         EndTurnButton.onClick.AddListener(() => GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>().EndTurn(GameObject.FindGameObjectWithTag("Player")));        
         
         EndTurn.SetActive(false);
-        PlayerHandContainer.SetActive(false);
+        PlayerHand.SetActive(false);
         CameraIndicator.SetActive(false);
 
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -78,24 +82,35 @@ public class RoamingAndCombatUiController : UiController
         Debug.Log("RoamingAndCombatUiController initialized");        
     }
 
-
-    public void ChangeEndButtonVisibility(bool visibility)
-    {
-        EndTurn.SetActive(visibility);
-    }
     /// <summary>
     /// Temp remove combat screen
     /// </summary>
     /// <param name="isInteractable"></param>
     public void ChangeCombatScreenTemp(bool isInteractable)
     {
-        EndTurnButton.interactable = isInteractable;
+        if (introCombatAnimationFinish)
+        { 
+            EndTurnButton.interactable = isInteractable;
 
-        StartCoroutine(RedrawPlayerHand(isInteractable));
+            if (isInteractable)
+            {
+                if (ChipManager.Instance.UsedChips.Count != 8)
+                {
+                    PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+                    PlayerHand.GetComponent<PlayerHandContainer>().SliderButton.interactable = true;
+                }
+            }
+            else
+            {
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
+                PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+                PlayerHand.GetComponent<PlayerHandContainer>().SliderButton.interactable = false;
+            }
 
-        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
+            EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
 
-        CombatAnimation.SetActive(!isInteractable);      
+            CombatAnimation.SetActive(!isInteractable);
+        }
     }
 
     /// <summary>
@@ -127,34 +142,20 @@ public class RoamingAndCombatUiController : UiController
     {
         if (Shield == 0 && MaxShield == 100)
         {
-            ShieldContainer.SetActive(false);
+            ShieldBar.gameObject.SetActive(false);
+            ShieldText.gameObject.SetActive(false);
         }
         else
         {
-            ShieldContainer.SetActive(true);
+            ShieldText.gameObject.SetActive(true);
+            ShieldBar.gameObject.SetActive(true);
 
             float shieldPercentage = (float)Shield / MaxShield;
 
             // Directly update the shield bar and text
             ShieldBar.fillAmount = shieldPercentage;
-            ShieldText.SetText($"{Shield}/{MaxShield}");
+            ShieldText.SetText($"{Shield}");
         }
-        //if (Shield == 0 && MaxShield == 100)
-        //{
-        //    ShieldContainer.SetActive(false);
-        //}
-        //else
-        //{
-        //    ShieldContainer.SetActive(true);
-
-        //    // Calculate the target ShieldAmount percentage
-        //    float shieldPercentage = (float)Shield / (float)MaxShield;
-
-        //    StopCoroutine(UpdateShieldOverTime(shieldPercentage,Shield,MaxShield));
-
-        //    // Start the coroutine to smoothly update the ShieldAmount bar
-        //    StartCoroutine(UpdateShieldOverTime(shieldPercentage, Shield, MaxShield));
-        //}
     }
 
     /// <summary>
@@ -162,36 +163,117 @@ public class RoamingAndCombatUiController : UiController
     /// </summary>
     /// <param name="currentEnergy"></param>
     /// <param name="maxEnergy"></param>
-    public void UpdateEnergy(int currentEnergy, int maxEnergy)
-    {
-        // Directly update the energy bar
-        float energyPercentage = (float)currentEnergy / maxEnergy;
-        EnergyBar.fillAmount = energyPercentage;
-        //// Normalize the energy value to a 0-1 range
-        //float tempTargetFillAmount = (float)currentEnergy / maxEnergy;
+    public void UpdateEnergy(float currentEnergy, float maxEnergy)
+    {            
 
-
-        //StopCoroutine(FillEnergyOverTime(tempTargetFillAmount));
-
-        //StartCoroutine(FillEnergyOverTime(tempTargetFillAmount));
+        switch (currentEnergy)
+        {
+            case 10f:
+                EnergyBar.fillAmount = 1f;
+                break;
+            case 9f:
+                EnergyBar.fillAmount = 0.94f;
+                break;
+            case 8f:
+                EnergyBar.fillAmount = 0.843f;
+                break;
+            case 7f:
+                EnergyBar.fillAmount = 0.720f;
+                break;
+            case 6f:
+                EnergyBar.fillAmount = 0.618f;
+                break;
+            case 5f:
+                EnergyBar.fillAmount = 0.51f;
+                break;
+            case 4f:
+                EnergyBar.fillAmount = 0.406f;
+                break;
+            case 3f:
+                EnergyBar.fillAmount = 0.308f;
+                break;
+            case 2f:
+                EnergyBar.fillAmount = 0.19f;
+                break;
+            case 1f:
+                EnergyBar.fillAmount = 0.072f;
+                break;
+            case 0f:
+                EnergyBar.fillAmount = 0.0f;
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
-    /// switch UI Modes
+    /// Remove Combat UI
     /// </summary>
-    /// <param name="CombatMode"></param>
-    public void SwitchMode(bool CombatMode)
+    public void RemoveCombatUI()
     {
-        if (CombatMode)
+        // Directly disable Combat UI without delay
+        PlayerHand.SetActive(false);
+        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
+        EndTurn.SetActive(false);
+        CombatAnimation.SetActive(false);
+    }
+
+    /// <summary>
+    /// Remove Combat UI for puzzles
+    /// </summary>
+    public void RemoveCombatUIPuzzle()
+    {
+        // Directly disable Combat UI without delay
+        PlayerHand.SetActive(false);
+        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
+    }
+    /// <summary>
+    /// Prepare screen for CombatStart
+    /// </summary>
+    public void StartPrepCombatStart()
+    {
+        CombatAnimation.SetActive(true);
+        PlayerHand.SetActive(true);
+
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
         {
-            StartCoroutine(EnableCombatMode());
+            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+            EndTurn.SetActive(true);
+            EndTurnButton.interactable = true;
         }
-        else
+    }
+
+    /// <summary>
+    /// Start combat mode for puzzles
+    /// </summary>
+    public void StarPrepCombatStartPuzzle()
+    {
+        PlayerHand.SetActive(true);
+        PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
+    }
+    /// <summary>
+    /// After aniamtor gets half way this is called.
+    /// </summary>
+    public void ContPrepCombatStart()
+    {
+        if (!introCombatAnimationFinish)
         {
-            // Directly disable Combat UI without delay
-            PlayerHandContainer.SetActive(false);
-            EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
+            EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
+            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+
+            if (ChipManager.Instance.UsedChips.Count != 8)
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+
+            introCombatAnimationFinish = true;
+
+            Invoke("FinishCombatStart", 1f);
         }
+    }
+    private void FinishCombatStart()
+    {
+        // Hide CombatAnimation if it's temporary
+        CombatAnimation.SetActive(false);
     }
 
     public void MakeGearInteractable(bool Interactable)
@@ -201,7 +283,7 @@ public class RoamingAndCombatUiController : UiController
         EquipmentButton.interactable = Interactable;
     }
 
-    public void UpdateGearButtonStates(int currentEnergy)
+    public void UpdateGearButtonStates(float currentEnergy)
     {
         // Get all equipped items
         Item armor = GearManager.Instance.GetEquippedItem(Item.ItemType.Armor);
@@ -249,6 +331,7 @@ public class RoamingAndCombatUiController : UiController
                 try
                 {
                     effectPrefab.GetComponent<Image>().sprite = EffectImages.Find(sprite => sprite.name == effectName);
+                    effectPrefab.GetComponent<EffectsInfo>().SetAmountOfEffect(statusEffect.StackCount);
                 }
                 catch
                 {
@@ -258,23 +341,47 @@ public class RoamingAndCombatUiController : UiController
         }
     }
     /// <summary>
-    /// Close hand and reopen with new cards or just draw hand with cards.
+    /// Popup description of the effect
     /// </summary>
-    private IEnumerator RedrawPlayerHand(bool Interactable)
+    /// <param name="effectName"></param>
+    public void DisplayEffectInfo(string effectName)
     {
-        yield return new WaitForSeconds(1f);
-        if (Interactable)
-        {
-            PlayerHandContainer.SetActive(Interactable);
-            yield return new WaitForSeconds(0.5f);
-            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();            
+        EffectsInfoObject.SetActive(true);
+
+        switch (effectName) {
+            case "Drained":
+                EffectsInfo.SetText("Drained: While <b>Drained</b>, your Attacks do 20% less damage.");
+                break;
+            case "Galvanize":
+                EffectsInfo.SetText("Galvanize: Gain <color=#3EF4D3>Shield</color> at the end of your turn, equal to your amount of Galvanize.<sub>(This stacks)</sub>");
+                break;
+            case "Impervious":
+                EffectsInfo.SetText("Impervious: Take no damage for a turn.");
+                break;
+            case "Jam":
+                EffectsInfo.SetText("Jam: While you are <b>Jammed</b>, you may not use Chips.");
+                break;
+            case "Motivation":
+                EffectsInfo.SetText("Motivation: When this effect appears, your next played chip will activate twice.");
+                break;
+            case "Power":
+                EffectsInfo.SetText("Attacks deal additional damage equal to your amount of <b>power</b>.<sub>(until end of combat)</sub>");
+                break;
+            case "WornDown":
+                EffectsInfo.SetText("While <b>Worn Down</b>, your <color=#3EF4D3>Shield</color> provides 30% less <color=#3EF4D3>Shield</color>");
+                break;
+            default:
+                EffectsInfo.SetText("Error!");
+                EffectsInfo.color = Color.red;
+                break;
         }
-        else
-        {
-            PlayerHandContainer.SetActive(Interactable);
-            yield return new WaitForSeconds(0.5f);
-            PlayerHandContainer.GetComponent<PlayerHandContainer>().TogglePanel();
-        }
+    }
+    /// <summary>
+    /// Disable the InfoBox
+    /// </summary>
+    public void HideEffectInfo()
+    {
+        EffectsInfoObject.SetActive(false);
     }
     /// <summary>
     /// Checks if item can be used.
@@ -282,119 +389,17 @@ public class RoamingAndCombatUiController : UiController
     /// <param name="item"></param>
     /// <param name="currentEnergy"></param>
     /// <returns></returns>
-    private bool CanUseItem(Item item, int currentEnergy)
+    private bool CanUseItem(Item item, float currentEnergy)
     {
         if (item == null) return false;
 
-        int energyCost = 0;
+        float energyCost = 0f;
         foreach (ItemEffect effect in item.itemEffects)
         {
-            energyCost += effect.energyCost - item.GetEnergyCostDecreaseBy();
+            energyCost += effect.energyCost;
         }
 
         return currentEnergy >= energyCost;
-    }
-    /// <summary>
-    /// play combat entrance animation and then continue.
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator EnableCombatMode()
-    {
-        // Show CombatAnimation and wait
-        CombatAnimation.SetActive(true);
-        yield return new WaitForSeconds(2f);
-
-        // Proceed with enabling combat UI
-        StartCoroutine(RedrawPlayerHand(true));
-
-        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
-
-        // Hide CombatAnimation if it's temporary
-        CombatAnimation.SetActive(false);
-    }
-
-    private IEnumerator UpdateHealthOverTime(float targetFillAmount)
-    {
-        // While the bar is not at the target fill amount, update it
-        while (Mathf.Abs(HealthBar.fillAmount - targetFillAmount) > 0.001f)
-        {
-            // Lerp between current fill and target fill by the fill speed
-            HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, targetFillAmount, SpeedOfFill * Time.deltaTime);
-
-            // Lerp the color based on the health percentage
-            HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, HealthBar.fillAmount);
-
-            // Display percentage as an integer (0 to 100)
-            int percentage = Mathf.RoundToInt(HealthBar.fillAmount * 100);
-            HealthText.SetText(percentage + "%");
-
-            // Ensure the fill value gradually updates each frame
-            yield return null;
-        }
-
-        // Ensure it snaps to the exact target amount at the end
-        HealthBar.fillAmount = targetFillAmount;
-        HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, HealthBar.fillAmount);
-
-        // Display percentage as an integer (0 to 100)
-        int finalPercentage = Mathf.RoundToInt(targetFillAmount * 100);
-        HealthText.SetText(finalPercentage + "%");
-    }
-
-    private IEnumerator UpdateShieldOverTime(float targetFillAmount, int Shield, int MaxShield)
-    {      
-
-        int initialCurrentShield = Mathf.RoundToInt(ShieldBar.fillAmount * MaxShield);
-        int targetCurrentShield = Shield;
-
-        int initialMaxShield = MaxShield;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < SpeedOfFill)
-        {
-            elapsedTime += Time.deltaTime;
-
-            // Lerp the ShieldAmount bar fill amount
-            float newFillAmount = Mathf.Lerp(ShieldBar.fillAmount, targetFillAmount, elapsedTime / SpeedOfFill);
-            ShieldBar.fillAmount = newFillAmount;
-
-            // Dynamically calculate ShieldAmount values
-            int currentShield = Mathf.RoundToInt(Mathf.Lerp(initialCurrentShield, targetCurrentShield, elapsedTime / SpeedOfFill));
-            int maxShield = Mathf.RoundToInt(Mathf.Lerp(initialMaxShield, MaxShield, elapsedTime / SpeedOfFill));
-
-            // Update the ShieldAmount text
-            ShieldText.SetText($"{currentShield}/{maxShield}");
-
-            yield return null;
-        }
-
-        // Snap to final values
-        ShieldBar.fillAmount = targetFillAmount;
-        ShieldText.SetText($"{targetCurrentShield}/{MaxShield}");
-    }
-
-    /// <summary>
-    /// Fill EnergyBar by amount over time.
-    /// </summary>
-    /// <param name="targetFillAmount"></param>
-    /// <returns></returns>
-    private IEnumerator FillEnergyOverTime(float targetFillAmount)
-    {
-
-        // While the bar is not at the target fill amount, update it
-        while (Mathf.Abs(EnergyBar.fillAmount - targetFillAmount) > 0.001f)
-        {
-            // Lerp between current fill and target fill by the fill speed
-            EnergyBar.fillAmount = Mathf.Lerp(EnergyBar.fillAmount, targetFillAmount, SpeedOfFill * Time.deltaTime);            
-           
-
-            // Ensure the fill value gradually updates each frame
-            yield return null;
-        }
-
-        // Ensure it snaps to the exact target amount at the end
-        EnergyBar.fillAmount = targetFillAmount;
     }
 
     void OnDestroy()

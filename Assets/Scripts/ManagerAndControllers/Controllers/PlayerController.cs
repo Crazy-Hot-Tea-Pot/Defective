@@ -10,8 +10,9 @@ using static Effects;
 
 // Controller for Player this class is not the input class that is generated.
 public class PlayerController : MonoBehaviour
-{    
-    public PlayerUiController uiController;
+{
+    [SerializeField]
+    private PlayerUiController uiController;
 
     //Camera in the scene
     private Camera mainCamera;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject RipplePrefab;
     public GameObject RippleRunPrefab;
+    public GameObject CallScreen;
 
 
     [Header("Player stats")]
@@ -105,11 +107,11 @@ public class PlayerController : MonoBehaviour
             maxShield = value;
         }
     }
-    private int energy;
+    private float energy;
     /// <summary>
     /// Returns PlayerEnergy
     /// </summary>
-    public int Energy
+    public float Energy
     {
         get { return energy; }
         private set
@@ -118,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
             if (energy > maxEnergy)
                 energy = maxEnergy;
-            else if (energy <= 0)
+            else if (energy <= 0.0f)
                 energy = 0;
 
             UiManager.Instance.UpdateEnergy(Energy, MaxEnergy);
@@ -126,11 +128,11 @@ public class PlayerController : MonoBehaviour
             UiManager.Instance.UpdateGearButtonsStates(energy);
         }
     }
-    private readonly int maxEnergy=50;
+    private readonly float maxEnergy = 10.0f;
     /// <summary>
     /// Returns max energy
     /// </summary>
-    public int MaxEnergy
+    public float MaxEnergy
     {
         get { return maxEnergy; }
     }
@@ -382,7 +384,7 @@ public class PlayerController : MonoBehaviour
 
         Initialize();
 
-        CharacterSpeak("Made it\nhere we go.", false, 0.5f,2f);
+        //CharacterSpeak("Scanning Area, I seem to be in the *InsertSceneName*", false, 0.5f,2f); 
         SoundManager.PlayFXSound(EnterLevelSound);
     }
 
@@ -556,12 +558,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="energyAmount"></param>
     /// <returns></returns>
-    public bool SpendEnergy(int energyAmount)
+    public bool SpendEnergy(float energyAmount)
     {
         if(energyAmount>Energy)
             return false;
         
-        Energy-= energyAmount;
+        Energy -= energyAmount;
         return true;
     }
 
@@ -580,6 +582,8 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Buff buff, int stacks)
     {
         AddOrUpdateEffect(buff, stacks);
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
     /// Add Debuff to Player
@@ -589,6 +593,8 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Debuff debuff, int stacks)
     {
         AddOrUpdateEffect(debuff, stacks);
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
     /// Add Special effect to Player
@@ -596,11 +602,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="specialEffect"></param>
     public void AddEffect(Effects.SpecialEffects specialEffect)
     {
-        //if (!ListOfActiveEffects.Any(e => e.Effect.Equals(specialEffect)))
-        //{
-        //    ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 0));
-        //}
         AddOrUpdateEffect(specialEffect, 1);
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -671,6 +675,8 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.SpecialEffects specialEffect)
     {
         ListOfActiveEffects.RemoveAll(e => e.SpecialEffect.Equals(specialEffect));
+
+        UiManager.Instance.UpdateEffects(listOfActiveEffects);
     }
 
     /// <summary>
@@ -909,12 +915,24 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Combat
+    /// <summary>
+    /// Prepare for start combat
+    /// </summary>
+    public void CombatStart()
+    {
+        //Restore energy to full
+        RecoverFullEnergy();
 
+        ListOfActiveEffects.Clear();
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
+    }
     /// <summary>
     /// Stuff to do at start of players turn.
     /// </summary>
     public void StartTurn()
     {
+
         //Remove ShieldAmount
         if (Shield > 0)
             Shield = 0;
@@ -985,9 +1003,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="revealByLetter">true if you want to reveal speech by letter or false by word</param>
     /// <param name="howFastToTalk"></param>
     /// <param name="howLongToDisplay">default is 3</param>
-    public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f)
+    public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f, bool isDialogue = false)
     {
-        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay);
+        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay, isDialogue);
     }
 
     /// <summary>
@@ -1034,6 +1052,11 @@ public class PlayerController : MonoBehaviour
     private void TestSpeak()
     {
         CharacterSpeak("I have a voice.\nI realy do have a voice !!", true, 0.1f, 5f);
+    }
+    [ContextMenu("Give scrap")]
+    private void GivePlayerScrap()
+    {
+        GainScrap(1000);
     }
     [ContextMenu("Test Damage 5")]
     private void TestDamage()

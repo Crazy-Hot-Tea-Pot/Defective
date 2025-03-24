@@ -53,7 +53,7 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     void Start()
     {
         GearImage.sprite = Item.itemImage;
-        GearName.SetText(Item.itemName);        
+        GearName.SetText(Item.itemName+" - "+Item.ItemTeir);        
 
         switch(PrefabMode)
         {
@@ -115,7 +115,7 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         string gearDesriptionText="";
         foreach(var effect in Item.itemEffects)
         {
-            gearDesriptionText += effect.ItemEffectDescription;            
+            gearDesriptionText += effect.GetEffectDescription(Item);            
             gearDesriptionText += "\n=====\n";
             //GameObject temp = null;
             //temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);
@@ -142,11 +142,10 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     /// </summary>
     private void VerifyScrapItem()
     {
-        GameObject temp = Instantiate(ConfirmationWindow,UiManager.Instance.transform);
-        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow("You are about to scrap the item " 
-            + item.itemName + 
+        UiManager.Instance.PopUpMessage("You are about to scrap the item "
+            + item.itemName +
             " for the scrap value of "
-            + item.GetScrapValue(),ConfirmScrap);        
+            + item.GetScrapValue(), ConfirmScrap);       
     }
     private void ConfirmScrap()
     {

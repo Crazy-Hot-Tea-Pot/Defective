@@ -9,7 +9,6 @@ using UnityEngine;
 /// </summary>
 public class TicketVendor : Enemy
 {
-    private int nextIntentRoll;
 
     // Start is called before the first frame update
     public override void Start()
@@ -38,26 +37,26 @@ public class TicketVendor : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
-    public override void PerformIntentTrigger(string intentName)
+    protected override void SetUpEnemy()
     {
-        base.PerformIntentTrigger(intentName);
+        base.SetUpEnemy();
 
-        switch (intentName)
+        switch (Difficulty)
         {
-            case "Halt": 
-                Halt(); 
+            case EnemyDifficulty.Easy:
+                MaxHp = 60;
                 break;
-            case "Confiscate": 
-                Confiscate(); 
+            case EnemyDifficulty.Medium:
+                MaxHp = 90;
                 break;
-            case "Redirect": 
-                Redirect(); 
-                break;
-            default:
-                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+            case EnemyDifficulty.Hard:
+                MaxHp = 120;
                 break;
         }
+
+        CurrentHP = MaxHp;
     }
+
     protected override void PerformIntent()
     {
         base.PerformIntent();
@@ -81,7 +80,6 @@ public class TicketVendor : Enemy
                 break;
         }
 
-        StartCoroutine(PrepareToEndTurn());
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {

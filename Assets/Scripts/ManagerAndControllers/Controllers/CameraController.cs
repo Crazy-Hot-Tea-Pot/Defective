@@ -32,7 +32,8 @@ public class CameraController : MonoBehaviour
         Free,
         BorderMovement,
         Combat,
-        FirstPerson
+        FirstPerson,
+        Call
     }
 
     [Header("Cameras")]
@@ -44,6 +45,7 @@ public class CameraController : MonoBehaviour
     public CinemachineVirtualCamera freeCamera;
     public CinemachineVirtualCamera BorderCamera;
     public CinemachineVirtualCamera FirstPersonCamera;
+    public CinemachineVirtualCamera CallCamera;
     public CinemachineVirtualCamera CombatCamera
     {
         get
@@ -182,8 +184,8 @@ public class CameraController : MonoBehaviour
         };
 
         // Handle rotation start and stop
-        playerInputActions.CameraControls.RotateCamera.started += ctx => SwitchCamera(CameraState.Rotation);
-        playerInputActions.CameraControls.RotateCamera.canceled += ctx => OnResetCamera();
+        //playerInputActions.CameraControls.RotateCamera.started += ctx => SwitchCamera(CameraState.Rotation);
+        //playerInputActions.CameraControls.RotateCamera.canceled += ctx => OnResetCamera();
 
 
         playerInputActions.CameraControls.FreeCam.performed += ctx => SwitchCamera(CameraState.Free);
@@ -200,7 +202,9 @@ public class CameraController : MonoBehaviour
     void Start()
     {
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();                
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        CallCamera = GameObject.Find("CallCamera").GetComponent<CinemachineVirtualCamera>();
 
         Target = player;
 
@@ -345,6 +349,9 @@ public class CameraController : MonoBehaviour
             case GameManager.GameMode.Combat:
                 SwitchCamera(CameraState.Combat);
                 break;
+            case GameManager.GameMode.Dialogue:
+                SwitchCamera(CameraState.Call);
+                break;
         }        
     }
 
@@ -361,11 +368,13 @@ public class CameraController : MonoBehaviour
             Debug.Log("Camera reset ignored because the player is interacting.");
             return;
         }
+
         DefaultCamera.Priority = 0;
         RotationCamera.Priority = 0;
         freeCamera.Priority = 0;
         BorderCamera.Priority = 0;
         FirstPersonCamera.Priority = 0;
+        CallCamera.Priority = 0;
 
         if(CombatCamera!=null)
             CombatCamera.Priority = 0;
@@ -390,6 +399,9 @@ public class CameraController : MonoBehaviour
                 break;
             case CameraState.Combat:
                 CombatCamera.Priority = 10;
+                break;
+            case CameraState.Call:
+                CallCamera.Priority = 10;
                 break;
             default:
                 DefaultCamera.Priority = 10;

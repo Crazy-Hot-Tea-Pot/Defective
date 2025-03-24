@@ -5,7 +5,11 @@ using UnityEngine;
 public class Looter : Enemy
 {
     [Header("Custom for Enemy type")]
+    // To track the number of Swipes performed
+    private int swipeCount = 0;
+    private bool isShrouded;
     private int stolenScrap = 0;
+    private bool isWithLeader = false;
     /// <summary>
     /// To keep track of stolen Scraps
     /// </summary>
@@ -20,16 +24,21 @@ public class Looter : Enemy
             stolenScrap = value;
         }
     }
-
-    // To track the number of Swipes performed
-    private int swipeCount = 0;
-
-    private bool isShrouded;
-
     public bool IsShrouded
     {
         get { return isShrouded; }
         private set { isShrouded = value; }
+    }
+    public bool IsWithLeader
+    {
+        get
+        {
+            return isWithLeader;
+        }
+        set
+        {
+            isWithLeader = value;
+        }
     }
 
     // Start is called before the first frame update
@@ -45,26 +54,26 @@ public class Looter : Enemy
 
         base.Start();
     }
-    public override void PerformIntentTrigger(string intentName)
+    protected override void SetUpEnemy()
     {
-        base.PerformIntentTrigger(intentName);
+        base.SetUpEnemy();
 
-        switch (intentName)
+        switch (Difficulty)
         {
-            case "Swipe":
-                Swipe();
+            case EnemyDifficulty.Easy:
+                MaxHp = 20;
                 break;
-            case "Shroud":
-                Shroud();
+            case EnemyDifficulty.Medium:
+                MaxHp = 30;
                 break;
-            case "Escape":
-                Escape();
-                break;
-            default:
-                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+            case EnemyDifficulty.Hard:
+                MaxHp = 45;
                 break;
         }
+
+        CurrentHP = MaxHp;
     }
+
     protected override void PerformIntent()
     {
         base.PerformIntent();
@@ -72,7 +81,7 @@ public class Looter : Enemy
         // Since 100% on first chance just made it this way.
 
         if (swipeCount < 3) // First three turns are Swipe
-        {
+        {   
             //Swipe();
             Animator.SetTrigger("Intent 1");
         }
@@ -86,8 +95,6 @@ public class Looter : Enemy
             //Escape();
             Animator.SetTrigger("Intent 3");
         }
-
-        StartCoroutine(PrepareToEndTurn());
     }
     /// <summary>
     /// Return all stolen Scraps upon killing
@@ -98,11 +105,6 @@ public class Looter : Enemy
 
         base.Die();
     }    
-
-    public override void TakeDamage(int damage)
-    {
-        base.TakeDamage(damage);
-    }
 
     public override void CombatStart()
     {
@@ -116,7 +118,16 @@ public class Looter : Enemy
         else if (swipeCount == 3 && !IsShrouded)
             return ("Shroud", IntentType.Shield, 10);
         else if (IsShrouded)
-            return ("Escape", IntentType.Unique, 0);
+        {
+            //if with gangleader reset
+            if (IsWithLeader)
+            {
+                swipeCount = 0;
+                return ("Swipe", IntentType.Attack, 6);
+            }
+            else
+                return ("Escape", IntentType.Unique, 0);
+        }
 
         return ("Unknown", IntentType.None, 0);
     }
@@ -124,7 +135,7 @@ public class Looter : Enemy
     /// <summary>
     ///  After the 3rd Swipe, perform Shroud
     /// </summary>
-    private void Swipe()
+    public void Swipe()
     {
         Debug.Log($"{EnemyName} performs Swipe, dealing 4 damage and stealing 5 Scrap.");
         swipeCount++;
@@ -151,7 +162,7 @@ public class Looter : Enemy
 
     }
 
-    private void Shroud()
+    public void Shroud()
     {
         Debug.Log($"{EnemyName} performs Shroud, gaining 10 Shield.");
         Shield += 10;
@@ -159,7 +170,7 @@ public class Looter : Enemy
         isShrouded = true;
     }
 
-    private void Escape()
+    public void Escape()
     {
         Debug.Log($"{EnemyName} performs Escape, exiting the fight with {StolenScrap} Scrap.");
 

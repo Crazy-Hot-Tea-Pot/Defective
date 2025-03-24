@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Scriptables/Dialogues/Dialogue_Dialogue_Dialogue_TutorialDialogue.asset.meta
+guid: 1b91c79cd724efb44a308b61420e98fe
+========
+guid: c487c5ce369373f44852621f8bc880d3
+>>>>>>>> main:Assets/Resources/Scriptables/Quest/Tutorial1Highlight.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

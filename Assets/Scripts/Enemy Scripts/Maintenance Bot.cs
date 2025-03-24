@@ -5,8 +5,6 @@ public class MaintenanceBot : Enemy
     [Header("Custom for Enemy type")]
     private bool repairUsed;
 
-    private int nextIntentRoll;
-
     public bool RepairUsed
     {
         get
@@ -61,32 +59,31 @@ public class MaintenanceBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
-    public override void PerformIntentTrigger(string intentName)
+    protected override void SetUpEnemy()
     {
-        base.PerformIntentTrigger(intentName);
+        base.SetUpEnemy();
 
-        switch (intentName)
+        switch (Difficulty)
         {
-            case "Repair":
-                Repair();
-                repairUsed = true;
+            case EnemyDifficulty.Easy:
+                MaxHp = 50;
                 break;
-            case "Galvanize":
-                Galvanize();
+            case EnemyDifficulty.Medium:
+                MaxHp = 70;
                 break;
-            case "Disassemble":
-                Disassemble();
-                break;
-            default:
-                Debug.LogWarning($"Intent '{intentName}' not handled in {EnemyName}.");
+            case EnemyDifficulty.Hard:
+                MaxHp = 90;
                 break;
         }
+
+        CurrentHP = MaxHp;
     }
+
     protected override void PerformIntent()
     {
         base.PerformIntent();
 
-        if (CurrentHP <= maxHP / 2 && !RepairUsed)
+        if (CurrentHP <= MaxHp / 2 && !RepairUsed)
         {
             //Repair();
             //RepairUsed = true;
@@ -105,11 +102,10 @@ public class MaintenanceBot : Enemy
                 Animator.SetTrigger("Intent 2");
             }
         }
-        StartCoroutine(PrepareToEndTurn());
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        if (CurrentHP <= maxHP / 2 && !RepairUsed)
+        if (CurrentHP <= MaxHp / 2 && !RepairUsed)
             return ("Repair", IntentType.Buff, 0);
         else if (nextIntentRoll <= 4)
             return ("Galvanize", IntentType.Buff, 4);
@@ -122,7 +118,7 @@ public class MaintenanceBot : Enemy
     /// and
     /// Apply Worn
     /// </summary>
-    private void Disassemble()
+    public void Disassemble()
     {
         Debug.Log("Maintenance Bot uses Disassemble!");
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(9);
@@ -131,7 +127,7 @@ public class MaintenanceBot : Enemy
     /// <summary>
     /// Gains 4 stacks of Galvanize.
     /// </summary>
-    private void Galvanize()
+    public void Galvanize()
     {
         //PlaySound
         SoundManager.PlayFXSound(GalvanizeBotSound, this.gameObject.transform);
@@ -141,12 +137,17 @@ public class MaintenanceBot : Enemy
     /// <summary>
     /// heals 30% of its Max Hp
     /// </summary>
-    private void Repair()
-    {        
-        //Play sound
-        SoundManager.PlayFXSound(RepairBotSound, this.gameObject.transform);
+    public void Repair()
+    {
+        //Make UI true to prevent error.
+        EnemyUIObject.SetActive(true);
 
-        int tempHealAmount = Mathf.RoundToInt(maxHP * 0.3f);
-        CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, maxHP);        
+        //Play sound
+        SoundManager.PlayFXSound(RepairBotSound);
+
+        int tempHealAmount = Mathf.RoundToInt(MaxHp * 0.3f);
+        CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, MaxHp);
+
+        RepairUsed = true;
     }
 }

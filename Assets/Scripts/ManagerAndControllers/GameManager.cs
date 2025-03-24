@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         Title,
         Pause,
         Interacting,
+        Dialogue,
         Roaming,
         Combat,
         CombatLoot,
@@ -154,6 +155,7 @@ public class GameManager : MonoBehaviour
         switch (CurrentLevel)
         {
             case Levels.Title:
+            case Levels.Settings:
             case Levels.Loading:
             case Levels.Credits:
                 break;

@@ -10,9 +10,7 @@ public class Buff : SkillEffects
     {
         base.ChipUpgraded();
         if(IsUpgraded)           
-                amountOfBuffToApply += amountToUpgradeBy;
-        else
-            amountOfBuffToApply -= amountToUpgradeBy;
+            amountOfBuffToApply += amountToUpgradeBy;       
     }
     public override void ApplyEffect(PlayerController player)
     {

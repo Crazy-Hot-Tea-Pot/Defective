@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Leech
-  description: Deal 5 Damage, gain Energy to the Damage Dealt.
-  chipImage: {fileID: 21300000, guid: 38f7306a5bc3e53438fdee0f2e53b69c, type: 3}
+  StartingDescription: Deal damage while refilling energy taken from enemies
+  chipImage: {fileID: 21300000, guid: ac9593d5d54bf324bbe4fe404d86eb48, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Absorb energy from enemies as you deal damage.
-  ChipRareityWeight: 0.5
+  ChipRareityWeight: 0.1
   hitAllTargets: 0
   chipType: 3
   ChipActivate: 6

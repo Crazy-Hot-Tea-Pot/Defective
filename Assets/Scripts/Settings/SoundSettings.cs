@@ -37,7 +37,7 @@ public class SoundSettings
         {
             return sfxVolume;
         }
-        private set
+        set
         {
             sfxVolume = value;
         }
@@ -49,7 +49,7 @@ public class SoundSettings
         {
             return bgmMute;
         }
-        private set
+        set
         {
             bgmMute = value;
         }
@@ -61,7 +61,7 @@ public class SoundSettings
         {
             return sfxMute;
         }
-        private set
+        set
         {
             sfxMute = value;
         }

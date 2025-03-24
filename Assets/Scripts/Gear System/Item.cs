@@ -19,7 +19,17 @@ public class Item : ScriptableObject
     /// <summary>
     /// What item does
     /// </summary>
-    public string itemDescription;
+    public string itemDescription
+    {
+        get
+        {
+            return GetDynamicDescription();
+        }
+    }
+
+    [Tooltip("Only put beginning the rest of the info is generated.")]
+    [SerializeField]
+    private string itemBeginningDescription;
 
     /// <summary>
     /// Image of item.
@@ -71,9 +81,6 @@ public class Item : ScriptableObject
     [Header("Tier Values")]
     [Tooltip("How much to increase for Damage Or Shield per Tier")]
     public List<int> valueIncreaseBy = new() { 0, 2, 3, 4, 5 };
-
-    [Tooltip("How much to increase Energy By for each Teir")]
-    public List<int> energyCostDecreaseBy = new() { 0, 2, 3, 4, 5 };
 
     [Tooltip("How much scrap value for each Teir")]
     public List<int> scrapValueForEachTeir = new() { 0, 1, 2, 3, 4, 5 };
@@ -152,32 +159,6 @@ public class Item : ScriptableObject
         }
     }   
 
-    public int GetEnergyCostDecreaseBy()
-    {
-        int tempReturnValue = 0;
-
-        switch (ItemTeir)
-        {
-            case Teir.Base:
-                tempReturnValue = energyCostDecreaseBy[(int)Teir.Base];
-                break;
-            case Teir.Bronze:
-                tempReturnValue = energyCostDecreaseBy[(int)Teir.Bronze];
-            break;
-            case Teir.Silver:
-                tempReturnValue = energyCostDecreaseBy[(int)Teir.Silver];
-                break;
-            case Teir.Gold:
-                tempReturnValue = energyCostDecreaseBy[(int)Teir.Gold];
-                break;
-            case Teir.Platinum:
-                tempReturnValue = energyCostDecreaseBy[(int)Teir.Platinum];
-                break;
-        }
-
-        return tempReturnValue;
-    }
-
     public int GetValueIncreaseBy()
     {
         int tempReturnValue = 0;
@@ -248,6 +229,21 @@ public class Item : ScriptableObject
             Debug.Log($"{itemName} is already at max tier!");
         }
     }
+
+    private string GetDynamicDescription()
+    {
+        // Start with the base description
+        string description = itemBeginningDescription;
+
+        // Loop through each effect and call its description method
+        foreach (var effect in itemEffects)
+        {
+            description += $"\n{effect.GetEffectDescription(this)}";
+        }
+
+        return description;
+    }
+
 
     private void ApplyTierStats()
     {

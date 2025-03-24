@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1781cf51b510a44b451071858f430e, type: 3}
   m_Name: Spend 1 Energy and Deal 1 Damage (Single Target)
   m_EditorClassIdentifier: 
-  ItemEffectDescription: Spend 1 Energy and Deal 1 Damage (Single Target)
-  energyCost: 5
+  energyCost: 1
   SpecialConditionEffect: 0
   Condition: 0
   deBuffEffectToApplyToEnemy: []

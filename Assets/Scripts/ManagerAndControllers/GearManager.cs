@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class GearManager : MonoBehaviour
@@ -72,19 +73,10 @@ public class GearManager : MonoBehaviour
         // Check if the player already has this item
         Item existingItem = PlayerCurrentGear.Find(item => item.itemName == newItem.itemName);
 
-        if (existingItem != null)
+        if (existingItem != null && existingItem.ItemTeir != Item.Teir.Platinum)
         {
-            // Prioritize upgrading the equipped item if it exists
-            if (existingItem.IsEquipped)
-            {
-                UpgradeItem(existingItem);
-            }
-            else
-            {
-                UpgradeItem(existingItem);
-            }
-
-            Debug.Log($"{newItem.itemName} combined to increase tier.");
+            
+            UpgradeItem(existingItem);                      
             return true;
         }
         else
@@ -98,7 +90,7 @@ public class GearManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Inventory full! Cannot acquire new item.");
+                UiManager.Instance.PopUpMessage("Inventory full! Cannot acquire new item.");
                 return false;
             }
         }
@@ -210,7 +202,7 @@ public class GearManager : MonoBehaviour
         {
             // Increase tier by one
             item.UpgradeTier();
-            Debug.Log($"{item.itemName} upgraded to {item.ItemTeir}.");
+            UiManager.Instance.PopUpMessage($"{item.itemName} combined to increase to teir {item.ItemTeir}");            
         }
         else
         {
@@ -248,4 +240,27 @@ public class GearManager : MonoBehaviour
             GameManager.Instance.OnSceneChange -= SceneChange;
         }
     }
+    //Cheats
+    [ContextMenu("Give Random Gear")]
+    private void GiveRandomGear()
+    {
+        if (AllGear.Count == 0)
+        {
+            Debug.LogWarning("No gear available to give.");
+            return;
+        }
+
+        // Select a random item from AllGear
+        Item randomItem = AllGear[Random.Range(0, AllGear.Count)];
+
+        // Clone the item to ensure we don't modify the original
+        Item newItem = Instantiate(randomItem);
+
+        // Try to acquire the item
+        if (Acquire(newItem))
+        {
+            Debug.Log($"Gave player random gear: {newItem.itemName}");
+        }
+    }
+
 }

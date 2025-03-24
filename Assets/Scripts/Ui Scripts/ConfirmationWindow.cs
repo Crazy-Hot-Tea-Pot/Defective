@@ -34,7 +34,7 @@ public class ConfirmationWindow : MonoBehaviour
         cancelButton.onClick.AddListener(DestroyWindow);        
         ConfirmationButton.onClick.AddListener(InvokeConfirmAction);        
     }
-    public void SetUpComfirmationWindow(string Message, Action onConfirm)
+    public void SetUpComfirmationWindow(string Message, Action onConfirm=null)
     {
         TextBox.SetText(Message);
         onConfrimAction = onConfirm;

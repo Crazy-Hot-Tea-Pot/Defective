@@ -149,7 +149,7 @@ public class LootController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         controller.ChipName.SetText(NewChip.chipName + " Chip");
         controller.ChipImage.sprite = NewChip.chipImage;
         controller.ChipType.SetText(NewChip.ChipType.ToString());
-        controller.ChipDescription.SetText(NewChip.description);
+        controller.ChipDescription.SetText(NewChip.ChipDescription);
 
         //Animate
 
@@ -169,7 +169,7 @@ public class LootController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             GameObject temp = null;
             temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);
-            temp.GetComponent<TextMeshProUGUI>().SetText(effect.ItemEffectDescription);
+            temp.GetComponent<TextMeshProUGUI>().SetText(effect.GetEffectDescription(newItem));
         }
 
 

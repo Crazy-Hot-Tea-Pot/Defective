@@ -17,6 +17,7 @@ public class PlayerUiController : MonoBehaviour
     public float letterRevealSpeed = 0.05f;
     // Speed for revealing words
     public float wordRevealSpeed = 0.2f;
+    public GameObject CallScreen;
 
     private Coroutine chatboxCoroutine;
 
@@ -28,7 +29,8 @@ public class PlayerUiController : MonoBehaviour
     /// <param name="byLetter">Reveal by letter or by word.</param>
     /// <param name="howFastToTalk">How fast you want the speed to be.</param>
     /// <param name="displayDuration">How long the message to be displayed. Default is 3 seconds.</param>
-    public void PlayerTalk(string message, bool byLetter, float howFastToTalk, float displayDuration = 3f)
+    /// <param name="onComplete"> Method to call back when player finish talk.</param>
+    public void PlayerTalk(string message, bool byLetter, float howFastToTalk, float displayDuration = 3f, bool isDialogue = false)
     {
         // Ensure ChatBox starts hidden
         ChatBox.SetActive(false);
@@ -40,10 +42,10 @@ public class PlayerUiController : MonoBehaviour
         }
 
         // Start the reveal coroutine
-        chatboxCoroutine = StartCoroutine(RevealText(ChatBox, message, byLetter, howFastToTalk, displayDuration));
+        chatboxCoroutine = StartCoroutine(RevealText(ChatBox, message, byLetter, howFastToTalk, displayDuration, isDialogue));
     }
 
-    private IEnumerator RevealText(GameObject chatBox, string message, bool byLetter, float revealSpeed, float displayDuration)
+    private IEnumerator RevealText(GameObject chatBox, string message, bool byLetter, float revealSpeed, float displayDuration, bool isDialogue = false)
     {
         // Get TextMeshPro component from the chatBox
         TextMeshPro tmpText = chatBox.GetComponent<TextMeshPro>();
@@ -113,5 +115,10 @@ public class PlayerUiController : MonoBehaviour
 
         // Hide the chatbox after the display duration
         chatBox.SetActive(false);
+
+        if(isDialogue)
+        {
+            DialogueManager.Instance.ShowNextLine();
+        }
     }
 }

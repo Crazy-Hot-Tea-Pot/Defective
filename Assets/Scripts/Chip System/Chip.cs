@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 
@@ -81,11 +82,12 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private string chipTitle;        
     private NewChip newChip;
-    private GameObject chipinfoDisplay;
+    private GameObject chipInfoDisplay;
     private CombatController CombatController;
     private PuzzleController PuzzleController;
     private GameObject Player;
     private TerminalController UpgradeController;
+    private int attemptCounter=0;
 
     void Start()
     {        
@@ -105,7 +107,14 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 // Check if there is a target available
                 if (CombatController.Target == null)
                 {
-                    throw new NullReferenceException("No target assigned for combat.");
+                    attemptCounter++;
+
+                    if (attemptCounter > 3)
+                    {
+                        UiManager.Instance.PopUpMessage("You must select a target by clicking them with you mouse to attack first!");
+                    }
+
+                    return;
                 }
 
                 //Check if Player is jammed
@@ -122,12 +131,15 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
                     newChip.IsActive = true;
 
+                    //If motivated to play chip twice
                     if (Player.GetComponent<PlayerController>().IsMotivated)
                     {
                         if (newChip is DefenseChip defenseChip)
                         {
                             newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
                             newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
+
+                            Player.GetComponent<PlayerController>().RemoveEffect(Effects.SpecialEffects.Motivation);
                         }
                         else
                         {
@@ -175,10 +187,8 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     }
 
                     ChipManager.Instance.AddToUsedChips(this.gameObject);
-                }
-                else
-                {
-                    throw new NullReferenceException("No chip script attached.");
+
+                    UiManager.Instance.CanMakeAnyMoreMoves();
                 }
             }
             catch (NullReferenceException ex)
@@ -296,22 +306,22 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (chipinfoDisplay == null)
+        if (chipInfoDisplay == null)
         {
 
-            chipinfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
+            chipInfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
 
 
-            ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
+            ChipInfoController controller = chipInfoDisplay.GetComponent<ChipInfoController>();
 
-            StartCoroutine(DelayForAnimator(controller));            
+            SetUpChipInfo(controller);           
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(chipinfoDisplay != null)
+        if(chipInfoDisplay != null)
         {
-            ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
+            ChipInfoController controller = chipInfoDisplay.GetComponent<ChipInfoController>();
 
             // Animate shrinking
             Vector3 targetPosition = this.transform.position;
@@ -320,7 +330,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             controller.Shrink(startPosition, targetPosition);
 
             // Optional: Delay destruction for animation
-            Destroy(chipinfoDisplay, 1f);
+            Destroy(chipInfoDisplay, 1f);
         }
     }
 
@@ -331,17 +341,17 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         UpgradeController.ChipSelectToUpgrade(newChip);
     }
-
-    private IEnumerator DelayForAnimator(ChipInfoController controller)
+    private void SetUpChipInfo(ChipInfoController controller)
     {
-        yield return null;
-
         controller.ChipName.SetText(ChipTitle);
         controller.ChipImage.sprite = NewChip.chipImage;
+        controller.ChipDescription.SetText(newChip.ChipDescription);
+        controller.ChipType.SetText(newChip.ChipType.ToString());
+
         switch (NewChip.ChipType)
         {
             case NewChip.TypeOfChips.Attack:
-                controller.ChipType.color = Color.red;
+                controller.ChipType.color = Color.red;                
                 break;
             case NewChip.TypeOfChips.Defense:
                 controller.ChipType.color = Color.blue;
@@ -353,26 +363,21 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 controller.ChipType.color = Color.white;
                 break;
         }
-        controller.ChipType.SetText(NewChip.ChipType.ToString());
-        controller.ChipDescription.SetText(NewChip.description);
 
-        //Animate
-
-        Vector3 targetPosition = UiManager.Instance.transform.position;
-        Vector3 startPosition = this.transform.position;
-        controller.Enlarge(startPosition, targetPosition);
-    }
+        controller.animator.SetBool("IsEnlarging", true);
+        controller.animator.SetBool("IsShrinking", false);
+    }   
     void OnDestroy()
     {
-        if(chipinfoDisplay != null)
-            Destroy(chipinfoDisplay);
+        if(chipInfoDisplay != null)
+            Destroy(chipInfoDisplay);
 
         chipButton.onClick.RemoveAllListeners();
     }
     void OnDisable()
     {
-        if (chipinfoDisplay != null)
-            Destroy(chipinfoDisplay);
+        if (chipInfoDisplay != null)
+            Destroy(chipInfoDisplay);
     }
 
 }

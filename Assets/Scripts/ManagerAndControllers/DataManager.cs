@@ -50,7 +50,7 @@ public class DataManager : MonoBehaviour
             if (!Directory.Exists(saveDirectory))
             {
                 Directory.CreateDirectory(saveDirectory);
-            }          
+            }
         }
         else
         {
@@ -104,7 +104,7 @@ public class DataManager : MonoBehaviour
             CurrentGameData.Gear.Add(gearData);
         }
 
-        StoryManager.Instance.SaveStoryProgress();
+        StoryManager.Instance.SaveStoryProgress();        
 
         string json = JsonUtility.ToJson(CurrentGameData, true);
         File.WriteAllText(saveFilePath, json);
@@ -298,5 +298,5 @@ public class DataManager : MonoBehaviour
         }
         Debug.LogWarning($"Attempted to delete a save that does not exist: {saveName}");
         return false;
-    }
+    }    
 }

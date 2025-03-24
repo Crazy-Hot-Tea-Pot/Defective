@@ -26,7 +26,6 @@ public class EnemyEditor : Editor
         // Add Difficulty Dropdown
         enemy.Difficulty = (Enemy.EnemyDifficulty)EditorGUILayout.EnumPopup("Difficulty", enemy.Difficulty);
 
-        enemy.maxHP = EditorGUILayout.IntField("Max HP", enemy.maxHP);
         EditorGUILayout.LabelField("Current HP Amount", enemy.CurrentHP.ToString());
         // Health Bar
         DrawHealthBar(enemy);
@@ -70,7 +69,7 @@ public class EnemyEditor : Editor
     private void DrawHealthBar(Enemy enemy)
     {
         // Calculate the fill percentage for the health bar
-        float healthPercentage = (float)enemy.CurrentHP / enemy.maxHP;
+        float healthPercentage = (float)enemy.CurrentHP / enemy.MaxHp;
 
         // Display health bar background
         Rect rect = GUILayoutUtility.GetRect(18, 18, "TextField");
@@ -81,7 +80,7 @@ public class EnemyEditor : Editor
         EditorGUI.DrawRect(filledRect, Color.green); // Filled portion (green)
 
         // Overlay the health text
-        EditorGUI.LabelField(rect, $"{enemy.CurrentHP} / {enemy.maxHP}", new GUIStyle
+        EditorGUI.LabelField(rect, $"{enemy.CurrentHP} / {enemy.MaxHp}", new GUIStyle
         {
             alignment = TextAnchor.MiddleCenter,
             normal = new GUIStyleState { textColor = Color.white },

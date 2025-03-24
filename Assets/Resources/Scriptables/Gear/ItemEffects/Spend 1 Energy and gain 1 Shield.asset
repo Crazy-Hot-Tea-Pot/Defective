@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d80e112095c1b64bb5ed13de03c004a, type: 3}
   m_Name: Spend 1 Energy and gain 1 Shield
   m_EditorClassIdentifier: 
-  ItemEffectDescription: Spend 1 Energy and gain 1 Shield
-  energyCost: 5
+  energyCost: 1
   SpecialConditionEffect: 0
   Condition: 0
   deBuffEffectToApplyToEnemy: []
@@ -21,4 +20,5 @@ MonoBehaviour:
   debuffToApplyToPlayer: []
   effectToApplyToPlayer: 0
   HitAllTargets: 0
+  specialEffectOnly: 0
   baseShieldAmount: 1

@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class UiManager : MonoBehaviour
 {
@@ -39,11 +40,14 @@ public class UiManager : MonoBehaviour
     public GameObject InventoryUI;
     public GameObject TerminalUI;
     public GameObject LootUI;
-    public GameObject SettingsUI;
     public GameObject GameOverUI;
+
+    public GameObject Popup;
 
     private UiController currentController;
     private static UiManager instance;
+
+    private GameManager.GameMode GameMode;
 
     void OnEnable()
     {
@@ -82,6 +86,9 @@ public class UiManager : MonoBehaviour
     #region RoamingAndCombatUI
     public void UpdateCameraIndicator(CameraController.CameraState cameraState)
     {
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
+            return;
+
         //Activate UI Obejct        
         GetCurrentController<RoamingAndCombatUiController>().CameraIndicator.SetActive(true);
 
@@ -89,22 +96,30 @@ public class UiManager : MonoBehaviour
     }
     public void UpdateHealth(int currentHealth, int MaxHealth)
     {
-        GetCurrentController<RoamingAndCombatUiController>().UpdateHealth(currentHealth, MaxHealth);
+        switch (GameManager.Instance.CurrentGameMode)
+        {
+            case GameManager.GameMode.Interacting:
+            case GameManager.GameMode.GameOver:
+            case GameManager.GameMode.Credits:
+                break;
+            default:
+                GetCurrentController<RoamingAndCombatUiController>().UpdateHealth(currentHealth, MaxHealth);
+                break;
+        }        
     }
     public void UpdateShield(int currentShield, int MaxShield)
     {
         GetCurrentController<RoamingAndCombatUiController>().UpdateShield(currentShield, MaxShield);
     }
-    public void UpdateEnergy(int currentEnergy, int MaxEnergy)
+    public void UpdateEnergy(float currentEnergy, float MaxEnergy)
     {
         GetCurrentController<RoamingAndCombatUiController>().UpdateEnergy(currentEnergy, MaxEnergy);
     }
-    public void EndTurnButtonVisibility(bool Visiable)
-    {
-        GetCurrentController<RoamingAndCombatUiController>().ChangeEndButtonVisibility(Visiable);
-    }
     public void ChangeCombatScreenTemp(bool Interact)
     {
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
+            return;
+
         GetCurrentController<RoamingAndCombatUiController>().ChangeCombatScreenTemp(Interact);
     }
     /// <summary>
@@ -119,7 +134,7 @@ public class UiManager : MonoBehaviour
     /// Update gear buttons
     /// </summary>
     /// <param name="energy"></param>
-    public void UpdateGearButtonsStates(int energy)
+    public void UpdateGearButtonsStates(float energy)
     {
         var controller = GetCurrentController<RoamingAndCombatUiController>();
         if (controller != null)
@@ -141,19 +156,50 @@ public class UiManager : MonoBehaviour
 
     }
     /// <summary>
+    /// Check if player can make anymore moves.
+    /// </summary>
+    public void CanMakeAnyMoreMoves()
+    {
+        if (
+            GameObject.Find("Player").GetComponent<PlayerController>().Energy == 0
+            &&
+            ChipManager.Instance.IsHandEmpty
+            )
+        {
+            GetCurrentController<RoamingAndCombatUiController>().PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
+            GetCurrentController<RoamingAndCombatUiController>().EndTurnButtonAnimator.SetTrigger("Click Me");
+        }
+    }
+    /// <summary>
     /// Setup screen for CombatMode
     /// </summary>
-    private void StartCombat()
+    public void StartCombat()
     {
-        GetCurrentController<RoamingAndCombatUiController>().SwitchMode(true);
+        GetCurrentController<RoamingAndCombatUiController>().StartPrepCombatStart();
+    }
+
+    /// <summary>
+    /// Setup screen for puzzle combat mode
+    /// </summary>
+    public void StartPuzzleCombat()
+    {
+        GetCurrentController<RoamingAndCombatUiController>().StarPrepCombatStartPuzzle();
+    }
+
+    /// <summary>
+    /// Ends the screen for puzzle combat
+    /// </summary>
+    public void EndPuzzleCombat()
+    {
+        GetCurrentController<RoamingAndCombatUiController>().RemoveCombatUIPuzzle();
     }
     /// <summary>
     /// Remove combat screen for roaming
     /// </summary>
-    private void EndCombat()
+    public void EndCombat()
     {
-        if(GameManager.Instance.CurrentGameMode != GameManager.GameMode.GameOver)
-            GetCurrentController<RoamingAndCombatUiController>().SwitchMode(false);
+        if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.GameOver)
+            GetCurrentController<RoamingAndCombatUiController>().RemoveCombatUI();
     }
     #endregion
     #region InventoryUI
@@ -248,11 +294,11 @@ public class UiManager : MonoBehaviour
         {
             if (CurrentUI.name == InventoryUI.name)
             {
-                SwitchScreen(RoamingAndCombatUI);
+                AdditiveSceneLoadandUnload("Settings", true);
             }
             else
             {
-                SwitchScreen(SettingsUI);
+                AdditiveSceneLoadandUnload("Settings", false);
             }
         }
 
@@ -260,19 +306,17 @@ public class UiManager : MonoBehaviour
 
     /// <summary>
     /// Override for open settings ui
-    ///If settings breaks it's 10000% this but I think it's working
     /// </summary>
     /// <param name="context"></param>
     public void ToggleSettings()
     {
         if (CurrentUI.name == InventoryUI.name)
         {
-            StartCoroutine(DetermineCombat());
-            SwitchScreen(RoamingAndCombatUI);
+            AdditiveSceneLoadandUnload("Settings", true);
         }
         else
         {
-            SwitchScreen(SettingsUI);
+            AdditiveSceneLoadandUnload("Settings", false);
         }
     }
     /// <summary>
@@ -280,7 +324,33 @@ public class UiManager : MonoBehaviour
     /// </summary>
     private void ToggleSettingsAtTitle()
     {
-        SwitchScreen(SettingsUI);
+        AdditiveSceneLoadandUnload("Settings", false);
+    }
+
+    /// <summary>
+    /// A check for if we are in the title screen for settings UI mainly
+    /// </summary>
+    /// <returns></returns>
+    public bool TitleCheck()
+    {
+        //Are we in the title sceen
+        if (GameObject.Find("Player") == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// We need a way to find title controller in the correct scene for settings UI
+    /// </summary>
+    /// <param name="name"></param>
+    public GameObject FindTitleController(string name)
+    {
+        return GameObject.Find(name);
     }
 
     /// <summary>
@@ -288,27 +358,21 @@ public class UiManager : MonoBehaviour
     /// </summary>
     public void CloseSettingsOnClick()
     {
-        StartCoroutine(DetermineCombat());
-        SwitchScreen(RoamingAndCombatUI);
+        AdditiveSceneLoadandUnload("Settings", true);
     }
 
-    /// <summary>
-    /// A method to determine if the combat UI should be in combat when exiting the settings ui
-    /// </summary>
-    private IEnumerator DetermineCombat()
+    private void AdditiveSceneLoadandUnload(string scene, bool unload)
     {
-        yield return new WaitForSecondsRealtime(0.3f);
-        //If we are in combat put us in combat mode
-        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
+        if(unload)
         {
-            //This mode will make sure combat resumes properly
-            CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(true);
+            SceneManager.UnloadSceneAsync(scene);
+            //Allows the character to move
+            GameManager.Instance.UpdateGameMode(GameMode);
         }
-        //If anything else
         else
         {
-            //Do not put us in combat
-            CurrentUI?.GetComponent<RoamingAndCombatUiController>().SwitchMode(false);
+            GameMode = GameManager.Instance.CurrentGameMode;
+            SceneManager.LoadScene(scene, LoadSceneMode.Additive);
         }
     }
     public void CloseSettingsOnClickTitle()
@@ -454,6 +518,12 @@ public class UiManager : MonoBehaviour
         CurrentUI.transform.localPosition = Vector3.zero;
         CurrentUI.transform.localRotation = Quaternion.identity;
         CurrentUI.transform.localScale = Vector3.one;
+    }
+
+    public void PopUpMessage(string message,Action MethodToCallOnConfirm=null)
+    {
+        GameObject temp = Instantiate(Popup, Instance.transform);
+        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(message, MethodToCallOnConfirm);
     }
     
     private void SceneChange(Levels newLevel)
