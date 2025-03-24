@@ -20,7 +20,7 @@ MonoBehaviour:
   itemEffects:
   - {fileID: 11400000, guid: 43de31146a04d5f49aba2ec9165193dd, type: 2}
   ItemRarityWeight: 0.15
-  valueIncreaseBy: 0000000002000000040000000600000008000000
+  valueIncreaseBy: 0000000002000000030000000400000005000000
   scrapValueForEachTeir: 0a0000000f00000014000000190000001e00000005000000
   ItemActivateSound: 16
   ItemDeactivateSound: 16

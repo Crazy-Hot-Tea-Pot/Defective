@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e1781cf51b510a44b451071858f430e, type: 3}
-  m_Name: Spend 5 Energy and Deal 2 Damage (Single Target)
+  m_Name: Spend 2 Energy and Deal 3 Damage
   m_EditorClassIdentifier: 
-  energyCost: 1
-  SpecialConditionEffect: 0
-  Condition: 0
-  deBuffEffectToApplyToEnemy: []
+  energyCost: 2
+  SpecialConditionEffect: 1
+  Condition: 1
+  deBuffEffectToApplyToEnemy:
+  - DeBuff: 1
+    AmountToDeBuff: 1
   buffToApplyToPlayer: []
   debuffToApplyToPlayer: []
   effectToApplyToPlayer: 0
   HitAllTargets: 0
-  baseDamage: 2
+  baseDamage: 3
