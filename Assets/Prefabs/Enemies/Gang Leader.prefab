@@ -174,10 +174,9 @@ MonoBehaviour:
   agent: {fileID: 0}
   Animator: {fileID: 7179783880809168420}
   playerCamera: {fileID: 0}
-  enemyName: 
+  enemyName: Gang Leader
   enemyDifficulty: 2
   enemyIs: 0
-  maxHP: 80
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}
   DroppedChips: []
@@ -217,6 +216,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6909295669475989238}
     m_Modifications:
+    - target: {fileID: 692259597026661380, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692259597026661380, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692259597026661380, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692259597026661380, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 725513441622281150, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -305,21 +320,73 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3623526319657072417, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623526319657072417, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623526319657072417, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623526319657072417, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3725788166322361622, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112317058377381678, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_text
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5139836085644037944, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5146906263344973441, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146906263344973441, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146906263344973441, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146906263344973441, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5268760087186665007, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5805350694152790122, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: EffectPrefab
+      value: 
+      objectReference: {fileID: 574781747826575752, guid: 92ab3e66630a362438532ffc7dba401f, type: 3}
+    - target: {fileID: 5963902245727523415, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5999033585686323767, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032271459558298246, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_text
+      value: Gang Leader
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032271459558298246, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_fontSize
+      value: 65.8
       objectReference: {fileID: 0}
     - target: {fileID: 6488430225359736191, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
@@ -336,6 +403,22 @@ PrefabInstance:
     - target: {fileID: 8398928584233296438, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8622234643699543731, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Name

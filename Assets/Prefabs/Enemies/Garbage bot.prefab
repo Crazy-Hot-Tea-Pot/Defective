@@ -107,10 +107,9 @@ MonoBehaviour:
   agent: {fileID: 0}
   Animator: {fileID: 8791733095705212926}
   playerCamera: {fileID: 0}
-  enemyName: Garbage
+  enemyName: Garbage bot
   enemyDifficulty: 2
   enemyIs: 1
-  maxHP: 120
   listOfActiveEffects: []
   damageTextPrefab: {fileID: 8797586467627540377, guid: adf7e13694cdcc04ab4b930ff94a86cb, type: 3}
   DroppedChips: []
@@ -293,6 +292,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4112317058377381678, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_text
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 5146906263344973441, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -323,7 +326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6032271459558298246, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_fontSize
-      value: 65.8
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 6388239274412779569, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
@@ -344,6 +347,22 @@ PrefabInstance:
     - target: {fileID: 8398928584233296438, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597158907027910992, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8622234643699543731, guid: b845a22ad60f6954ab4cdc7901576242, type: 3}
       propertyPath: m_Name

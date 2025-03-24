@@ -1252,7 +1252,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.8333333
-    functionName: CallMethod
+    functionName: CallIntent
     data: Neutralize
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

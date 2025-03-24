@@ -82,6 +82,7 @@ public class Enemy : MonoBehaviour
     protected float shield;
     protected float maxShield = 0f;
     protected bool isTargeted;
+    protected int nextIntentRoll;
 
     /// <summary>
     /// Returns name of enemy
@@ -165,7 +166,8 @@ public class Enemy : MonoBehaviour
         }
         protected set
         {
-            currentHp = value;
+            //Make sure save as 1 decimal place
+            currentHp = (float)Math.Round((double)value,1);
 
             //Update UI for enemy HealthBar
             thisEnemyUI.UpdateHealth(currentHp,MaxHp);

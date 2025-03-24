@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Leech
-  StartingDescription: Absorb an equal amount of damage delt as energy from the enemy
+  StartingDescription: Deal damage while refilling energy taken from enemies
   chipImage: {fileID: 21300000, guid: ac9593d5d54bf324bbe4fe404d86eb48, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150

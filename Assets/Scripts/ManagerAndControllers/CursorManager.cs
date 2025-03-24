@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CursorManager : MonoBehaviour
 {
@@ -38,6 +39,12 @@ public class CursorManager : MonoBehaviour
     // Handles the cursor changes based on what the mouse is hovering over
     private void HandleCursor()
     {
+        if(EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            ResetCursor();
+            return;
+        }
+
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 

@@ -2,8 +2,6 @@
 
 public class GarbageBot : Enemy
 {
-    // Store the roll for consistency
-    private int nextIntentRoll;
 
     [Header("Sound")]
     public SoundFX ShredGarbageSound;

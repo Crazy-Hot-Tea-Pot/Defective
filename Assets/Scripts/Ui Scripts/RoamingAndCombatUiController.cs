@@ -48,7 +48,9 @@ public class RoamingAndCombatUiController : UiController
     public GameObject EffectsContainer;
     public GameObject EffectsInfoObject;
     public TextMeshProUGUI EffectsInfo;
-    public List<Sprite> EffectImages;    
+    public List<Sprite> EffectImages;
+
+    private bool introCombatAnimationFinish = false;
 
     // Start is called before the first frame update
     void Start()
@@ -86,22 +88,29 @@ public class RoamingAndCombatUiController : UiController
     /// <param name="isInteractable"></param>
     public void ChangeCombatScreenTemp(bool isInteractable)
     {
-        EndTurnButton.interactable = isInteractable;
+        if (introCombatAnimationFinish)
+        { 
+            EndTurnButton.interactable = isInteractable;
 
-        if (isInteractable)
-        {
-            if(ChipManager.Instance.UsedChips.Count!=8)
-                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+            if (isInteractable)
+            {
+                if (ChipManager.Instance.UsedChips.Count != 8)
+                {
+                    PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+                    PlayerHand.GetComponent<PlayerHandContainer>().SliderButton.interactable = true;
+                }
+            }
+            else
+            {
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
+                PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+                PlayerHand.GetComponent<PlayerHandContainer>().SliderButton.interactable = false;
+            }
+
+            EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
+
+            CombatAnimation.SetActive(!isInteractable);
         }
-        else
-        {
-            PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
-            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
-        }
-
-        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
-
-        CombatAnimation.SetActive(!isInteractable);      
     }
 
     /// <summary>
@@ -206,6 +215,7 @@ public class RoamingAndCombatUiController : UiController
         PlayerHand.SetActive(false);
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
         EndTurn.SetActive(false);
+        CombatAnimation.SetActive(false);
     }
 
     /// <summary>
@@ -247,13 +257,18 @@ public class RoamingAndCombatUiController : UiController
     /// </summary>
     public void ContPrepCombatStart()
     {
-        EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
-        PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
-        
-        if (ChipManager.Instance.UsedChips.Count != 8)
-            PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+        if (!introCombatAnimationFinish)
+        {
+            EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
+            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
 
-        Invoke("FinishCombatStart", 1f);
+            if (ChipManager.Instance.UsedChips.Count != 8)
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+
+            introCombatAnimationFinish = true;
+
+            Invoke("FinishCombatStart", 1f);
+        }
     }
     private void FinishCombatStart()
     {
@@ -352,7 +367,7 @@ public class RoamingAndCombatUiController : UiController
             case "Power":
                 EffectsInfo.SetText("Attacks deal additional damage equal to your amount of <b>power</b>.<sub>(until end of combat)</sub>");
                 break;
-            case "Worn Down":
+            case "WornDown":
                 EffectsInfo.SetText("While <b>Worn Down</b>, your <color=#3EF4D3>Shield</color> provides 30% less <color=#3EF4D3>Shield</color>");
                 break;
             default:

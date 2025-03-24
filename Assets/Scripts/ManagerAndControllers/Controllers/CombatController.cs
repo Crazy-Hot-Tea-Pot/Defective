@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class CombatController : MonoBehaviour
@@ -321,6 +322,10 @@ public class CombatController : MonoBehaviour
             Debug.Log("All enemies defeated or escaped. Combat ends.");
             EndCombat();
         }
+        else
+        {
+            StartTurn();
+        }
     }
 
     /// <summary>
@@ -366,7 +371,6 @@ public class CombatController : MonoBehaviour
         // Change to Combat Background Music
         SoundManager.ChangeBackground(CombatSound);
     }
-
 
     /// <summary>
     /// Resets combat-related data to prepare for a new combat encounter.
@@ -419,24 +423,30 @@ public class CombatController : MonoBehaviour
     /// <param name="context"></param>
     private void OnSelectTarget(InputAction.CallbackContext context)
     {
+        StartCoroutine(HandleTargetSelection());
+    }
+    private IEnumerator HandleTargetSelection()
+    {
+        yield return null; // Wait for UI to update this frame
+
         if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-        {
-            return;
-        }
+            yield break;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            yield break;
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
 
-
         if (Physics.Raycast(ray, out hit))
         {
-            // Check if the clicked object is an enemy combatant
             if (hit.collider.CompareTag("Enemy"))
             {
                 SetTarget(hit.collider.gameObject);
             }
         }
     }
+
 
     /// <summary>
     /// Method to cycle through combatEnemies using Tab key

@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cc3f0f3f73f624e9acf36bae9e783d, type: 3}
+  m_Name: branch test
+  m_EditorClassIdentifier: 
+  storyName: branch test
+  pathType: 1
+  difficulty: 1
+  levels:
+  - uniqueLevelID: 2dcae793-7034-4507-8927-1da2a0445c7d
+    levelID: 1
+    terminalSpawnChance: 0
+    enemySpawns: []
+    nextLevels:
+    - rid: 304137549666320386
+    - rid: 304137549666320387
+    isCompleted: 0
+    questCondition: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 304137549666320386
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 08c6922b-d9b6-4319-83b4-ae1d170dbe71
+        levelID: 2
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels:
+        - rid: 304137549666320388
+        - rid: 304137549666320389
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 304137549666320387
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 04553ddf-b690-4858-aa94-94e9063211e0
+        levelID: 3
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels:
+        - rid: 304137549666320390
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 304137549666320388
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: cbc9a9b4-7013-4d22-b96e-a1580d6e16da
+        levelID: 4
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 304137549666320389
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 74bdbf97-e24d-433b-917e-475eb7ad512d
+        levelID: 5
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 304137549666320390
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 2890e4f6-fc1e-420d-b036-df4c53a4ff30
+        levelID: 6
+        terminalSpawnChance: 0
+        enemySpawns: []
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}

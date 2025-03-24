@@ -25,7 +25,22 @@ public class GangLeader : Enemy
             looter2 = value;
         }
     }
+    public enum GangLeaderPhases
+    {
+        WithLooters,
+        Alone
+    }
 
+    public GangLeaderPhases CurrentPhase
+    {
+        get
+        {
+            if(Looter1 != null || Looter2!= null)
+                return GangLeaderPhases.WithLooters;
+            else
+                return GangLeaderPhases.Alone;
+        }
+    }
     private GameObject looter1;
     private GameObject looter2;
 
@@ -46,8 +61,20 @@ public class GangLeader : Enemy
         
         Debug.Log("Assigning Looters");
         AssignLooters();
+
+        // Roll first intent at combat start
+        nextIntentRoll = Random.Range(1, 11);
+
         base.CombatStart();
     }
+
+    public override void EndTurn()
+    {
+        // Roll next intent for the upcoming turn
+        nextIntentRoll = Random.Range(1, 11);
+        base.EndTurn();
+    }
+
 
     protected override void SetUpEnemy()
     {
@@ -72,37 +99,49 @@ public class GangLeader : Enemy
         CurrentHP = MaxHp;
     }
 
-
     protected override void PerformIntent()
     {
         base.PerformIntent();
 
-        if (Looter1.activeInHierarchy || Looter2.activeInHierarchy)
+        // If the selected intent is a Looter-dependent one
+        if (NextIntent.intentText == "Threaten" && (Looter1 == null && Looter2 == null))
         {
-            if (Random.Range(1, 11) < 5)
-            {
+            Debug.Log("Looters are gone. Rerolling intent for Gang Leader...");
+
+            // Reroll intent phase
+            nextIntentRoll = Random.Range(1, 11);
+
+            // Get new intent (updates display)
+            var rerolledIntent = GetNextIntent();
+            NextIntent = rerolledIntent;
+
+            // Force update on UI
+            EnemyUI enemyUI = EnemyUIObject.GetComponent<EnemyUI>();
+            enemyUI.DisplayIntent(rerolledIntent.intentText, rerolledIntent.intentType, rerolledIntent.value);
+        }
+
+        // Now perform the actual intent
+        switch (NextIntent.intentText)
+        {
+            case "Threaten":
                 //Threaten();
                 Animator.SetTrigger("Intent 1");
-            }                
-            else
-            {
+                break;
+            case "Intimidate":
                 //Intimidate();
                 Animator.SetTrigger("Intent 2");
-            }
-        }
-        //Once Looters are defeated
-        else
-        {
-            if (Random.Range(1, 11) < 4)
-            {
+                break;
+            case "Disorient":
                 //Disorient();
                 Animator.SetTrigger("Intent 3");
-            }
-            else
-            {
+                break;
+            case "Cower":
                 //Cower();
                 Animator.SetTrigger("Intent 4");
-            }
+                break;
+            default:
+                Debug.LogWarning($"Unknown intent: {NextIntent.intentText}");
+                break;
         }
     }
     /// <summary>
@@ -125,21 +164,26 @@ public class GangLeader : Enemy
     }
     /// <summary>
     /// Self and Looters gain 2 Power.
-    /// 50% change of this
+    /// 50% chance of this.
+    /// no reference as called by animator
     /// </summary>
     private void Threaten()
     {
+        // Gang Leader buffs self
         this.AddEffect(Effects.Buff.Power, 2);
 
-        //Come back and remove this for better logic
-        try
+        if (Looter1 != null)
         {
-            Looter1.GetComponent<Enemy>().AddEffect(Effects.Buff.Power, 2);
-            Looter2.GetComponent<Enemy>().AddEffect(Effects.Buff.Power, 2);
+            var enemy = Looter1.GetComponent<Enemy>();
+            if (enemy != null)
+                enemy.AddEffect(Effects.Buff.Power, 2);
         }
-        catch
+
+        if (Looter2 != null)
         {
-            Debug.Log("One of looters are dead.");
+            var enemy = Looter2.GetComponent<Enemy>();
+            if (enemy != null)
+                enemy.AddEffect(Effects.Buff.Power, 2);
         }
     }
     /// <summary>
@@ -162,29 +206,33 @@ public class GangLeader : Enemy
             .ToList();
 
         if (looters.Count > 0)
+        {
             Looter1 = looters[0];
+            Looter1.GetComponent<Looter>().IsWithLeader = true;
+        }
 
         if (looters.Count > 1)
+        {
             Looter2 = looters[1];
+            Looter2.GetComponent <Looter>().IsWithLeader = true;
+        }
 
         Debug.Log($"Gang Leader assigned Looters: {Looter1?.name}, {Looter2?.name}");
     }
 
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        if (Looter1.activeInHierarchy || Looter2.activeInHierarchy)
+        if (CurrentPhase == GangLeaderPhases.WithLooters)
         {
-            if (Random.Range(1, 11) < 5)
-                return ("Threaten", IntentType.Buff, 2);
-            else
-                return ("Intimidate", IntentType.Debuff, 1);
+            return nextIntentRoll < 5
+                ? ("Threaten", IntentType.Buff, 2)
+                : ("Intimidate", IntentType.Debuff, 1);
         }
         else
         {
-            if (Random.Range(1, 11) < 4)
-                return ("Disorient", IntentType.Attack, 6);
-            else
-                return ("Cower", IntentType.Shield, 15);
+            return nextIntentRoll < 4
+                ? ("Disorient", IntentType.Attack, 6)
+                : ("Cower", IntentType.Shield, 15);
         }
     }
 
