@@ -117,7 +117,7 @@ MonoBehaviour:
   DroppedItems: []
   DroppedScrap: 40
   EnemyDeathSound: 0
-  EnemyDamageTakenSound: 0
+  EnemyDamageTakenSound: 52
   ShredGarbageSound: 0
 --- !u!65 &3419500869265954236
 BoxCollider:

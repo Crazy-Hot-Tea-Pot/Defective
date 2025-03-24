@@ -16,6 +16,7 @@ public enum SoundFX
     ChipDebuffV1,
     ChipNormal,
     ChipsPlay,
+    Combat_StartSfxV1,
     DeckClose,
     DeckOpen,
     DoorSfx,
@@ -43,6 +44,8 @@ public enum SoundFX
     GuardSound,
     Jam,
     LaserBeam,
+    LooterBossDeath,
+    LooterDeath,
     LooterEscapeSFX,
     LuckyTrinket,
     MaintenanceBotDeath,
@@ -60,5 +63,6 @@ public enum SoundFX
     Shroud,
     SteelPlatingSound,
     Swipe,
+    Test,
     WornDown,
 }

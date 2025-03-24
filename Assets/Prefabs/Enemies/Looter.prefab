@@ -67,7 +67,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2d213ab2834cc1348bf06d8ea2e71b18, type: 2}
   DroppedScrap: 15
   EnemyDeathSound: 0
-  EnemyDamageTakenSound: 0
+  EnemyDamageTakenSound: 52
 --- !u!136 &684236413309906426
 CapsuleCollider:
   m_ObjectHideFlags: 0
