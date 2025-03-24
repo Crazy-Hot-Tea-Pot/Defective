@@ -32926,7 +32926,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 35, y: 15, z: 35}
+  m_LocalScale: {x: 35, y: 15, z: 53}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1372429337453053232}
@@ -33353,7 +33353,7 @@ GameObject:
   - component: {fileID: 1807833165839169056}
   - component: {fileID: 8656661329748813548}
   m_Layer: 2
-  m_Name: Combat Zone (2)
+  m_Name: BOSS CAM
   m_TagString: CombatZone
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -33877,7 +33877,7 @@ Transform:
   m_GameObject: {fileID: 1201775341039237389}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8999996, y: -7.2, z: 0.32000005}
+  m_LocalPosition: {x: -0.5, y: -7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33926,7 +33926,7 @@ Transform:
   m_GameObject: {fileID: 1923318342777702941}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6999998, y: -10.86, z: 0.3199997}
+  m_LocalPosition: {x: -1, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34272,31 +34272,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.69
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.098840855
+      value: -0.009362524
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.01573435
+      value: -0.00035036597
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9826066
+      value: 0.99925673
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.15641989
+      value: -0.037394457
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -34399,31 +34399,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.810001
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.3
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9673415
+      value: -0.01997212
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.007177277
+      value: -0.00079697534
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.25336835
+      value: 0.9990052
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0018798888
+      value: -0.039864697
       objectReference: {fileID: 0}
     - target: {fileID: 4986987348647155085, guid: b447e20d11af1d843bc4a30ad88c8216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -34615,10 +34615,10 @@ MonoBehaviour:
   NotSaveTransparicy: 0.2
   InCombatColor: {r: 0.9150943, g: 0, b: 0, a: 0}
   CombatTransparicy: 1
-  areaSize: {x: 35, y: 15, z: 35}
-  playerPositionXZOffset: {x: -7, y: -9.04}
-  cameraPositionOffset: {x: -12.81, y: -2.5, z: -17.3}
-  cameraTargetPositionOffset: {x: -2.9, y: -7.2, z: 0.32}
+  areaSize: {x: 35, y: 15, z: 53}
+  playerPositionXZOffset: {x: 0, y: 8}
+  cameraPositionOffset: {x: 0.5, y: 0, z: 25}
+  cameraTargetPositionOffset: {x: -0.5, y: -7, z: 0}
   CombatArea: {fileID: 1493740967503550072}
   zoneCollider: {fileID: 1029706051610519109}
   enemyLayer:
@@ -34789,8 +34789,8 @@ MonoBehaviour:
   CombatTransparicy: 1
   areaSize: {x: 35, y: 15, z: 35}
   playerPositionXZOffset: {x: -0.7, y: 12.7}
-  cameraPositionOffset: {x: 2.69, y: -0.3, z: 17}
-  cameraTargetPositionOffset: {x: -0.7, y: -10.86, z: 0.32}
+  cameraPositionOffset: {x: -0.5, y: 1, z: 27}
+  cameraTargetPositionOffset: {x: -1, y: -6, z: 0}
   CombatArea: {fileID: 2208939645550126440}
   zoneCollider: {fileID: 312771112094471509}
   enemyLayer:
@@ -34810,7 +34810,7 @@ Transform:
   m_GameObject: {fileID: 5004948632061702655}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -7, z: -9.04}
+  m_LocalPosition: {x: 0, y: -7, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
