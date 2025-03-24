@@ -61,13 +61,13 @@ public class Looter : Enemy
         switch (Difficulty)
         {
             case EnemyDifficulty.Easy:
-                MaxHp = 20;
-                break;
-            case EnemyDifficulty.Medium:
                 MaxHp = 30;
                 break;
-            case EnemyDifficulty.Hard:
+            case EnemyDifficulty.Medium:
                 MaxHp = 45;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 60;
                 break;
         }
 
