@@ -5,7 +5,11 @@ using UnityEngine;
 public class Looter : Enemy
 {
     [Header("Custom for Enemy type")]
+    // To track the number of Swipes performed
+    private int swipeCount = 0;
+    private bool isShrouded;
     private int stolenScrap = 0;
+    private bool isWithLeader = false;
     /// <summary>
     /// To keep track of stolen Scraps
     /// </summary>
@@ -20,16 +24,21 @@ public class Looter : Enemy
             stolenScrap = value;
         }
     }
-
-    // To track the number of Swipes performed
-    private int swipeCount = 0;
-
-    private bool isShrouded;
-
     public bool IsShrouded
     {
         get { return isShrouded; }
         private set { isShrouded = value; }
+    }
+    public bool IsWithLeader
+    {
+        get
+        {
+            return isWithLeader;
+        }
+        set
+        {
+            isWithLeader = value;
+        }
     }
 
     // Start is called before the first frame update
@@ -72,7 +81,7 @@ public class Looter : Enemy
         // Since 100% on first chance just made it this way.
 
         if (swipeCount < 3) // First three turns are Swipe
-        {
+        {   
             //Swipe();
             Animator.SetTrigger("Intent 1");
         }
@@ -109,7 +118,16 @@ public class Looter : Enemy
         else if (swipeCount == 3 && !IsShrouded)
             return ("Shroud", IntentType.Shield, 10);
         else if (IsShrouded)
-            return ("Escape", IntentType.Unique, 0);
+        {
+            //if with gangleader reset
+            if (IsWithLeader)
+            {
+                swipeCount = 0;
+                return ("Swipe", IntentType.Attack, 6);
+            }
+            else
+                return ("Escape", IntentType.Unique, 0);
+        }
 
         return ("Unknown", IntentType.None, 0);
     }

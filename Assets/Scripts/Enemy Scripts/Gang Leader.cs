@@ -206,10 +206,16 @@ public class GangLeader : Enemy
             .ToList();
 
         if (looters.Count > 0)
+        {
             Looter1 = looters[0];
+            Looter1.GetComponent<Looter>().IsWithLeader = true;
+        }
 
         if (looters.Count > 1)
+        {
             Looter2 = looters[1];
+            Looter2.GetComponent <Looter>().IsWithLeader = true;
+        }
 
         Debug.Log($"Gang Leader assigned Looters: {Looter1?.name}, {Looter2?.name}");
     }
