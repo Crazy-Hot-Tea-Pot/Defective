@@ -215,6 +215,7 @@ public class RoamingAndCombatUiController : UiController
         PlayerHand.SetActive(false);
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", false);
         EndTurn.SetActive(false);
+        CombatAnimation.SetActive(false);
     }
 
     /// <summary>

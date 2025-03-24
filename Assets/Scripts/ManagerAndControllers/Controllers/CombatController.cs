@@ -322,6 +322,10 @@ public class CombatController : MonoBehaviour
             Debug.Log("All enemies defeated or escaped. Combat ends.");
             EndCombat();
         }
+        else
+        {
+            StartTurn();
+        }
     }
 
     /// <summary>
@@ -367,7 +371,6 @@ public class CombatController : MonoBehaviour
         // Change to Combat Background Music
         SoundManager.ChangeBackground(CombatSound);
     }
-
 
     /// <summary>
     /// Resets combat-related data to prepare for a new combat encounter.
