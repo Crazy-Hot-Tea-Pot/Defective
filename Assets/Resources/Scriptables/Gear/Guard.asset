@@ -22,9 +22,9 @@ MonoBehaviour:
   ItemRarityWeight: 0.2
   valueIncreaseBy: 0000000000000000010000000000000002000000
   scrapValueForEachTeir: 050000000a0000000f000000140000001900000005000000
-  ItemActivateSound: 32
-  ItemDeactivateSound: 52
-  ItemFailSound: 52
-  ItemHitShield: 32
-  ItemHitFlesh: 32
-  ItemHitMetal: 32
+  ItemActivateSound: 34
+  ItemDeactivateSound: 56
+  ItemFailSound: 56
+  ItemHitShield: 34
+  ItemHitFlesh: 34
+  ItemHitMetal: 34

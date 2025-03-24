@@ -65,8 +65,8 @@ MonoBehaviour:
   DroppedItems:
   - {fileID: 11400000, guid: 973ffdfa52080df418e8e09c0fc909fa, type: 2}
   DroppedScrap: 15
-  EnemyDeathSound: 13
-  EnemyDamageTakenSound: 13
+  EnemyDeathSound: 41
+  EnemyDamageTakenSound: 56
   NeutralizeSound: 35
   RamSound: 15
   AlertSound: 12

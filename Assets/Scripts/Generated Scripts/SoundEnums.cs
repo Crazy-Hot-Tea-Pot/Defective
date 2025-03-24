@@ -2,8 +2,11 @@ public enum BgSound
 {
     Background,
     BattleBM,
+    Credits,
     MainMenuAmbient,
     TutorialBackground,
+    TutorialBackgroundv2,
+    TutorialBackgroundv3,
 }
 
 public enum SoundFX
@@ -16,6 +19,7 @@ public enum SoundFX
     ChipDebuffV1,
     ChipNormal,
     ChipsPlay,
+    CombatStartSfxV2,
     Combat_StartSfxV1,
     DeckClose,
     DeckOpen,

@@ -1064,7 +1064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24365c5b6b6082a4dbd2f4b6841a407e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playInScenes: 00000000070000000a00000009000000
+  playInScenes: 00000000070000000a000000
   pauseInScenes: 01000000020000000300000004000000050000000600000008000000
 --- !u!114 &1259556925
 MonoBehaviour:
