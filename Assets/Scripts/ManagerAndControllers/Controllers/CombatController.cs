@@ -190,7 +190,7 @@ public class CombatController : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles an enemy leaving combat, either by escaping or dying.
+    /// Handles an enemy leaving combat, either by dying.
     /// Adds loot and removes the enemy from the turn queue.
     /// </summary>
     /// <param name="enemy">The enemy leaving combat.</param>
@@ -221,6 +221,31 @@ public class CombatController : MonoBehaviour
 
         // Check for combat end
         CheckCombatEnd();
+    }
+    /// <summary>
+    /// Handles an enemy leaving combat by escape.
+    /// </summary>
+    /// <param name="enemy"></param>
+    public void LeaveCombat(GameObject enemy)
+    {
+        if (!CombatEnemies.Contains(enemy))
+            return;
+
+        Debug.Log($"{enemy.name} has left combat!");
+        CombatEnemies.Remove(enemy);
+
+        // Rebuild the queue without the enemy
+        turnQueue = new Queue<GameObject>(CombatEnemies);
+
+        if (CombatEnemies.Count == 0)
+        {
+            Debug.Log("All enemies defeated or escaped. Combat ends.");
+            EndCombat();
+        }
+        else
+        {
+            StartTurn();
+        }
     }
 
     /// <summary>
@@ -321,10 +346,6 @@ public class CombatController : MonoBehaviour
         {
             Debug.Log("All enemies defeated or escaped. Combat ends.");
             EndCombat();
-        }
-        else
-        {
-            StartTurn();
         }
     }
 
