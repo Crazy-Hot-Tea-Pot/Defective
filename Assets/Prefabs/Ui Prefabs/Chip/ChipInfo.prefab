@@ -83,11 +83,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe33c051c9a8c644bfddba7f453f542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimateTime: 1
   ChipImage: {fileID: 5168639810700702312}
   ChipName: {fileID: 1428252078310546695}
   ChipDescription: {fileID: 2969612216005241874}
   ChipType: {fileID: 7308661907051642745}
-  animator: {fileID: 0}
+  animator: {fileID: 913458041113260109}
 --- !u!1 &2770254428000223957
 GameObject:
   m_ObjectHideFlags: 0

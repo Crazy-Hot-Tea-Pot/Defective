@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 
-public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Chip : MonoBehaviour, IPointerClickHandler
 {
     public enum ChipMode
     {
@@ -304,35 +303,44 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 break;
         }
     }
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (chipInfoDisplay == null)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
+            if (chipInfoDisplay == null)
+            {
 
-            chipInfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
+                chipInfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
 
 
-            ChipInfoController controller = chipInfoDisplay.GetComponent<ChipInfoController>();
+                ChipInfoController controller = chipInfoDisplay.GetComponent<ChipInfoController>();
 
-            SetUpChipInfo(controller);           
+                controller.SetUpChipInfo(NewChip);
+
+                switch (NewChip.ChipType)
+                {
+                    case NewChip.TypeOfChips.Attack:
+                        controller.ChipType.color = Color.red;
+                        break;
+                    case NewChip.TypeOfChips.Defense:
+                        controller.ChipType.color = Color.blue;
+                        break;
+                    case NewChip.TypeOfChips.Skill:
+                        controller.ChipType.color = Color.green;
+                        break;
+                    default:
+                        controller.ChipType.color = Color.white;
+                        break;
+                }
+
+                controller.animator.SetBool("IsEnlarging", true);
+                controller.animator.SetBool("IsShrinking", false);
+
+                controller.TargetPosition = this.transform.position;
+                controller.StartPosition = UiManager.Instance.transform.position;
+            }
         }
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if(chipInfoDisplay != null)
-        {
-            ChipInfoController controller = chipInfoDisplay.GetComponent<ChipInfoController>();
-
-            // Animate shrinking
-            Vector3 targetPosition = this.transform.position;
-            Vector3 startPosition = UiManager.Instance.transform.position;
-
-            controller.Shrink(startPosition, targetPosition);
-
-            // Optional: Delay destruction for animation
-            Destroy(chipInfoDisplay, 1f);
-        }
-    }
+    }    
 
     /// <summary>
     /// Tell the Upgrade Controller this is the chip the user selected to ugprade.
@@ -340,33 +348,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private void UpgradeChipSelected()
     {
         UpgradeController.ChipSelectToUpgrade(newChip);
-    }
-    private void SetUpChipInfo(ChipInfoController controller)
-    {
-        controller.ChipName.SetText(ChipTitle);
-        controller.ChipImage.sprite = NewChip.chipImage;
-        controller.ChipDescription.SetText(newChip.ChipDescription);
-        controller.ChipType.SetText(newChip.ChipType.ToString());
-
-        switch (NewChip.ChipType)
-        {
-            case NewChip.TypeOfChips.Attack:
-                controller.ChipType.color = Color.red;                
-                break;
-            case NewChip.TypeOfChips.Defense:
-                controller.ChipType.color = Color.blue;
-                break;
-            case NewChip.TypeOfChips.Skill:
-                controller.ChipType.color = Color.green;
-                break;
-            default:
-                controller.ChipType.color = Color.white;
-                break;
-        }
-
-        controller.animator.SetBool("IsEnlarging", true);
-        controller.animator.SetBool("IsShrinking", false);
-    }   
+    }  
     void OnDestroy()
     {
         if(chipInfoDisplay != null)

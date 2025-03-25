@@ -86,7 +86,7 @@ public class UiManager : MonoBehaviour
     #region RoamingAndCombatUI
     public void UpdateCameraIndicator(CameraController.CameraState cameraState)
     {
-        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver || GameManager.Instance.CurrentGameMode == GameManager.GameMode.BrowseringInventory)
             return;
 
         //Activate UI Obejct        
@@ -205,15 +205,19 @@ public class UiManager : MonoBehaviour
     #region InventoryUI
     public void ToggleInventory(InputAction.CallbackContext context)
     {
-        if (context.performed && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming)
+        if (context.performed 
+            && 
+            (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming|| GameManager.Instance.CurrentGameMode == GameManager.GameMode.BrowseringInventory))
         {
             if (CurrentUI.name == InventoryUI.name )
             {
                 SwitchScreen(RoamingAndCombatUI);
+                GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
             }
             else
             {
                 SwitchScreen(InventoryUI);
+                GameManager.Instance.UpdateGameMode(GameManager.GameMode.BrowseringInventory);
             }
         }
     }

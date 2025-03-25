@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GearInventory : MonoBehaviour, IPointerClickHandler
 {
     public enum Mode
     {
@@ -35,8 +35,6 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private GameObject gearInfoDisplay;
     private Mode mode;
-
-
 
     public Item Item
     {
@@ -74,61 +72,27 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 Debug.LogWarning("Prefab Mode not set!!");
                 break;
         }        
-    }    
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (gearInfoDisplay == null)
-        {
-
-            gearInfoDisplay = Instantiate(GearInfoPrefab, UiManager.Instance.transform);
-
-            GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();
-
-            StartCoroutine(DelayForAnimator(controller));
-        }
     }
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (gearInfoDisplay != null)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
-            GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();
+            if (gearInfoDisplay == null)
+            {
 
-            // Animate shrinking
-            Vector3 targetPosition = this.transform.position;
-            Vector3 startPosition = UiManager.Instance.transform.position;
+                gearInfoDisplay = Instantiate(GearInfoPrefab, UiManager.Instance.transform);
 
-            controller.Shrink(startPosition, targetPosition);
+                GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();
 
-            // Optional: Delay destruction for animation
-            Destroy(gearInfoDisplay, 1f);
+                controller.SetUpGearInfo(Item);
+
+                controller.animator.SetBool("IsEnlarging", true);
+                controller.animator.SetBool("IsShrinking", false);
+
+                controller.TargetPosition = this.transform.position;
+                controller.StartPosition = UiManager.Instance.transform.position;
+            }
         }
-    }
-    private IEnumerator DelayForAnimator(GearInfoController controller)
-    {
-        yield return null;
-
-        controller.GearName.SetText(Item.itemName);
-        //controller.GearDescription.SetText(Item.itemDescription);
-        controller.GearImage.sprite = Item.itemImage;
-        controller.GearType.SetText(Item.itemType.ToString());
-
-        string gearDesriptionText="";
-        foreach(var effect in Item.itemEffects)
-        {
-            gearDesriptionText += effect.GetEffectDescription(Item);            
-            gearDesriptionText += "\n=====\n";
-            //GameObject temp = null;
-            //temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);
-            //temp.GetComponent<TextMeshProUGUI>().SetText(effect.ItemEffectDescription);
-        }
-        controller.GearDescription.SetText(gearDesriptionText);
-
-
-        //Animate
-
-        Vector3 targetPosition = UiManager.Instance.transform.position;
-        Vector3 startPosition = this.transform.position;
-        controller.Enlarge(startPosition, targetPosition);
     }
     private void EquipGear()
     {
