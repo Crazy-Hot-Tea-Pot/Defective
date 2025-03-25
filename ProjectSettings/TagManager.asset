@@ -21,6 +21,7 @@ TagManager:
   - PuzzleManager
   - Puzzle
   - Junk
+  - Info
   layers:
   - Default
   - TransparentFX

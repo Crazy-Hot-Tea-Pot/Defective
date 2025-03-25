@@ -22,6 +22,6 @@ MonoBehaviour:
   debuffToApplyToPlayer: []
   effectToApplyToPlayer: 0
   HitAllTargets: 0
-  SpecialEffectName: Double Damage
+  SpecialEffectDescription: Gain 1 Power
   HasPassiveEffect: 0
   passiveEffect: 0
