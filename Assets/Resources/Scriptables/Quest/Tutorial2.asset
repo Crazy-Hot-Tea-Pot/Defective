@@ -17,10 +17,11 @@ MonoBehaviour:
   modifiedQuestName: Tutorial2
   questDesc: Tutorial2
   complete: 0
-  isTutorial: 1
-  PopupText: To attack you must first select the enemy by clicking them with your
-    mouse. Then you can use chips as located below. Chps work simialr to cards in
-    a deck and you have 8 chips total in your whole combat.
+  isTutorial: 0
+  PopupText: To attack, click your target. Below you can view your "Chips", which
+    are consumables with many different effects. You have 8 in your Deck, and draw
+    up to 4 each turn. They refill at the end of combat. Right-click them for more
+    information.
   nextQuest: {fileID: 0}
   InCombat: 1
   Index: 1
