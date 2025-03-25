@@ -20,7 +20,7 @@ public class RoamingAndCombatUiController : UiController
     public Color lowHealthColor = Color.red;
 
     [Header("Shield")]
-    public Image ShieldBar;
+    public GameObject ShieldIcon;    
     public TextMeshProUGUI ShieldText;
 
     [Header("Energy")]
@@ -142,18 +142,16 @@ public class RoamingAndCombatUiController : UiController
     {
         if (Shield == 0 && MaxShield == 100)
         {
-            ShieldBar.gameObject.SetActive(false);
-            ShieldText.gameObject.SetActive(false);
+            ShieldIcon.SetActive(false);            
         }
         else
-        {
-            ShieldText.gameObject.SetActive(true);
-            ShieldBar.gameObject.SetActive(true);
+        {            
+            ShieldIcon.SetActive(true);
 
-            float shieldPercentage = (float)Shield / MaxShield;
+            //float shieldPercentage = (float)Shield / MaxShield;
 
             // Directly update the shield bar and text
-            ShieldBar.fillAmount = shieldPercentage;
+            //ShieldBar.fillAmount = shieldPercentage;
             ShieldText.SetText($"{Shield}");
         }
     }

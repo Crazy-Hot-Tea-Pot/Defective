@@ -523,11 +523,16 @@ public class UiManager : MonoBehaviour
         CurrentUI.transform.localRotation = Quaternion.identity;
         CurrentUI.transform.localScale = Vector3.one;
     }
-
-    public void PopUpMessage(string message,Action MethodToCallOnConfirm=null)
+    /// <summary>
+    /// Bring up pop up window to player.
+    /// </summary>
+    /// <param name="message">Message to tell player.</param>
+    /// <param name="CancelButtonVisible">If you want the cancel Button Visible. Default true</param>
+    /// <param name="MethodToCallOnConfirm">Method to call when player presses confirm. Default null.</param>
+    public void PopUpMessage(string message,Action MethodToCallOnConfirm=null, bool CancelButtonVisible = true)
     {
         GameObject temp = Instantiate(Popup, Instance.transform);
-        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(message, MethodToCallOnConfirm);
+        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(message,CancelButtonVisible, MethodToCallOnConfirm);
     }
     
     private void SceneChange(Levels newLevel)

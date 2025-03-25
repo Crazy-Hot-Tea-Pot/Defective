@@ -127,22 +127,33 @@ public class QuestManager : MonoBehaviour
         if(nextQuest != null)
         {
             nextSpawnQuest = nextQuest;
-            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
+            // sure i told you to use the UIManager
+            //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
+
+            UiManager.Instance.PopUpMessage(text, SummonQuest);
+
+            //So much easier
+
             questToComplete.CompleteQuest();
         }
         else
         {
-            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, null);
+            //sigh why the f would you pass a null?
+            //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, null);
+
+            UiManager.Instance.PopUpMessage(text);
         }
     }
 
     public void CreateNullConfirmationWindow(string text, Quest completedQuest)
     {
         nextSpawnQuest = completedQuest;
-        GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-        window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, ForceComplete);
+        //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+        //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, ForceComplete);
+
+        UiManager.Instance.PopUpMessage(text, ForceComplete);
     }
 
     public void ForceComplete()
