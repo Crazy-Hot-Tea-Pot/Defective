@@ -307,7 +307,8 @@ public class Chip : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (chipInfoDisplay == null)
+            GameObject infoInScene = GameObject.FindGameObjectWithTag("Info");
+            if (chipInfoDisplay == null && infoInScene == null)
             {
 
                 chipInfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);

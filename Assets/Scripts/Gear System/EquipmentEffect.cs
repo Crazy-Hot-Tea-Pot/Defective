@@ -5,7 +5,7 @@ using static Effects;
 public class EquipmentEffect : ItemEffect
 {
     [Header("Equipment values")]
-    public string SpecialEffectName;    
+    public string SpecialEffectDescription;    
 
     /// <summary>
     /// If this effect is passive
@@ -47,7 +47,7 @@ public class EquipmentEffect : ItemEffect
     }
     public override string GetEffectDescription(Item item)
     {
-        return $"Special Effect: {SpecialEffectName}";
+        return $"Special Effect: {SpecialEffectDescription}";
     }
 
     protected override void Equipped()

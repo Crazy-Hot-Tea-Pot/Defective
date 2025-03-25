@@ -77,7 +77,8 @@ public class GearInventory : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (gearInfoDisplay == null)
+            GameObject infoInScene = GameObject.FindGameObjectWithTag("Info");
+            if (gearInfoDisplay == null && infoInScene == null)
             {
 
                 gearInfoDisplay = Instantiate(GearInfoPrefab, UiManager.Instance.transform);

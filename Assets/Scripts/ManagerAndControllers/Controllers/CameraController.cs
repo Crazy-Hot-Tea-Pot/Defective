@@ -363,7 +363,7 @@ public class CameraController : MonoBehaviour
     /// <param name="state"></param>
     public void SwitchCamera(CameraState state)
     {
-        if (IsPlayerInteracting() || GameManager.Instance.CurrentGameMode == GameManager.GameMode.BrowseringInventory)
+        if (!IsPlayerInteracting() || GameManager.Instance.CurrentGameMode != GameManager.GameMode.Roaming)
         {
             Debug.Log("Camera reset ignored because the player is interacting.");
             return;

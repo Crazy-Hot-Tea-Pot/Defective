@@ -220,7 +220,11 @@ public class NewChip : ScriptableObject
                 {
                     int baseDmg = attackChip.damage;
                     int upgradedDmg = attackChip.damage + attackChip.upgradedDamageByAmount;
-                    description += $"\nDeals {baseDmg} damage{(attackChip.IsUpgraded ? $" {upgradedDmg}" : "")}.";
+
+                    if (IsUpgraded)
+                        description += $"\nDeals {baseDmg} damage";
+                    else
+                        description += $"\nDeals {upgradedDmg} damage";                    
 
                     if (attackChip.debuffStacks > 0)
                     {
@@ -235,7 +239,11 @@ public class NewChip : ScriptableObject
                 {
                     int baseShield = defenseChip.shieldAmount;
                     int upgradedShield = baseShield + defenseChip.upgradedShieldAmountToApply;
-                    description += $"\nGrants {baseShield} Shield{(defenseChip.IsUpgraded ? $"{upgradedShield}" : "")}.";
+
+                    if (IsUpgraded)
+                        description += $"\nGrants {upgradedShield} Shield";
+                    else
+                        description += $"\nGrants {baseShield} Shield";                    
 
                     if (defenseChip.buffToApply != Effects.Buff.None)
                     {
