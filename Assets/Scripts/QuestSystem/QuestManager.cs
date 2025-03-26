@@ -28,8 +28,11 @@ public class QuestManager : MonoBehaviour
 
     public GameObject ConfirmationWindow;
     private Quest nextSpawnQuest;
+    private Quest secondQuestVar;
 
     private bool automatic = false;
+
+    public int questIndex;
 
     private void Awake()
     {
@@ -88,6 +91,7 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }
+
     }
 
     // Update is called once per frame
@@ -98,6 +102,9 @@ public class QuestManager : MonoBehaviour
         {
             for (int i = 0; i < CurrentQuest.Count; i++)
             {
+                //This try stops a really annoying bug that appears inconsistently
+                try
+                {
                     //If the current quest is complete
                     if (CurrentQuest[i].complete == true)
                     {
@@ -105,6 +112,8 @@ public class QuestManager : MonoBehaviour
                         completeList.Add(CurrentQuest[i]);
                         //remove it from current
                         CurrentQuest.RemoveAt(i);
+                        //Run the next quest on ui (NEVER DELETE THIS IT'S WAY MORE ESSENTIAL THEN IT LOOKS)
+                        UpdateQuestHud(CurrentQuest[i]);
 
                         //Change the current quest if it's not null and it's automatic
                         if (futureQuestList.Count != 0 && automatic == true)
@@ -117,7 +126,14 @@ public class QuestManager : MonoBehaviour
                     else
                     {
                         CurrentQuest[i].RunQuest();
+                        UpdateQuestHud(CurrentQuest[i]);
                     }
+                }
+                //If we index out of range randomly this only happens when we are done so just break out
+                catch
+                {
+                    break;
+                }
             }
         }
     }
@@ -147,6 +163,28 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    public void CreateConfirmationWindow(string text, Quest nextQuest, Quest SecondaryQuest, Quest questToComplete)
+    {
+        if (nextQuest != null && SecondaryQuest != null)
+        {
+            nextSpawnQuest = nextQuest;
+            Debug.Log(nextQuest);
+            secondQuestVar = SecondaryQuest;
+            Debug.Log(SecondaryQuest);
+            //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
+            UiManager.Instance.PopUpMessage(text, SummonQuest,false);
+            questToComplete.CompleteQuest();
+        }
+        else
+        {
+            //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, null);
+
+            UiManager.Instance.PopUpMessage(text, null, false);
+        }
+    }
+
     public void CreateNullConfirmationWindow(string text, Quest completedQuest)
     {
         nextSpawnQuest = completedQuest;
@@ -163,7 +201,16 @@ public class QuestManager : MonoBehaviour
 
     public void SummonQuest()
     {
-        AddCurrentQuest(nextSpawnQuest);
+        if(nextSpawnQuest != null)
+        {
+            AddCurrentQuest(nextSpawnQuest);
+            nextSpawnQuest = null;
+        }
+        if (secondQuestVar != null)
+        {
+            AddCurrentQuest(secondQuestVar);
+            secondQuestVar = null;
+        }
     }
 
     /// <summary>
@@ -212,24 +259,10 @@ public class QuestManager : MonoBehaviour
     /// <param name="quest"></param>
     public void RetrieveQuestInfo(int index, TMP_Text quest)
     {
-        while (CurrentQuest[index].isTutorial || CurrentQuest[index].questName == lastQuest)
-        {
-            if(index + 1 <= CurrentQuest.Count)
-            {
-                index += 1;
-            }
-            else
-            {
-                break;
-            }
-            if (CurrentQuest.Count == index)
-            {
-                index -= 1;
-                break;
-            }
-        }
 
-        if (!CurrentQuest[index].isTutorial)
+        index = IndexEditor(index);
+
+        if (!CurrentQuest[index].isTutorial && CurrentQuest[index].mainQuest)
         {
             //Try to collect a quest from the currentquest list
             try
@@ -240,26 +273,15 @@ public class QuestManager : MonoBehaviour
             //But if we can't that's ok just go to the complete list
             catch
             {
-                //For some reason not having two try catches just will return null even with a != null check
-                try
-                {
-                    //If there is a value to show as a complete quest show it
-                    if (completeList[0] != null)
-                    {
-                        quest.text = completeList[0].questName;
-                    }
-                }
-                //If there is only one quest then just hide the other text and make it nothing
-                catch
-                {
+
                     quest.text = " ";
                     Debug.Log("That quest doesn't exist at index: " + index);
-                }
             }
         }
         //Else if there is a tutorial and it's the last thing left show it.
         else
         {
+
             //If there is a value to show as a complete quest show it
             if (completeList[index] != null)
             {
@@ -267,6 +289,39 @@ public class QuestManager : MonoBehaviour
             }
         }
        
+    }
+
+    public void UpdateQuestHud(Quest quest)
+    {
+            if (quest.mainQuest && quest.name == CurrentQuest[questIndex].name)
+            {
+                if (quest.complete)
+                {
+                    GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog(quest);
+                }
+                else
+                {
+                    GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog();
+                }
+                GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
+            }
+    }
+
+    public int IndexEditor(int index)
+    {
+        while (CurrentQuest[index].mainQuest == false || CurrentQuest[index].complete == true)
+        {
+            if (index + 1 < CurrentQuest.Count)
+            {
+                index += 1;
+                Debug.Log(index + "Break");
+            }
+            else
+            {
+                break;
+            }
+        }
+        return index;
     }
 
     /// <summary>

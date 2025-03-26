@@ -19,7 +19,7 @@ MonoBehaviour:
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Gain Power to increase your damage while cleansing yourself of debuffs!
-  ChipRareityWeight: 0.5
+  ChipRareityWeight: 0.2
   hitAllTargets: 0
   chipType: 2
   ChipActivate: 4

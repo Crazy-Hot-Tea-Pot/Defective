@@ -57,7 +57,10 @@ public class AttackChip : NewChip
             tempDamage = Mathf.Round(tempDamage * 0.8f *100f)/100f;
         }
 
-        Target.TakeDamage(tempDamage);
+        for(int i = 0; i < numberOfHits; i++)
+        {
+            Target.TakeDamage(tempDamage);
+        }      
 
         //Play sound for damage
         if (Target.Shield <= 0)

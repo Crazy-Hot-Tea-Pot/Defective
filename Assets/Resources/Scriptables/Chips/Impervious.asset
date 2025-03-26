@@ -19,7 +19,7 @@ MonoBehaviour:
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: You can't touch this! Take no damage for a turn when this is played.
-  ChipRareityWeight: 0.5
+  ChipRareityWeight: 0.2
   hitAllTargets: 0
   chipType: 2
   ChipActivate: 4

@@ -294,7 +294,7 @@ public class UiManager : MonoBehaviour
     /// <param name="context"></param>
     private void ToggleSettings(InputAction.CallbackContext context)
     {
-        if (context.performed && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming)
+        if (context.performed && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming || context.performed && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Dialogue || context.performed && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
         {
             if (CurrentUI.name == InventoryUI.name)
             {

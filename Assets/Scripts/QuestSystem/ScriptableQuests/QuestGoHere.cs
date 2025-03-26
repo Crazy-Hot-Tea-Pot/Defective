@@ -43,6 +43,7 @@ public class QuestGoHere : Quest
         try
         {
             GameObject.Find(questEndNameForPositionCalc);
+            //QuestManager.Instance.UpdateQuestHud(this);
             //Use the base of the method
             base.CompleteQuest();
         }

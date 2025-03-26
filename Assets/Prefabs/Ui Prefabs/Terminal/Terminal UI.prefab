@@ -4092,22 +4092,22 @@ MonoBehaviour:
     <#80ff80>....Loading Options...</color>
 
 
-    <color=#0000FF><link="UpgradeHealthScreen"><u>Upgrade
+    <color=#5157FF><link="UpgradeHealthScreen"><u>Upgrade
     Health</u></link></color>
 
 
-    <color=#0000FF><link="UpgradeChipScreen"><u>Upgrade
+    <color=#5157FF><link="UpgradeChipScreen"><u>Upgrade
     Chips</u></link></color>
 
 
-    <color=#0000FF><link="Items"><u>Scrap Items</u></link></color>
+    <color=#5157FF><link="Items"><u>Scrap Items</u></link></color>
 
 
-    <color=#0000FF><link="DataServer"><u>Save
+    <color=#5157FF><link="DataServer"><u>Save
     Game</u></link></color>
 
 
-    <color=#0000FF><link="Exit"><u>Exit</u></link></color>
+    <color=#5157FF><link="Exit"><u>Exit</u></link></color>
 
 
 '

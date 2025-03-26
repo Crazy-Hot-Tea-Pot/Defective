@@ -9,7 +9,7 @@ public class SettingsUIController : UiController
     //First Layer Settings Buttons
     private Button Optionsbtn;
     private Button Continuebtn;
-    private Button Exitbtn;
+    private Button Questbtn;
     private Button MainMenubtn;
 
     //Buttons for tabs
@@ -51,6 +51,8 @@ public class SettingsUIController : UiController
 
     private bool hasOpenedVideo;
     private bool hasOpenedAudio;
+
+    public GameObject QuestUIScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -129,11 +131,12 @@ public class SettingsUIController : UiController
             Continuebtn.onClick.RemoveAllListeners();
             //Make the button for continue functional
             Continuebtn.onClick.AddListener(Continue);
-            //Find the exit button
-            Exitbtn = this.gameObject.transform.Find("ShortMenu").Find("Exitbtn").GetComponent<Button>();
-            Exitbtn.onClick.RemoveAllListeners();
-            //Make the exit button functional
-            Exitbtn.onClick.AddListener(Exit);
+            Questbtn = this.gameObject.transform.Find("ShortMenu").Find("Questbtn").GetComponent<Button>();
+            //Quest button
+            Questbtn.onClick.RemoveAllListeners();
+            //Make the Quest button functional
+            Questbtn.onClick.AddListener(OpenQuestUI);
+            Questbtn.onClick.AddListener(QuestUIScreen.GetComponent<QuestLogController>().OpenFullLog);
             //Find the main menu button
             MainMenubtn = this.gameObject.transform.Find("ShortMenu").Find("MainMenubtn").GetComponent<Button>();
             //Add the Main menu button
@@ -600,10 +603,10 @@ public class SettingsUIController : UiController
     }
 
     /// <summary>
-    /// Exit the game
+    /// Opens the quest menu
     /// </summary>
-    public void Exit()
+    public void OpenQuestUI()
     {
-        Application.Quit();
+        QuestUIScreen.SetActive(true);
     }
 }

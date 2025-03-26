@@ -11,6 +11,7 @@ public class Quest : ScriptableObject
     public string questDesc;
     public bool complete = false;
     public bool isTutorial;
+    public bool mainQuest;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class Quest : ScriptableObject
     /// </summary>
     public virtual void RunQuest()
     {
-
+        
     }
 
     ///<summary>
@@ -40,6 +41,7 @@ public class Quest : ScriptableObject
         complete = true;
         questName = "\n" + ccQuestName + " (Complete)";
         Debug.Log("Quest Complete: " + questName);
+        //QuestManager.Instance.UpdateQuestHud(this);
     }
 
     /// <summary>

@@ -950,7 +950,7 @@ GameObject:
   - component: {fileID: 3406691192815831185}
   m_Layer: 5
   m_Name: GearInfo
-  m_TagString: Untagged
+  m_TagString: Info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1030,6 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2466a77cb4453e54a8ac3206d4e10630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimateTime: 1
   GearImage: {fileID: 3044263572755490763}
   GearName: {fileID: 9112060890583687618}
   GearDescription: {fileID: 3789439235079757237}

@@ -18,7 +18,10 @@ MonoBehaviour:
   questDesc: Tutorial1
   complete: 0
   isTutorial: 1
-  PopupText: You can view quests by pressing the quest bar above to expand the quests.
+  mainQuest: 0
+  PopupText: You can view quests at all times in the top corner of your screen or
+    from the escape menue. Try now press escape.
   nextQuest: {fileID: 11400000, guid: af3e87ae73b4e6a4fa23aad0373567d6, type: 2}
+  secondQuest: {fileID: 11400000, guid: 1b91c79cd724efb44a308b61420e98fe, type: 2}
   InCombat: 0
   Index: 1
