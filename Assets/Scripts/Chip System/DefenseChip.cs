@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static Effects;
 
 [CreateAssetMenu(fileName = "NewDefenseChip", menuName = "Chip System/Defense Chip")]
 public class DefenseChip : NewChip
