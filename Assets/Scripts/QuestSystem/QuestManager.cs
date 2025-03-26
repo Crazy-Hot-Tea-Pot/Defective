@@ -102,6 +102,9 @@ public class QuestManager : MonoBehaviour
         {
             for (int i = 0; i < CurrentQuest.Count; i++)
             {
+                //This try stops a really annoying bug that appears inconsistently
+                try
+                {
                     //If the current quest is complete
                     if (CurrentQuest[i].complete == true)
                     {
@@ -125,6 +128,12 @@ public class QuestManager : MonoBehaviour
                         CurrentQuest[i].RunQuest();
                         UpdateQuestHud(CurrentQuest[i]);
                     }
+                }
+                //If we index out of range randomly this only happens when we are done so just break out
+                catch
+                {
+                    break;
+                }
             }
         }
     }
@@ -258,6 +267,7 @@ public class QuestManager : MonoBehaviour
         //Else if there is a tutorial and it's the last thing left show it.
         else
         {
+
             //If there is a value to show as a complete quest show it
             if (completeList[index] != null)
             {
@@ -269,19 +279,18 @@ public class QuestManager : MonoBehaviour
 
     public void UpdateQuestHud(Quest quest)
     {
-
-        if (quest.mainQuest && quest.name == CurrentQuest[questIndex].name)
-        {
-            if(quest.complete)
+            if (quest.mainQuest && quest.name == CurrentQuest[questIndex].name)
             {
-                GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog(quest);
+                if (quest.complete)
+                {
+                    GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog(quest);
+                }
+                else
+                {
+                    GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog();
+                }
+                GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
             }
-            else
-            {
-                GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog();
-            }
-            GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
-        }
     }
 
     public int IndexEditor(int index)

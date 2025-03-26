@@ -22,7 +22,7 @@ MonoBehaviour:
   PopupText: To attack you must first select the enemy by clicking them with your
     mouse. Then you can use chips as located below. Chps work simialr to cards in
     a deck and you have 8 chips total in your whole combat.
-  nextQuest: {fileID: 11400000, guid: faf8b303d51b8a14ea77fd9c2443d58e, type: 2}
-  secondQuest: {fileID: 11400000, guid: 63254f11417dfc44e9f2fa6fe5941219, type: 2}
+  nextQuest: {fileID: 11400000, guid: 52061b798fdb5f34badecdb7129b88ae, type: 2}
+  secondQuest: {fileID: 0}
   InCombat: 1
   Index: 1

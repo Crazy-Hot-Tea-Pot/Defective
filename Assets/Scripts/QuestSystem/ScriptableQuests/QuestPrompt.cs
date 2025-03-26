@@ -29,7 +29,18 @@ public class QuestPrompt : Quest
         {
             if (Index)
             {
-                QuestManager.Instance.CreateConfirmationWindow(PopupText, nextQuest, secondQuest, this);
+                if(secondQuest != null)
+                {
+                    QuestManager.Instance.CreateConfirmationWindow(PopupText, nextQuest, secondQuest, this);
+                }
+                else if (nextQuest != null && secondQuest == null)
+                {
+                    QuestManager.Instance.CreateConfirmationWindow(PopupText, nextQuest, this);
+                }
+                else
+                {
+                    QuestManager.Instance.CreateNullConfirmationWindow(PopupText, this);
+                }
             }
             else
             {                              

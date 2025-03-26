@@ -22,7 +22,7 @@ MonoBehaviour:
   PopupText: You can also use abilites instead of cards located as indicated. They
     spend energy and are switched when items are switched in your inventory (Tab
     outside of combat)
-  nextQuest: {fileID: 11400000, guid: 3738208835ebdef4788987528e3c499c, type: 2}
-  secondQuest: {fileID: 11400000, guid: 82fb3b89b28cb0141896391e8e98e6e8, type: 2}
+  nextQuest: {fileID: 0}
+  secondQuest: {fileID: 0}
   InCombat: 1
   Index: 1
