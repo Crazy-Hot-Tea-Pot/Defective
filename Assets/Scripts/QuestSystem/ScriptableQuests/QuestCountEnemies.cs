@@ -49,6 +49,7 @@ public class QuestCountEnemies : Quest
         {
             //Take away from the counter
             remainingEnemies += 1;
+            //QuestManager.Instance.UpdateQuestHud(this);
         }
     }
 }

@@ -18,10 +18,11 @@ MonoBehaviour:
   questDesc: TutorialCombat2
   complete: 0
   isTutorial: 1
+  mainQuest: 0
   UIElementPath: UiManager/Roaming And Combat UI/Energy And Gear Container/Punch/WeaponButton
   curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
   xOffset: 0
   yOffset: 10
   nextQuest: {fileID: 11400000, guid: 3738208835ebdef4788987528e3c499c, type: 2}
-  secondQuest: {fileID: 11400000, guid: 7f4a57f01dec88446945da9d7c750bc7, type: 2}
+  secondQuest: {fileID: 0}
   InCombat: 1

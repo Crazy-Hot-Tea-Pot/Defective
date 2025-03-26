@@ -18,4 +18,5 @@ MonoBehaviour:
   questDesc: Click the ground to move
   complete: 0
   isTutorial: 1
-  questSpawn: {fileID: 11400000, guid: 1b91c79cd724efb44a308b61420e98fe, type: 2}
+  mainQuest: 0
+  questSpawn: {fileID: 11400000, guid: be85751e627828c41b56ce093f5ac207, type: 2}
