@@ -171,14 +171,17 @@ public class QuestManager : MonoBehaviour
             Debug.Log(nextQuest);
             secondQuestVar = SecondaryQuest;
             Debug.Log(SecondaryQuest);
-            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
+            //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
+            UiManager.Instance.PopUpMessage(text, SummonQuest,false);
             questToComplete.CompleteQuest();
         }
         else
         {
-            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
-            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, null);
+            //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, null);
+
+            UiManager.Instance.PopUpMessage(text, null, false);
         }
     }
 
