@@ -506,6 +506,21 @@ public class PlayerController : MonoBehaviour
                     modifiedDamage = 0;
                 }
             }
+            if (IsGalvanized)
+            {
+                if (modifiedDamage >= GalvanizedStacks)
+                {
+                    modifiedDamage -= GalvanizedStacks;
+                    Debug.Log("Galvanized Abosrbed " + GalvanizedStacks + "Damage");
+                }
+                else
+                {
+                    modifiedDamage -= GalvanizedStacks;
+                    Debug.Log("Galvanized Abosrbed " + GalvanizedStacks + "Damage");
+                    modifiedDamage = 0;
+                }
+            }
+
             Health = Health - modifiedDamage;
 
 
@@ -938,7 +953,7 @@ public class PlayerController : MonoBehaviour
             Shield = 0;
 
         //Remove buffs by 1
-        RemoveOrReduceEffect(Effects.Buff.Galvanize, 1);
+        //RemoveOrReduceEffect(Effects.Buff.Galvanize, 1);
 
         UiManager.Instance.ChangeStateOfGear(!IsRedirected);
     }
