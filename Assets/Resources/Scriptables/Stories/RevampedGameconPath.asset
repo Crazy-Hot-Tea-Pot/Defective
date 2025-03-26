@@ -308,9 +308,6 @@ MonoBehaviour:
         - enemyType: 2
           enemyName: Hammer
           difficulty: 2
-        - enemyType: 4
-          enemyName: Heavy Duty
-          difficulty: 2
         nextLevels:
         - rid: 1724621887276318733
         isCompleted: 0
@@ -376,9 +373,6 @@ MonoBehaviour:
           difficulty: 2
         - enemyType: 2
           enemyName: Hammer
-          difficulty: 2
-        - enemyType: 4
-          enemyName: Heavy Load
           difficulty: 2
         nextLevels:
         - rid: 1724621887276318734

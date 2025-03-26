@@ -61,13 +61,13 @@ public class Looter : Enemy
         switch (Difficulty)
         {
             case EnemyDifficulty.Easy:
-                MaxHp = 20;
-                break;
-            case EnemyDifficulty.Medium:
                 MaxHp = 30;
                 break;
-            case EnemyDifficulty.Hard:
+            case EnemyDifficulty.Medium:
                 MaxHp = 45;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 60;
                 break;
         }
 
@@ -174,7 +174,7 @@ public class Looter : Enemy
     {
         Debug.Log($"{EnemyName} performs Escape, exiting the fight with {StolenScrap} Scrap.");
 
-        CombatController.LeaveCombat(this.gameObject,0,null,null);
+        CombatController.LeaveCombat(this.gameObject);
 
         EnemyManager.Instance.RemoveEnemy(this.gameObject);
     }

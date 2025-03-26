@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemTeir: 0
   itemName: Energy Cannon
-  itemBeginningDescription: Energy Cannon
+  itemBeginningDescription: 'Energy Cannon: Spend 2 Energy, '
   itemImage: {fileID: 21300000, guid: 763854511c12add47b1da3de1f58b11f, type: 3}
   itemType: 0
   itemEffects:
