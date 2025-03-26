@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - speakerName: Unknown Person
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: Hey, you there. Can you hear me?
     isPlayerSpeaking: 0
     revealByLetter: 1
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Unknown Person
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: I wonder if the fall damaged your voice box...
     isPlayerSpeaking: 0
     revealByLetter: 1
@@ -35,7 +35,7 @@ MonoBehaviour:
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Unknown Person
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: "While watching the security feed, I saw them dump you here. I\u2019m
       using a special radio frequency to tune into your head."
     isPlayerSpeaking: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Unknown Person
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: Calm yourself, I am Ignotus, former resident of this home to the
       largest group of Looters in the underground.
     isPlayerSpeaking: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Ignotus
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: "Deep underground, and deep in trouble I\u2019d say. We need to
       get you out of here."
     isPlayerSpeaking: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Ignotus
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: "I know we\u2019ve just met, but our goals align. I want out of
       here, and you probably want answers, which I can provide. I know who left you
       here to die."
@@ -111,7 +111,7 @@ MonoBehaviour:
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Ignotus
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: Now, I need your help retrieving an item from deep within this
       subway. It will not be easy.
     isPlayerSpeaking: 0
@@ -126,7 +126,7 @@ MonoBehaviour:
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Ignotus
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: At the very end of this subway is the leader of a looter gang,
       he holds the key to our survival.
     isPlayerSpeaking: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
     textSpeed: 0.05
     timeBetweenLines: 1
   - speakerName: Ignotus
-    speakerImage: {fileID: 0}
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
     dialogueText: It will be revealed in time, my friend. Now, go retrieve it, and
       I will tell you more about your memories.
     isPlayerSpeaking: 0
