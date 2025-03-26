@@ -28,6 +28,7 @@ public class QuestManager : MonoBehaviour
 
     public GameObject ConfirmationWindow;
     private Quest nextSpawnQuest;
+    private Quest secondQuestVar;
 
     private bool automatic = false;
 
@@ -144,6 +145,25 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    public void CreateConfirmationWindow(string text, Quest nextQuest, Quest SecondaryQuest, Quest questToComplete)
+    {
+        if (nextQuest != null && SecondaryQuest != null)
+        {
+            nextSpawnQuest = nextQuest;
+            Debug.Log(nextQuest);
+            secondQuestVar = SecondaryQuest;
+            Debug.Log(SecondaryQuest);
+            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
+            questToComplete.CompleteQuest();
+        }
+        else
+        {
+            GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
+            window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, null);
+        }
+    }
+
     public void CreateNullConfirmationWindow(string text, Quest completedQuest)
     {
         nextSpawnQuest = completedQuest;
@@ -158,7 +178,16 @@ public class QuestManager : MonoBehaviour
 
     public void SummonQuest()
     {
-        AddCurrentQuest(nextSpawnQuest);
+        if(nextSpawnQuest != null)
+        {
+            AddCurrentQuest(nextSpawnQuest);
+            nextSpawnQuest = null;
+        }
+        if (secondQuestVar != null)
+        {
+            AddCurrentQuest(secondQuestVar);
+            secondQuestVar = null;
+        }
     }
 
     /// <summary>
@@ -241,7 +270,6 @@ public class QuestManager : MonoBehaviour
     public void UpdateQuestHud(Quest quest)
     {
 
-        Debug.Log("Quest Name: " + quest.name + "Last Quest: " + CurrentQuest[questIndex].name);
         if (quest.mainQuest && quest.name == CurrentQuest[questIndex].name)
         {
             if(quest.complete)

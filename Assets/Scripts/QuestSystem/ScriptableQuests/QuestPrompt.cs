@@ -9,6 +9,7 @@ public class QuestPrompt : Quest
     public string PopupText;
     [Tooltip("Option quests if you put nothing here it will not cause a problem")]
     public Quest nextQuest = null;
+    public Quest secondQuest = null;
     public bool InCombat;
     public bool Index;
 
@@ -28,10 +29,10 @@ public class QuestPrompt : Quest
         {
             if (Index)
             {
-                QuestManager.Instance.CreateConfirmationWindow(PopupText, nextQuest, this);
+                QuestManager.Instance.CreateConfirmationWindow(PopupText, nextQuest, secondQuest, this);
             }
             else
-            {
+            {                              
                 QuestManager.Instance.CreateNullConfirmationWindow(PopupText, this);
             }
         }

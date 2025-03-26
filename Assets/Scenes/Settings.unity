@@ -170,10 +170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -334,7 +334,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 994186243651182683, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -190.87187
+      value: -290.03674
+      objectReference: {fileID: 0}
+    - target: {fileID: 994186243651182683, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0015966761
       objectReference: {fileID: 0}
     - target: {fileID: 1201378479669254188, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
       propertyPath: m_AnchorMax.y
@@ -346,7 +350,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1264520146696848545, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -192.07408
+      value: -303.5753
+      objectReference: {fileID: 0}
+    - target: {fileID: 1264520146696848545, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 108.82168
       objectReference: {fileID: 0}
     - target: {fileID: 1381671455956049504, guid: 5ff2f4d6c2d83e545afa0ad6733bfc27, type: 3}
       propertyPath: m_Name
