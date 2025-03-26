@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: QuestGoHereTest
   m_EditorClassIdentifier: 
   questName: Go To The Sparkles
-  questDesc: You have to move towards the sparkles
+  ccQuestName: Go To The Sparkles
+  modifiedQuestName: Go To The Sparkles
+  questDesc: Practice movement by heading towards the sparkles
   complete: 0
+  isTutorial: 0
   questEndNameForPositionCalc: QuestMarker(Clone)
