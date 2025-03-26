@@ -285,7 +285,6 @@ public class TitleController : MonoBehaviour
         animator.SetTrigger("VideoFinish");
     }
 
-
     /// <summary>
     /// 20% chance to glitch each character.
     /// Replace with random ASCII character.

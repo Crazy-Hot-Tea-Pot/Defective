@@ -178,6 +178,8 @@ public class CombatController : MonoBehaviour
         }
 
         StartTurn();
+
+        GameStatsTracker.Instance.StartCombatTimer();
     }
 
     /// <summary>
@@ -354,7 +356,9 @@ public class CombatController : MonoBehaviour
     /// </summary>
     private void EndCombat()
     {
-        Debug.Log("Combat has ended.");        
+        Debug.Log("Combat has ended."); 
+        
+        GameStatsTracker.Instance.EndCombatTimer();
 
         SoundManager.PlayFXSound(CombatWinSound);
 

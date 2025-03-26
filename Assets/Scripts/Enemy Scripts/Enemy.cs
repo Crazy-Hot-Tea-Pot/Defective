@@ -526,6 +526,9 @@ public class Enemy : MonoBehaviour
         RotateToPlayer(EnemyTarget.transform.position);
 
         Animator.SetTrigger("Hit");
+
+        //Track damage
+        GameStatsTracker.Instance.ReportDamage(damage);
     }
 
     /// <summary>

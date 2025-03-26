@@ -773,6 +773,7 @@ public class PlayerController : MonoBehaviour
     public void GainScrap(int amount)
     {
         Scrap += amount;
+        GameStatsTracker.Instance.AddScrap(amount);
     }
 
     /// <summary>
