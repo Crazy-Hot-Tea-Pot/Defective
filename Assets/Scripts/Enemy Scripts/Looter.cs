@@ -99,7 +99,7 @@ public class Looter : Enemy
     /// <summary>
     /// Return all stolen Scraps upon killing
     /// </summary>
-    public override void Die()
+    protected override void Die()
     {        
         ReturnStolenScrap();
 

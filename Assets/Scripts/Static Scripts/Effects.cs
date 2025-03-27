@@ -76,6 +76,7 @@ public static class Effects
             public Debuff DebuffEffect;
             public SpecialEffects SpecialEffect;
             public int StackCount;
+            public bool permnamentEffect = false;
 
             // Constructor for Buffs
             public StatusEffect(Buff buff, int stackCount)
@@ -96,12 +97,13 @@ public static class Effects
             }
 
             // Constructor for Special Effects
-            public StatusEffect(SpecialEffects specialEffect, int stackCount)
+            public StatusEffect(SpecialEffects specialEffect, int stackCount,bool permnament=false)
             {
                 BuffEffect = Buff.None;
                 DebuffEffect = Debuff.None;
                 SpecialEffect = specialEffect;
                 StackCount = stackCount;
+                permnamentEffect=permnament;
             }
     }
 

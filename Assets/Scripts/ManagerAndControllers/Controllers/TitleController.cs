@@ -159,6 +159,9 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator StartGame()
     {
+        // Reset all scriptables to default
+        ChipManager.Instance.ResetAllChips();
+        GearManager.Instance.ResetAllGear();
 
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);

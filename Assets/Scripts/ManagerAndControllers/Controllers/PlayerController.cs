@@ -362,6 +362,8 @@ public class PlayerController : MonoBehaviour
     public SoundFX DamageTakenSound;
     public SoundFX GainShieldSound;
     public SoundFX EnterLevelSound;
+    public SoundFX SpeakingSound;
+
     // Awake is called when instance is being loaded
     void Awake()
     {
@@ -597,7 +599,6 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Buff buff, int stacks)
     {
         AddOrUpdateEffect(buff, stacks);
-
         UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
@@ -608,18 +609,18 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Debuff debuff, int stacks)
     {
         AddOrUpdateEffect(debuff, stacks);
-
         UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
     /// Add Special effect to Player
     /// </summary>
     /// <param name="specialEffect"></param>
-    public void AddEffect(Effects.SpecialEffects specialEffect)
+    public void AddEffect(Effects.SpecialEffects specialEffect,int stacks=0,bool permnament=false)
     {
-        AddOrUpdateEffect(specialEffect, 1);
+        AddOrUpdateEffect(specialEffect,stacks,permnament);
 
-        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
+        if(specialEffect != SpecialEffects.LuckyTrinket)
+            UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -628,7 +629,7 @@ public class PlayerController : MonoBehaviour
     /// <typeparam name="T"></typeparam>
     /// <param name="effect"></param>
     /// <param name="stacks"></param>
-    private void AddOrUpdateEffect<T>(T effect, int stacks) where T : Enum
+    private void AddOrUpdateEffect<T>(T effect, int stacks=0,bool permnament=false) where T : Enum
     {
         for (int i = 0; i < ListOfActiveEffects.Count; i++)
         {
@@ -648,11 +649,9 @@ public class PlayerController : MonoBehaviour
             ListOfActiveEffects.Add(new StatusEffect(buffEffect, stacks));
         else if (effect is Debuff debuffEffect)
             ListOfActiveEffects.Add(new StatusEffect(debuffEffect, stacks));
-        else if (effect is SpecialEffects specialEffect)
-            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks));
-
-        UiManager.Instance.UpdateEffects(ListOfActiveEffects);        
-
+        else if (effect is SpecialEffects specialEffect)       
+            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks,permnament));        
+      
     }
 
     #endregion
@@ -669,6 +668,7 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.Buff buff, int stacks = 0, bool removeAll = false)
     {
         RemoveOrReduceEffect(buff, stacks, removeAll);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -681,6 +681,7 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.Debuff debuff, int stacks = 0, bool removeAll = false)
     {
         RemoveOrReduceEffect(debuff, stacks, removeAll);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -691,7 +692,8 @@ public class PlayerController : MonoBehaviour
     {
         ListOfActiveEffects.RemoveAll(e => e.SpecialEffect.Equals(specialEffect));
 
-        UiManager.Instance.UpdateEffects(listOfActiveEffects);
+        if (specialEffect != SpecialEffects.LuckyTrinket)
+            UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -939,7 +941,10 @@ public class PlayerController : MonoBehaviour
         //Restore energy to full
         RecoverFullEnergy();
 
-        ListOfActiveEffects.Clear();
+        // Filter out permanent effects
+        ListOfActiveEffects = ListOfActiveEffects
+            .Where(effect => effect.permnamentEffect)
+            .ToList();
 
         UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
@@ -1007,6 +1012,13 @@ public class PlayerController : MonoBehaviour
         }
 
        RemoveEffect(Effects.Buff.Power,0,true);
+
+        // Filter out permanent effects instead of clearing the whole list
+        ListOfActiveEffects = ListOfActiveEffects
+            .Where(effect => effect.permnamentEffect)
+            .ToList();
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
 
@@ -1022,6 +1034,7 @@ public class PlayerController : MonoBehaviour
     public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f, bool isDialogue = false)
     {
         uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay, isDialogue);
+        SoundManager.PlayFXSound(SpeakingSound);
     }
 
     /// <summary>

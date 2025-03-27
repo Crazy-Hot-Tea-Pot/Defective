@@ -44,6 +44,11 @@ public class GangLeader : Enemy
     private GameObject looter1;
     private GameObject looter2;
 
+    [Header("Sounds")]
+    public BgSound CustomBattleSound;
+    private BgSound previousBackgroundSound;
+    private bool wasBackgroundPlaying;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -64,6 +69,17 @@ public class GangLeader : Enemy
 
         // Roll first intent at combat start
         nextIntentRoll = Random.Range(1, 11);
+
+        // Save current background state
+        previousBackgroundSound = SoundManager.GetCurrentBackgroundSound();
+        wasBackgroundPlaying = GameObject.Find("BgSound")?.GetComponent<AudioSource>()?.isPlaying ?? false;
+
+        // Play the custom battle sound if set
+        if (CustomBattleSound != BgSound.None)
+        {
+            SoundManager.ChangeBackground(CustomBattleSound);
+            Debug.Log($"Playing custom battle sound: {CustomBattleSound}");
+        }
 
         base.CombatStart();
     }
@@ -142,6 +158,27 @@ public class GangLeader : Enemy
             default:
                 Debug.LogWarning($"Unknown intent: {NextIntent.intentText}");
                 break;
+        }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+
+        // Check if the previous sound exists and resume it
+        if (previousBackgroundSound != BgSound.None)
+        {
+            SoundManager.ChangeBackground(previousBackgroundSound);
+
+            if (wasBackgroundPlaying)
+            {
+                GameObject.Find("BgSound")?.GetComponent<AudioSource>()?.Play();
+                Debug.Log($"Resuming previous background sound: {previousBackgroundSound}");
+            }
+            else
+            {
+                Debug.Log($"Previous background sound was not playing, remaining silent.");
+            }
         }
     }
     /// <summary>

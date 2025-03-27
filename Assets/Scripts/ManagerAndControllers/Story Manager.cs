@@ -213,7 +213,7 @@ public class StoryManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"StoryManager: Level {nextLevel} not found in the story! Check story setup.");
+            Debug.LogWarning($"StoryManager: Level {nextLevel} not found in the story! Check story setup.");
         }
     }
     private void SceneChange(Levels newLevel)

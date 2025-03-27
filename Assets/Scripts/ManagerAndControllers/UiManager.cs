@@ -282,7 +282,8 @@ public class UiManager : MonoBehaviour
     }
     public void AddItemToInventory(Item item)
     {
-        GearManager.Instance.Acquire(item);
+        Item gearInstance = Instantiate(item);
+        GearManager.Instance.Acquire(gearInstance);
         GetCurrentController<LootUiController>().LootItems.Remove(item);
         GetCurrentController<LootUiController>().UpdateLootScreen();
     }

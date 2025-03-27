@@ -244,6 +244,21 @@ public class ChipManager : MonoBehaviour
         return AllChips.FindAll(chip => chip.chipRarity == chipRarity);
     }
 
+    public void ResetAllChips()
+    {
+        foreach (var chip in AllChips)
+        {
+            // Reset upgrade status
+            chip.IsUpgraded = false;
+            // Reset active status
+            chip.IsActive = false;
+            // Reset disable counter
+            chip.DisableCounter = 0;
+            Debug.Log($"{chip.chipName} reset to default values.");
+        }
+    }
+
+
 
     /// <summary>
     /// Load all Chip ScriptableObjects in the Resources folder.
@@ -330,4 +345,24 @@ public class ChipManager : MonoBehaviour
             GameManager.Instance.OnSceneChange -= SceneChange;
         }
     }
+
+    #region Cheats
+    //Cheats
+    [ContextMenu("Choose Custom Deck")]
+    private void ChooseYourDeck()
+    {
+        if (AllChips == null || AllChips.Count == 0)
+        {
+            Debug.LogWarning("No chips available to display.");
+            return;
+        }
+
+        // Switch to Chip Management Mode
+        GameManager.Instance.UpdateGameMode(GameManager.GameMode.CombatLoot);
+
+        // Send all chips to the UI for selection
+        UiManager.Instance.SendLoot(0, new List<Item>(), AllChips);
+    }
+
+    #endregion
 }

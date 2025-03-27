@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -364,6 +365,15 @@ public class CombatController : MonoBehaviour
 
         // Notify GameManager or handle loot distribution
         GameManager.Instance.EndCombat();
+
+        // Check for Lucky Trinket effect
+        PlayerController playerController = Player.GetComponent<PlayerController>();
+
+        if (playerController.ListOfActiveEffects.Any(effect => effect.SpecialEffect == Effects.SpecialEffects.LuckyTrinket))
+        {
+            ScrapLootForCurrentCombat += 10;
+            Debug.Log("Lucky Trinket effect detected, adding 10 Scrap to a total of " + ScrapLootForCurrentCombat + " Scrap.");            
+        }
 
         if (ScrapLootForCurrentCombat > 0 || ItemsLootForCurrentCombat.Count > 0 || NewChipLootForCurrentCombat.Count > 0)
         {

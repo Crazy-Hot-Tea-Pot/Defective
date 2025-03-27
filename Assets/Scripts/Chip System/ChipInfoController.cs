@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class ChipInfoController : MonoBehaviour
@@ -78,7 +76,6 @@ public class ChipInfoController : MonoBehaviour
     {
         if (animator == null)
         {
-            Debug.LogError("Animator not found!");
 
             if (!TryGetComponent<Animator>(out animator))
                 Debug.Log("still no animator.");            
@@ -108,6 +105,11 @@ public class ChipInfoController : MonoBehaviour
     }
 
     void OnDisable()
+    {
+        select.Disable();
+        select.performed -= Shrink;
+    }
+    void OnDestroy()
     {
         select.Disable();
         select.performed -= Shrink;

@@ -57,7 +57,7 @@ public class EnemyEditor : Editor
         serializedObject.ApplyModifiedProperties();
 
         // Save changes to the object
-        if (GUI.changed)
+        if (GUI.changed && debugMode)
         {
             EditorUtility.SetDirty(enemy);
         }

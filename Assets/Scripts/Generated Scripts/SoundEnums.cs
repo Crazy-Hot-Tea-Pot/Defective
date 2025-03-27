@@ -1,5 +1,6 @@
 public enum BgSound
 {
+    None,
     Background,
     BattleBM,
     MainMenuAmbient,
@@ -8,6 +9,7 @@ public enum BgSound
 
 public enum SoundFX
 {
+    None,
     AccesDenied,
     BattleBM,
     BattleStart,

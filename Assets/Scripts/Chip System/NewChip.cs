@@ -52,10 +52,6 @@ public class NewChip : ScriptableObject
                     Debug.LogError($"No Button component found on {ThisChip.name}.");
                 }
             }
-            else
-            {
-                Debug.LogError("ThisChip is not assigned.");
-            }
 
             if (isActive)
                 disableCounter = 0;

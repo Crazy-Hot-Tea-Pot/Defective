@@ -1233,6 +1233,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e852543f35f8f14489c7c90147c202c1, type: 3}
   - {fileID: 21300000, guid: 9f2206ff0f3a75043ad04dbc389d326e, type: 3}
   - {fileID: 21300000, guid: 90685feaf04a8bd4f86c2ef1334e2cc9, type: 3}
+  - {fileID: 21300000, guid: 5cd36f5ce3a3b144888e67f701cdefd3, type: 3}
 --- !u!1 &3169442531875478621
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,6 +3819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationController: {fileID: 2568784770593054324}
+  Quest1: {fileID: 0}
 --- !u!95 &2568784770593054324
 Animator:
   serializedVersion: 5

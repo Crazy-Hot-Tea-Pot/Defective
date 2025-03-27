@@ -544,7 +544,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Call when enemy die.
     /// </summary>
-    public virtual void Die()
+    protected virtual void Die()
     {
         //Update the quest for counting enemies to count it's death
         try

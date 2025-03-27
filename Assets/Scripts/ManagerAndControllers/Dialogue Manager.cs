@@ -26,6 +26,9 @@ public class DialogueManager : MonoBehaviour
     private Queue<DialogueLine> dialogueQueue = new Queue<DialogueLine>();
     private PlayerInputActions playerInput;
 
+    [Header("Sounds")]
+    public SoundFX SpeakerSound;
+
     void OnEnable()
     {
         playerInput.Player.Enable();
@@ -94,6 +97,8 @@ public class DialogueManager : MonoBehaviour
             CallScreen.SpeakerName = line.speakerName;
             CallScreen.SpeakerImage = line.speakerImage != null ? line.speakerImage.texture : null;
             CallScreen.NextText(line.dialogueText, line.revealByLetter, line.textSpeed, line.timeBetweenLines);
+
+            SoundManager.PlayFXSound(SpeakerSound);
         }
     }
 

@@ -485,6 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDialogue: {fileID: 0}
+  SpeakerSound: 0
 --- !u!1 &829852516
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,7 +2630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7c0d18c00219e4788ddd39c2c0f4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalScrapCollected: 0
 --- !u!114 &5981241227396257276
 MonoBehaviour:
   m_ObjectHideFlags: 0

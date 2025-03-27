@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using static Effects;
 
 [CreateAssetMenu(fileName = "NewEquipmentEffect", menuName = "Gear/Effects/EquipmentEffect")]
@@ -24,16 +25,15 @@ public class EquipmentEffect : ItemEffect
         {
             isPassiveEffectActive = value;
         }
-    }
+    }    
 
     private bool isPassiveEffectActive = false;
-    private Item linkedItem;
 
     public override void Activate(PlayerController player, Item item, Enemy enemy = null)
     {
         if (player.SpendEnergy(energyCost))
         {
-            linkedItem = item;
+            LinkedItem = item;
 
             //Play Item Effect
             base.Activate(player, item, enemy);
@@ -50,22 +50,20 @@ public class EquipmentEffect : ItemEffect
         return $"Special Effect: {SpecialEffectDescription}";
     }
 
-    protected override void Equipped()
+    public override void Equip()
     {
-        base.Equipped();
+        base.Equip();
 
         if (HasPassiveEffect && IsEquipped)
         {
-            if (!IsPassiveEffectActive)
-            {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().AddEffect(passiveEffect);
-                IsPassiveEffectActive = true;
-            }
-            else if(IsPassiveEffectActive)
-            {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().RemoveEffect(passiveEffect);
-                SoundManager.PlayFXSound(linkedItem.ItemDeactivateSound);
-            }            
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().AddEffect(passiveEffect,0,true);
+            SoundManager.PlayFXSound(LinkedItem.ItemActivateSound);
+            IsPassiveEffectActive = true;
         }
+        else if(HasPassiveEffect)
+        {            
+            SoundManager.PlayFXSound(LinkedItem.ItemDeactivateSound);
+            IsPassiveEffectActive = false;
+        }                   
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static SoundAsset;
 
 public static class SoundManager
 {    
@@ -12,6 +13,13 @@ public static class SoundManager
     /// <param name="bgSound">New sound</param>
     public static void ChangeBackground(BgSound bgSound)
     {
+        if (bgSound == BgSound.None)
+        {
+            Debug.Log("No sound selected. Skipping background sound change.");
+            return;
+        }
+
+
         if (SettingsManager.Instance.SoundSettings.BGMMute)
             return;
 
@@ -71,6 +79,12 @@ public static class SoundManager
     /// <param name="bgSound">The background sound to play.</param>
     public static void StartBackgroundSound(BgSound bgSound)
     {
+        if (bgSound == BgSound.None)
+        {
+            Debug.Log("No sound selected. Skipping background sound change.");
+            return;
+        }
+
         //if mute don't bother to spawn sound
         if (SettingsManager.Instance.SoundSettings.BGMMute)
         {
@@ -96,6 +110,11 @@ public static class SoundManager
     /// <param name="sound">The specific sound effect to play.</param>
     public static void PlayFXSound(SoundFX sound)
     {
+        if (sound == SoundFX.None)
+        {
+            Debug.Log("No sound selected. Skipping background sound change.");
+            return;
+        }
         //if mute don't bother to spawn sound
         if (SettingsManager.Instance.SoundSettings.SFXMute)
         {
@@ -122,6 +141,12 @@ public static class SoundManager
     /// <param name="parent"></param>
     public static void PlayFXSound(SoundFX sound, Transform parent)
     {
+        if (sound == SoundFX.None)
+        {
+            Debug.Log("No sound selected. Skipping background sound change.");
+            return;
+        }
+
         GameObject soundGameObject = new GameObject("SoundFX");
         AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
         soundGameObject.AddComponent<SoundFXLife>().SoundLength = GetAudio(sound).length;

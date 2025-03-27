@@ -150,6 +150,10 @@ public class Item : ScriptableObject
 
     public void ItemEquipped()
     {
+        foreach(ItemEffect itemEffect in itemEffects)
+        {
+            itemEffect.LinkedItem = this;
+        }
         if (isEquipped)
         {
             foreach (var effect in itemEffects)

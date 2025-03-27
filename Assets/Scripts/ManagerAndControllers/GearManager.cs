@@ -71,9 +71,9 @@ public class GearManager : MonoBehaviour
     public bool Acquire(Item newItem)
     {
         // Check if the player already has this item
-        Item existingItem = PlayerCurrentGear.Find(item => item.itemName == newItem.itemName);
+        Item existingItem = PlayerCurrentGear.Find(item => item.itemName == newItem.itemName && item.ItemTeir != Item.Teir.Platinum);
 
-        if (existingItem != null && existingItem.ItemTeir != Item.Teir.Platinum)
+        if (existingItem != null)
         {
             
             UpgradeItem(existingItem);                      
@@ -181,6 +181,13 @@ public class GearManager : MonoBehaviour
         }
         return null;
     }
+    public void ResetAllGear()
+    {
+        foreach (var item in AllGear)
+        {
+            item.ResetToDefault();
+        }
+    }
 
     /// <summary>
     /// Load all gear from scriptables
@@ -240,6 +247,7 @@ public class GearManager : MonoBehaviour
             GameManager.Instance.OnSceneChange -= SceneChange;
         }
     }
+    #region Cheats
     //Cheats
     [ContextMenu("Give Random Gear")]
     private void GiveRandomGear()
@@ -262,5 +270,18 @@ public class GearManager : MonoBehaviour
             Debug.Log($"Gave player random gear: {newItem.itemName}");
         }
     }
+    [ContextMenu("Give Lucky Trinket")]
+    private void GiveluckyTrinket()
+    {
+        Item item = AllGear.Find(e => e.itemName == "Lucky Trinket");
 
+        Item newItem = Instantiate(item);
+
+        // Try to acquire the item
+        if (Acquire(newItem))
+        {
+            Debug.Log($"Gave player random gear: {newItem.itemName}");
+        }
+    }
+    #endregion
 }
