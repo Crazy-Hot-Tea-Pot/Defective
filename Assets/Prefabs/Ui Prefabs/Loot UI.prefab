@@ -2347,6 +2347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe33c051c9a8c644bfddba7f453f542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimateTime: 1
   ChipImage: {fileID: 2839396158377738889}
   ChipName: {fileID: 8290870677936729574}
   ChipDescription: {fileID: 5326372791787724019}
