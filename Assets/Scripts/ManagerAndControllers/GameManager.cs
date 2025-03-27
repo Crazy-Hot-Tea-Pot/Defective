@@ -26,7 +26,8 @@ public class GameManager : MonoBehaviour
         GameOver,
         Credits,
         Loading,
-        BrowseringInventory
+        BrowseringInventory,
+        Won
     }
 
     public GameMode CurrentGameMode

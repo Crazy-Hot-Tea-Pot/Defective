@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,11 +39,34 @@ public class GameStatsTracker : MonoBehaviour
             highestDamageDealt = value;
         }
     }
-    public int totalScrapCollected;
+    public int TotalScrapCollected
+    {
+        get
+        {
+            return totalScrapCollected;
+        }
+        private set
+        {
+            totalScrapCollected = value;
+        }
+    }
+    public List<NewChip> TotalChipsCollected
+    {
+        get
+        {
+            return totalChipsCollected;
+        }
+        set
+        {
+            totalChipsCollected = value;
+        }
+    }
 
+    private int totalScrapCollected;
     private float fastestCombatTime = Mathf.Infinity;
     private float combatStartTime;
     private float highestDamageDealt;
+    private List<NewChip> totalChipsCollected= new List<NewChip>();
     private static GameStatsTracker instance;
 
     void Awake()
@@ -90,6 +114,7 @@ public class GameStatsTracker : MonoBehaviour
     }
     public void AddScrap(int scrap)
     {
-        totalScrapCollected += scrap;
-    }
+        TotalScrapCollected += scrap;
+    }    
+
 }

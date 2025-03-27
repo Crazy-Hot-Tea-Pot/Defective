@@ -8,7 +8,6 @@ public class WinController : MonoBehaviour
 {
     public TextMeshProUGUI TitleText;
     public TextMeshProUGUI StatDisplay;
-    public TextMeshProUGUI CreditDisplay;
 
     [Header("Title Effect Settings")]
     [Tooltip("Switch between Glitch and Scramble effects.")]
@@ -55,18 +54,12 @@ public class WinController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //fastestTimeText.text = $"Fastest Combat: {GameStatsManager.Instance.fastestCombatTime:F2}s";
-        //highestDamageText.text = $"Highest Damage: {GameStatsManager.Instance.highestDamageDealt}";
-        //scrapCollectedText.text = $"Total Scrap: {GameStatsManager.Instance.totalScrapCollected}";
-
         //if (Wordmode)
         //    StartCoroutine(RevealWords(StatDisplay));
         //else
         //    StartCoroutine(RevealCharacters(StatDisplay));
-        
-        originalText = TitleText.text;
 
-        StartCoroutine(RevealWords(CreditDisplay));
+        originalText = TitleText.text;
 
         StartCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
     }
@@ -79,13 +72,12 @@ public class WinController : MonoBehaviour
     private void BackToTitle(InputAction.CallbackContext context)
     {
         GameManager.Instance.RequestScene(Levels.Title);
-    }
+    }    
     /// <summary>
     /// 20% chance to glitch each character.
     /// Replace with random ASCII character.
     /// </summary>
     /// <param name="input"></param>
-    /// <returns></returns>
     private string GlitchText(string input)
     {
         char[] chars = input.ToCharArray();

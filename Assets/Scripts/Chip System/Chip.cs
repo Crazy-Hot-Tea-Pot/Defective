@@ -91,7 +91,9 @@ public class Chip : MonoBehaviour, IPointerClickHandler
     void Start()
     {        
         Player = GameObject.FindGameObjectWithTag("Player");
-        PuzzleController = GameObject.FindGameObjectWithTag("PuzzleController").GetComponent<PuzzleController>();
+
+        //if(GameManager.Instance.CurrentGameMode != GameManager.GameMode.Won)
+            //PuzzleController = GameObject.FindGameObjectWithTag("PuzzleController").GetComponent<PuzzleController>();
     }
     /// <summary>
     /// Runs Scriptable Chip
