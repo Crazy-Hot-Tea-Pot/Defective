@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c112f3aee6477b642855d7e9a4ccbd31, type: 3}
+  m_Name: Dialogue_Level5Intro
+  m_EditorClassIdentifier: 
+  lines:
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: Ignotus?
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
+    dialogueText: Yes? What is it?
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: I have been curious... Why is it that you've chosen to abandon
+      this place you once called home?
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
+    dialogueText: ...
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
+    dialogueText: ...Ignotus isn't my real name, you know.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: Pardon? I'm afraid I don't follow...
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
+    dialogueText: 'Down here, you''re either "Looter X" or "Looter K". We''re all
+      meant to be nameless nobodies doing the bidding of a tyrannical loonie. '
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
+    dialogueText: 'I chose the name "Ignotus" because I want to be free. I don''t
+      want to die here as another nameless piece of trash that has been left to rot
+      by those above. '
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: So it seems I'm not alone in my search for purpose...
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
+    dialogueText: ....
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
+    dialogueText: ...It smells pretty bad down here too.That's another reason.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: Ah, smell. How I wish I had operational nasal receptors to experience
+      this feeling.
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Ignotus
+    speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
+    dialogueText: Trust me, you're not missing out on anything...
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
