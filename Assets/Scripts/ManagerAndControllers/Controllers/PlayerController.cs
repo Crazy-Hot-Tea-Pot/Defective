@@ -358,10 +358,10 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #endregion
-    [Header("Sound")]
+    [Header("Sounds")]
     public SoundFX DamageTakenSound;
     public SoundFX GainShieldSound;
-    public SoundFX EnterLevelSound;
+    public SoundFX EnterLevelSound;    
 
     // Awake is called when instance is being loaded
     void Awake()

@@ -122,6 +122,9 @@ public class DialogueManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().SwitchCamera(CameraController.CameraState.Default);
 
         GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
+
+        SoundManager.StopLoopingFXSound(SpeakerSound);
+        SoundManager.StopLoopingFXSound(PlayerSpeakingSound);
     }
 
     /// <summary>
@@ -137,6 +140,9 @@ public class DialogueManager : MonoBehaviour
                 EndDialogue();
             }
         }
+
+        SoundManager.StopLoopingFXSound(SpeakerSound);
+        SoundManager.StopLoopingFXSound(PlayerSpeakingSound);
     }
 
     private void SceneChange(Levels newLevel)

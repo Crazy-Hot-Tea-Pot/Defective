@@ -63,12 +63,6 @@ public class WinController : MonoBehaviour
 
         StartCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void BackToTitle(InputAction.CallbackContext context)
     {
         GameManager.Instance.RequestScene(Levels.Title);
