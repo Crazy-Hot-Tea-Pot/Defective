@@ -22,7 +22,7 @@ MonoBehaviour:
   ChipRareityWeight: 0.1
   hitAllTargets: 0
   chipType: 1
-  ChipActivate: 6
+  ChipActivate: 7
   damage: 4
   upgradedDamageByAmount: 2
   numberOfHits: 2

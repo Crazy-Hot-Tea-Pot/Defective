@@ -272,6 +272,7 @@ GameObject:
   - component: {fileID: 8225162743088629511}
   - component: {fileID: 7268435510682088053}
   - component: {fileID: 1179851457093925589}
+  - component: {fileID: 5779132090356333460}
   m_Layer: 0
   m_Name: Questbtn
   m_TagString: Untagged
@@ -381,6 +382,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5779132090356333460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118979612296126757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 44
+  ButtonClickSound: 43
 --- !u!1 &155838327431758341
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +634,7 @@ GameObject:
   - component: {fileID: 3149184915460289553}
   - component: {fileID: 4300277370797094978}
   - component: {fileID: 2921614784519337942}
+  - component: {fileID: 6612162853979793040}
   m_Layer: 0
   m_Name: Optionsbtn
   m_TagString: Untagged
@@ -728,6 +744,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6612162853979793040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235871426864375068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 44
+  ButtonClickSound: 43
 --- !u!1 &279915614252099875
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +770,7 @@ GameObject:
   - component: {fileID: 6731039914901717596}
   - component: {fileID: 9104178888701107580}
   - component: {fileID: 1077876702228800262}
+  - component: {fileID: 3858917601869377424}
   m_Layer: 5
   m_Name: Completebtn
   m_TagString: Untagged
@@ -849,6 +880,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3858917601869377424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279915614252099875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 44
+  ButtonClickSound: 43
 --- !u!1 &446883026494581130
 GameObject:
   m_ObjectHideFlags: 0
@@ -4260,7 +4305,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -303.5755, y: 108.824394}
+  m_AnchoredPosition: {x: -303.57538, y: 108.82443}
   m_SizeDelta: {x: 183, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!23 &3434473691427439747
@@ -4339,7 +4384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -290.03622, y: -0.00000977665}
+  m_AnchoredPosition: {x: -290.0361, y: -0.00000977665}
   m_SizeDelta: {x: 183, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!23 &112159197851113584
@@ -5632,6 +5677,7 @@ GameObject:
   - component: {fileID: 3928486585745675323}
   - component: {fileID: 8578066417957636471}
   - component: {fileID: 8560046705907614734}
+  - component: {fileID: 8798087208153055282}
   m_Layer: 5
   m_Name: Backbtn
   m_TagString: Untagged
@@ -5741,6 +5787,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8798087208153055282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331249834925314852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 44
+  ButtonClickSound: 43
 --- !u!1 &4342638854927857920
 GameObject:
   m_ObjectHideFlags: 0
@@ -6574,7 +6634,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7136032306320403047}
   m_HandleRect: {fileID: 589008382997944620}
   m_Direction: 2
-  m_Value: -0.0000009815044
+  m_Value: -0.0000015423641
   m_Size: 0.63725233
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10195,6 +10255,7 @@ GameObject:
   - component: {fileID: 4631770562882577180}
   - component: {fileID: 1427106835077529591}
   - component: {fileID: 268073056249975470}
+  - component: {fileID: 7167400017250166097}
   m_Layer: 0
   m_Name: Continuebtn
   m_TagString: Untagged
@@ -10304,6 +10365,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7167400017250166097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8114615117556966776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 44
+  ButtonClickSound: 43
 --- !u!1 &8225208592544522570
 GameObject:
   m_ObjectHideFlags: 0
@@ -10391,6 +10466,7 @@ GameObject:
   - component: {fileID: 6759293143357738193}
   - component: {fileID: 3509749099532366971}
   - component: {fileID: 6560464277924960500}
+  - component: {fileID: 3462956401098240981}
   m_Layer: 0
   m_Name: MainMenubtn
   m_TagString: Untagged
@@ -10500,6 +10576,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3462956401098240981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8231348375610506883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 44
+  ButtonClickSound: 43
 --- !u!1 &8260500605656947870
 GameObject:
   m_ObjectHideFlags: 0

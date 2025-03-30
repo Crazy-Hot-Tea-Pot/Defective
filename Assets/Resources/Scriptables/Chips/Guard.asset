@@ -22,7 +22,7 @@ MonoBehaviour:
   ChipRareityWeight: 0.15
   hitAllTargets: 0
   chipType: 2
-  ChipActivate: 4
+  ChipActivate: 5
   shieldAmount: 5
   upgradedShieldAmountToApply: 0
   effectToApply: 0
