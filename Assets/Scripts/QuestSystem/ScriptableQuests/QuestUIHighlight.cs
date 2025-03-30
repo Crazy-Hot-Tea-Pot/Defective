@@ -54,7 +54,7 @@ public class QuestUIHighlight : Quest
         }
         catch
         {
-            Debug.Log("We Failed");
+            Debug.LogError("SABASTIAN ERROR FROM CALLING IN UPDATE EVERYFRAME");
         }
 
     }

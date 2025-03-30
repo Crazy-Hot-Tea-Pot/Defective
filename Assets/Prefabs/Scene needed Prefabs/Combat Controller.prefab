@@ -47,6 +47,6 @@ MonoBehaviour:
   ItemsLootForCurrentCombat: []
   NewChipLootForCurrentCombat: []
   combatArea: {fileID: 0}
-  CombatStartSound: 9
+  CombatStartSound: 8
   CombatSound: 2
   CombatWinSound: 3

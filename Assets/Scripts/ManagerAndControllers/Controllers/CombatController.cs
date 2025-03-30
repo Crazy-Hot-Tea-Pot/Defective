@@ -400,6 +400,7 @@ public class CombatController : MonoBehaviour
         if (combatStartClip != null)
         {
             SoundManager.PlayFXSound(CombatStartSound);
+            Debug.Log("Playing CombatStartSound");
             yield return new WaitForSeconds(combatStartClip.length);
         }
 

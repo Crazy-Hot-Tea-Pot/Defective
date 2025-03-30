@@ -15,7 +15,6 @@ public enum SoundFX
     None,
     AccesDenied,
     BattleBM,
-    BattleStart,
     BattleWin,
     ChipBuffV1,
     ChipDebuffV1,
