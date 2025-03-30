@@ -25,6 +25,6 @@ MonoBehaviour:
   ItemActivateSound: 51
   ItemDeactivateSound: 0
   ItemFailSound: 0
-  ItemHitShield: 51
+  ItemHitShield: 53
   ItemHitFlesh: 51
   ItemHitMetal: 53
