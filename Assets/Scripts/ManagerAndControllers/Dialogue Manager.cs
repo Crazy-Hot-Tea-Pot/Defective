@@ -78,9 +78,8 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ShowNextLine()
     {
-        SoundManager.StopLoopingFXSound(SpeakerSound);
-        SoundManager.StopLoopingFXSound(PlayerSpeakingSound);
-        
+        StopPlayingSound();
+
         if (dialogueQueue.Count == 0)
         {
             EndDialogue();
@@ -109,6 +108,14 @@ public class DialogueManager : MonoBehaviour
 
             SoundManager.PlayFXSound(SpeakerSound, true, false);
         }
+    }
+    /// <summary>
+    /// Stop playing dialogue sound.
+    /// </summary>
+    public void StopPlayingSound()
+    {
+        SoundManager.StopLoopingFXSound(SpeakerSound);
+        SoundManager.StopLoopingFXSound(PlayerSpeakingSound);
     }
 
     /// <summary>

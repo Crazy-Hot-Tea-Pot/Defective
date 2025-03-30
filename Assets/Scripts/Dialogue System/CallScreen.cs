@@ -116,6 +116,9 @@ public class CallScreen : MonoBehaviour
                 yield return new WaitForSeconds(revealSpeed * 2);
             }
         }
+
+        DialogueManager.Instance.StopPlayingSound();
+
         yield return new WaitForSeconds(timeBetweenLines);
 
         // Move to the next line
