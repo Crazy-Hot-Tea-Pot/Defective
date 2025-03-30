@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
             case Levels.Settings:
             case Levels.Loading:
             case Levels.Credits:
+            case Levels.Win:
                 break;
             default:
                 DataManager.Instance.CurrentGameData.Level = level;                
@@ -220,6 +221,9 @@ public class GameManager : MonoBehaviour
                 case Levels.Credits:
                     CurrentGameMode = GameMode.Credits;
                     break;
+                case Levels.Win:
+                    CurrentGameMode = GameMode.Won;
+                    break;
                 default:
                     CurrentGameMode = GameMode.Roaming;
 
@@ -239,5 +243,11 @@ public class GameManager : MonoBehaviour
             
             OnSceneChange?.Invoke(CurrentLevel);
         }        
+    }
+
+    [ContextMenu("Win Scene Text")]
+    private void ToWin()
+    {
+        GameManager.Instance.RequestScene(Levels.Win);
     }
 }

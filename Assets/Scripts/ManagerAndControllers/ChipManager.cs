@@ -157,8 +157,11 @@ public class ChipManager : MonoBehaviour
 
             PlayerDeck.Add(CloneOfNewChip);
 
+            //Clone chip again
+            NewChip chipInstance = Instantiate(CloneOfNewChip);
+
             //Increase chips collected
-            GameStatsTracker.Instance.TotalChipsCollected.Add(CloneOfNewChip);
+            GameStatsTracker.Instance.TotalChipsCollected.Add(chipInstance);
 
             return true;
         }

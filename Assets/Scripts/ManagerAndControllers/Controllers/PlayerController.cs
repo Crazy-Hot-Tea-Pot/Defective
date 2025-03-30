@@ -362,7 +362,6 @@ public class PlayerController : MonoBehaviour
     public SoundFX DamageTakenSound;
     public SoundFX GainShieldSound;
     public SoundFX EnterLevelSound;
-    public SoundFX SpeakingSound;
 
     // Awake is called when instance is being loaded
     void Awake()
@@ -1033,8 +1032,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="howLongToDisplay">default is 3</param>
     public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f, bool isDialogue = false)
     {
-        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay, isDialogue);
-        SoundManager.PlayFXSound(SpeakingSound);
+        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay, isDialogue);        
     }
 
     /// <summary>

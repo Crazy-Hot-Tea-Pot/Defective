@@ -224,6 +224,7 @@ public class StoryManager : MonoBehaviour
             case Levels.Settings:
             case Levels.Credits:
             case Levels.Loading:
+            case Levels.Win:
                 break;
             default:
 
