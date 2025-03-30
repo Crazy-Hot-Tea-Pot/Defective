@@ -358,6 +358,12 @@ public class TitleController : MonoBehaviour
             TitleText.rectTransform.anchoredPosition -= offset2D;
         }
     }
+
+    [ContextMenu("Win Scene Text")]
+    private void ToWin()
+    {
+        GameManager.Instance.RequestScene(Levels.Win);
+    }
     void OnDestroy()
     {
         PlayButton.onClick.RemoveAllListeners();

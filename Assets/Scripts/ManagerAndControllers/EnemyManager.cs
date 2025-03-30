@@ -241,6 +241,7 @@ public class EnemyManager : MonoBehaviour
             case Levels.Loading:
             case Levels.WorkShop:
             case Levels.Credits:
+            case Levels.Win:
                 break;
             default:
                 SpawnEnemiesForLevel();

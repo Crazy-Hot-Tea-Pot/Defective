@@ -421,11 +421,8 @@ public class UiManager : MonoBehaviour
                 GameObject.Find("Options Button").GetComponent<Button>().onClick.AddListener(ToggleSettingsAtTitle);
                 break;
             case GameManager.GameMode.Loading:
-                //Delete current UI from scene
-                if (CurrentUI != null)
-                    Destroy(CurrentUI);
-                break;
             case GameManager.GameMode.Credits:
+            case GameManager.GameMode.Won:
                 //Delete current UI from scene
                 if (CurrentUI != null)
                     Destroy(CurrentUI);

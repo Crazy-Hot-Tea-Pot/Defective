@@ -28,6 +28,8 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Sounds")]
     public SoundFX SpeakerSound;
+    public SoundFX PlayerSpeakingSound;
+    public SoundFX MessageRecieveSound;
 
     void OnEnable()
     {
@@ -76,6 +78,9 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ShowNextLine()
     {
+        SoundManager.StopLoopingFXSound(SpeakerSound);
+        SoundManager.StopLoopingFXSound(PlayerSpeakingSound);
+        
         if (dialogueQueue.Count == 0)
         {
             EndDialogue();
@@ -90,15 +95,19 @@ public class DialogueManager : MonoBehaviour
             GameObject.Find("Player").GetComponent<PlayerController>().CharacterSpeak(
                 line.dialogueText, line.revealByLetter, line.textSpeed, line.timeBetweenLines, true
             );
+
+            SoundManager.PlayFXSound(PlayerSpeakingSound,true,false);
         }
         else
         {
+            SoundManager.PlayFXSound(MessageRecieveSound);
+
             // If an NPC is speaking, show it on CallScreen
             CallScreen.SpeakerName = line.speakerName;
             CallScreen.SpeakerImage = line.speakerImage != null ? line.speakerImage.texture : null;
             CallScreen.NextText(line.dialogueText, line.revealByLetter, line.textSpeed, line.timeBetweenLines);
 
-            SoundManager.PlayFXSound(SpeakerSound);
+            SoundManager.PlayFXSound(SpeakerSound, true, false);
         }
     }
 
@@ -138,6 +147,7 @@ public class DialogueManager : MonoBehaviour
             case Levels.Loading:
             case Levels.Settings:
             case Levels.Credits:
+            case Levels.Win:
                 break;
             default:
                 CallScreen = GameObject.Find("Player").GetComponent<PlayerController>().CallScreen.GetComponent<CallScreen>();
