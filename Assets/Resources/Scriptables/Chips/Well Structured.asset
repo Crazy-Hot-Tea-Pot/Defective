@@ -22,5 +22,5 @@ MonoBehaviour:
   ChipRareityWeight: 0.15
   hitAllTargets: 0
   chipType: 3
-  ChipActivate: 4
+  ChipActivate: 5
   specialEffect: {fileID: 11400000, guid: 180aa68582dd04748b9b5346e1eba23f, type: 2}

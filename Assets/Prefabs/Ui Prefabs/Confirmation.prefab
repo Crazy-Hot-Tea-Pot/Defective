@@ -281,8 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSelectSound: 39
-  ButtonClickSound: 38
+  ButtonSelectSound: 44
+  ButtonClickSound: 43
 --- !u!114 &20671249813935962
 MonoBehaviour:
   m_ObjectHideFlags: 0

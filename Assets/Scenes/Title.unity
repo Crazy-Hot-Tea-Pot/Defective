@@ -485,8 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDialogue: {fileID: 0}
-  SpeakerSound: 0
-  PlayerSpeakingSound: 0
+  SpeakerSound: 47
+  PlayerSpeakingSound: 48
   MessageRecieveSound: 0
 --- !u!1 &829852516
 GameObject:
