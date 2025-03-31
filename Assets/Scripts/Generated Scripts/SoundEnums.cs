@@ -3,6 +3,7 @@ public enum BgSound
     None,
     Background,
     BattleBM,
+    Credits,
     LooterBossTheme,
     MainMenuAmbient,
     TutorialBackground,
