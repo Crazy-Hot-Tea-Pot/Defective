@@ -108,15 +108,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);  // Destroy duplicates
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        Initialize();
-    }
-    void Initialize()
-    {
-
-    }
     /// <summary>
     /// A method that can be used to transition into combat when out of combat
     /// </summary>
