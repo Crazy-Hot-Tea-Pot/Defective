@@ -3563,6 +3563,7 @@ GameObject:
   - component: {fileID: 2847732399835207573}
   - component: {fileID: 2082295569873223181}
   - component: {fileID: 4741827971579878457}
+  - component: {fileID: 5523500154879614532}
   m_Layer: 5
   m_Name: ChipsButton
   m_TagString: Untagged
@@ -3672,6 +3673,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5523500154879614532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5744687148912120761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 0
+  ButtonClickSound: 41
 --- !u!1 &5837580469617784074
 GameObject:
   m_ObjectHideFlags: 0
@@ -4987,8 +5002,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSelectSound: 44
-  ButtonClickSound: 43
+  ButtonSelectSound: 0
+  ButtonClickSound: 41
 --- !u!1 &7130975090551933360
 GameObject:
   m_ObjectHideFlags: 0
@@ -5313,6 +5328,7 @@ GameObject:
   - component: {fileID: 1233184176564133826}
   - component: {fileID: 3659899607595802465}
   - component: {fileID: 2341894882365705697}
+  - component: {fileID: 2880663065851185971}
   m_Layer: 5
   m_Name: GearButton
   m_TagString: Untagged
@@ -5422,6 +5438,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2880663065851185971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7487091808085266753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 41
+  ButtonClickSound: 0
 --- !u!1 &7499786520064040794
 GameObject:
   m_ObjectHideFlags: 0

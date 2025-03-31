@@ -64,9 +64,9 @@ MonoBehaviour:
   DroppedItems:
   - {fileID: 11400000, guid: d9fe00d134e9ea34e98c128921fbd533, type: 2}
   DroppedScrap: 30
-  EnemyDeathSound: 0
+  EnemyDeathSound: 40
   EnemyDamageTakenSound: 0
-  RepairBotSound: 42
+  RepairBotSound: 44
   GalvanizeBotSound: 31
 --- !u!136 &2074716340593231451
 CapsuleCollider:

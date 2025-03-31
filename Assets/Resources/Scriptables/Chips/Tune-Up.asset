@@ -15,14 +15,14 @@ MonoBehaviour:
   chipRarity: 1
   chipName: Tune-Up
   StartingDescription: "Removes the effects of \u201CDrained\u201D"
-  chipImage: {fileID: 21300000, guid: af4c4f157201e1a4f891a442a7dfc253, type: 3}
+  chipImage: {fileID: 21300000, guid: feb61959d0e38f44b850029342162b6c, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: A great defensive option when in need to remove a debuff.
   ChipRareityWeight: 0.15
   hitAllTargets: 0
   chipType: 2
-  ChipActivate: 5
+  ChipActivate: 3
   shieldAmount: 0
   upgradedShieldAmountToApply: 0
   effectToApply: 0
