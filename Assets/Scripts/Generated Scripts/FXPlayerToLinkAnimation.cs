@@ -63,10 +63,6 @@ public class FXPlayerToLinkAnimation : MonoBehaviour
     }
 
     // END CUSTOM
-    public void PlaySound_BattleWin()
-    {
-        SoundManager.PlayFXSound(SoundFX.BattleWin);
-    }
     public void PlaySound_ChipsPlay()
     {
         SoundManager.PlayFXSound(SoundFX.ChipsPlay);

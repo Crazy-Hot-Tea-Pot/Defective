@@ -134,7 +134,8 @@ public class SecurityDrone : Enemy
                 break;
         }
 
-        CurrentHP = MaxHp;
+        if(CurrentHP<=0)
+            CurrentHP = MaxHp;
     }
     protected override void PerformIntent()
     {

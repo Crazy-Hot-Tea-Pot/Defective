@@ -202,8 +202,8 @@ public class CombatController : MonoBehaviour
     /// <param name="items">Items dropped by the enemy.</param>
     public void LeaveCombat(GameObject enemy, int scrapLoot, List<NewChip> newChips, List<Item> items)
     {
-        if (!CombatEnemies.Contains(enemy)) 
-            return;
+        //if (!CombatEnemies.Contains(enemy)) 
+        //    return;
 
         Debug.Log($"{enemy.name} has left combat!");
         CombatEnemies.Remove(enemy);

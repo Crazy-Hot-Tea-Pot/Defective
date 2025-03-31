@@ -75,8 +75,8 @@ public class MaintenanceBot : Enemy
                 MaxHp = 90;
                 break;
         }
-
-        CurrentHP = MaxHp;
+        if (CurrentHP <= 0)
+            CurrentHP = MaxHp;
     }
 
     protected override void PerformIntent()

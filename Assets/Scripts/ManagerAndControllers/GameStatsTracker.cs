@@ -100,6 +100,8 @@ public class GameStatsTracker : MonoBehaviour
     {
         float duration = Time.time - combatStartTime;
 
+        duration = Mathf.Round(duration * 100f) / 100f;
+
         if (duration < FastestCombatTime)
         {
             FastestCombatTime = duration;

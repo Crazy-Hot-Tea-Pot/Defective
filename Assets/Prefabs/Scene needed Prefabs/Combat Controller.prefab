@@ -49,4 +49,4 @@ MonoBehaviour:
   combatArea: {fileID: 0}
   CombatStartSound: 8
   CombatSound: 2
-  CombatWinSound: 3
+  CombatWinSound: 10

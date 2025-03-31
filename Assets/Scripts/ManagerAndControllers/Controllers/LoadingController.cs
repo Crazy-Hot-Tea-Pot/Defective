@@ -60,6 +60,7 @@ public class LoadingController : MonoBehaviour
         {
             case Levels.Credits:
             case Levels.Win:
+            case Levels.Title:
                 break;
             default:
                 GenerateStoryGraph();

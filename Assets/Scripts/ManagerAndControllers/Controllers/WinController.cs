@@ -42,7 +42,7 @@ public class WinController : MonoBehaviour
 
         backToTitleAction.Enable();
 
-        backToTitleAction.performed += BackToTitle;
+        backToTitleAction.performed += ToCredits;
     }
 
     void Awake()
@@ -63,9 +63,9 @@ public class WinController : MonoBehaviour
 
         StartCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
     }
-    private void BackToTitle(InputAction.CallbackContext context)
+    private void ToCredits(InputAction.CallbackContext context)
     {
-        GameManager.Instance.RequestScene(Levels.Title);
+        GameManager.Instance.RequestScene(Levels.Credits);
     }    
     /// <summary>
     /// 20% chance to glitch each character.
@@ -197,7 +197,7 @@ public class WinController : MonoBehaviour
     }
     void OnDisable()
     {
-        backToTitleAction.performed -= BackToTitle;
+        backToTitleAction.performed -= ToCredits;
         backToTitleAction.Disable();
     }
 }

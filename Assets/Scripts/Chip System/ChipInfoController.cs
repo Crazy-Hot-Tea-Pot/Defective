@@ -78,7 +78,10 @@ public class ChipInfoController : MonoBehaviour
         {
 
             if (!TryGetComponent<Animator>(out animator))
-                Debug.Log("still no animator.");            
+            {
+                Debug.LogWarning("still no animator.");
+                return;
+            }
         }
 
         // Start shrinking animation
