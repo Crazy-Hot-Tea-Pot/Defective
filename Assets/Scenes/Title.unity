@@ -485,8 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDialogue: {fileID: 0}
-  SpeakerSound: 47
-  PlayerSpeakingSound: 48
+  SpeakerSound: 46
+  PlayerSpeakingSound: 45
   MessageRecieveSound: 0
 --- !u!1 &829852516
 GameObject:
@@ -1461,8 +1461,8 @@ MonoBehaviour:
   ResumeButton: {fileID: 2085399598711015237}
   OptionsButton: {fileID: 7001422712445478700}
   QuitButton: {fileID: 3720112114893829648}
-  ButtonSelectSound: 44
-  ButtonClickSound: 43
+  ButtonSelectSound: 42
+  ButtonClickSound: 41
   VersionText: {fileID: 4622310774376628093}
   CurrentStory: {fileID: 11400000, guid: e00ceb53a68735145a1d20453d113a10, type: 2}
   MaxHealth: 50
