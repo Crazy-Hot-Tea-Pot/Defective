@@ -49,6 +49,7 @@ public class QuestCountEnemies : Quest
         {
             //Take away from the counter
             remainingEnemies += 1;
+            GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
             //QuestManager.Instance.UpdateQuestHud(this);
         }
     }

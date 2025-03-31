@@ -30,7 +30,7 @@ public class QuestManager : MonoBehaviour
     private Quest nextSpawnQuest;
     private Quest secondQuestVar;
 
-    private bool automatic = false;
+    public bool automatic = false;
 
     public int questIndex;
 
@@ -49,49 +49,7 @@ public class QuestManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Load all the quest scriptables and clone them
-        PopulateQuestSciptables();
-
-        //If there are no current quests 
-        if(CurrentQuest == null || CurrentQuest.Count == 0)
-        {
-            automatic = true;
-        }
-
-        //If no order is given for quests we will make one up
-        if(automatic)
-        {
-            foreach (Quest quest in futureQuestList)
-            {
-                CurrentQuest.Add(quest);
-            }
-            futureQuestList.Clear();
-        }
-        //If one is delete doubles in future quests
-        else
-        {
-            //We don't want to effect the originals so we are instantly copying the quest into its self so it's a list of copiess
-            for (int i = 0; i < CurrentQuest.Count; i++)
-            {
-
-                //Clone the value
-                Quest Temp = CurrentQuest[i];
-                CurrentQuest[i] = Instantiate(Temp);
-            }
-
-            //Remove doubles
-            for (int i = 0; i < futureQuestList.Count; i++)
-            {
-                for(int y = 0; y < CurrentQuest.Count; y++)
-                {
-                    if (futureQuestList[i].name == CurrentQuest[y].name)
-                    {
-                        futureQuestList.RemoveAt(i);
-                    }
-                }
-            }
-        }
-
+       
     }
 
     // Update is called once per frame
@@ -303,7 +261,6 @@ public class QuestManager : MonoBehaviour
                 {
                     GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().GenerateQuestLog();
                 }
-                GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
             }
     }
 
@@ -381,24 +338,6 @@ public class QuestManager : MonoBehaviour
             {
                 futureQuestList.Remove(Temp);
             }
-        }
-    }
-
-    /// <summary>
-    /// Populates the quest scriptables
-    /// </summary>
-    public void PopulateQuestSciptables()
-    {
-        //Load all quests in the quest folder
-        futureQuestList = new List<Quest>(Resources.LoadAll<Quest>("Scriptables/Quest"));
-
-        //We don't want to effect the originals so we are instantly copying the quest into its self so it's a list of copiess
-        for (int i = 0; i < futureQuestList.Count; i++)
-        {
-
-            //Clone the value
-            Quest Temp = futureQuestList[i];
-            futureQuestList[i] = Instantiate(Temp);
         }
     }
 
