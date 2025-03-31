@@ -83,7 +83,7 @@ public class PlayerHandContainer : MonoBehaviour
         {
             GameObject tempNewChip = Instantiate(ChipManager.Instance.chipPrefab, PlayerHand.transform);
 
-            tempNewChip.GetComponent<Chip>().Mode = Chip.ChipMode.Combat;
+            tempNewChip.GetComponent<Chip>().SetChipModeTo(Chip.ChipMode.Combat);
 
             tempNewChip.GetComponent<Chip>().NewChip = chip;
         }

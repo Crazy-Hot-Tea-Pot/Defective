@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System;
-using static Cinemachine.DocumentationSortingAttribute;
 
 /// <summary>
 /// Data we would be saving for the Player.
@@ -86,13 +85,16 @@ public class GameData
     // Time stamp
     public string TimeStampString;
 
-    public List<string> SecurityCamRecordings = new List<string>();
+    public float CompletionTime;
+
+    public List<string> TotalCollectedChips = new List<string>();
 
     //Default Constructor
     public GameData()
     {
         Chips = new List<ChipData>();
         Gear = new List<GearData>();
+        TotalCollectedChips=new List<string>();
     }
 
     // Synchronize TimeStamp with its string representation

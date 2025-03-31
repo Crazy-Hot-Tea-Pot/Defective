@@ -203,7 +203,9 @@ public class TitleController : MonoBehaviour
 
         // Request the scene from StoryManager (instead of latestSave)
         GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
-        //GameManager.Instance.RequestScene(Levels.Tutorial);
+
+        //Start tracker
+        GameStatsTracker.Instance.StartSession();
 
     }
     /// <summary>
@@ -222,7 +224,6 @@ public class TitleController : MonoBehaviour
         // Request the scene from GameManager
         // Request the scene from StoryManager (instead of latestSave)
         GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
-        //GameManager.Instance.RequestScene(latestSave.storyProgress.currentLevel);
     }
     private IEnumerator OpenOptions()
     {
@@ -234,6 +235,9 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator Quit()
     {
+
+        DataManager.Instance.AutoSave();
+
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);
 

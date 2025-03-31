@@ -16,7 +16,28 @@ public class GameStatsTracker : MonoBehaviour
             instance = value;
         }
     }
-
+    public float SessionStartTime
+    {
+        get
+        {
+            return sessionStartTime;
+        }
+        set
+        {
+            sessionStartTime = value;
+        }
+    }
+    public float SessionPlayTime
+    {
+        get
+        {
+            return sessionPlayTime;
+        }
+        private set
+        {
+            sessionPlayTime = value;
+        }
+    }
     public float FastestCombatTime
     {
         get
@@ -63,11 +84,13 @@ public class GameStatsTracker : MonoBehaviour
     }
 
     private int totalScrapCollected;
+    private float sessionPlayTime=0f;
     private float fastestCombatTime = Mathf.Infinity;
     private float combatStartTime;
     private float highestDamageDealt;
     private List<NewChip> totalChipsCollected= new List<NewChip>();
     private static GameStatsTracker instance;
+    private float sessionStartTime = 0;
 
     void Awake()
     {
@@ -92,7 +115,6 @@ public class GameStatsTracker : MonoBehaviour
     {
         combatStartTime = Time.time;
     }
-
     /// <summary>
     /// End Combat Timer and Saves if fastest
     /// </summary>
@@ -107,6 +129,10 @@ public class GameStatsTracker : MonoBehaviour
             FastestCombatTime = duration;
         }
     }
+    /// <summary>
+    /// Report damage done amount for highest damage
+    /// </summary>
+    /// <param name="damage"></param>
     public void ReportDamage(float damage)
     {
         if (damage > highestDamageDealt)
@@ -114,9 +140,45 @@ public class GameStatsTracker : MonoBehaviour
             HighestDamageDealt = damage;
         }
     }
+    /// <summary>
+    /// Add scrap to totale scrap collected
+    /// </summary>
+    /// <param name="scrap"></param>
     public void AddScrap(int scrap)
     {
         TotalScrapCollected += scrap;
     }    
+    /// <summary>
+    /// Starting time for game
+    /// </summary>
+    public void StartSession()
+    {
+        SessionStartTime = Time.time;
+    }
+    /// <summary>
+    /// Track time for the current session
+    /// </summary>
+    public void UpdatePlayTime()
+    {
+        if (SessionStartTime > 0)
+        {            
+            SessionPlayTime = Time.time - SessionStartTime;
+        }
+    }
+    [ContextMenu("Generate Dummy Data")]
+    public void GenerateDummyData()
+    {
+        Debug.Log("Generating dummy data for testing...");
+
+        // Generate random dummy data for testing
+        FastestCombatTime = UnityEngine.Random.Range(10f, 120f); // Random combat time between 10 and 120 seconds
+        HighestDamageDealt = UnityEngine.Random.Range(50f, 500f); // Random damage between 50 and 500
+        TotalScrapCollected = UnityEngine.Random.Range(100, 1000); // Random scrap between 100 and 1000
+
+        // Simulate a completion time
+        SessionStartTime = Time.time - UnityEngine.Random.Range(600f, 3600f); // Random session from 10 minutes to 1 hour ago
+
+        Debug.Log("Dummy data generated!");
+    }
 
 }

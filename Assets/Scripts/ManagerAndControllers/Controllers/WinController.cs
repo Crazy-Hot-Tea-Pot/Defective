@@ -8,6 +8,8 @@ public class WinController : MonoBehaviour
 {
     public TextMeshProUGUI TitleText;
     public TextMeshProUGUI StatDisplay;
+    public GameObject ChipCollectedContainer;
+    public GameObject ChipDefault;
 
     [Header("Title Effect Settings")]
     [Tooltip("Switch between Glitch and Scramble effects.")]
@@ -25,11 +27,15 @@ public class WinController : MonoBehaviour
     [Tooltip("How much the text shakes (reduce this for subtle movement)")]
     public float positionJitter = 1f;
 
-    [Header("Text Reveal Settings")]
+    [Header("Win Data Text Reveal Settings")]
     [Range(0.000f, 0.100f)]
     public float revealSpeed = 0.05f;
     public int wordsPerCycle = 1;
     public bool Wordmode;
+
+    [Header("Chip Reveal Settings")]
+    public bool RevealInstantly = false;
+    public float chipRevealSpeed = 0.5f;
 
     private bool hasTextChanged;
     private string originalText;
@@ -54,14 +60,43 @@ public class WinController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //if (Wordmode)
-        //    StartCoroutine(RevealWords(StatDisplay));
-        //else
-        //    StartCoroutine(RevealCharacters(StatDisplay));
+        PopulateChips();
+        SetUpStatsText();       
 
         originalText = TitleText.text;
 
         StartCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
+    }
+    private void PopulateChips()
+    {
+        foreach (Transform child in ChipCollectedContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        StartCoroutine(SpawnLootWithDelay());
+    }
+    private void SetUpStatsText()
+    {
+        float completionTime = Time.time - GameStatsTracker.Instance.SessionStartTime;
+
+
+        string completionTimeFormatted = $"{(int)completionTime / 60:D2}:{(int)completionTime % 60:D2}";
+        string fastestCombatTimeFormatted = GameStatsTracker.Instance.FastestCombatTime == Mathf.Infinity ? "N/A" : $"{(int)GameStatsTracker.Instance.FastestCombatTime / 60:D2}:{(int)GameStatsTracker.Instance.FastestCombatTime % 60:D2}";
+        string highestDamageDealtFormatted = $"{GameStatsTracker.Instance.HighestDamageDealt:F0}";
+        string totalScrapCollectedFormatted = $"<color=yellow>{GameStatsTracker.Instance.TotalScrapCollected}</color>";
+
+
+        StatDisplay.SetText($"Completion Time: {completionTimeFormatted}\n" +
+                            $"Fastest Combat Time: {fastestCombatTimeFormatted}\n" +
+                            $"Highest Damage Dealt: {highestDamageDealtFormatted}\n" +
+                            $"Total <color=yellow>Scrap</color> Collected: {totalScrapCollectedFormatted}");
+        
+
+        if (Wordmode)
+            StartCoroutine(RevealWords(StatDisplay));
+        else
+            StartCoroutine(RevealCharacters(StatDisplay));
     }
     private void ToCredits(InputAction.CallbackContext context)
     {
@@ -102,8 +137,9 @@ public class WinController : MonoBehaviour
 
             if (visibleCount > totalVisibleCharacters)
             {
-                yield return new WaitForSeconds(1.0f);
-                visibleCount = 0;
+                yield break;
+                //yield return new WaitForSeconds(1.0f);
+                //visibleCount = 0;
             }
 
             textComponent.maxVisibleCharacters = visibleCount;
@@ -141,7 +177,8 @@ public class WinController : MonoBehaviour
         }
 
         // Optionally pause at the end of all words
-        yield return new WaitForSeconds(1.0f);
+        //yield return new WaitForSeconds(1.0f);
+        yield break;
     }
     private IEnumerator ScrambleEffect()
     {
@@ -193,6 +230,20 @@ public class WinController : MonoBehaviour
 
             TitleText.text = originalText;
             TitleText.rectTransform.anchoredPosition -= offset2D;
+        }
+    }
+    private IEnumerator SpawnLootWithDelay()
+    {
+        foreach (NewChip newChip in GameStatsTracker.Instance.TotalChipsCollected)
+        {
+            GameObject Chip = Instantiate(ChipDefault, ChipCollectedContainer.transform);
+
+            Chip.GetComponent<Chip>().SetChipModeTo(global::Chip.ChipMode.Inventory);
+
+            Chip.GetComponent<Chip>().NewChip = newChip;
+
+            // Wait for second before spawning the next
+            yield return new WaitForSeconds(chipRevealSpeed);
         }
     }
     void OnDisable()

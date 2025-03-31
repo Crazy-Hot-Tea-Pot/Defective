@@ -152,7 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TitleText: {fileID: 1170428322218496804}
-  StatDisplay: {fileID: 0}
+  StatDisplay: {fileID: 1417976427}
+  ChipCollectedContainer: {fileID: 1175058479}
+  ChipDefault: {fileID: 7436777728557001682, guid: d9849c1ec37ff6e499ec76c0fe76af67, type: 3}
   useScrambleEffect: 1
   effectInterval: 0.5
   effectDuration: 0.15
@@ -160,6 +162,8 @@ MonoBehaviour:
   revealSpeed: 0.1
   wordsPerCycle: 1
   Wordmode: 0
+  RevealInstantly: 0
+  chipRevealSpeed: 0.5
 --- !u!4 &40360409
 Transform:
   m_ObjectHideFlags: 0
