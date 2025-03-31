@@ -259,7 +259,7 @@ public class NewChip : ScriptableObject
             case TypeOfChips.Skill:
                 if (this is SkillChip skillChip && skillChip.specialEffect != null)
                 {
-                    description += $"\n{skillChip.specialEffect.name}";
+                    //description += $"\n{skillChip.specialEffect.name}";
                     if (skillChip.IsUpgraded)
                         description += $"\n(Upgraded: +{skillChip.specialEffect.amountToUpgradeBy})";
                 }

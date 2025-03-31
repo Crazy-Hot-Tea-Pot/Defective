@@ -166,7 +166,7 @@ public class UiManager : MonoBehaviour
             ChipManager.Instance.IsHandEmpty
             )
         {
-            GetCurrentController<RoamingAndCombatUiController>().PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
+            GetCurrentController<RoamingAndCombatUiController>().PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Hide);
             GetCurrentController<RoamingAndCombatUiController>().EndTurnButtonAnimator.SetTrigger("Click Me");
         }
     }

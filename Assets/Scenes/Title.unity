@@ -1512,7 +1512,8 @@ MonoBehaviour:
     Chips: []
     Gear: []
     TimeStampString: 
-    SecurityCamRecordings: []
+    CompletionTime: 0
+    TotalCollectedChips: []
 --- !u!4 &1829154760
 Transform:
   m_ObjectHideFlags: 0

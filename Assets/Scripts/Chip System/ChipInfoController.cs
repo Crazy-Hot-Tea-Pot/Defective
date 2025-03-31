@@ -61,7 +61,7 @@ public class ChipInfoController : MonoBehaviour
     /// <param name="chip"></param>
     public void SetUpChipInfo(NewChip chip)
     {
-        ChipName.SetText(chip.chipName + " Chip");
+        ChipName.SetText(chip.chipName);
         ChipImage.sprite = chip.chipImage;
         ChipType.SetText(chip.ChipType.ToString());
         ChipDescription.SetText(chip.ChipDescription);

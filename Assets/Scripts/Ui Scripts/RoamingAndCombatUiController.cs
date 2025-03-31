@@ -98,15 +98,13 @@ public class RoamingAndCombatUiController : UiController
             {
                 if (ChipManager.Instance.UsedChips.Count != 8)
                 {
-                    PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
-                    PlayerHand.GetComponent<PlayerHandContainer>().SliderButton.interactable = true;
+                    PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Reveal);                    
                 }
             }
             else
             {
-                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
-                PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
-                PlayerHand.GetComponent<PlayerHandContainer>().SliderButton.interactable = false;
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Hide);
+                PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();                
             }
 
             EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
@@ -263,7 +261,7 @@ public class RoamingAndCombatUiController : UiController
             PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
 
             if (ChipManager.Instance.UsedChips.Count != 8)
-                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Reveal);
 
             introCombatAnimationFinish = true;
 
