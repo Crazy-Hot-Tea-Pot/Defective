@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2e94c00137ccef42aca0929b37e26af, type: 3}
-  m_Name: QuestCountEnemies
+  m_Name: L4DefeatLooterBossAndFriends
   m_EditorClassIdentifier: 
-  questName: 'The Alpha:'
-  ccQuestName: 'The Alpha:'
-  modifiedQuestName: 
-  questDesc: 'Kill the alpha however you see fit to '
+  questName: 'Defeat the looter boss and his men : '
+  ccQuestName: 'Defeat the looter boss and his men : '
+  modifiedQuestName: 'Defeat the looter boss and his men : '
+  questDesc: The looter boss has set up a mounting force here and we must destroy
+    all of them.
   complete: 0
   isTutorial: 0
   mainQuest: 1
-  totalEnemies: 1
-  enemyType: GangLeader
+  totalEnemies: 7
+  enemyType: Looter

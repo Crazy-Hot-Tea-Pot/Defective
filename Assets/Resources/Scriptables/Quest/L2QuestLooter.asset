@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2e94c00137ccef42aca0929b37e26af, type: 3}
-  m_Name: QuestCountEnemies
+  m_Name: L2QuestLooter
   m_EditorClassIdentifier: 
-  questName: 'The Alpha:'
-  ccQuestName: 'The Alpha:'
-  modifiedQuestName: 
-  questDesc: 'Kill the alpha however you see fit to '
+  questName: 'Defeat The Looters: '
+  ccQuestName: 'Defeat The Looters: '
+  modifiedQuestName: 'Defeat The Looters: '
+  questDesc: Defeat 6 looters
   complete: 0
   isTutorial: 0
   mainQuest: 1
-  totalEnemies: 1
-  enemyType: GangLeader
+  totalEnemies: 6
+  enemyType: Looter

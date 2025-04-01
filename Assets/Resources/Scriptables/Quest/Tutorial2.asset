@@ -19,9 +19,10 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
-  PopupText: To attack you must first select the enemy by clicking them with your
-    mouse. Then you can use chips as located below. Chps work simialr to cards in
-    a deck and you have 8 chips total in your whole combat.
+  PopupText: To attack, select an enemy with your mouse. Each combat, you have 8
+    "Chips" in your Deck, which are consumables that refresh at the end of each combat.
+    You will draw up to 4 each turn, and may inspect them by right-clicking on them.
+    They are located below.
   nextQuest: {fileID: 11400000, guid: 52061b798fdb5f34badecdb7129b88ae, type: 2}
   secondQuest: {fileID: 0}
   InCombat: 1

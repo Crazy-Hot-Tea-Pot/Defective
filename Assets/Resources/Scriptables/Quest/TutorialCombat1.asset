@@ -19,10 +19,11 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
-  UIElementPath: UiManager/Roaming And Combat UI/PlayerHandContainer/Button
+  UIElementPath: UiManager/Roaming And Combat UI/PlayerHand
   curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
   xOffset: 0
-  yOffset: 10
+  yOffset: 40
   nextQuest: {fileID: 11400000, guid: faf8b303d51b8a14ea77fd9c2443d58e, type: 2}
-  secondQuest: {fileID: 11400000, guid: 82fb3b89b28cb0141896391e8e98e6e8, type: 2}
+  secondQuest: {fileID: 0}
   InCombat: 1
+  FindAnyChild: 1
