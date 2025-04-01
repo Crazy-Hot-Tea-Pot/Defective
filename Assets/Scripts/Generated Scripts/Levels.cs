@@ -15,4 +15,5 @@ public enum Levels
     Credits,
     Settings,
     TestLevel,
+    Win,
 }

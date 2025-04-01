@@ -526,6 +526,9 @@ public class Enemy : MonoBehaviour
         RotateToPlayer(EnemyTarget.transform.position);
 
         Animator.SetTrigger("Hit");
+
+        //Track damage
+        GameStatsTracker.Instance.ReportDamage(damage);
     }
 
     /// <summary>
@@ -541,7 +544,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Call when enemy die.
     /// </summary>
-    public virtual void Die()
+    protected virtual void Die()
     {
         //Update the quest for counting enemies to count it's death
         try

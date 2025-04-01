@@ -26,7 +26,8 @@ public class GameManager : MonoBehaviour
         GameOver,
         Credits,
         Loading,
-        BrowseringInventory
+        BrowseringInventory,
+        Won
     }
 
     public GameMode CurrentGameMode
@@ -107,15 +108,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);  // Destroy duplicates
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        Initialize();
-    }
-    void Initialize()
-    {
-
-    }
     /// <summary>
     /// A method that can be used to transition into combat when out of combat
     /// </summary>
@@ -159,6 +151,7 @@ public class GameManager : MonoBehaviour
             case Levels.Settings:
             case Levels.Loading:
             case Levels.Credits:
+            case Levels.Win:
                 break;
             default:
                 DataManager.Instance.CurrentGameData.Level = level;                
@@ -219,24 +212,33 @@ public class GameManager : MonoBehaviour
                 case Levels.Credits:
                     CurrentGameMode = GameMode.Credits;
                     break;
+                case Levels.Win:
+                    CurrentGameMode = GameMode.Won;
+                    break;
                 default:
                     CurrentGameMode = GameMode.Roaming;
 
-                    try
-                    {
-                        if (PreviousScene == Levels.Title)
-                            GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(CurrentLevel);
-                        else
-                            GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(PreviousScene);
-                    }
-                    catch
-                    {
-                        Debug.LogWarning("No Entrance in scene.");
-                    }
+                    //try
+                    //{
+                    //    if (PreviousScene == Levels.Title)
+                    //        GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(CurrentLevel);
+                    //    else
+                    //        GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(PreviousScene);
+                    //}
+                    //catch
+                    //{
+                    //    Debug.LogWarning("No Entrance in scene.");
+                    //}
                     break;
             }
             
             OnSceneChange?.Invoke(CurrentLevel);
         }        
+    }
+
+    [ContextMenu("Win Scene Text")]
+    private void ToWin()
+    {
+        GameManager.Instance.RequestScene(Levels.Win);
     }
 }

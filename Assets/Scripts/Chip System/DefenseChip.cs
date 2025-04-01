@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static Effects;
 
 [CreateAssetMenu(fileName = "NewDefenseChip", menuName = "Chip System/Defense Chip")]
 public class DefenseChip : NewChip
@@ -76,10 +75,10 @@ public class DefenseChip : NewChip
     public override void OnChipPlayed(PlayerController player)
     {
         base.OnChipPlayed(player);
-        
+
         //Apply worndown effect
         if (player.IsWornDown)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ApplyShield(Mathf.FloorToInt(shieldAmount*0.7f));
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ApplyShield(shieldAmount*0.7f);
         else
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ApplyShield(shieldAmount);
 

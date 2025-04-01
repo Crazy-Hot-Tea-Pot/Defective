@@ -58,6 +58,8 @@ public class DialogueEditorWindow : EditorWindow
                 lines[i].textSpeed = EditorGUILayout.Slider("Text Speed:", lines[i].textSpeed, 0.01f, 0.1f);
             }
 
+            lines[i].timeBetweenLines = EditorGUILayout.Slider("Time Between Lines:", lines[i].timeBetweenLines,1f,10f);
+
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Move Up") && i > 0)
             {

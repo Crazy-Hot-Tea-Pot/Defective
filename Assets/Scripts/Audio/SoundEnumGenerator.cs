@@ -23,6 +23,7 @@ public class SoundEnumGenerator
         // Generate BgSound enum
         enumBuilder.AppendLine("public enum BgSound");
         enumBuilder.AppendLine("{");
+        enumBuilder.AppendLine("    None,");
         AddFilesToEnum(bgFolder, enumBuilder);
         enumBuilder.AppendLine("}");
         enumBuilder.AppendLine();
@@ -30,6 +31,7 @@ public class SoundEnumGenerator
         // Generate SoundFX enum
         enumBuilder.AppendLine("public enum SoundFX");
         enumBuilder.AppendLine("{");
+        enumBuilder.AppendLine("    None,");
         AddFilesToEnum(fxFolder, enumBuilder);
         enumBuilder.AppendLine("}");
 

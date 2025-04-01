@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System;
-using static Cinemachine.DocumentationSortingAttribute;
 
 /// <summary>
 /// Data we would be saving for the Player.
@@ -73,9 +72,9 @@ public class GameData
     //Levels the Player is on
     public Levels Level;
     //Player HealthBar
-    public int Health;
+    public float Health;
     //Player MaxHealth;
-    public int MaxHealth;
+    public float MaxHealth;
     //PlayerScrap
     public int Scraps;
     public StoryProgress storyProgress = new StoryProgress();
@@ -86,13 +85,16 @@ public class GameData
     // Time stamp
     public string TimeStampString;
 
-    public List<string> SecurityCamRecordings = new List<string>();
+    public float CompletionTime;
+
+    public List<string> TotalCollectedChips = new List<string>();
 
     //Default Constructor
     public GameData()
     {
         Chips = new List<ChipData>();
         Gear = new List<GearData>();
+        TotalCollectedChips=new List<string>();
     }
 
     // Synchronize TimeStamp with its string representation

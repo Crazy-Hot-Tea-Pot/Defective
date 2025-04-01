@@ -159,6 +159,9 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator StartGame()
     {
+        // Reset all scriptables to default
+        ChipManager.Instance.ResetAllChips();
+        GearManager.Instance.ResetAllGear();
 
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);
@@ -200,7 +203,9 @@ public class TitleController : MonoBehaviour
 
         // Request the scene from StoryManager (instead of latestSave)
         GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
-        //GameManager.Instance.RequestScene(Levels.Tutorial);
+
+        //Start tracker
+        GameStatsTracker.Instance.StartSession();
 
     }
     /// <summary>
@@ -219,7 +224,6 @@ public class TitleController : MonoBehaviour
         // Request the scene from GameManager
         // Request the scene from StoryManager (instead of latestSave)
         GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
-        //GameManager.Instance.RequestScene(latestSave.storyProgress.currentLevel);
     }
     private IEnumerator OpenOptions()
     {
@@ -231,6 +235,9 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator Quit()
     {
+
+        DataManager.Instance.AutoSave();
+
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);
 
@@ -284,7 +291,6 @@ public class TitleController : MonoBehaviour
         videoPlayer.Stop();
         animator.SetTrigger("VideoFinish");
     }
-
 
     /// <summary>
     /// 20% chance to glitch each character.
@@ -355,6 +361,12 @@ public class TitleController : MonoBehaviour
             TitleText.text = originalText;
             TitleText.rectTransform.anchoredPosition -= offset2D;
         }
+    }
+
+    [ContextMenu("Win Scene Text")]
+    private void ToWin()
+    {
+        GameManager.Instance.RequestScene(Levels.Win);
     }
     void OnDestroy()
     {

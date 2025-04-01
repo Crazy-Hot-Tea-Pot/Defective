@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
+using static Item;
 
 public class GearInfoController : MonoBehaviour
 {
@@ -91,15 +92,23 @@ public class GearInfoController : MonoBehaviour
     {
         GearName.SetText(item.itemName);
         GearImage.sprite = item.itemImage;
-        GearType.SetText(item.itemType.ToString());
 
-        string gearDesriptionText = "";
-        foreach (var effect in item.itemEffects)
+        switch (item.itemType)
         {
-            gearDesriptionText += effect.GetEffectDescription(item);
-            gearDesriptionText += "\n=====\n";
+            case ItemType.Weapon:
+                GearType.color=Color.red;
+            break;
+            case ItemType.Armor:
+                GearType.color=Color.blue;
+            break;
+            case ItemType.Equipment:
+                GearType.color=Color.green;
+            break;
+
         }
-        GearDescription.SetText(gearDesriptionText);
+        GearType.SetText(item.itemType.ToString());        
+        
+        GearDescription.SetText(item.itemDescription);
     }
 
     private IEnumerator MoveToPosition(Vector3 startPosition, Vector3 targetPosition, float duration)

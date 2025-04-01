@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -178,6 +179,8 @@ public class CombatController : MonoBehaviour
         }
 
         StartTurn();
+
+        GameStatsTracker.Instance.StartCombatTimer();
     }
 
     /// <summary>
@@ -199,8 +202,8 @@ public class CombatController : MonoBehaviour
     /// <param name="items">Items dropped by the enemy.</param>
     public void LeaveCombat(GameObject enemy, int scrapLoot, List<NewChip> newChips, List<Item> items)
     {
-        if (!CombatEnemies.Contains(enemy)) 
-            return;
+        //if (!CombatEnemies.Contains(enemy)) 
+        //    return;
 
         Debug.Log($"{enemy.name} has left combat!");
         CombatEnemies.Remove(enemy);
@@ -354,12 +357,23 @@ public class CombatController : MonoBehaviour
     /// </summary>
     private void EndCombat()
     {
-        Debug.Log("Combat has ended.");        
+        Debug.Log("Combat has ended."); 
+        
+        GameStatsTracker.Instance.EndCombatTimer();
 
         SoundManager.PlayFXSound(CombatWinSound);
 
         // Notify GameManager or handle loot distribution
         GameManager.Instance.EndCombat();
+
+        // Check for Lucky Trinket effect
+        PlayerController playerController = Player.GetComponent<PlayerController>();
+
+        if (playerController.ListOfActiveEffects.Any(effect => effect.SpecialEffect == Effects.SpecialEffects.LuckyTrinket))
+        {
+            ScrapLootForCurrentCombat += 10;
+            Debug.Log("Lucky Trinket effect detected, adding 10 Scrap to a total of " + ScrapLootForCurrentCombat + " Scrap.");            
+        }
 
         if (ScrapLootForCurrentCombat > 0 || ItemsLootForCurrentCombat.Count > 0 || NewChipLootForCurrentCombat.Count > 0)
         {
@@ -386,6 +400,9 @@ public class CombatController : MonoBehaviour
         if (combatStartClip != null)
         {
             SoundManager.PlayFXSound(CombatStartSound);
+
+            Debug.Log("Playing CombatStartSound");
+
             yield return new WaitForSeconds(combatStartClip.length);
         }
 

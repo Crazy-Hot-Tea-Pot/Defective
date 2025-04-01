@@ -1,21 +1,27 @@
 public enum BgSound
 {
+    None,
     Background,
     BattleBM,
+    Credits,
+    LooterBossTheme,
     MainMenuAmbient,
     TutorialBackground,
+    TutorialBackgroundv2,
+    TutorialBackgroundv3,
 }
 
 public enum SoundFX
 {
+    None,
     AccesDenied,
-    BattleBM,
-    BattleStart,
-    BattleWin,
+    ButtonClickNegative,
+    ButtonClickPositive,
     ChipBuffV1,
     ChipDebuffV1,
     ChipNormal,
     ChipsPlay,
+    CombatStartSfxV1,
     DeckClose,
     DeckOpen,
     DoorSfx,
@@ -43,6 +49,8 @@ public enum SoundFX
     GuardSound,
     Jam,
     LaserBeam,
+    LooterBossDeath,
+    LooterDeath,
     LooterEscapeSFX,
     LuckyTrinket,
     MaintenanceBotDeath,
@@ -50,6 +58,9 @@ public enum SoundFX
     MenuSelectionSound,
     MiantenanceBotDissemble,
     MiantenanceBotRepair,
+    ParoleLooter,
+    ParoleRobot,
+    PlayerDamageTaken,
     Powerboost,
     PowerboostV2,
     RobotPunchHitHuman,
@@ -60,5 +71,7 @@ public enum SoundFX
     Shroud,
     SteelPlatingSound,
     Swipe,
+    terminal,
+    Test,
     WornDown,
 }

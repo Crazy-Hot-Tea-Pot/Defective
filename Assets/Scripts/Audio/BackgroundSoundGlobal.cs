@@ -8,6 +8,8 @@ using UnityEngine;
 public class BackgroundSoundGlobal : MonoBehaviour
 {
     private AudioSource audioSource;
+    private AudioClip previousClip;
+    private bool wasPlayingBeforeCombat = false;
     [SerializeField]
     private List<Levels> playInScenes = new List<Levels>();
     [SerializeField]

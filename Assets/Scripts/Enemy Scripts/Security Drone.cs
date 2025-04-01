@@ -1,4 +1,3 @@
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class SecurityDrone : Enemy
@@ -134,7 +133,8 @@ public class SecurityDrone : Enemy
                 break;
         }
 
-        CurrentHP = MaxHp;
+        if(CurrentHP<=0)
+            CurrentHP = MaxHp;
     }
     protected override void PerformIntent()
     {

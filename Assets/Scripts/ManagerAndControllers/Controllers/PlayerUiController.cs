@@ -109,6 +109,7 @@ public class PlayerUiController : MonoBehaviour
                 yield return new WaitForSeconds(revealSpeed);
             }
         }
+        DialogueManager.Instance.StopPlayingSound();
 
         // Wait for the display duration
         yield return new WaitForSeconds(displayDuration);

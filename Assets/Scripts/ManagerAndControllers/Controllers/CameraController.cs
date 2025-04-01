@@ -335,8 +335,7 @@ public class CameraController : MonoBehaviour
     {
         // Prevent the Reset action if Player is interacting
         if (IsPlayerInteracting())
-        {
-            Debug.Log("Camera reset ignored because the player is interacting.");
+        {            
             return;
         }
         switch (GameManager.Instance.CurrentGameMode)
@@ -364,8 +363,7 @@ public class CameraController : MonoBehaviour
     public void SwitchCamera(CameraState state)
     {
         if (IsPlayerInteracting())
-        {
-            Debug.Log("Camera reset ignored because the player is interacting.");
+        {            
             return;
         }
 

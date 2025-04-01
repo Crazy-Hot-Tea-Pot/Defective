@@ -23,8 +23,8 @@ MonoBehaviour:
   valueIncreaseBy: 0000000000000000010000000000000002000000
   scrapValueForEachTeir: 050000000a0000000f000000140000001900000005000000
   ItemActivateSound: 33
-  ItemDeactivateSound: 34
-  ItemFailSound: 34
+  ItemDeactivateSound: 0
+  ItemFailSound: 0
   ItemHitShield: 33
   ItemHitFlesh: 33
   ItemHitMetal: 33

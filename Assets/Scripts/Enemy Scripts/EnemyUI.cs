@@ -103,11 +103,18 @@ public class EnemyUI : MonoBehaviour
         // Stop any currently running health update coroutine
         StopAllCoroutines();
 
-        if(this.gameObject.activeInHierarchy)
+        if (this.gameObject.activeInHierarchy)
             // Start the coroutine to smoothly update the health bar
-            StartCoroutine(UpdateHealthOverTime(currentHp,maxHp));
+            StartCoroutine(UpdateHealthOverTime(currentHp, maxHp));
+        else
+            StartCoroutine(WaitToCallBack(currentHp, maxHp));
     }
+    private IEnumerator WaitToCallBack(float currentHp, float maxHp)
+    {
+        yield return new WaitForSeconds(1f);
 
+        UpdateHealth(currentHp, maxHp);
+    }
     /// <summary>
     /// Update Enemy ShieldBar Bar
     /// </summary>
@@ -132,9 +139,15 @@ public class EnemyUI : MonoBehaviour
             if (this.gameObject.activeInHierarchy)
                 // Start the coroutine to smoothly update the shield bar
                 StartCoroutine(UpdateShieldOverTime(shieldPercentage, maxShield));
+            else            
+                StartCoroutine(WaitToCallBackShield(shieldPercentage, maxShield));            
         }
     }
-
+    private IEnumerator WaitToCallBackShield(float currentShield, float maxShield)
+    {
+        yield return new WaitForSeconds(1f);
+        UpdateShield(currentShield, maxShield);
+    }
     /// <summary>
     /// Update the Effects for Enemy
     /// </summary>

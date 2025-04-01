@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2905883298498235603}
   - component: {fileID: 2787496012562100680}
   - component: {fileID: 9176900050084815381}
+  - component: {fileID: 8021104442203126349}
   m_Layer: 5
   m_Name: ScrapButton
   m_TagString: Untagged
@@ -121,6 +122,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8021104442203126349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892596702438338599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &1520915160978640921
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +148,7 @@ GameObject:
   - component: {fileID: 4273881284257792928}
   - component: {fileID: 6154483096693796095}
   - component: {fileID: 8395739842728003518}
+  - component: {fileID: 5569756640164553579}
   m_Layer: 5
   m_Name: EquipButton
   m_TagString: Untagged
@@ -242,6 +258,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5569756640164553579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520915160978640921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &3562640182456178730
 GameObject:
   m_ObjectHideFlags: 0

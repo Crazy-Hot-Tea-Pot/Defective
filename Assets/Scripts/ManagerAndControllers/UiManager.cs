@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -94,7 +95,7 @@ public class UiManager : MonoBehaviour
 
         GetCurrentController<RoamingAndCombatUiController>().CameraModeIndicatorController.SwitchIndicatorTo(cameraState);
     }
-    public void UpdateHealth(int currentHealth, int MaxHealth)
+    public void UpdateHealth(float currentHealth, float MaxHealth)
     {
         switch (GameManager.Instance.CurrentGameMode)
         {
@@ -107,7 +108,7 @@ public class UiManager : MonoBehaviour
                 break;
         }        
     }
-    public void UpdateShield(int currentShield, int MaxShield)
+    public void UpdateShield(float currentShield, float MaxShield)
     {
         GetCurrentController<RoamingAndCombatUiController>().UpdateShield(currentShield, MaxShield);
     }
@@ -166,7 +167,7 @@ public class UiManager : MonoBehaviour
             ChipManager.Instance.IsHandEmpty
             )
         {
-            GetCurrentController<RoamingAndCombatUiController>().PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
+            GetCurrentController<RoamingAndCombatUiController>().PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Hide);
             GetCurrentController<RoamingAndCombatUiController>().EndTurnButtonAnimator.SetTrigger("Click Me");
         }
     }
@@ -282,7 +283,8 @@ public class UiManager : MonoBehaviour
     }
     public void AddItemToInventory(Item item)
     {
-        GearManager.Instance.Acquire(item);
+        Item gearInstance = Instantiate(item);
+        GearManager.Instance.Acquire(gearInstance);
         GetCurrentController<LootUiController>().LootItems.Remove(item);
         GetCurrentController<LootUiController>().UpdateLootScreen();
     }
@@ -406,7 +408,8 @@ public class UiManager : MonoBehaviour
         return controller;
     }
     private void UpdateUIForGameMode()
-    {       
+    {
+        EventSystem.current.SetSelectedGameObject(null);
 
         // Update UI elements based on the game mode
         switch (GameManager.Instance.CurrentGameMode)
@@ -418,20 +421,19 @@ public class UiManager : MonoBehaviour
 
                 GameObject.Find("Options Button").GetComponent<Button>().onClick.RemoveAllListeners();
                 GameObject.Find("Options Button").GetComponent<Button>().onClick.AddListener(ToggleSettingsAtTitle);
+
+                EventSystem.current.SetSelectedGameObject(GameObject.Find("Play Button"));
                 break;
             case GameManager.GameMode.Loading:
-                //Delete current UI from scene
-                if (CurrentUI != null)
-                    Destroy(CurrentUI);
-                break;
             case GameManager.GameMode.Credits:
+            case GameManager.GameMode.Won:
                 //Delete current UI from scene
                 if (CurrentUI != null)
                     Destroy(CurrentUI);
                 break;
             case GameManager.GameMode.Combat:
             case GameManager.GameMode.Roaming:
-                SwitchScreen(listOfUis.Find(ui => ui.name == RoamingAndCombatUI.name));
+                SwitchScreen(listOfUis.Find(ui => ui.name == RoamingAndCombatUI.name));                
                 break;
             case GameManager.GameMode.Pause:
                 Debug.Log("[UiManager] Displaying Pause Menu.");

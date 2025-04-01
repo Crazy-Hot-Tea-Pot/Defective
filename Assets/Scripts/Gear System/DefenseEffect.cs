@@ -13,7 +13,7 @@ public class DefenseEffect : ItemEffect
 
     public override void Activate(PlayerController player, Item item, Enemy enemy = null)
     {
-        int adjustedShieldAmount = baseShieldAmount + item.GetValueIncreaseBy();        
+        float adjustedShieldAmount = baseShieldAmount + item.GetValueIncreaseBy();        
 
         if (player.SpendEnergy(energyCost))
         {
@@ -21,8 +21,9 @@ public class DefenseEffect : ItemEffect
             // Adjust shield based on debuffs
             if (player.IsWornDown)
             {
-                adjustedShieldAmount = Mathf.FloorToInt(adjustedShieldAmount * 0.7f); // Reduce shield by 30%
-            }
+                // Reduce shield by 30%
+                adjustedShieldAmount *= 0.7f;
+            }            
 
             player.ApplyShield(adjustedShieldAmount);
 
