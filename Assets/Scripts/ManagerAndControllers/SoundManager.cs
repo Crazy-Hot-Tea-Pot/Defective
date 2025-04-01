@@ -282,9 +282,9 @@ public static class SoundManager
             BgSound? bgSound = SoundAsset.soundAssets.soundBGArray
                 .FirstOrDefault(bg => bg.audioClip == audioSource.clip)?.bgSound;
 
-            return bgSound ?? BgSound.Background; 
+            return bgSound ?? BgSound.None; 
         }
-        return BgSound.Background;
+        return BgSound.None;
     }
 
     /// <summary>

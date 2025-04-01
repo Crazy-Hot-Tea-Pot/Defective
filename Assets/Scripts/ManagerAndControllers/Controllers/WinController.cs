@@ -88,7 +88,7 @@ public class WinController : MonoBehaviour
 
 
         StatDisplay.SetText($"Completion Time: {completionTimeFormatted}\n" +
-                            $"Fastest Combat Time: {fastestCombatTimeFormatted}\n" +
+                            $"fastest Combat Time: {fastestCombatTimeFormatted}\n" +
                             $"Highest Damage Dealt: {highestDamageDealtFormatted}\n" +
                             $"Total <color=yellow>Scrap</color> Collected: {totalScrapCollectedFormatted}");
         

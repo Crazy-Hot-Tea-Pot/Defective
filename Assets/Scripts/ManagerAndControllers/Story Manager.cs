@@ -238,27 +238,42 @@ public class StoryManager : MonoBehaviour
 
                 if (CurrentLevel.NextLevels.Count == 0)
                 {
-                    Debug.LogWarning("No next levels assigned for this level.");
-                    return;
-                }
-
-                // Ensure we are not assigning more exits than next levels available
-                for (int i = 0; i < tempDoors.Length; i++)
-                {
-                    SceneChange sceneChange = tempDoors[i].GetComponent<SceneChange>();
-
-                    if (sceneChange == null)
+                    Debug.LogWarning("No next levels assigned for this level. So setting to win");
+                    // Ensure we are not assigning more exits than next levels available
+                    for (int i = 0; i < tempDoors.Length; i++)
                     {
-                        Debug.LogError($"Exit {tempDoors[i].name} is missing a SceneChange component!");
-                        continue;
+                        SceneChange sceneChange = tempDoors[i].GetComponent<SceneChange>();
+
+                        if (sceneChange == null)
+                        {
+                            Debug.LogError($"Exit {tempDoors[i].name} is missing a SceneChange component!");
+                            continue;
+                        }
+
+                        sceneChange.SetNextLevel(Levels.Win);
+
                     }
-
-                    // Assign next levels in order, looping if necessary
-                    Levels assignedLevel = CurrentLevel.NextLevels[i % CurrentLevel.NextLevels.Count].levelID;
-                    sceneChange.SetNextLevel(assignedLevel);
-
                 }
+                else
+                {
 
+                    // Ensure we are not assigning more exits than next levels available
+                    for (int i = 0; i < tempDoors.Length; i++)
+                    {
+                        SceneChange sceneChange = tempDoors[i].GetComponent<SceneChange>();
+
+                        if (sceneChange == null)
+                        {
+                            Debug.LogError($"Exit {tempDoors[i].name} is missing a SceneChange component!");
+                            continue;
+                        }
+
+                        // Assign next levels in order, looping if necessary
+                        Levels assignedLevel = CurrentLevel.NextLevels[i % CurrentLevel.NextLevels.Count].levelID;
+                        sceneChange.SetNextLevel(assignedLevel);
+
+                    }
+                }
                 //Handle terminal Activation
                 GameObject upgradeComputer = GameObject.Find("Upgrade Computer");
 

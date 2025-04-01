@@ -218,17 +218,17 @@ public class GameManager : MonoBehaviour
                 default:
                     CurrentGameMode = GameMode.Roaming;
 
-                    try
-                    {
-                        if (PreviousScene == Levels.Title)
-                            GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(CurrentLevel);
-                        else
-                            GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(PreviousScene);
-                    }
-                    catch
-                    {
-                        Debug.LogWarning("No Entrance in scene.");
-                    }
+                    //try
+                    //{
+                    //    if (PreviousScene == Levels.Title)
+                    //        GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(CurrentLevel);
+                    //    else
+                    //        GameObject.FindGameObjectWithTag("Entrance").GetComponent<SceneChange>().SetNextLevel(PreviousScene);
+                    //}
+                    //catch
+                    //{
+                    //    Debug.LogWarning("No Entrance in scene.");
+                    //}
                     break;
             }
             

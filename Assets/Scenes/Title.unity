@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playInScenes: 00000000070000000a00000009000000
-  pauseInScenes: 01000000020000000300000004000000050000000600000008000000
+  pauseInScenes: 010000000200000003000000040000000500000006000000080000000b000000
 --- !u!114 &1259556925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,7 +1464,7 @@ MonoBehaviour:
   ButtonSelectSound: 42
   ButtonClickSound: 41
   VersionText: {fileID: 4622310774376628093}
-  CurrentStory: {fileID: 11400000, guid: e00ceb53a68735145a1d20453d113a10, type: 2}
+  CurrentStory: {fileID: 11400000, guid: f8a2ba432277fc946bea0ae1103ecdf7, type: 2}
   MaxHealth: 50
   StartingScrap: 150
 --- !u!1 &1829154758
