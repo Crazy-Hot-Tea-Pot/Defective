@@ -507,6 +507,98 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""d48a39b8-cf48-45c1-ab1d-7d761c6e8c15"",
+            ""actions"": [
+                {
+                    ""name"": ""AnyKeyboardInput"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5cda503-bcb1-4a88-9fe0-14c5ebe12ec3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnyMouseInput"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""2371b39a-49a0-4347-8e11-31cf9901e4af"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a7ee205a-ec46-4322-a380-d552f11cbbf9"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKeyboardInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea7def16-a484-43f6-9d64-e01c1f4d87ce"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01f1791f-ee05-44c1-a2e4-40b714403fe4"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""548dbb9d-c045-4b33-b477-9b1c5c9d8ae7"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0eb92782-19f2-473f-9917-f124c0752ac1"",
+                    ""path"": ""Mouse/Scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b79bf1c-200f-4ddb-a126-44131f41bee6"",
+                    ""path"": ""mouse/Delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -534,6 +626,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerCombat = asset.FindActionMap("Player Combat", throwIfNotFound: true);
         m_PlayerCombat_SelectTarget = m_PlayerCombat.FindAction("SelectTarget", throwIfNotFound: true);
         m_PlayerCombat_CycleTarget = m_PlayerCombat.FindAction("CycleTarget", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_AnyKeyboardInput = m_UI.FindAction("AnyKeyboardInput", throwIfNotFound: true);
+        m_UI_AnyMouseInput = m_UI.FindAction("AnyMouseInput", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -841,6 +937,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerCombatActions @PlayerCombat => new PlayerCombatActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_AnyKeyboardInput;
+    private readonly InputAction m_UI_AnyMouseInput;
+    public struct UIActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AnyKeyboardInput => m_Wrapper.m_UI_AnyKeyboardInput;
+        public InputAction @AnyMouseInput => m_Wrapper.m_UI_AnyMouseInput;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @AnyKeyboardInput.started += instance.OnAnyKeyboardInput;
+            @AnyKeyboardInput.performed += instance.OnAnyKeyboardInput;
+            @AnyKeyboardInput.canceled += instance.OnAnyKeyboardInput;
+            @AnyMouseInput.started += instance.OnAnyMouseInput;
+            @AnyMouseInput.performed += instance.OnAnyMouseInput;
+            @AnyMouseInput.canceled += instance.OnAnyMouseInput;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @AnyKeyboardInput.started -= instance.OnAnyKeyboardInput;
+            @AnyKeyboardInput.performed -= instance.OnAnyKeyboardInput;
+            @AnyKeyboardInput.canceled -= instance.OnAnyKeyboardInput;
+            @AnyMouseInput.started -= instance.OnAnyMouseInput;
+            @AnyMouseInput.performed -= instance.OnAnyMouseInput;
+            @AnyMouseInput.canceled -= instance.OnAnyMouseInput;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IPlayerActions
     {
         void OnSelect(InputAction.CallbackContext context);
@@ -866,5 +1016,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnSelectTarget(InputAction.CallbackContext context);
         void OnCycleTarget(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnAnyKeyboardInput(InputAction.CallbackContext context);
+        void OnAnyMouseInput(InputAction.CallbackContext context);
     }
 }

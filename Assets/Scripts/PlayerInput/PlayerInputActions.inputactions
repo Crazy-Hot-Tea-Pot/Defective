@@ -485,6 +485,98 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "d48a39b8-cf48-45c1-ab1d-7d761c6e8c15",
+            "actions": [
+                {
+                    "name": "AnyKeyboardInput",
+                    "type": "Button",
+                    "id": "b5cda503-bcb1-4a88-9fe0-14c5ebe12ec3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AnyMouseInput",
+                    "type": "PassThrough",
+                    "id": "2371b39a-49a0-4347-8e11-31cf9901e4af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a7ee205a-ec46-4322-a380-d552f11cbbf9",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyKeyboardInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea7def16-a484-43f6-9d64-e01c1f4d87ce",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyMouseInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01f1791f-ee05-44c1-a2e4-40b714403fe4",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyMouseInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "548dbb9d-c045-4b33-b477-9b1c5c9d8ae7",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyMouseInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0eb92782-19f2-473f-9917-f124c0752ac1",
+                    "path": "Mouse/Scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyMouseInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b79bf1c-200f-4ddb-a126-44131f41bee6",
+                    "path": "mouse/Delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyMouseInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
