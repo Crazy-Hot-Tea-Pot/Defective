@@ -11,7 +11,7 @@ public class BuffAndDebuffsEffect : SkillEffects
     {
         public Effects.Debuff debuffType;
         public int amountToRemove = 1;
-        public int upgradedAmount = 0;
+        public int upgradedAmountBy = 0;
         public bool removeAll = false;
     }
 
@@ -38,9 +38,13 @@ public class BuffAndDebuffsEffect : SkillEffects
             int amount = debuff.amountToRemove;
 
             if (IsUpgraded)
-                amount += debuff.upgradedAmount;
+                amount += debuff.upgradedAmountBy;
 
             player.RemoveEffect(debuff.debuffType, amount, debuff.removeAll);
+
+            //Break out if not upgraded
+            if (!IsUpgraded)
+                break;
         }
     }
 }

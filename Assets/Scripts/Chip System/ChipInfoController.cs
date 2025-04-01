@@ -63,6 +63,19 @@ public class ChipInfoController : MonoBehaviour
     {
         ChipName.SetText(chip.chipName);
         ChipImage.sprite = chip.chipImage;
+
+        switch(chip.ChipType)
+        {
+            case NewChip.TypeOfChips.Attack:
+                ChipType.color = Color.red;
+                break;
+            case NewChip.TypeOfChips.Defense:
+                ChipType.color = Color.blue;
+                break;
+            case NewChip.TypeOfChips.Skill:
+                ChipType.color = Color.green;
+                break;
+        }
         ChipType.SetText(chip.ChipType.ToString());
         ChipDescription.SetText(chip.ChipDescription);
     }

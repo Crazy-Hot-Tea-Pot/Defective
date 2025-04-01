@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 2
   chipName: Recharge
-  StartingDescription: Refresh your Energy
+  StartingDescription: 
   chipImage: {fileID: 21300000, guid: 559e576586f39fa42a2ad1fb4572154d, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
@@ -22,5 +22,5 @@ MonoBehaviour:
   ChipRareityWeight: 0
   hitAllTargets: 0
   chipType: 3
-  ChipActivate: 3
+  ChipActivate: 4
   specialEffect: {fileID: 11400000, guid: bd075ab368830c7409b2e740dc79966c, type: 2}

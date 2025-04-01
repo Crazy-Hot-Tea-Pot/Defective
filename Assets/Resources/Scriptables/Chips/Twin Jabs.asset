@@ -19,10 +19,10 @@ MonoBehaviour:
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Try pairing this with Power buffs for some serious damage!
-  ChipRareityWeight: 0.1
+  ChipRareityWeight: 0
   hitAllTargets: 0
   chipType: 1
-  ChipActivate: 5
+  ChipActivate: 6
   damage: 4
   upgradedDamageByAmount: 2
   numberOfHits: 2

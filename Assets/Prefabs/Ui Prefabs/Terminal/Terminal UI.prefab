@@ -646,8 +646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSelectSound: 0
-  ButtonClickSound: 42
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &1571765841274825751
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,8 +782,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSelectSound: 0
-  ButtonClickSound: 42
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &1622491896189936227
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,8 +1383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSelectSound: 0
-  ButtonClickSound: 42
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &2149801387701285205
 GameObject:
   m_ObjectHideFlags: 0
@@ -3467,8 +3467,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSelectSound: 0
-  ButtonClickSound: 41
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &4940853889979192604
 GameObject:
   m_ObjectHideFlags: 0
@@ -5004,6 +5004,7 @@ GameObject:
   - component: {fileID: 5886229878049891137}
   - component: {fileID: 7947001788724799184}
   - component: {fileID: 5153241639556083757}
+  - component: {fileID: 393041761592366821}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -5113,6 +5114,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &393041761592366821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6756832637403050317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &6868193209461819158
 GameObject:
   m_ObjectHideFlags: 0

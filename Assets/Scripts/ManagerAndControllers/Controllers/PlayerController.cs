@@ -31,33 +31,33 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player stats")]
     #region PlayerStats 
-    private int health;
+    private float health;
     /// <summary>
     /// Returns PLayer HealthBar
     /// </summary>
-    public int Health
+    public float Health
     {
         get { return health; }
         private set
         {
-            health = value;
+            health = Mathf.Max(0, Mathf.Min(value, MaxHealth));
 
             UiManager.Instance.UpdateHealth(Health, MaxHealth);
 
             if (health > maxHealth)
                 health = maxHealth;
-            else if (health <= 0)
+            else if (health <= 0f)
             {
-                health = 0;
+                health = 0f;
                 PlayerDie();
             }
         }
     }
-    private int maxHealth;
+    private float maxHealth;
     /// <summary>
     /// Returns max HealthBar
     /// </summary>
-    public int MaxHealth
+    public float MaxHealth
     {
         get { return maxHealth; }
         private set
@@ -65,11 +65,11 @@ public class PlayerController : MonoBehaviour
             maxHealth = value;
         }
     }
-    private int shield;
+    private float shield;
     /// <summary>
     /// Player ShieldBar amount
     /// </summary>
-    public int Shield
+    public float Shield
     {
         get
         {
@@ -77,26 +77,26 @@ public class PlayerController : MonoBehaviour
         }
         private set
         {
-            shield = value;
+            shield = Mathf.Max(0, value);
 
             if (shield > maxShield)
-                maxShield = value;
+                maxShield = shield;
 
-            if (shield <= 0)
+            if (shield <= 0f)
             {
-                shield = 0;
-                maxShield = 100;
+                shield = 0f;
+                maxShield = 100f;
             }
 
-            UiManager.Instance.UpdateShield(Shield, MaxShield);
+            UiManager.Instance.UpdateShield(Mathf.Floor(Shield*10)/10, MaxShield);
         }
     }
-    private int maxShield=100; 
+    private float maxShield =100f; 
     
     /// <summary>
     /// Max amount of ShieldBar currently.
     /// </summary>
-    public int MaxShield
+    public float MaxShield
     {
         get
         {
@@ -474,7 +474,7 @@ public class PlayerController : MonoBehaviour
     /// Deal Damage to Player.
     /// </summary>
     /// <param name="damage">Amount of Damage as Int.</param>
-    public void DamagePlayerBy(int damage)
+    public void DamagePlayerBy(float damage)
     {
         //if Impervious
         if (IsImpervious)
@@ -483,11 +483,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            int modifiedDamage = damage;
+            float modifiedDamage = damage;
 
             if (IsWornDown)
             {
-                modifiedDamage = Mathf.CeilToInt(damage * 1.3f);
+                modifiedDamage *=  1.3f;
             }
             // if has ShieldAmount
             if (Shield > 0)
@@ -522,7 +522,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            Health = Health - modifiedDamage;
+            Health -= modifiedDamage;
 
 
             //Play Sound
@@ -538,7 +538,7 @@ public class PlayerController : MonoBehaviour
     /// Give Player baseShieldAmount.
     /// </summary>
     /// <param name="shieldAmount"></param>
-    public void ApplyShield(int shieldAmount)
+    public void ApplyShield(float shieldAmount)
     {
         //Restore ShieldBar
         Shield += shieldAmount;

@@ -300,7 +300,6 @@ public class StoryManager : MonoBehaviour
             Debug.LogWarning("No stories found in Resources/Scriptables/Stories.");
         }
         allStories = loadedStories.ToList();
-        Debug.Log($"Loaded {allStories.Count} stories from Resources.");
     }
     /// <summary>
     /// Recursively searches for a level in the story by its levelID.

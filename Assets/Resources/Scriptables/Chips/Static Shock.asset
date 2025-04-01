@@ -19,10 +19,10 @@ MonoBehaviour:
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Deal a massive amount of damage, but at the cost of reducing your Shield!
-  ChipRareityWeight: 0.15
+  ChipRareityWeight: 0
   hitAllTargets: 0
   chipType: 1
-  ChipActivate: 4
+  ChipActivate: 5
   damage: 12
   upgradedDamageByAmount: 3
   numberOfHits: 1

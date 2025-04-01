@@ -764,7 +764,7 @@ MonoBehaviour:
   doubleClickTime: 0.5
   SoundWhenPlayerClicks: 7
   listOfActiveEffects: []
-  DamageTakenSound: 0
+  DamageTakenSound: 47
   GainShieldSound: 31
   EnterLevelSound: 11
 --- !u!136 &613447968063264353

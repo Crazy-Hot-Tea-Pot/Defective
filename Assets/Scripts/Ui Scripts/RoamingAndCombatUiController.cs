@@ -116,10 +116,10 @@ public class RoamingAndCombatUiController : UiController
     /// <summary>
     /// Updates the UI for Player HealthBar
     /// </summary>
-    public void UpdateHealth(int currentHealth, int maxHealth)
+    public void UpdateHealth(float currentHealth, float maxHealth)
     {
         // Directly update the health bar
-        float targetHealthPercentage = (float)currentHealth / maxHealth;
+        float targetHealthPercentage = currentHealth / maxHealth;
         HealthBar.fillAmount = targetHealthPercentage;
         HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, targetHealthPercentage);
 
@@ -138,9 +138,9 @@ public class RoamingAndCombatUiController : UiController
     /// <summary>
     /// Updates the UI for Player ShieldAmount
     /// </summary>
-    public void UpdateShield(int Shield, int MaxShield)
+    public void UpdateShield(float Shield, float MaxShield)
     {
-        if (Shield == 0 && MaxShield == 100)
+        if (Shield == 0f && MaxShield == 100f)
         {
             ShieldIcon.SetActive(false);            
         }

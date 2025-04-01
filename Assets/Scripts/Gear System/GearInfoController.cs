@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
+using static Item;
 
 public class GearInfoController : MonoBehaviour
 {
@@ -91,6 +92,20 @@ public class GearInfoController : MonoBehaviour
     {
         GearName.SetText(item.itemName);
         GearImage.sprite = item.itemImage;
+
+        switch (item.itemType)
+        {
+            case ItemType.Weapon:
+                GearType.color=Color.red;
+            break;
+            case ItemType.Armor:
+                GearType.color=Color.blue;
+            break;
+            case ItemType.Equipment:
+                GearType.color=Color.green;
+            break;
+
+        }
         GearType.SetText(item.itemType.ToString());        
         
         GearDescription.SetText(item.itemDescription);

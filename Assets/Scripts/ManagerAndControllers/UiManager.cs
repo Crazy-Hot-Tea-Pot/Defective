@@ -95,7 +95,7 @@ public class UiManager : MonoBehaviour
 
         GetCurrentController<RoamingAndCombatUiController>().CameraModeIndicatorController.SwitchIndicatorTo(cameraState);
     }
-    public void UpdateHealth(int currentHealth, int MaxHealth)
+    public void UpdateHealth(float currentHealth, float MaxHealth)
     {
         switch (GameManager.Instance.CurrentGameMode)
         {
@@ -108,7 +108,7 @@ public class UiManager : MonoBehaviour
                 break;
         }        
     }
-    public void UpdateShield(int currentShield, int MaxShield)
+    public void UpdateShield(float currentShield, float MaxShield)
     {
         GetCurrentController<RoamingAndCombatUiController>().UpdateShield(currentShield, MaxShield);
     }

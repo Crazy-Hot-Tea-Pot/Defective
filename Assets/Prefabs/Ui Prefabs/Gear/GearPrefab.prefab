@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSelectSound: 0
-  ButtonClickSound: 42
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &1520915160978640921
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,8 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98723891b1f17b43b047d7b6801a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSelectSound: 0
-  ButtonClickSound: 41
+  ButtonSelectSound: 2
+  ButtonClickSound: 3
 --- !u!1 &3562640182456178730
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,10 +19,10 @@ MonoBehaviour:
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Gain Galvanize to have constant source of Defense!
-  ChipRareityWeight: 0.1
+  ChipRareityWeight: 0
   hitAllTargets: 0
   chipType: 2
-  ChipActivate: 3
+  ChipActivate: 4
   shieldAmount: 7
   upgradedShieldAmountToApply: 2
   effectToApply: 0

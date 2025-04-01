@@ -19,10 +19,10 @@ MonoBehaviour:
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: Play this to increase your shielding.
-  ChipRareityWeight: 0.15
+  ChipRareityWeight: 0.1
   hitAllTargets: 0
   chipType: 2
-  ChipActivate: 3
+  ChipActivate: 6
   shieldAmount: 5
   upgradedShieldAmountToApply: 0
   effectToApply: 0

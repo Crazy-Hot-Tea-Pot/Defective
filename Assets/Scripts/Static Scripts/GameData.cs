@@ -72,9 +72,9 @@ public class GameData
     //Levels the Player is on
     public Levels Level;
     //Player HealthBar
-    public int Health;
+    public float Health;
     //Player MaxHealth;
-    public int MaxHealth;
+    public float MaxHealth;
     //PlayerScrap
     public int Scraps;
     public StoryProgress storyProgress = new StoryProgress();
