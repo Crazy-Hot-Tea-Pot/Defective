@@ -958,13 +958,13 @@ MonoBehaviour:
       m_Calls: []
   m_text: "<size=500%>Thanks for playing</size>\n\n<size=200%><b>Adam Airhart</b></size>\nProJect
     Lead, ProJect Managment, Game Design\r\n\n<size=200%><b>Adelie Rosenthal-Wang</b></size>\nUI
-    Artist, Shader Programming (tentative)\r\n\n<size=200%><b>Adnan KasuJJa</b></size>\nGame
-    Design, Story\r\n\n<size=200%><b>Adrien Patenaude</b></size>\nLead Artist, Level
-    Design\r\n\n<size=200%><b>Jayce Lovell</b></size>\nProgrammer, Tools Programmer
-    \r\n\n<size=200%><b>Lay Ndiaye</b></size>\nAudio/Sound Design, Game Design, Story
-    \r\n\n<size=200%><b>Rish Vimalanathan</b></size>\n3D Modeller, Artist\r\n\n<size=200%><b>Sebastian
-    Anderson</b></size>\nProgrammer\n\n<size=200%><b>Toma Ikomi</b></size>\n3D Modeller,
-    Artist, Animator\n\n\n\n<size=50%><u>Press ESC to go back to title.</u></size>"
+    and Shader Artist\r\n\n<size=200%><b>Adnan KasuJJa</b></size>\nGame Design, Story\r\n\n<size=200%><b>Adrien
+    Patenaude</b></size>\nLead Artist, Level Design\r\n\n<size=200%><b>Jayce Lovell</b></size>\nGameplay
+    and Tools Programmer \r\n\n<size=200%><b>Lay Ndiaye</b></size>\nAudio/Sound Design,
+    Game Design, Story \r\n\n<size=200%><b>Rish Vimalanathan</b></size>\n3D Modeller,
+    Artist\r\n\n<size=200%><b>Sebastian Anderson</b></size>\nQuest and Puzzle Programmer\n\n<size=200%><b>Toma
+    Ikomi</b></size>\n3D Modeller, Artist, Animator\n\n\n\n<size=50%><u>Press ESC
+    to go back to title.</u></size>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -991,7 +991,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.4
+  m_fontSize: 21.35
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
