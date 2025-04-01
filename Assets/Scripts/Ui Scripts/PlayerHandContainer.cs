@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerHandContainer : MonoBehaviour
@@ -93,9 +94,16 @@ public class PlayerHandContainer : MonoBehaviour
             // Apply overlap and positioning
             tempNewChip.transform.localPosition = new Vector3(i * overlapOffset, Mathf.Sin(i * 0.1f) * yOffset, i * zOffset);
         }
+        // Select the first chip using the Event System
+        if (ChipManager.Instance.PlayerHand.Count > 0)
+        {
+            GameObject firstChip = this.transform.GetChild(0).gameObject;
+            EventSystem.current.firstSelectedGameObject = firstChip;
+            EventSystem.current.SetSelectedGameObject(firstChip);
+        }
 
     }
-    public void UpdateChipPositions()
+    private void UpdateChipPositions()
     {
         for(int i = 0; i<this.transform.childCount; i++)
         {

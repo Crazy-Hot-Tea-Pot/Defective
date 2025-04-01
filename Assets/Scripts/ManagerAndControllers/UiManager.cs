@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -407,7 +408,8 @@ public class UiManager : MonoBehaviour
         return controller;
     }
     private void UpdateUIForGameMode()
-    {       
+    {
+        EventSystem.current.SetSelectedGameObject(null);
 
         // Update UI elements based on the game mode
         switch (GameManager.Instance.CurrentGameMode)
@@ -419,6 +421,8 @@ public class UiManager : MonoBehaviour
 
                 GameObject.Find("Options Button").GetComponent<Button>().onClick.RemoveAllListeners();
                 GameObject.Find("Options Button").GetComponent<Button>().onClick.AddListener(ToggleSettingsAtTitle);
+
+                EventSystem.current.SetSelectedGameObject(GameObject.Find("Play Button"));
                 break;
             case GameManager.GameMode.Loading:
             case GameManager.GameMode.Credits:
@@ -429,7 +433,7 @@ public class UiManager : MonoBehaviour
                 break;
             case GameManager.GameMode.Combat:
             case GameManager.GameMode.Roaming:
-                SwitchScreen(listOfUis.Find(ui => ui.name == RoamingAndCombatUI.name));
+                SwitchScreen(listOfUis.Find(ui => ui.name == RoamingAndCombatUI.name));                
                 break;
             case GameManager.GameMode.Pause:
                 Debug.Log("[UiManager] Displaying Pause Menu.");
