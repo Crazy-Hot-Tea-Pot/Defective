@@ -7,7 +7,7 @@ public class QuestCountEnemies : Quest
 {
     public int totalEnemies;
     private int remainingEnemies = 0;
-    public string enemyName;
+    public string enemyType;
 
     private string saveQuestName;
     private string saveQuestDesc;
@@ -22,11 +22,11 @@ public class QuestCountEnemies : Quest
     {
 
         //Update the description
-        questDesc = saveQuestDesc + "Kill " + enemyName + "\n(" + remainingEnemies + "/" + totalEnemies + ")";
+        questDesc = saveQuestDesc + "Kill " + enemyType + "\n(" + remainingEnemies + "/" + totalEnemies + ")";
         //Update the name
-        questName = saveQuestName + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
+        questName = saveQuestName + "Kill " + enemyType + " (" + remainingEnemies + "/" + totalEnemies + ")";
         //Update alt name
-        modifiedQuestName = saveQuestName + "Kill " + enemyName;
+        modifiedQuestName = saveQuestName + "Kill " + enemyType;
 
         //If remaining enemies is equal to 0 complete the quest
         if (remainingEnemies == totalEnemies)
@@ -45,10 +45,11 @@ public class QuestCountEnemies : Quest
     public override void EnemyQuestCounterUpdate(string enemyTypeName)
     {
         //If the name matches
-        if(enemyTypeName == enemyName)
+        if(enemyTypeName == enemyType)
         {
             //Take away from the counter
             remainingEnemies += 1;
+            GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
             //QuestManager.Instance.UpdateQuestHud(this);
         }
     }

@@ -115,7 +115,7 @@ public class Chip : MonoBehaviour, IPointerClickHandler
 
                     if (attemptCounter > 3)
                     {
-                        UiManager.Instance.PopUpMessage("You must select a target by clicking them with you mouse to attack first!");
+                        UiManager.Instance.PopUpMessage("You must first select an enemy with your mouse.");
                     }
 
                     return;

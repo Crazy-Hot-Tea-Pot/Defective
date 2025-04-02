@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -65,12 +66,23 @@ public class PlayerHandContainer : MonoBehaviour
                 {
                     SoundManager.PlayFXSound(CloseDeck);
                     animator.SetTrigger("Hide");
-                    HandIsVisible = PlayerHandState.Hide;                    
+                    HandIsVisible = PlayerHandState.Hide;
+
+                    // first delete all children
+                    foreach (Transform child in this.transform)
+                    {
+                        // Destroy each child
+                        Destroy(child.gameObject);
+                    }
                 }                
                 break;
         }        
     }
-    public void FillPlayerHand()
+    private void PopulateHand()
+    {
+        StartCoroutine(FillPlayerHand());
+    }
+    private IEnumerator FillPlayerHand()
     {
         // first delete all children
         foreach (Transform child in this.transform)
@@ -78,6 +90,8 @@ public class PlayerHandContainer : MonoBehaviour
             // Destroy each child
             Destroy(child.gameObject);
         }
+
+        yield return new WaitForSeconds(0.5f);
 
         ChipManager.Instance.RefreshPlayerHand();
 
@@ -93,6 +107,8 @@ public class PlayerHandContainer : MonoBehaviour
 
             // Apply overlap and positioning
             tempNewChip.transform.localPosition = new Vector3(i * overlapOffset, Mathf.Sin(i * 0.1f) * yOffset, i * zOffset);
+
+            yield return new WaitForSeconds(0.2f);
         }
 
     }

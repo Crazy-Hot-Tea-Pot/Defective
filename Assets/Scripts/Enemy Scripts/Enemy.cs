@@ -552,7 +552,8 @@ public class Enemy : MonoBehaviour
             //Give enemy counter update the enemy name so they can verify it
             foreach (Quest quest in QuestManager.Instance.CurrentQuest)
             {
-                quest.EnemyQuestCounterUpdate(EnemyName);
+                Debug.Log("Look at this" + EnemyType.ToString());
+                quest.EnemyQuestCounterUpdate(EnemyType.ToString());
             }
         }
         catch

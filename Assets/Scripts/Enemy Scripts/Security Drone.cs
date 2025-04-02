@@ -78,7 +78,7 @@ public class SecurityDrone : Enemy
         int tempRandom = Random.Range(1,tempChips.Count);
         DroppedChips.Add(tempChips[tempRandom]);
 
-        EnemyType = EnemyManager.TypeOfEnemies.GangLeader;
+        EnemyType = EnemyManager.TypeOfEnemies.SecurityDrone;
 
         base.Start();
     }

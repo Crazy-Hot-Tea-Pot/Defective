@@ -40,6 +40,7 @@ public class Quest : ScriptableObject
     {
         complete = true;
         questName = "\n" + ccQuestName + " (Complete)";
+        GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
         Debug.Log("Quest Complete: " + questName);
         //QuestManager.Instance.UpdateQuestHud(this);
     }

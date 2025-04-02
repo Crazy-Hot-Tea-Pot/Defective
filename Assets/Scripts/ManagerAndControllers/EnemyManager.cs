@@ -152,7 +152,7 @@ public class EnemyManager : MonoBehaviour
         LevelDefinition currentLevel = StoryManager.Instance.GetCurrentLevel();
         if (currentLevel == null)
         {
-            Debug.LogError("No current level defined in StoryManager.");
+            Debug.LogWarning("No current level defined in StoryManager.");
             return;
         }
 
@@ -160,7 +160,7 @@ public class EnemyManager : MonoBehaviour
         CombatZone[] combatZones = FindObjectsOfType<CombatZone>();
         if (combatZones.Length == 0)
         {
-            Debug.LogError("No CombatZones found in the scene.");
+            Debug.LogWarning("No CombatZones found in the scene.");
             return;
         }
 
@@ -242,6 +242,7 @@ public class EnemyManager : MonoBehaviour
             case Levels.WorkShop:
             case Levels.Credits:
             case Levels.Win:
+            case Levels.Trailer:
                 break;
             default:
                 SpawnEnemiesForLevel();
