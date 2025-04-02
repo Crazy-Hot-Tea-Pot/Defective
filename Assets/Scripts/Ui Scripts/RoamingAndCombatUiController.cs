@@ -104,7 +104,7 @@ public class RoamingAndCombatUiController : UiController
             else
             {
                 PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Hide);
-                PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();                
+                //PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();                
             }
 
             EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
@@ -235,7 +235,7 @@ public class RoamingAndCombatUiController : UiController
 
         if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
         {
-            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+            //PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
             EndTurn.SetActive(true);
             EndTurnButton.interactable = true;
         }
@@ -247,7 +247,7 @@ public class RoamingAndCombatUiController : UiController
     public void StarPrepCombatStartPuzzle()
     {
         PlayerHand.SetActive(true);
-        PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+        //PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
     }
     /// <summary>
@@ -258,7 +258,7 @@ public class RoamingAndCombatUiController : UiController
         if (!introCombatAnimationFinish)
         {
             EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
-            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+            //PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
 
             if (ChipManager.Instance.UsedChips.Count != 8)
                 PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Reveal);

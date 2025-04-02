@@ -427,6 +427,7 @@ public class UiManager : MonoBehaviour
             case GameManager.GameMode.Loading:
             case GameManager.GameMode.Credits:
             case GameManager.GameMode.Won:
+            case GameManager.GameMode.Trailer:
                 //Delete current UI from scene
                 if (CurrentUI != null)
                     Destroy(CurrentUI);

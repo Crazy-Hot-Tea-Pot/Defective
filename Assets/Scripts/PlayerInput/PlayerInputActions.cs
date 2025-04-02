@@ -507,6 +507,87 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""e7147ca2-d931-487e-a0a1-1b273a8be4bc"",
+            ""actions"": [
+                {
+                    ""name"": ""AnyKeyboardInput"",
+                    ""type"": ""Button"",
+                    ""id"": ""76df7546-650b-48ee-9179-8e8670592477"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnyMouseInput"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""0770f7fd-9d88-490f-9805-b15cb88f2c7c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""cb6b918b-f2cf-48c9-9358-dc361c6ee153"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKeyboardInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4124645f-6f42-4004-840d-4cfe30096258"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99d35f31-221b-4d87-834e-fb1185bf4e24"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""850cbd6b-212b-45d2-907f-2937bb76f8d4"",
+                    ""path"": ""<Mouse>/radius"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e1858a9-51df-448c-958d-36cb825278a4"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyMouseInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -534,6 +615,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerCombat = asset.FindActionMap("Player Combat", throwIfNotFound: true);
         m_PlayerCombat_SelectTarget = m_PlayerCombat.FindAction("SelectTarget", throwIfNotFound: true);
         m_PlayerCombat_CycleTarget = m_PlayerCombat.FindAction("CycleTarget", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_AnyKeyboardInput = m_UI.FindAction("AnyKeyboardInput", throwIfNotFound: true);
+        m_UI_AnyMouseInput = m_UI.FindAction("AnyMouseInput", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -841,6 +926,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerCombatActions @PlayerCombat => new PlayerCombatActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_AnyKeyboardInput;
+    private readonly InputAction m_UI_AnyMouseInput;
+    public struct UIActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AnyKeyboardInput => m_Wrapper.m_UI_AnyKeyboardInput;
+        public InputAction @AnyMouseInput => m_Wrapper.m_UI_AnyMouseInput;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @AnyKeyboardInput.started += instance.OnAnyKeyboardInput;
+            @AnyKeyboardInput.performed += instance.OnAnyKeyboardInput;
+            @AnyKeyboardInput.canceled += instance.OnAnyKeyboardInput;
+            @AnyMouseInput.started += instance.OnAnyMouseInput;
+            @AnyMouseInput.performed += instance.OnAnyMouseInput;
+            @AnyMouseInput.canceled += instance.OnAnyMouseInput;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @AnyKeyboardInput.started -= instance.OnAnyKeyboardInput;
+            @AnyKeyboardInput.performed -= instance.OnAnyKeyboardInput;
+            @AnyKeyboardInput.canceled -= instance.OnAnyKeyboardInput;
+            @AnyMouseInput.started -= instance.OnAnyMouseInput;
+            @AnyMouseInput.performed -= instance.OnAnyMouseInput;
+            @AnyMouseInput.canceled -= instance.OnAnyMouseInput;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IPlayerActions
     {
         void OnSelect(InputAction.CallbackContext context);
@@ -866,5 +1005,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnSelectTarget(InputAction.CallbackContext context);
         void OnCycleTarget(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnAnyKeyboardInput(InputAction.CallbackContext context);
+        void OnAnyMouseInput(InputAction.CallbackContext context);
     }
 }
