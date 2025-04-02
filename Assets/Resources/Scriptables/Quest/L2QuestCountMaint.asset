@@ -15,10 +15,10 @@ MonoBehaviour:
   questName: 'Defeat Maintenance Bots: '
   ccQuestName: 'Defeat Maintenance Bots: '
   modifiedQuestName: 'Defeat Maintenance Bots: '
-  questDesc: 'Maintenance bots will just repair our broken enemies. We must destroy
-    both of them. '
+  questDesc: Maintenance bots will just repair our broken enemies. We must destroy
+    him.
   complete: 0
   isTutorial: 0
   mainQuest: 1
-  totalEnemies: 2
+  totalEnemies: 1
   enemyType: Maintenancebot

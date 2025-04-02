@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e94c00137ccef42aca0929b37e26af, type: 3}
   m_Name: L2QuestLooter
   m_EditorClassIdentifier: 
-  questName: 'Defeat The Looters: '
-  ccQuestName: 'Defeat The Looters: '
-  modifiedQuestName: 'Defeat The Looters: '
-  questDesc: Defeat 6 looters
+  questName: 'Defeat The Looter: '
+  ccQuestName: 'Defeat The Looter: '
+  modifiedQuestName: 'Defeat The Looter: '
+  questDesc: Defeat 1 looters
   complete: 0
   isTutorial: 0
   mainQuest: 1
-  totalEnemies: 6
+  totalEnemies: 1
   enemyType: Looter

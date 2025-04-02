@@ -219,34 +219,39 @@ public class QuestManager : MonoBehaviour
     {
 
         index = IndexEditor(index);
-
-        if (!CurrentQuest[index].isTutorial && CurrentQuest[index].mainQuest)
+        try
         {
-            //Try to collect a quest from the currentquest list
-            try
+            if (!CurrentQuest[index].isTutorial && CurrentQuest[index].mainQuest)
             {
-                quest.text = CurrentQuest[index].questName;
-                lastQuest = quest.text;
-            }
-            //But if we can't that's ok just go to the complete list
-            catch
-            {
+                //Try to collect a quest from the currentquest list
+                try
+                {
+                    quest.text = CurrentQuest[index].questName;
+                    lastQuest = quest.text;
+                }
+                //But if we can't that's ok just go to the complete list
+                catch
+                {
 
                     quest.text = " ";
                     Debug.Log("That quest doesn't exist at index: " + index);
+                }
             }
-        }
-        //Else if there is a tutorial and it's the last thing left show it.
-        else
-        {
-
-            //If there is a value to show as a complete quest show it
-            if (completeList[index] != null)
+            //Else if there is a tutorial and it's the last thing left show it.
+            else
             {
-                quest.text = "No Quest Assigned";
+
+                //If there is a value to show as a complete quest show it
+                if (completeList[index] != null)
+                {
+                    quest.text = "No Quest Assigned";
+                }
             }
         }
-       
+        catch
+        {
+            quest.text = "No Quest Assigned";
+        }
     }
 
     public void UpdateQuestHud(Quest quest)
@@ -266,19 +271,27 @@ public class QuestManager : MonoBehaviour
 
     public int IndexEditor(int index)
     {
-        while (CurrentQuest[index].mainQuest == false || CurrentQuest[index].complete == true)
+        try
         {
-            if (index + 1 < CurrentQuest.Count)
+            while (CurrentQuest[index].mainQuest == false || CurrentQuest[index].complete == true)
             {
-                index += 1;
-                Debug.Log(index + "Break");
+                if (index + 1 < CurrentQuest.Count)
+                {
+                    index += 1;
+                    Debug.Log(index + "Break");
+                }
+                else
+                {
+                    break;
+                }
             }
-            else
-            {
-                break;
-            }
+            return index;
         }
-        return index;
+        catch
+        {
+            index = 0;
+            return index;
+        }
     }
 
     /// <summary>
