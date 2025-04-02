@@ -101,6 +101,9 @@ public class TerminalController : MonoBehaviour
 
     private CameraController Camera;
 
+    [Header("Sounds")]
+    public SoundFX TerminalIdleSound;
+
     void Awake()
     {
         defaultScreenText = DefaultScreen.GetComponent<TextMeshPro>();
@@ -114,7 +117,9 @@ public class TerminalController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SwitchToScreen(Screens.Default);        
+        SwitchToScreen(Screens.Default);
+
+        SoundManager.PlayFXSound(TerminalIdleSound,true,true,this.transform);
     }
 
     /// <summary>

@@ -1,4 +1,3 @@
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class SecurityDrone : Enemy
@@ -79,7 +78,7 @@ public class SecurityDrone : Enemy
         int tempRandom = Random.Range(1,tempChips.Count);
         DroppedChips.Add(tempChips[tempRandom]);
 
-        EnemyType = EnemyManager.TypeOfEnemies.GangLeader;
+        EnemyType = EnemyManager.TypeOfEnemies.SecurityDrone;
 
         base.Start();
     }
@@ -134,7 +133,8 @@ public class SecurityDrone : Enemy
                 break;
         }
 
-        CurrentHP = MaxHp;
+        if(CurrentHP<=0)
+            CurrentHP = MaxHp;
     }
     protected override void PerformIntent()
     {

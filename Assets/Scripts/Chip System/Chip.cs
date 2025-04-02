@@ -66,7 +66,7 @@ public class Chip : MonoBehaviour, IPointerClickHandler
 
             if (NewChip != null)
             {
-                ChipTitle = NewChip.chipName;// + " Chip";
+                ChipTitle = NewChip.chipName;
                 this.gameObject.name = ChipTitle;
                 NewChip.ThisChip = this.gameObject;
                 // Set image to chip
@@ -87,11 +87,16 @@ public class Chip : MonoBehaviour, IPointerClickHandler
     private GameObject Player;
     private TerminalController UpgradeController;
     private int attemptCounter=0;
+    private Animator animator;
 
     void Start()
     {        
         Player = GameObject.FindGameObjectWithTag("Player");
-        PuzzleController = GameObject.FindGameObjectWithTag("PuzzleController").GetComponent<PuzzleController>();
+
+        animator = GetComponent<Animator>();
+
+        //if(GameManager.Instance.CurrentGameMode != GameManager.GameMode.Won)
+            //PuzzleController = GameObject.FindGameObjectWithTag("PuzzleController").GetComponent<PuzzleController>();
     }
     /// <summary>
     /// Runs Scriptable Chip
@@ -110,7 +115,7 @@ public class Chip : MonoBehaviour, IPointerClickHandler
 
                     if (attemptCounter > 3)
                     {
-                        UiManager.Instance.PopUpMessage("You must select a target by clicking them with you mouse to attack first!");
+                        UiManager.Instance.PopUpMessage("You must first select an enemy with your mouse.");
                     }
 
                     return;
@@ -283,7 +288,9 @@ public class Chip : MonoBehaviour, IPointerClickHandler
                 CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
                 chipButton.interactable = true;
                 chipButton.onClick.AddListener(ChipSelected);                
-                newChip.IsActive = true;                
+                newChip.IsActive = true;   
+                if(animator==null)
+                    animator=GetComponent<Animator>();
                 break;
             case ChipMode.WorkShop:
                 UpgradeController = GameObject.FindGameObjectWithTag("UpgradeController").GetComponent<TerminalController>();
@@ -342,7 +349,10 @@ public class Chip : MonoBehaviour, IPointerClickHandler
             }
         }
     }    
-
+    public void SelectChip(bool state)
+    {
+        animator.SetBool("Selected", state);
+    }
     /// <summary>
     /// Tell the Upgrade Controller this is the chip the user selected to ugprade.
     /// </summary>

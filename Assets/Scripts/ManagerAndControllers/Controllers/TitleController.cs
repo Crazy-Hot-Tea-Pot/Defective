@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using Random = UnityEngine.Random;
@@ -54,6 +55,13 @@ public class TitleController : MonoBehaviour
     public int MaxHealth;
     public int StartingScrap;
 
+    [Header("Idle Settings")]
+    public float idleTime = 30f;
+    private float idleTimer = 0f;
+    private bool trailerLoaded = false;
+    private InputAction anyKeyAction;
+    private InputAction anyMouseAction;
+
     // Input System reference
     private PlayerInputActions playerInput;
 
@@ -66,11 +74,17 @@ public class TitleController : MonoBehaviour
         skipAction = playerInput.Player.SkipAnimation;
         skipAction.Enable();
         skipAction.performed += SkipVideo;
+
+        anyKeyAction.Enable();
+        anyMouseAction.Enable();
     }
     void Awake()
     {
         // Get PlayerInput component
         playerInput = new PlayerInputActions();
+
+        anyKeyAction = playerInput.UI.AnyKeyboardInput;
+        anyMouseAction = playerInput.UI.AnyMouseInput;
     }
     // Start is called before the first frame update
     void Start()
@@ -104,7 +118,28 @@ public class TitleController : MonoBehaviour
 
         originalText=TitleText.text;
     }
+    void Update()
+    {
+        if (trailerLoaded)
+            return;
+        else
+        {
+            if (InputReceived())
+            {
+                idleTimer = 0f;
+            }
+            else
+            {
+                idleTimer += Time.deltaTime;
 
+                if (idleTimer >= idleTime)
+                {
+                    trailerLoaded = true;
+                    SceneManager.LoadScene("Trailer");
+                }
+            }
+        }
+    }
     /// <summary>
     /// Plays Sound for when mouse over Button.
     /// </summary>
@@ -126,6 +161,10 @@ public class TitleController : MonoBehaviour
     {
         StopCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
         StartCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
+    }
+    private bool InputReceived()
+    {
+        return anyKeyAction.triggered || anyMouseAction.triggered;
     }
     /// <summary>
     /// Adds OnSelect listener to play button sound.
@@ -159,6 +198,9 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator StartGame()
     {
+        // Reset all scriptables to default
+        ChipManager.Instance.ResetAllChips();
+        GearManager.Instance.ResetAllGear();
 
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);
@@ -200,7 +242,9 @@ public class TitleController : MonoBehaviour
 
         // Request the scene from StoryManager (instead of latestSave)
         GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
-        //GameManager.Instance.RequestScene(Levels.Tutorial);
+
+        //Start tracker
+        GameStatsTracker.Instance.StartSession();
 
     }
     /// <summary>
@@ -219,7 +263,6 @@ public class TitleController : MonoBehaviour
         // Request the scene from GameManager
         // Request the scene from StoryManager (instead of latestSave)
         GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
-        //GameManager.Instance.RequestScene(latestSave.storyProgress.currentLevel);
     }
     private IEnumerator OpenOptions()
     {
@@ -231,6 +274,9 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator Quit()
     {
+
+        DataManager.Instance.AutoSave();
+
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);
 
@@ -284,7 +330,6 @@ public class TitleController : MonoBehaviour
         videoPlayer.Stop();
         animator.SetTrigger("VideoFinish");
     }
-
 
     /// <summary>
     /// 20% chance to glitch each character.
@@ -356,6 +401,12 @@ public class TitleController : MonoBehaviour
             TitleText.rectTransform.anchoredPosition -= offset2D;
         }
     }
+
+    [ContextMenu("Win Scene Text")]
+    private void ToWin()
+    {
+        GameManager.Instance.RequestScene(Levels.Win);
+    }
     void OnDestroy()
     {
         PlayButton.onClick.RemoveAllListeners();
@@ -363,5 +414,8 @@ public class TitleController : MonoBehaviour
         OptionsButton.onClick.RemoveAllListeners();
         QuitButton.onClick.RemoveAllListeners();
         skipAction.Disable();
+
+        anyKeyAction.Disable();
+        anyMouseAction.Disable();
     }
 }

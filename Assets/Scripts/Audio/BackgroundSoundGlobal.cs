@@ -7,7 +7,14 @@ using UnityEngine;
 /// </summary>
 public class BackgroundSoundGlobal : MonoBehaviour
 {
+    public static BackgroundSoundGlobal Instance
+    {
+        get;
+        private set;
+    }
     private AudioSource audioSource;
+    private AudioClip previousClip;
+    private bool wasPlayingBeforeCombat = false;
     [SerializeField]
     private List<Levels> playInScenes = new List<Levels>();
     [SerializeField]
@@ -15,11 +22,18 @@ public class BackgroundSoundGlobal : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         // Get the AudioSource component
-        audioSource = GetComponent<AudioSource>();
-        
+        audioSource = GetComponent<AudioSource>(); 
     }
 
     void Start()

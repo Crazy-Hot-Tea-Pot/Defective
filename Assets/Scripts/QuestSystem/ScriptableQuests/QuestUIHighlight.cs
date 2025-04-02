@@ -15,6 +15,7 @@ public class QuestUIHighlight : Quest
     public Quest secondQuest = null;
     public bool InCombat;
     private bool IExist = false;
+    public bool FindAnyChild = false;
 
     private void Awake()
     {
@@ -27,6 +28,10 @@ public class QuestUIHighlight : Quest
         {
             //Find the UIElementPath
             UIElement = GameObject.Find(UIElementPath).gameObject;
+            if (FindAnyChild)
+            {
+                UIElement = UIElement.transform.GetChild(0).gameObject;
+            }
 
             //If we have a button to change
             if (UIElement.GetComponent<Button>() == true)
@@ -54,7 +59,7 @@ public class QuestUIHighlight : Quest
         }
         catch
         {
-            Debug.Log("We Failed");
+            
         }
 
     }

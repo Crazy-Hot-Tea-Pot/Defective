@@ -22,7 +22,7 @@ MonoBehaviour:
     timeBetweenLines: 1
   - speakerName: Unknown Person
     speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
-    dialogueText: I wonder if the fall damaged your voice box...
+    dialogueText: I wonder if that nasty fall you took damaged your voice box...
     isPlayerSpeaking: 0
     revealByLetter: 1
     textSpeed: 0.05
@@ -52,8 +52,8 @@ MonoBehaviour:
     timeBetweenLines: 1
   - speakerName: Unknown Person
     speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
-    dialogueText: Calm yourself, I am Ignotus, former resident of this home to the
-      largest group of Looters in the underground.
+    dialogueText: Calm down. I'm Ignotus, former resident of this place, now known
+      as home to the largest group of Looters in the underground.
     isPlayerSpeaking: 0
     revealByLetter: 1
     textSpeed: 0.05

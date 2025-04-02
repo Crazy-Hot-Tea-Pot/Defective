@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e8ace226ea7a4eb72b09b510bb7c1, type: 3}
+  m_Name: ChargeUp
+  m_EditorClassIdentifier: 
+  chipRarity: 1
+  chipName: Charge Up
+  StartingDescription: 
+  chipImage: {fileID: 21300000, guid: fab70ee4f8c6f6747bffac5a929b6e4a, type: 3}
+  canBeUpgraded: 1
+  costToUpgrade: 150
+  ChipTip: Gain Power to increase your Damage while cleansing yourself of debuffs!
+  ChipRareityWeight: 0.1
+  hitAllTargets: 0
+  chipType: 3
+  ChipActivate: 4
+  specialEffect: {fileID: 11400000, guid: 7d2758b785c78384596b5101efdce1bb, type: 2}

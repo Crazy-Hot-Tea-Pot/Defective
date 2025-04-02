@@ -50,7 +50,7 @@ public class MaintenanceBot : Enemy
             DroppedChips.Add(commonChips[secondIndex]);
         }
 
-        EnemyType = EnemyManager.TypeOfEnemies.GangLeader;
+        EnemyType = EnemyManager.TypeOfEnemies.Maintenancebot;
 
         base.Start();
     }
@@ -75,8 +75,8 @@ public class MaintenanceBot : Enemy
                 MaxHp = 90;
                 break;
         }
-
-        CurrentHP = MaxHp;
+        if (CurrentHP <= 0)
+            CurrentHP = MaxHp;
     }
 
     protected override void PerformIntent()

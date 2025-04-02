@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -96,15 +98,13 @@ public class RoamingAndCombatUiController : UiController
             {
                 if (ChipManager.Instance.UsedChips.Count != 8)
                 {
-                    PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
-                    PlayerHand.GetComponent<PlayerHandContainer>().SliderButton.interactable = true;
+                    PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Reveal);                    
                 }
             }
             else
             {
-                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Close);
-                PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
-                PlayerHand.GetComponent<PlayerHandContainer>().SliderButton.interactable = false;
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Hide);
+                //PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();                
             }
 
             EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", isInteractable);
@@ -116,10 +116,10 @@ public class RoamingAndCombatUiController : UiController
     /// <summary>
     /// Updates the UI for Player HealthBar
     /// </summary>
-    public void UpdateHealth(int currentHealth, int maxHealth)
+    public void UpdateHealth(float currentHealth, float maxHealth)
     {
         // Directly update the health bar
-        float targetHealthPercentage = (float)currentHealth / maxHealth;
+        float targetHealthPercentage = currentHealth / maxHealth;
         HealthBar.fillAmount = targetHealthPercentage;
         HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, targetHealthPercentage);
 
@@ -138,9 +138,9 @@ public class RoamingAndCombatUiController : UiController
     /// <summary>
     /// Updates the UI for Player ShieldAmount
     /// </summary>
-    public void UpdateShield(int Shield, int MaxShield)
+    public void UpdateShield(float Shield, float MaxShield)
     {
-        if (Shield == 0 && MaxShield == 100)
+        if (Shield == 0f && MaxShield == 100f)
         {
             ShieldIcon.SetActive(false);            
         }
@@ -235,7 +235,7 @@ public class RoamingAndCombatUiController : UiController
 
         if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
         {
-            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+            //PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
             EndTurn.SetActive(true);
             EndTurnButton.interactable = true;
         }
@@ -247,7 +247,7 @@ public class RoamingAndCombatUiController : UiController
     public void StarPrepCombatStartPuzzle()
     {
         PlayerHand.SetActive(true);
-        PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+        //PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
         EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
     }
     /// <summary>
@@ -258,10 +258,10 @@ public class RoamingAndCombatUiController : UiController
         if (!introCombatAnimationFinish)
         {
             EnergyAndGearContainer.GetComponent<Animator>().SetBool("Visible", true);
-            PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
+            //PlayerHand.GetComponent<PlayerHandContainer>().FillPlayerHand();
 
             if (ChipManager.Instance.UsedChips.Count != 8)
-                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Open);
+                PlayerHand.GetComponent<PlayerHandContainer>().TogglePanel(PlayerHandContainer.PlayerHandState.Reveal);
 
             introCombatAnimationFinish = true;
 
@@ -278,7 +278,9 @@ public class RoamingAndCombatUiController : UiController
     {
         ArmorButton.interactable = Interactable;
         WeaponButton.interactable = Interactable;
-        EquipmentButton.interactable = Interactable;
+
+        if(EquipmentButton.transform.parent.name != "Lucky Trinket")
+            EquipmentButton.interactable = Interactable;
     }
 
     public void UpdateGearButtonStates(float currentEnergy)
@@ -291,7 +293,15 @@ public class RoamingAndCombatUiController : UiController
         // Check if each gear button should be enabled or disabled based on energy cost
         ArmorButton.interactable = (armor != null && CanUseItem(armor, currentEnergy));
         WeaponButton.interactable = (weapon != null && CanUseItem(weapon, currentEnergy));
-        EquipmentButton.interactable = (equipment != null && CanUseItem(equipment, currentEnergy));
+
+        if (equipment.itemEffects.Any(effect => effect is EquipmentEffect equipmentEffect && equipmentEffect.HasPassiveEffect))
+        {
+            EquipmentButton.interactable = false;
+        }
+        else
+        {
+            EquipmentButton.interactable = (equipment != null && CanUseItem(equipment, currentEnergy));
+        }        
     }
     /// <summary>
     /// Update the Player Effects Panel
@@ -367,6 +377,9 @@ public class RoamingAndCombatUiController : UiController
                 break;
             case "WornDown":
                 EffectsInfo.SetText("While <b>Worn Down</b>, your <color=#3EF4D3>Shield</color> provides 30% less <color=#3EF4D3>Shield</color>");
+                break;
+            case "LuckyTrinket":
+                EffectsInfo.SetText("At End of Combat gain more bonus <color=#FFFF00>scrap</color>.");
                 break;
             default:
                 EffectsInfo.SetText("Error!");

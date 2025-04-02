@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class ChipInfoController : MonoBehaviour
@@ -63,8 +61,21 @@ public class ChipInfoController : MonoBehaviour
     /// <param name="chip"></param>
     public void SetUpChipInfo(NewChip chip)
     {
-        ChipName.SetText(chip.chipName + " Chip");
+        ChipName.SetText(chip.chipName);
         ChipImage.sprite = chip.chipImage;
+
+        switch(chip.ChipType)
+        {
+            case NewChip.TypeOfChips.Attack:
+                ChipType.color = Color.red;
+                break;
+            case NewChip.TypeOfChips.Defense:
+                ChipType.color = Color.blue;
+                break;
+            case NewChip.TypeOfChips.Skill:
+                ChipType.color = Color.green;
+                break;
+        }
         ChipType.SetText(chip.ChipType.ToString());
         ChipDescription.SetText(chip.ChipDescription);
     }
@@ -78,10 +89,12 @@ public class ChipInfoController : MonoBehaviour
     {
         if (animator == null)
         {
-            Debug.LogError("Animator not found!");
 
             if (!TryGetComponent<Animator>(out animator))
-                Debug.Log("still no animator.");            
+            {
+                Debug.LogWarning("still no animator.");
+                return;
+            }
         }
 
         // Start shrinking animation
@@ -108,6 +121,11 @@ public class ChipInfoController : MonoBehaviour
     }
 
     void OnDisable()
+    {
+        select.Disable();
+        select.performed -= Shrink;
+    }
+    void OnDestroy()
     {
         select.Disable();
         select.performed -= Shrink;

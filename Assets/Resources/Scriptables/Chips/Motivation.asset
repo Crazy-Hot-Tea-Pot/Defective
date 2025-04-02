@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 0
   chipName: Motivation
-  StartingDescription: Your next chip activates twice
+  StartingDescription: 
   chipImage: {fileID: 21300000, guid: d9b90565e9013204f9c5a25796668388, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: Get double the use out of your next chip.
-  ChipRareityWeight: 0.5
+  ChipRareityWeight: 0
   hitAllTargets: 0
   chipType: 3
   ChipActivate: 4

@@ -31,33 +31,33 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player stats")]
     #region PlayerStats 
-    private int health;
+    private float health;
     /// <summary>
     /// Returns PLayer HealthBar
     /// </summary>
-    public int Health
+    public float Health
     {
         get { return health; }
         private set
         {
-            health = value;
+            health = Mathf.Max(0, Mathf.Min(value, MaxHealth));
 
             UiManager.Instance.UpdateHealth(Health, MaxHealth);
 
             if (health > maxHealth)
                 health = maxHealth;
-            else if (health <= 0)
+            else if (health <= 0f)
             {
-                health = 0;
+                health = 0f;
                 PlayerDie();
             }
         }
     }
-    private int maxHealth;
+    private float maxHealth;
     /// <summary>
     /// Returns max HealthBar
     /// </summary>
-    public int MaxHealth
+    public float MaxHealth
     {
         get { return maxHealth; }
         private set
@@ -65,11 +65,11 @@ public class PlayerController : MonoBehaviour
             maxHealth = value;
         }
     }
-    private int shield;
+    private float shield;
     /// <summary>
     /// Player ShieldBar amount
     /// </summary>
-    public int Shield
+    public float Shield
     {
         get
         {
@@ -77,26 +77,26 @@ public class PlayerController : MonoBehaviour
         }
         private set
         {
-            shield = value;
+            shield = Mathf.Max(0, value);
 
             if (shield > maxShield)
-                maxShield = value;
+                maxShield = shield;
 
-            if (shield <= 0)
+            if (shield <= 0f)
             {
-                shield = 0;
-                maxShield = 100;
+                shield = 0f;
+                maxShield = 100f;
             }
 
-            UiManager.Instance.UpdateShield(Shield, MaxShield);
+            UiManager.Instance.UpdateShield(Mathf.Floor(Shield*10)/10, MaxShield);
         }
     }
-    private int maxShield=100; 
+    private float maxShield =100f; 
     
     /// <summary>
     /// Max amount of ShieldBar currently.
     /// </summary>
-    public int MaxShield
+    public float MaxShield
     {
         get
         {
@@ -358,10 +358,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #endregion
-    [Header("Sound")]
+    [Header("Sounds")]
     public SoundFX DamageTakenSound;
     public SoundFX GainShieldSound;
-    public SoundFX EnterLevelSound;
+    public SoundFX EnterLevelSound;    
+
     // Awake is called when instance is being loaded
     void Awake()
     {
@@ -473,7 +474,7 @@ public class PlayerController : MonoBehaviour
     /// Deal Damage to Player.
     /// </summary>
     /// <param name="damage">Amount of Damage as Int.</param>
-    public void DamagePlayerBy(int damage)
+    public void DamagePlayerBy(float damage)
     {
         //if Impervious
         if (IsImpervious)
@@ -482,11 +483,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            int modifiedDamage = damage;
+            float modifiedDamage = damage;
 
             if (IsWornDown)
             {
-                modifiedDamage = Mathf.CeilToInt(damage * 1.3f);
+                modifiedDamage *=  1.3f;
             }
             // if has ShieldAmount
             if (Shield > 0)
@@ -521,7 +522,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            Health = Health - modifiedDamage;
+            Health -= modifiedDamage;
 
 
             //Play Sound
@@ -537,7 +538,7 @@ public class PlayerController : MonoBehaviour
     /// Give Player baseShieldAmount.
     /// </summary>
     /// <param name="shieldAmount"></param>
-    public void ApplyShield(int shieldAmount)
+    public void ApplyShield(float shieldAmount)
     {
         //Restore ShieldBar
         Shield += shieldAmount;
@@ -597,7 +598,6 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Buff buff, int stacks)
     {
         AddOrUpdateEffect(buff, stacks);
-
         UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
@@ -608,18 +608,18 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Debuff debuff, int stacks)
     {
         AddOrUpdateEffect(debuff, stacks);
-
         UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
     /// Add Special effect to Player
     /// </summary>
     /// <param name="specialEffect"></param>
-    public void AddEffect(Effects.SpecialEffects specialEffect)
+    public void AddEffect(Effects.SpecialEffects specialEffect,int stacks=0,bool permnament=false)
     {
-        AddOrUpdateEffect(specialEffect, 1);
+        AddOrUpdateEffect(specialEffect,stacks,permnament);
 
-        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
+        if(specialEffect != SpecialEffects.LuckyTrinket)
+            UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -628,7 +628,7 @@ public class PlayerController : MonoBehaviour
     /// <typeparam name="T"></typeparam>
     /// <param name="effect"></param>
     /// <param name="stacks"></param>
-    private void AddOrUpdateEffect<T>(T effect, int stacks) where T : Enum
+    private void AddOrUpdateEffect<T>(T effect, int stacks=0,bool permnament=false) where T : Enum
     {
         for (int i = 0; i < ListOfActiveEffects.Count; i++)
         {
@@ -648,11 +648,9 @@ public class PlayerController : MonoBehaviour
             ListOfActiveEffects.Add(new StatusEffect(buffEffect, stacks));
         else if (effect is Debuff debuffEffect)
             ListOfActiveEffects.Add(new StatusEffect(debuffEffect, stacks));
-        else if (effect is SpecialEffects specialEffect)
-            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks));
-
-        UiManager.Instance.UpdateEffects(ListOfActiveEffects);        
-
+        else if (effect is SpecialEffects specialEffect)       
+            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks,permnament));        
+      
     }
 
     #endregion
@@ -669,6 +667,7 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.Buff buff, int stacks = 0, bool removeAll = false)
     {
         RemoveOrReduceEffect(buff, stacks, removeAll);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -681,6 +680,7 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.Debuff debuff, int stacks = 0, bool removeAll = false)
     {
         RemoveOrReduceEffect(debuff, stacks, removeAll);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -691,7 +691,8 @@ public class PlayerController : MonoBehaviour
     {
         ListOfActiveEffects.RemoveAll(e => e.SpecialEffect.Equals(specialEffect));
 
-        UiManager.Instance.UpdateEffects(listOfActiveEffects);
+        if (specialEffect != SpecialEffects.LuckyTrinket)
+            UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -773,6 +774,7 @@ public class PlayerController : MonoBehaviour
     public void GainScrap(int amount)
     {
         Scrap += amount;
+        GameStatsTracker.Instance.AddScrap(amount);
     }
 
     /// <summary>
@@ -938,7 +940,10 @@ public class PlayerController : MonoBehaviour
         //Restore energy to full
         RecoverFullEnergy();
 
-        ListOfActiveEffects.Clear();
+        // Filter out permanent effects
+        ListOfActiveEffects = ListOfActiveEffects
+            .Where(effect => effect.permnamentEffect)
+            .ToList();
 
         UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
@@ -1006,6 +1011,13 @@ public class PlayerController : MonoBehaviour
         }
 
        RemoveEffect(Effects.Buff.Power,0,true);
+
+        // Filter out permanent effects instead of clearing the whole list
+        ListOfActiveEffects = ListOfActiveEffects
+            .Where(effect => effect.permnamentEffect)
+            .ToList();
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
 
@@ -1020,7 +1032,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="howLongToDisplay">default is 3</param>
     public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f, bool isDialogue = false)
     {
-        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay, isDialogue);
+        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay, isDialogue);                 
     }
 
     /// <summary>

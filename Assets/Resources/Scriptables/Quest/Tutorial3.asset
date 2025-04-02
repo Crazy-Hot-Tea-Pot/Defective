@@ -19,10 +19,11 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
-  PopupText: You can also use abilites instead of cards located as indicated. They
-    spend energy and are switched when items are switched in your inventory (Tab
-    outside of combat)
-  nextQuest: {fileID: 0}
+  PopupText: 'Additionally, you also have "Abilities" located on the bottom left
+    side of your screen. Each ability costs "Energy" which are the squares surrounding
+    the ability ring. You have 10 Energy that refreshes at the start of your turn.
+    Hover over each ability for more information. '
+  nextQuest: {fileID: 11400000, guid: 82fb3b89b28cb0141896391e8e98e6e8, type: 2}
   secondQuest: {fileID: 0}
   InCombat: 1
   Index: 1

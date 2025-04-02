@@ -72,7 +72,7 @@ public class LootController : MonoBehaviour, IPointerClickHandler
 
     private void Keep()
     {
-        if(NewChip != null)
+        if (NewChip != null)
             UiManager.Instance.SelectedChipToReplace(NewChip);
         else
             UiManager.Instance.AddItemToInventory(NewItem);

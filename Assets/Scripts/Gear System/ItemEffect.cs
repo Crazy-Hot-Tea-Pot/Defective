@@ -16,7 +16,7 @@ public class ItemEffect : ScriptableObject
         {
             isEquipped = value;
 
-            Equipped();
+            Equip();
         }
     }
 
@@ -47,6 +47,20 @@ public class ItemEffect : ScriptableObject
     public bool HitAllTargets = false;
 
     private bool isEquipped = false;
+
+    public Item LinkedItem
+    {
+        get
+        {
+            return linkedItem;
+        }
+        set
+        {
+            linkedItem = value;
+        }
+    }
+
+    private Item linkedItem;
 
     public virtual void Activate(PlayerController player, Item item, Enemy enemy = null)
     {        
@@ -80,7 +94,7 @@ public class ItemEffect : ScriptableObject
         return "fail";
     }
 
-    protected virtual void Equipped()
+    public virtual void Equip()
     {
 
     }

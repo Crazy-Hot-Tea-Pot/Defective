@@ -56,10 +56,15 @@ public class LoadingController : MonoBehaviour
 
         Display.SetActive(true);
 
-        if (GameManager.Instance.TargetScene != Levels.Credits)
+        switch (GameManager.Instance.TargetScene)
         {
-            //Generate Story Graph
-            GenerateStoryGraph();
+            case Levels.Credits:
+            case Levels.Win:
+            case Levels.Title:
+                break;
+            default:
+                GenerateStoryGraph();
+                break;
         }
     }
 

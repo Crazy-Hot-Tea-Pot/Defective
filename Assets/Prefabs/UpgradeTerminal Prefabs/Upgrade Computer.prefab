@@ -1182,6 +1182,7 @@ MonoBehaviour:
   ItemScreen: {fileID: 2225566523372175195}
   DataScreen: {fileID: 1993750869637070553}
   ErrorScreen: {fileID: 2479578678160134862}
+  TerminalIdleSound: 57
 --- !u!1 &4424763626801898311
 GameObject:
   m_ObjectHideFlags: 0

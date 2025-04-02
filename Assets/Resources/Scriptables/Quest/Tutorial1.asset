@@ -19,8 +19,9 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
-  PopupText: You can view quests at all times in the top corner of your screen or
-    from the escape menue. Try now press escape.
+  PopupText: Your main quest is displayed on the top-right corner of the screen.
+    Other quests can be viewed through the pause menu. Press the escape key to view
+    them.
   nextQuest: {fileID: 11400000, guid: af3e87ae73b4e6a4fa23aad0373567d6, type: 2}
   secondQuest: {fileID: 11400000, guid: 1b91c79cd724efb44a308b61420e98fe, type: 2}
   InCombat: 0

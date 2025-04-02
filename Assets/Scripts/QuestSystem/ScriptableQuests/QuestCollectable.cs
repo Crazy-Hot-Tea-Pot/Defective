@@ -44,6 +44,7 @@ public class QuestCollectable : Quest
         if(tag == tagName)
         {
             currentCollectoin = currentCollectoin + 1;
+            GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
             //QuestManager.Instance.UpdateQuestHud(this);
         }
     }

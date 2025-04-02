@@ -1,16 +1,22 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerHandContainer : MonoBehaviour
 {
     public enum PlayerHandState
     {
-        Open,
-        Close
+        Reveal,
+        Hide
     }
-
-    public GameObject PlayerHand;
-    public Button SliderButton;
+    [Header("Chips display settings")]
+    // Adjust this to control overlap
+    public float overlapOffset = 100f;
+    // Optional for slight curving
+    public float yOffset = 0f;
+    // Ensures proper layering
+    public float zOffset = -1f;
 
     [Header("Sounds")]
     public SoundFX OpenDeck;
@@ -28,18 +34,17 @@ public class PlayerHandContainer : MonoBehaviour
     }
 
     private Animator animator;
-    private PlayerHandState handStatus=PlayerHandState.Close;
+    private PlayerHandState handStatus = PlayerHandState.Hide;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        SliderButton.onClick.AddListener(OpenOrCloseHandByButtonClick);
     }
     /// <summary>
-    /// Open or close player hand.
+    /// Reveal or hide player hand.
     /// </summary>
-    /// <param name="WhatStateYouwantItToBe">Open or Close</param>
+    /// <param name="WhatStateYouwantItToBe">Reveal or Hide</param>
     public void TogglePanel(PlayerHandState WhatStateYouwantItToBe)
     {        
 
@@ -48,55 +53,89 @@ public class PlayerHandContainer : MonoBehaviour
 
         switch (WhatStateYouwantItToBe)
         {
-            case PlayerHandState.Open:
-                if (HandIsVisible == PlayerHandState.Close)
+            case PlayerHandState.Reveal:
+                if (HandIsVisible == PlayerHandState.Hide)
                 {                    
                     SoundManager.PlayFXSound(OpenDeck);
-                    animator.SetTrigger("SlideInScreen");
-                    HandIsVisible = PlayerHandState.Open;
+                    animator.SetTrigger("Reveal");
+                    HandIsVisible = PlayerHandState.Reveal;
                 }
                 break;
-            case PlayerHandState.Close:
-                if(HandIsVisible == PlayerHandState.Open)
+            case PlayerHandState.Hide:
+                if(HandIsVisible == PlayerHandState.Reveal)
                 {
                     SoundManager.PlayFXSound(CloseDeck);
-                    animator.SetTrigger("SlideOutScreen");
-                    HandIsVisible = PlayerHandState.Close;                    
+                    animator.SetTrigger("Hide");
+                    HandIsVisible = PlayerHandState.Hide;
+
+                    // first delete all children
+                    foreach (Transform child in this.transform)
+                    {
+                        // Destroy each child
+                        Destroy(child.gameObject);
+                    }
                 }                
                 break;
         }        
     }
-    public void FillPlayerHand()
+    private void PopulateHand()
+    {
+        StartCoroutine(FillPlayerHand());
+    }
+    private IEnumerator FillPlayerHand()
     {
         // first delete all children
-        foreach (Transform child in PlayerHand.transform)
+        foreach (Transform child in this.transform)
         {
             // Destroy each child
             Destroy(child.gameObject);
         }
 
-        //Change this so it only draws new cards via the combat controller
-        //if(GameManager.Instance.CurrentGameMode = GameManager.GameMode.Combat)
+        yield return new WaitForSeconds(0.5f);
+
         ChipManager.Instance.RefreshPlayerHand();
 
-        foreach (var chip in ChipManager.Instance.PlayerHand)
+        for (int i = 0; i < ChipManager.Instance.PlayerHand.Count; i++)
         {
-            GameObject tempNewChip = Instantiate(ChipManager.Instance.chipPrefab, PlayerHand.transform);
-
-            tempNewChip.GetComponent<Chip>().Mode = Chip.ChipMode.Combat;
+            var chip = ChipManager.Instance.PlayerHand[i];
+            GameObject tempNewChip = Instantiate(ChipManager.Instance.chipPrefab, this.transform);
 
             tempNewChip.GetComponent<Chip>().NewChip = chip;
+            tempNewChip.GetComponent<Chip>().SetChipModeTo(Chip.ChipMode.Combat);
+
+            tempNewChip.GetComponent<RectTransform>().sizeDelta = new Vector2(776f, 600f);
+
+            // Apply overlap and positioning
+            tempNewChip.transform.localPosition = new Vector3(i * overlapOffset, Mathf.Sin(i * 0.1f) * yOffset, i * zOffset);
+
+            yield return new WaitForSeconds(0.2f);
+        }
+
+    }
+    private void UpdateChipPositions()
+    {
+        for(int i = 0; i<this.transform.childCount; i++)
+        {
+            Transform chip = this.transform.GetChild(i);
+
+            chip.localPosition = new Vector3(i * overlapOffset, Mathf.Sin(i * 0.1f) * yOffset, i * zOffset);
+
+            Canvas canvas = chip.GetComponent<Canvas>();
+            if(canvas == null)
+            {
+                canvas = chip.gameObject.AddComponent<Canvas>();
+            }
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = i;
         }
     }
-    private void OpenOrCloseHandByButtonClick()
+    [ContextMenu("Update Chip layout")]
+    private void UpdateChipLayout()
     {
-        if(HandIsVisible == PlayerHandState.Open)
-            TogglePanel(PlayerHandState.Close);
-        else
-            TogglePanel(PlayerHandState.Open);
+        UpdateChipPositions();
     }
     void OnDestroy()
     {
-        SliderButton.onClick.RemoveListener(OpenOrCloseHandByButtonClick);
+        
     }
 }
