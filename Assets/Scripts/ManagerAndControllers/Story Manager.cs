@@ -282,8 +282,7 @@ public class StoryManager : MonoBehaviour
                     if (Random.Range(0, 100) < CurrentLevel.terminalSpawnChance)
                         upgradeComputer.SetActive(true);
                     else
-                    {
-                        Debug.Log("With a terminal spawn chance of " + CurrentLevel.terminalSpawnChance + " upgradeComputer failed to spawn.");
+                    {                        
                         upgradeComputer.SetActive(false);
                     }
                 }

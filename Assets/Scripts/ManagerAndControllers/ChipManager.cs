@@ -257,7 +257,6 @@ public class ChipManager : MonoBehaviour
             chip.IsActive = false;
             // Reset disable counter
             chip.DisableCounter = 0;
-            Debug.Log($"{chip.chipName} reset to default values.");
         }
     }
 

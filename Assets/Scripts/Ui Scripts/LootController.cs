@@ -92,9 +92,10 @@ public class LootController : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        GameObject infoInScene = GameObject.FindGameObjectWithTag("Info");
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (chipinfoDisplay == null && newChip != null)
+            if (chipinfoDisplay == null && newChip != null && infoInScene == null)
             {
 
                 chipinfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
@@ -110,7 +111,7 @@ public class LootController : MonoBehaviour, IPointerClickHandler
                 controller.TargetPosition = this.transform.position;
                 controller.StartPosition = UiManager.Instance.transform.position;
             }
-            else if (gearInfoDisplay == null && newItem != null)
+            else if (gearInfoDisplay == null && newItem != null && infoInScene == null)
             {
 
                 gearInfoDisplay = Instantiate(GearInfoPrefab, UiManager.Instance.transform);

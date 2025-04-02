@@ -49,6 +49,7 @@ public class LootUiController : UiController
     public GameObject LootGainDisplay;
     public TextMeshProUGUI LootGainInfo;
     public GameObject LootContainer;
+    public Button DropAllButton;
 
     [Header("Selection stuff")]
     public GameObject SelectionDisplay;
@@ -95,7 +96,9 @@ public class LootUiController : UiController
     {
         Debug.Log("Loot Ui initialized");
         CancelButton.onClick.AddListener(()=>CancelSelection());
+        DropAllButton.onClick.AddListener(() => DropAllLoot());
     }
+
     /// <summary>
     /// Put information into the screen.
     /// make sure to call after you have sent info to the Controller.
@@ -181,7 +184,6 @@ public class LootUiController : UiController
 
         UpdateLootScreen();
     }
-
     /// <summary>
     /// Generates a random number based on the size of our chipdroplist
     /// </summary>
@@ -456,8 +458,41 @@ public class LootUiController : UiController
         }
     }
 
-    void OnDestroy()
+    /// <summary>
+    /// Drop All Loot
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    private void DropAllLoot()
+    {
+        // Clear all UI elements in the LootContainer
+        foreach (Transform child in LootContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Clear all loot-related lists
+        lootChips.Clear();
+        lootItems.Clear();
+        lootTempChip.Clear();
+        lootTempItems.Clear();
+        distributedChips.Clear();
+        distributedItem.Clear();
+
+        // Reset loot-related state
+        lootRunThroughCounter = 0;
+        firstTimeLootAppear = true;
+
+        // Optionally hide the loot UI if you have a specific panel
+        gameObject.SetActive(false); // Or whatever closes the loot UI
+
+        // Switch back to roaming
+        GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
+
+        Debug.Log("All loot dropped.");
+    }
+void OnDestroy()
     {
         CancelButton.onClick.RemoveAllListeners();
+        DropAllButton.onClick.RemoveAllListeners();
     }
 }

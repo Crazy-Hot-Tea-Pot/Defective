@@ -14,7 +14,7 @@ public class BackgroundSoundGlobal : MonoBehaviour
     }
     private AudioSource audioSource;
     private AudioClip previousClip;
-    private bool wasPlayingBeforeCombat = false;
+    //private bool wasPlayingBeforeCombat = false;
     [SerializeField]
     private List<Levels> playInScenes = new List<Levels>();
     [SerializeField]
@@ -58,8 +58,7 @@ public class BackgroundSoundGlobal : MonoBehaviour
     {
         if (audioSource != null && audioSource.isPlaying)
         {
-            audioSource.Pause();
-            Debug.Log("Persistent background sound paused.");
+            audioSource.Pause();            
         }
     }
 
@@ -67,8 +66,7 @@ public class BackgroundSoundGlobal : MonoBehaviour
     {
         if (audioSource != null && !audioSource.isPlaying)
         {
-            audioSource.UnPause();
-            Debug.Log("Persistent background sound resumed.");
+            audioSource.UnPause();            
         }
     }
 

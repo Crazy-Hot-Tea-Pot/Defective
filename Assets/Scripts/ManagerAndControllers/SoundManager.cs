@@ -263,11 +263,7 @@ public static class SoundManager
             }
             loopingSounds.Remove(sound);
             Debug.Log($"Looping sound {sound} stopped.");
-        }
-        else
-        {
-            Debug.Log($"No looping sound found for {sound}.");
-        }
+        }        
     }
     /// <summary>
     /// Gets the current Bg Sound playing.

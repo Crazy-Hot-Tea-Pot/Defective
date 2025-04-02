@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 7771501317627392820}
   m_Layer: 5
   m_Name: Confirmation
-  m_TagString: Untagged
+  m_TagString: Confirm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

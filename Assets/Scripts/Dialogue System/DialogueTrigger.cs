@@ -25,9 +25,7 @@ public class DialogueTrigger : MonoBehaviour
                     triggerBottom.x + playerPositionXZOffset.x,
                     triggerBottom.y + 1f,
                     triggerBottom.z + playerPositionXZOffset.y
-                );
-
-                Debug.Log($"[DialogueTrigger] Updated PlayerPosition to {PlayerPosition.transform.position}");
+                );                
             }
             else
             {

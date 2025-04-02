@@ -1463,7 +1463,7 @@ MonoBehaviour:
   CurrentStory: {fileID: 11400000, guid: e00ceb53a68735145a1d20453d113a10, type: 2}
   MaxHealth: 50
   StartingScrap: 150
-  idleTime: 5
+  idleTime: 30
 --- !u!1 &1829154758
 GameObject:
   m_ObjectHideFlags: 0

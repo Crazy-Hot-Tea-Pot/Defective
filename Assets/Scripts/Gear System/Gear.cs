@@ -98,17 +98,6 @@ public class Gear : MonoBehaviour, ICanvasRaycastFilter, IPointerEnterHandler, I
             GearTip.SetActive(false);
         }
     }
-    // Handle clicks within the collider area
-    //public void OnPointerClick(PointerEventData eventData)
-    //{
-    //    Vector2 worldPoint = Camera.main.ScreenToWorldPoint(eventData.position);
-
-    //    if (polygonCollider.OverlapPoint(worldPoint))
-    //    {
-    //        //Debug.Log("Button clicked within Polygon Collider of "+this.gameObject.name);
-    //        PerformButtonAction();
-    //    }
-    //}
     public void UseItem()
     {
         try
@@ -167,10 +156,4 @@ public class Gear : MonoBehaviour, ICanvasRaycastFilter, IPointerEnterHandler, I
         GearImage.color=color;
         GearImage.sprite=Item.itemImage;
     }
-
-    //private void PerformButtonAction()
-    //{
-    //    // Add your button logic here
-    //    Debug.Log("Performing button action...");
-    //}
 }
