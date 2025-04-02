@@ -124,15 +124,8 @@ public class RoamingAndCombatUiController : UiController
         HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, targetHealthPercentage);
 
         // Update the health text
-        //int percentage = Mathf.RoundToInt(targetHealthPercentage * 100);
-        HealthText.SetText(currentHealth.ToString());//$"{percentage}%");
+        HealthText.SetText(currentHealth.ToString("F1"));//$"{percentage}%");
 
-        //float targetHealthPercentage = (float)currentHealth / maxHealth;
-
-        //StopCoroutine(UpdateHealthOverTime(targetHealthPercentage));
-
-        //// Start the coroutine to smoothly update the health bar
-        //StartCoroutine(UpdateHealthOverTime(targetHealthPercentage));
     }   
     
     /// <summary>
