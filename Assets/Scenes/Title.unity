@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playInScenes: 00000000070000000a000000
-  pauseInScenes: 010000000200000003000000040000000500000006000000080000000b00000009000000
+  pauseInScenes: 010000000200000003000000040000000500000006000000080000000b000000090000000d000000
 --- !u!114 &1259556925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1463,6 +1463,7 @@ MonoBehaviour:
   CurrentStory: {fileID: 11400000, guid: 0e7e9adf1c8110e4ba1203168bfbdb4b, type: 2}
   MaxHealth: 50
   StartingScrap: 150
+  idleTime: 5
 --- !u!1 &1829154758
 GameObject:
   m_ObjectHideFlags: 0

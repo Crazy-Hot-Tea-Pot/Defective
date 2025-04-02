@@ -16,4 +16,5 @@ public enum Levels
     Settings,
     TestLevel,
     Win,
+    Trailer,
 }

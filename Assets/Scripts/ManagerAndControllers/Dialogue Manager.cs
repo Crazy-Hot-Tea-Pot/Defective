@@ -161,6 +161,7 @@ public class DialogueManager : MonoBehaviour
             case Levels.Settings:
             case Levels.Credits:
             case Levels.Win:
+            case Levels.Trailer:
                 break;
             default:
                 CallScreen = GameObject.Find("Player").GetComponent<PlayerController>().CallScreen.GetComponent<CallScreen>();

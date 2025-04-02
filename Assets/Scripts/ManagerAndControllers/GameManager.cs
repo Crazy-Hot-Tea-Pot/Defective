@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour
         Credits,
         Loading,
         BrowseringInventory,
-        Won
+        Won,
+        Trailer
     }
 
     public GameMode CurrentGameMode
@@ -214,6 +215,9 @@ public class GameManager : MonoBehaviour
                     break;
                 case Levels.Win:
                     CurrentGameMode = GameMode.Won;
+                    break;
+                case Levels.Trailer:
+                    CurrentGameMode = GameMode.Trailer;
                     break;
                 default:
                     CurrentGameMode = GameMode.Roaming;
