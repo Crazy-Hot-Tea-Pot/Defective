@@ -532,18 +532,17 @@ public class UiManager : MonoBehaviour
     /// <param name="message">Message to tell player.</param>
     /// <param name="CancelButtonVisible">If you want the cancel Button Visible. Default true</param>
     /// <param name="MethodToCallOnConfirm">Method to call when player presses confirm. Default null.</param>
-    public bool PopUpMessage(string message,Action MethodToCallOnConfirm=null, bool CancelButtonVisible = true)
+    public void PopUpMessage(string message,Action MethodToCallOnConfirm=null, bool CancelButtonVisible = true)
     {
         GameObject PopUpWindow = GameObject.FindGameObjectWithTag("Confirm");
-        if (PopUpWindow != null)
+        if (PopUpWindow == null)
         {
             GameObject temp = Instantiate(Popup, Instance.transform);
-            temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(message, CancelButtonVisible, MethodToCallOnConfirm);
-            return true;
+            temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(message, CancelButtonVisible, MethodToCallOnConfirm);            
         }
         else
         {
-            return false;
+            PopUpWindow.GetComponent<Animator>().SetTrigger("Alert");
         }
     }
     
