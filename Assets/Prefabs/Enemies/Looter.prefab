@@ -173,7 +173,15 @@ PrefabInstance:
     - target: {fileID: -7823293702887809713, guid: db770a6dc6962e4448f92fd40a9febec, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 587265ab144b97745b530152ae90389f, type: 2}
+      objectReference: {fileID: 2100000, guid: a62b8d6a3b427774ba1ab81f15cebada, type: 2}
+    - target: {fileID: -7823293702887809713, guid: db770a6dc6962e4448f92fd40a9febec, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a62b8d6a3b427774ba1ab81f15cebada, type: 2}
+    - target: {fileID: -6452266432751415832, guid: db770a6dc6962e4448f92fd40a9febec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6126564370839708100, guid: db770a6dc6962e4448f92fd40a9febec, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -182,6 +190,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: dc685f985b76ce942983bbe5d59d30b5, type: 2}
+    - target: {fileID: -1391101608445812263, guid: db770a6dc6962e4448f92fd40a9febec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a62b8d6a3b427774ba1ab81f15cebada, type: 2}
+    - target: {fileID: -243328727730167312, guid: db770a6dc6962e4448f92fd40a9febec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: db770a6dc6962e4448f92fd40a9febec, type: 3}
       propertyPath: m_Name
       value: looter enemy 1 new

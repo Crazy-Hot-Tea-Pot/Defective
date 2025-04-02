@@ -15,8 +15,8 @@ MonoBehaviour:
   lines:
   - speakerName: Ignotus
     speakerImage: {fileID: 21300000, guid: 11f57c9185a5af44ab61d4ac71c00274, type: 3}
-    dialogueText: Now, up ahead is a Maintenance Bot. We have quite a few of in the
-      subway because things are always breaking down here.
+    dialogueText: Now, up ahead is a Maintenance Bot. We have quite a few of them
+      because things are always breaking down here.
     isPlayerSpeaking: 0
     revealByLetter: 1
     textSpeed: 0.05
