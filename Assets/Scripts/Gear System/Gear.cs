@@ -1,17 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
+public class Gear : MonoBehaviour, ICanvasRaycastFilter, IPointerEnterHandler, IPointerExitHandler
 {
     public PolygonCollider2D polygonCollider;
     public CombatController CombatController;
+    public PuzzleController PuzzleController;
     public GameObject Player;
     public Button Button;
     public Image GearImage;
+    public GameObject GearTip;
+    public TextMeshProUGUI GearTipText;
 
     public Item Item
     {
@@ -39,6 +43,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
 
     private Item item;
     private string gearName;
+    private int attemps=0;
 
     void Awake()
     {
@@ -57,6 +62,7 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
         try
         {
             CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
+            PuzzleController = GameObject.FindGameObjectWithTag("PuzzleController").GetComponent<PuzzleController>();
         }
         catch
         {
@@ -77,51 +83,70 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
         // Check if the world point is inside the Polygon Collider
         return polygonCollider != null && polygonCollider.OverlapPoint(new Vector2(worldPoint.x, worldPoint.y));
     }
-
-    // Handle clicks within the collider area
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(eventData.position);
-
-        if (polygonCollider.OverlapPoint(worldPoint))
+        if (Item != null)
         {
-            //Debug.Log("Button clicked within Polygon Collider of "+this.gameObject.name);
-            PerformButtonAction();
+            GearTipText.SetText(item.itemDescription);
+            GearTip.SetActive(true);
         }
     }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (GearTip.activeInHierarchy)
+        {
+            GearTip.SetActive(false);
+        }
+    }
+    // Handle clicks within the collider area
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    Vector2 worldPoint = Camera.main.ScreenToWorldPoint(eventData.position);
 
+    //    if (polygonCollider.OverlapPoint(worldPoint))
+    //    {
+    //        //Debug.Log("Button clicked within Polygon Collider of "+this.gameObject.name);
+    //        PerformButtonAction();
+    //    }
+    //}
     public void UseItem()
     {
         try
         {
-            // Check if there is a target available
-            if (
-                (CombatController.Target == null) 
-                && 
-                (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat))
-                throw new NullReferenceException("No target assigned.");
-
-            if (Item == null)
-                throw new NullReferenceException("No Item equipped.");
-            else
+            if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
             {
                 if (CombatController.Target == null)
-                    Item.ItemActivate(Player.GetComponent<PlayerController>());
-                else
                 {
-                    Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                    attemps++;
+
+                    if(attemps > 3)
+                        UiManager.Instance.PopUpMessage("You must first select an enemy with your mouse.");
+
+                    return;
                 }
+
+                if (Item == null)
+                    throw new NullReferenceException("No Item equipped.");
+
+                Item.ItemActivate(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+
+                UiManager.Instance.CanMakeAnyMoreMoves();
+            }
+            else
+            {
+                if (PuzzleController.Target == null)
+                    throw new NullReferenceException("No Puzzle target assigned.");
+
+                if (Item == null)
+                    throw new NullReferenceException("No Item equipped.");
+
+                Item.ItemActivate(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
             }
         }
         catch (NullReferenceException ex)
         {
             Debug.LogWarning($"Null reference error: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Generic catch for any other exceptions that may occur
-            Debug.LogError($"An unexpected error occurred: {ex.Message}");
-        }
+        }        
     }
     public void EquipItem(Item newItem)
     {
@@ -143,9 +168,9 @@ public class Gear : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
         GearImage.sprite=Item.itemImage;
     }
 
-    private void PerformButtonAction()
-    {
-        // Add your button logic here
-        Debug.Log("Performing button action...");
-    }
+    //private void PerformButtonAction()
+    //{
+    //    // Add your button logic here
+    //    Debug.Log("Performing button action...");
+    //}
 }

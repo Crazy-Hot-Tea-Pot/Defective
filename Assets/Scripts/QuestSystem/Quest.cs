@@ -1,32 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 
 public class Quest : ScriptableObject
 {
     public string questName;
+    public string ccQuestName;
+    public string modifiedQuestName;
     public string questDesc;
     public bool complete = false;
+    public bool isTutorial;
+    public bool mainQuest;
 
-    public void speaking(TMP_Text speaker, TMP_Text player)
+    private void Awake()
     {
-        RunQuest();
+        ccQuestName = questName;
     }
-
     /// <summary>
     /// A method intended to be overwritten to run quests and meet their requirments
     /// </summary>
     public virtual void RunQuest()
     {
-
+        
     }
 
     ///<summary>
     ///This method is always over written but allows for mono objects using collision detection to pass useful data script by script
     ///</summary>
-    public virtual void TouchPassThrough()
+    public virtual void TouchPassThrough(string tag)
     {
 
     }
@@ -37,8 +39,10 @@ public class Quest : ScriptableObject
     public virtual void CompleteQuest()
     {
         complete = true;
-        questName = questName + " (Complete)";
+        questName = "\n" + ccQuestName + " (Complete)";
+        GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
         Debug.Log("Quest Complete: " + questName);
+        //QuestManager.Instance.UpdateQuestHud(this);
     }
 
     /// <summary>
@@ -47,8 +51,16 @@ public class Quest : ScriptableObject
     /// <param name="enemyTypeName"></param>
     public virtual void EnemyQuestCounterUpdate(string enemyTypeName)
     {
+        Debug.Log("EnemyCounterBase");
+    }
+
+    public virtual void TriggerPopup()
+    {
 
     }
 
-}
+    public virtual void TriggerMovement()
+    {
 
+    }
+}

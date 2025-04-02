@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
+using static GameEnums;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -20,15 +21,14 @@ public class EnemyManager : MonoBehaviour
     /// Have to manually Update this for now.
     /// TODO add a generator that auto populates list of enemy types.
     /// </summary>
-    public enum EnemyType
+    public enum TypeOfEnemies
     {
         Looter,
         SecurityDrone,
         Maintenancebot,
         TicketVendor,
         Garbagebot,
-        GangLeader,
-        Inspector
+        GangLeader
     }
 
     public List<GameObject> EnemiesInLevel;
@@ -49,7 +49,7 @@ public class EnemyManager : MonoBehaviour
     private List<GameObject> combatEnemies = new();
     [SerializeField] 
     private List<GameObject> enemyPrefabs;
-    private Dictionary<EnemyType, GameObject> enemyPrefabDict = new();
+    private Dictionary<TypeOfEnemies, GameObject> enemyPrefabDict = new();
 
     void Awake()
     {
@@ -92,7 +92,7 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public GameObject GetEnemyPrefab(EnemyType type)
+    public GameObject GetEnemyPrefab(TypeOfEnemies type)
     {
         return enemyPrefabDict.ContainsKey(type) ? enemyPrefabDict[type] : null;
     }
@@ -117,7 +117,7 @@ public class EnemyManager : MonoBehaviour
             if (prefab != null)
             {
                 string normalizedPrefabName = prefab.name.Replace(" ", "").ToLower();
-                foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
+                foreach (TypeOfEnemies type in System.Enum.GetValues(typeof(TypeOfEnemies)))
                 {
                     string normalizedEnumName = type.ToString().ToLower(); // Normalize enum name (lowercase)
                     if (normalizedPrefabName == normalizedEnumName)
@@ -152,7 +152,7 @@ public class EnemyManager : MonoBehaviour
         LevelDefinition currentLevel = StoryManager.Instance.GetCurrentLevel();
         if (currentLevel == null)
         {
-            Debug.LogError("No current level defined in StoryManager.");
+            Debug.LogWarning("No current level defined in StoryManager.");
             return;
         }
 
@@ -160,7 +160,7 @@ public class EnemyManager : MonoBehaviour
         CombatZone[] combatZones = FindObjectsOfType<CombatZone>();
         if (combatZones.Length == 0)
         {
-            Debug.LogError("No CombatZones found in the scene.");
+            Debug.LogWarning("No CombatZones found in the scene.");
             return;
         }
 
@@ -190,11 +190,13 @@ public class EnemyManager : MonoBehaviour
                 }
 
                 string enemyName = "Unable to fetch name";
+                Enemy.EnemyDifficulty enemyDifficulty = Enemy.EnemyDifficulty.Medium;
                 EnemySpawn matchingEnemy = enemySpawns.Find(e => e.enemyType == enemyData.enemyType);
 
                 if(matchingEnemy != null)
                 {
                     enemyName = matchingEnemy.enemyName;
+                    enemyDifficulty = matchingEnemy.difficulty;
                     enemySpawns.Remove(matchingEnemy);
                 }
                 else
@@ -203,13 +205,22 @@ public class EnemyManager : MonoBehaviour
                 }
 
                 //Spawn enemy
-                GameObject enemy = Instantiate(enemyPrefab, enemyData.position, Quaternion.identity);                
-                enemy.GetComponent<Enemy>().SetEnemyName(enemyName);
+                GameObject enemy = Instantiate(enemyPrefab, enemyData.position, Quaternion.identity);
+                Enemy enemyComponent = enemy.GetComponent<Enemy>();                
                 enemy.SetActive(true);
+
+                if (enemyComponent != null)
+                {
+                    enemyComponent.SetEnemyName(enemyName);
+                    enemyComponent.Difficulty = (enemyDifficulty == Enemy.EnemyDifficulty.None) ? Enemy.EnemyDifficulty.Medium : enemyDifficulty;
+                }
+                else
+                {
+                    Debug.LogError("Spawned enemy is missing the Enemy component!");
+                }
             }
         }
     }
-
 
     private void StartCombat()
     {
@@ -226,8 +237,12 @@ public class EnemyManager : MonoBehaviour
         switch (newLevel)
         {
             case Levels.Title:
+            case Levels.Settings:
             case Levels.Loading:
             case Levels.WorkShop:
+            case Levels.Credits:
+            case Levels.Win:
+            case Levels.Trailer:
                 break;
             default:
                 SpawnEnemiesForLevel();

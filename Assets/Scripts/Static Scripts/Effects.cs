@@ -72,20 +72,11 @@ public static class Effects
     [System.Serializable]
     public class StatusEffect
     {
-        ////Effect(buff, Debuff or SpecialEffect)
-        //public Enum Effect;
-        ////Stack count for buffs/debuffs(if applicable)
-        //public int StackCount;
-
-        //public StatusEffect(Enum effect, int stackCount)
-        //{
-        //    Effect = effect;
-        //    StackCount = stackCount;
-        //}
             public Buff BuffEffect;  
             public Debuff DebuffEffect;
             public SpecialEffects SpecialEffect;
             public int StackCount;
+            public bool permnamentEffect = false;
 
             // Constructor for Buffs
             public StatusEffect(Buff buff, int stackCount)
@@ -106,12 +97,13 @@ public static class Effects
             }
 
             // Constructor for Special Effects
-            public StatusEffect(SpecialEffects specialEffect, int stackCount)
+            public StatusEffect(SpecialEffects specialEffect, int stackCount,bool permnament=false)
             {
                 BuffEffect = Buff.None;
                 DebuffEffect = Debuff.None;
                 SpecialEffect = specialEffect;
                 StackCount = stackCount;
+                permnamentEffect=permnament;
             }
     }
 

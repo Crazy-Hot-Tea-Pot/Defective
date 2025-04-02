@@ -5,14 +5,12 @@ using UnityEngine;
 public class ItemEditor : Editor
 {
     private SerializedProperty valueIncreaseBy;
-    private SerializedProperty energyCostDecreaseBy;
     private SerializedProperty scrapValue;
 
     private void OnEnable()
     {
         // Cache the serialized properties
-        valueIncreaseBy = serializedObject.FindProperty("valueIncreaseBy");
-        energyCostDecreaseBy = serializedObject.FindProperty("energyCostDecreaseBy");
+        valueIncreaseBy = serializedObject.FindProperty("valueIncreaseBy");        
         scrapValue = serializedObject.FindProperty("scrapValueForEachTeir");
     }
 
@@ -30,9 +28,6 @@ public class ItemEditor : Editor
         // Display the Tier Values as the enum names
         DrawTierList("Damage/Shield Increase", valueIncreaseBy);
 
-        EditorGUILayout.LabelField("Tier values to Decrease by", EditorStyles.boldLabel);
-        DrawTierList("Energy Cost Decrease", energyCostDecreaseBy);
-
         EditorGUILayout.LabelField("Scale Value for each Teir", EditorStyles.boldLabel);
         DrawTierList("Scrap Value", scrapValue);
 
@@ -40,7 +35,7 @@ public class ItemEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 
-    private void DrawTierList(string label, SerializedProperty list)
+    private void DrawTierList(string label, SerializedProperty list,bool isFloat=false)
     {
         EditorGUILayout.LabelField(label, EditorStyles.miniBoldLabel);
 
@@ -50,7 +45,9 @@ public class ItemEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(tierNames[i], GUILayout.Width(100));
+
             list.GetArrayElementAtIndex(i).intValue = EditorGUILayout.IntField(list.GetArrayElementAtIndex(i).intValue);
+
             EditorGUILayout.EndHorizontal();
         }
     }

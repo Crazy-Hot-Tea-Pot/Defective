@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cc3f0f3f73f624e9acf36bae9e783d, type: 3}
+  m_Name: Gamecon_Linear
+  m_EditorClassIdentifier: 
+  storyName: Gamecon_Linear
+  pathType: 0
+  difficulty: 1
+  levels:
+  - uniqueLevelID: 11b013f4-6cce-4e79-8546-3f3968ab1b56
+    levelID: 1
+    terminalSpawnChance: 0
+    enemySpawns:
+    - enemyType: 1
+      enemyName: Alpha
+      difficulty: 1
+    nextLevels:
+    - rid: 1508267758235418624
+    isCompleted: 0
+    questCondition: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 1508267758235418624
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 2dfc0008-e035-448a-b0e8-93c8acfb4087
+        levelID: 6
+        terminalSpawnChance: 100
+        enemySpawns: []
+        nextLevels:
+        - rid: 1508267758235418625
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1508267758235418625
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: ab7eac05-da66-418c-b2d3-3abfd52e2394
+        levelID: 2
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 0
+          enemyName: Looter Gavin
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Nuts
+          difficulty: 1
+        - enemyType: 1
+          enemyName: Beta
+          difficulty: 1
+        - enemyType: 1
+          enemyName: Capsa
+          difficulty: 1
+        nextLevels:
+        - rid: 1508267758235418626
+        isCompleted: 0
+        questCondition: {fileID: 0}
+    - rid: 1508267758235418626
+      type: {class: LevelDefinition, ns: , asm: Assembly-CSharp}
+      data:
+        uniqueLevelID: 6ef9f00f-d656-483c-978a-2cb3bcb21719
+        levelID: 4
+        terminalSpawnChance: 100
+        enemySpawns:
+        - enemyType: 2
+          enemyName: Grime
+          difficulty: 2
+        - enemyType: 2
+          enemyName: Bolts
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter James
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Amanda
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Marcus
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Samantha
+          difficulty: 2
+        - enemyType: 0
+          enemyName: Looter Pejman
+          difficulty: 1
+        - enemyType: 0
+          enemyName: Looter Bill
+          difficulty: 1
+        - enemyType: 5
+          enemyName: Boss Looter Andrew
+          difficulty: 2
+        nextLevels: []
+        isCompleted: 0
+        questCondition: {fileID: 0}

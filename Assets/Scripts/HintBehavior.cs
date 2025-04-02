@@ -15,6 +15,13 @@ public class HintBehavior : MonoBehaviour
 
     private Vector3 initialPosition;
 
+    private Camera playerCamera;
+
+    void Awake()
+    {
+        playerCamera = Camera.main;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +36,12 @@ public class HintBehavior : MonoBehaviour
         transform.position = initialPosition + new Vector3(0, yOffset, 0);
 
         // Rotation
-        transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+        //transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+        if (playerCamera != null)
+        {
+            Vector3 direction = (playerCamera.transform.position - this.transform.position).normalized;
+            direction.y = 0;
+            this.transform.rotation = Quaternion.LookRotation(-direction);
+        }
     }
 }

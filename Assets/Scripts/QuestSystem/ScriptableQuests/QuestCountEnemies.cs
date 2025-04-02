@@ -6,31 +6,33 @@ using UnityEngine;
 public class QuestCountEnemies : Quest
 {
     public int totalEnemies;
-    private int remainingEnemies;
-    public string enemyName;
+    private int remainingEnemies = 0;
+    public string enemyType;
 
-    private string ccQuestName;
-    private string ccQuestDesc;
+    private string saveQuestName;
+    private string saveQuestDesc;
 
     private void Awake()
     {
-        remainingEnemies = totalEnemies;
-        ccQuestDesc = questDesc;
-        ccQuestName = questName;
+        saveQuestDesc = questDesc;
+        saveQuestName = questName;
+        ccQuestName = saveQuestName;
     }
     public override void RunQuest()
     {
 
         //Update the description
-        questDesc = ccQuestDesc + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
+        questDesc = saveQuestDesc + "Kill " + enemyType + "\n(" + remainingEnemies + "/" + totalEnemies + ")";
         //Update the name
-        questName = ccQuestName + "Kill " + enemyName + " (" + remainingEnemies + "/" + totalEnemies + ")";
+        questName = saveQuestName + "Kill " + enemyType + " (" + remainingEnemies + "/" + totalEnemies + ")";
+        //Update alt name
+        modifiedQuestName = saveQuestName + "Kill " + enemyType;
 
         //If remaining enemies is equal to 0 complete the quest
-        if (remainingEnemies == 0)
+        if (remainingEnemies == totalEnemies)
         {
-            questDesc = ccQuestDesc;
-            questName = ccQuestName;
+            questDesc = saveQuestDesc;
+            questName = saveQuestName;
             CompleteQuest();
         }
 
@@ -43,10 +45,12 @@ public class QuestCountEnemies : Quest
     public override void EnemyQuestCounterUpdate(string enemyTypeName)
     {
         //If the name matches
-        if(enemyTypeName == enemyName)
+        if(enemyTypeName == enemyType)
         {
             //Take away from the counter
-            remainingEnemies -= 1;
+            remainingEnemies += 1;
+            GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
+            //QuestManager.Instance.UpdateQuestHud(this);
         }
     }
 }

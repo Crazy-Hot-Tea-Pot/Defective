@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ using UnityEngine;
 
 public class GarbageBot : Enemy
 {
+
+    [Header("Sound")]
+    public SoundFX ShredGarbageSound;
+
     public override void Start()
     {
         if (EnemyName == null)
@@ -12,28 +14,69 @@ public class GarbageBot : Enemy
         //Add Rare Chips Todrop
         DroppedChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Rare);
 
+        EnemyType = EnemyManager.TypeOfEnemies.Garbagebot;
+
         base.Start();
     }
+    public override void CombatStart()
+    {
+        //Roll once at the start
+        nextIntentRoll = Random.Range(1, 11);
+
+        base.CombatStart();
+    }
+    public override void EndTurn()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.EndTurn();
+    }
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 30;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 45;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 60;
+                break;
+        }
+        if (CurrentHP <= 0)
+            CurrentHP = MaxHp;
+    }
+
     protected override void PerformIntent()
     {
-        int tempRange = Random.Range(1, 11);
-
-        if (tempRange <= 3)
-            Compact();
-        else if (tempRange <= 6)
-            Shred();
-        else
-            PileOn();
-
         base.PerformIntent();
+        switch (NextIntent.intentText)
+        {
+            case "Compact":
+                    //Compact();
+                    Animator.SetTrigger("Intent 1");
+                break;
+            case "Shred":
+                    //Shred();
+                    Animator.SetTrigger("Intent 2");
+                break;
+            case "PileOn":
+                //PileOn();
+                Animator.SetTrigger("Intent 3");
+                break;
+            default:
+                Debug.LogWarning("Should never hit here!");
+                break;
+        }
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        int tempRange = Random.Range(1, 11);
-
-        if (tempRange <= 3)
+        if (nextIntentRoll <= 3)
             return ("Compact", IntentType.Attack, 15);
-        else if (tempRange <= 6)
+        else if (nextIntentRoll <= 6)
             return ("Shred", IntentType.Attack, 7);
         else
             return ("Pile On", IntentType.Attack, 10);
@@ -68,7 +111,7 @@ public class GarbageBot : Enemy
     private void Shred()
     {
         //Play Sound
-        SoundManager.PlayFXSound(SoundFX.ShredGarbageBot,this.gameObject.transform);
+        SoundManager.PlayFXSound(ShredGarbageSound,this.gameObject.transform);
 
         ApplyShield(7);
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(7);

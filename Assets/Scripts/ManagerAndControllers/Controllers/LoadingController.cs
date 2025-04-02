@@ -35,6 +35,7 @@ public class LoadingController : MonoBehaviour
     private string targetScene;
     private List<NewChip> Chips = new List<NewChip>();
     private NewChip choosenChip;
+    private Dictionary<int, float> verticalOffsetTracker = new Dictionary<int, float>();
 
     // Start is called before the first frame update
     void Start()
@@ -55,8 +56,16 @@ public class LoadingController : MonoBehaviour
 
         Display.SetActive(true);
 
-        //Generate Story Graph
-        GenerateStoryGraph();
+        switch (GameManager.Instance.TargetScene)
+        {
+            case Levels.Credits:
+            case Levels.Win:
+            case Levels.Title:
+                break;
+            default:
+                GenerateStoryGraph();
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -70,6 +79,8 @@ public class LoadingController : MonoBehaviour
     /// </summary>
     private void GenerateStoryGraph()
     {
+        string currentLevelUniqueID = StoryManager.Instance.CurrentLevel.uniqueLevelID;
+
         // Clear previous graph before generating
         foreach (GameObject obj in nodes)
         {
@@ -92,7 +103,9 @@ public class LoadingController : MonoBehaviour
         // Step 1: First Create All Nodes
         void CreateNodes(LevelDefinition level, Vector2 position, int depth)
         {
-            if (levelPositions.ContainsKey(level)) return; // Prevent duplicates
+            // Prevent duplicates
+            if (levelPositions.ContainsKey(level)) 
+                return;
 
             GameObject node = Instantiate(nodePrefab, graphContainer.transform);
             node.GetComponent<RectTransform>().anchoredPosition = position;
@@ -111,7 +124,7 @@ public class LoadingController : MonoBehaviour
                 }
             }
 
-            if (level == currentLevel)
+            if (level.uniqueLevelID == currentLevelUniqueID)
             {
                 nodeImage.color = currentColor;
                 StartCoroutine(PulseEffect(node.transform));
@@ -132,7 +145,16 @@ public class LoadingController : MonoBehaviour
             for (int i = 0; i < level.NextLevels.Count; i++)
             {
                 LevelDefinition nextLevel = level.NextLevels[i];
-                Vector2 nextPosition = new Vector2(position.x + spacingX, position.y - (i * spacingY));
+
+                //Vector2 nextPosition = new Vector2(position.x + spacingX, position.y - (i * spacingY));
+
+                if (!verticalOffsetTracker.ContainsKey(depth + 1))
+                    verticalOffsetTracker[depth + 1] = position.y;
+
+                float yOffset = verticalOffsetTracker[depth + 1];
+                Vector2 nextPosition = new Vector2(position.x + spacingX, yOffset);
+
+                verticalOffsetTracker[depth + 1] -= spacingY;
 
                 // Store connection pair for later
                 connectionPairs.Add((position, nextPosition));
@@ -188,13 +210,30 @@ public class LoadingController : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false; // Prevents auto-activation
 
-        float elapsedTime = 0f;
-        float FillDuration = 5f;
-        while(elapsedTime < FillDuration)
+        if (GameManager.Instance.Debugging)
         {
-            elapsedTime += Time.deltaTime;
-            ProgressBar.fillAmount = Mathf.Lerp(0,1,elapsedTime/FillDuration);
-            yield return null;
+            while (!asyncLoad.isDone)
+            {
+                ProgressBar.fillAmount = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+
+                if (asyncLoad.progress >= 0.9f)
+                    asyncLoad.allowSceneActivation = true;
+
+                yield return null;
+            }
+        }
+        else
+        {
+            //Fake loading time with progress bar
+            float elapsedTime = 0f;
+            float FillDuration = 5f;
+
+            while (elapsedTime < FillDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                ProgressBar.fillAmount = Mathf.Lerp(0, 1, elapsedTime / FillDuration);
+                yield return null;
+            }
         }
 
         // Wait until the scene is fully loaded (progress reaches 90%)

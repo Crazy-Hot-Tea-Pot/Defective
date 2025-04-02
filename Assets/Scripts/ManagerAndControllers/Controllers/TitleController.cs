@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using Random = UnityEngine.Random;
@@ -16,15 +17,19 @@ public class TitleController : MonoBehaviour
     public VideoPlayer videoPlayer;
     public GameObject Screen;
     public TextMeshProUGUI TitleText;
-    // Time between glitches
-    [Range(0.0f,1.0f)]
-    [Tooltip("How often the glitch happens (increase this to slow down the effect)")]
-    public float glitchInterval = 0.5f;
-    // How long each glitch lasts
+
+    [Header("Title Effect Settings")]
+    [Tooltip("Switch between Glitch and Scramble effects.")]
+    public bool useScrambleEffect = false;
+
+    [Range(0.0f, 1.0f)]
+    [Tooltip("How often the effect happens (increase this to slow down the effect)")]
+    public float effectInterval = 0.5f;
+
     [Range(0.00f, 1.00f)]
-    [Tooltip("How long each glitch lasts (increase this to make glitches last longer)")]
-    public float glitchDuration = 0.10f;
-    // Max pixel offset
+    [Tooltip("How long each effect lasts (increase this to make effects last longer)")]
+    public float effectDuration = 0.15f;
+
     [Range(0f, 10f)]
     [Tooltip("How much the text shakes (reduce this for subtle movement)")]
     public float positionJitter = 1f;
@@ -50,6 +55,13 @@ public class TitleController : MonoBehaviour
     public int MaxHealth;
     public int StartingScrap;
 
+    [Header("Idle Settings")]
+    public float idleTime = 30f;
+    private float idleTimer = 0f;
+    private bool trailerLoaded = false;
+    private InputAction anyKeyAction;
+    private InputAction anyMouseAction;
+
     // Input System reference
     private PlayerInputActions playerInput;
 
@@ -62,11 +74,17 @@ public class TitleController : MonoBehaviour
         skipAction = playerInput.Player.SkipAnimation;
         skipAction.Enable();
         skipAction.performed += SkipVideo;
+
+        anyKeyAction.Enable();
+        anyMouseAction.Enable();
     }
     void Awake()
     {
         // Get PlayerInput component
         playerInput = new PlayerInputActions();
+
+        anyKeyAction = playerInput.UI.AnyKeyboardInput;
+        anyMouseAction = playerInput.UI.AnyMouseInput;
     }
     // Start is called before the first frame update
     void Start()
@@ -87,10 +105,7 @@ public class TitleController : MonoBehaviour
         AddOnSelectListener(PlayButton);
         AddOnSelectListener(ResumeButton);
         AddOnSelectListener(OptionsButton);
-        AddOnSelectListener(QuitButton);
-
-
-        CheckForSaveData();
+        AddOnSelectListener(QuitButton);        
 
         videoPlayer.loopPointReached += OnVideoEnd;
 
@@ -103,10 +118,30 @@ public class TitleController : MonoBehaviour
 
         originalText=TitleText.text;
     }
+    void Update()
+    {
+        if (trailerLoaded)
+            return;
+        else
+        {
+            if (InputReceived())
+            {
+                idleTimer = 0f;
+            }
+            else
+            {
+                idleTimer += Time.deltaTime;
 
+                if (idleTimer >= idleTime)
+                {
+                    trailerLoaded = true;
+                    SceneManager.LoadScene("Trailer");
+                }
+            }
+        }
+    }
     /// <summary>
     /// Plays Sound for when mouse over Button.
-    /// 0 references because from inspector.
     /// </summary>
     public void PlaySelectButtonSound()
     {
@@ -122,9 +157,14 @@ public class TitleController : MonoBehaviour
         GameManager.Instance.RequestScene(Levels.Credits);
     }
 
-    public void StartGlitchEffect()
+    public void StartEffect()
     {
-        StartCoroutine(GlitchEffect());
+        StopCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
+        StartCoroutine(useScrambleEffect ? ScrambleEffect() : GlitchEffect());
+    }
+    private bool InputReceived()
+    {
+        return anyKeyAction.triggered || anyMouseAction.triggered;
     }
     /// <summary>
     /// Adds OnSelect listener to play button sound.
@@ -158,6 +198,9 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator StartGame()
     {
+        // Reset all scriptables to default
+        ChipManager.Instance.ResetAllChips();
+        GearManager.Instance.ResetAllGear();
 
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);
@@ -165,14 +208,6 @@ public class TitleController : MonoBehaviour
         GameData startData = new GameData();
 
         startData.SaveName = "Beginning";
-        //startData.Level = Levels.Tutorial;
-        //startData.MaxHealth = 50;
-        //startData.Health = 50;
-        //startData.Scraps = 100;
-        //startData.TimeStamp = DateTime.Now;
-
-        //startData.storyProgress.storyName = "Tutorial";
-        //startData.storyProgress.currentLevel = Levels.Tutorial;
 
         startData.MaxHealth=MaxHealth;
         startData.Health = MaxHealth;
@@ -205,7 +240,11 @@ public class TitleController : MonoBehaviour
 
         DataManager.Instance.Save(startData.SaveName);
 
-        GameManager.Instance.RequestScene(Levels.Tutorial);
+        // Request the scene from StoryManager (instead of latestSave)
+        GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
+
+        //Start tracker
+        GameStatsTracker.Instance.StartSession();
 
     }
     /// <summary>
@@ -219,8 +258,11 @@ public class TitleController : MonoBehaviour
         // Load the save data into the game
         DataManager.Instance.LoadData(latestSave.SaveName);
 
+        StoryManager.Instance.LoadStoryProgress();
+
         // Request the scene from GameManager
-        GameManager.Instance.RequestScene(latestSave.Level);
+        // Request the scene from StoryManager (instead of latestSave)
+        GameManager.Instance.RequestScene(StoryManager.Instance.CurrentLevel.levelID);
     }
     private IEnumerator OpenOptions()
     {
@@ -232,6 +274,9 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator Quit()
     {
+
+        DataManager.Instance.AutoSave();
+
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);
 
@@ -240,22 +285,36 @@ public class TitleController : MonoBehaviour
     /// <summary>
     /// Get all saves from DataManager
     /// Enable or disable the ResumeButton based on save availability
+    /// Is Called by Animator.
     /// </summary>
     private void CheckForSaveData()
     {    
         List<GameData> allSaves = DataManager.Instance.GetAllSaves();
 
         if (allSaves != null && allSaves.Count > 0)
-            ResumeButton.interactable = true;        
+        {
+            // Find the latest save by timestamp
+            foreach (var save in allSaves)
+            {
+                if (latestSave == null || save.TimeStamp > latestSave.TimeStamp)
+                    latestSave = save;
+            }
+
+            // Check if the story is complete
+            if (latestSave != null && latestSave.storyProgress.isStoryComplete)
+            {
+                Debug.Log("Story is complete. Disabling Resume button.");
+                ResumeButton.interactable = false;
+            }
+            else
+            {
+                ResumeButton.interactable = true;
+            }
+        }     
         else
             ResumeButton.interactable = false;
 
-        // Find the latest save by timestamp        
-        foreach (var save in allSaves)
-        {
-            if (latestSave == null || save.TimeStamp > latestSave.TimeStamp)
-                latestSave = save;
-        }
+        Debug.Log("Checked for save data");
     }    
     private void OnVideoEnd(VideoPlayer source)
     {
@@ -271,6 +330,7 @@ public class TitleController : MonoBehaviour
         videoPlayer.Stop();
         animator.SetTrigger("VideoFinish");
     }
+
     /// <summary>
     /// 20% chance to glitch each character.
     /// Replace with random ASCII character.
@@ -289,24 +349,63 @@ public class TitleController : MonoBehaviour
         }
         return new string(chars);
     }
+
+    private IEnumerator ScrambleEffect()
+    {
+        char[] scrambleChars = "0123456789ABCDEF@#$%&*<>?/\\|".ToCharArray();
+
+        while (true)
+        {
+            yield return new WaitForSeconds(effectInterval);
+            char[] chars = originalText.ToCharArray();
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (!char.IsWhiteSpace(chars[i]))
+                {
+                    char originalChar = chars[i];
+                    for (int j = 0; j < 5; j++)
+                    {
+                        chars[i] = scrambleChars[Random.Range(0, scrambleChars.Length)];
+                        TitleText.text = new string(chars);
+                        yield return new WaitForSeconds(effectDuration / 5f);
+                    }
+                    chars[i] = originalChar;
+                    TitleText.text = new string(chars);
+                }
+            }
+
+            Vector3 randomOffset = new Vector3(Random.Range(-positionJitter, positionJitter), Random.Range(-positionJitter, positionJitter), 0);
+            TitleText.rectTransform.anchoredPosition += new Vector2(randomOffset.x, randomOffset.y);
+            yield return new WaitForSeconds(effectDuration);
+            TitleText.rectTransform.anchoredPosition -= new Vector2(randomOffset.x, randomOffset.y);
+        }
+    }
     private IEnumerator GlitchEffect()
     {
         while (true) // Runs infinitely until title screen changes
         {
-            yield return new WaitForSeconds(glitchInterval);
+            yield return new WaitForSeconds(effectInterval);
 
             string glitchedText = GlitchText(originalText);           
             Vector3 randomOffset = new Vector3(Random.Range(-positionJitter, positionJitter), Random.Range(-positionJitter, positionJitter), 0);
 
             TitleText.text = glitchedText;
-            Vector2 offset2D = new Vector2(randomOffset.x, randomOffset.y); // Convert to Vector2
+            // Convert to Vector2
+            Vector2 offset2D = new Vector2(randomOffset.x, randomOffset.y);
             TitleText.rectTransform.anchoredPosition += offset2D;
 
-            yield return new WaitForSeconds(glitchDuration);
+            yield return new WaitForSeconds(effectDuration);
 
             TitleText.text = originalText;
             TitleText.rectTransform.anchoredPosition -= offset2D;
         }
+    }
+
+    [ContextMenu("Win Scene Text")]
+    private void ToWin()
+    {
+        GameManager.Instance.RequestScene(Levels.Win);
     }
     void OnDestroy()
     {
@@ -315,5 +414,8 @@ public class TitleController : MonoBehaviour
         OptionsButton.onClick.RemoveAllListeners();
         QuitButton.onClick.RemoveAllListeners();
         skipAction.Disable();
+
+        anyKeyAction.Disable();
+        anyMouseAction.Disable();
     }
 }

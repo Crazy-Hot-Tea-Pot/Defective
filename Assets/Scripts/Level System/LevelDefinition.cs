@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class LevelDefinition
 {
+    //Unique Level ID
+    public string uniqueLevelID;
     public Levels levelID;
     [Range(0,100)]
     public int terminalSpawnChance;
@@ -33,4 +35,11 @@ public class LevelDefinition
     }
 
     public Quest questCondition;
+    /// <summary>
+    /// Enqure a unique ID is generated for each level
+    /// </summary>
+    public LevelDefinition()
+    {
+        uniqueLevelID = Guid.NewGuid().ToString();
+    }
 }

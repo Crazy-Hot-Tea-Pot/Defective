@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewAttackChip", menuName = "Chip System/Attack Chip")]
 public class AttackChip : NewChip
 {
+    [Header("Attack Chip")]
     /// <summary>
     /// Amount of Damage Chip will do.
     /// </summary>
@@ -15,6 +16,11 @@ public class AttackChip : NewChip
     public Effects.Debuff debuffToApply;
     public int debuffStacks = 0;
     public int upgradedDebuffStacksByAmout;
+
+    [Header("Attack Chip Sounds")]
+    public SoundFX ChipHitShield;
+    public SoundFX ChipHitFlesh;
+    public SoundFX ChipHitMetal;
 
     public override bool IsUpgraded
     {
@@ -37,6 +43,55 @@ public class AttackChip : NewChip
     {
         base.OnChipPlayed(player,Target);
 
+        float tempDamage = damage;
+
+        // Apply buffs/debuffs to damage
+        if (player.IsPowered)
+        {
+            tempDamage += player.PoweredStacks;
+        }
+
+        if (player.IsDrained)
+        {
+            //Reduce damage by 20% for drained
+            tempDamage = Mathf.Round(tempDamage * 0.8f *100f)/100f;
+        }
+
+        for(int i = 0; i < numberOfHits; i++)
+        {
+            Target.TakeDamage(tempDamage);
+        }      
+
+        //Play sound for damage
+        if (Target.Shield <= 0)
+        {
+            //Play sound for enemyType
+            switch (Target.EnemyIs)
+            {
+                case Enemy.IsEnemy.Human:
+                    SoundManager.PlayFXSound(ChipHitFlesh);
+                    break;
+                case Enemy.IsEnemy.Robot:
+                    SoundManager.PlayFXSound(ChipHitMetal);
+                    break;                
+                default:
+                    SoundManager.PlayFXSound(ChipActivate);
+                    break;
+            }            
+        }
+        else
+            SoundManager.PlayFXSound(ChipHitShield);
+
+        //Now to apply debuffs
+        if (debuffStacks > 0)
+        {
+            Target.AddEffect(debuffToApply, debuffStacks);
+        }
+    }
+
+    public override void OnChipPlayed(PlayerController player, PuzzleRange Target)
+    {
+        base.OnChipPlayed(player, Target);
         int tempDamage = damage;
 
         // Apply buffs/debuffs to damage
@@ -51,12 +106,6 @@ public class AttackChip : NewChip
         }
 
         Target.TakeDamage(tempDamage);
-
-        //Now to apply debuffs
-        if (debuffStacks > 0)
-        {
-            Target.AddEffect(debuffToApply, debuffStacks);
-        }
     }
 
     void OnValidate()

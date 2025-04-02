@@ -5,14 +5,14 @@ using static Effects;
 public class EquipmentEffect : ItemEffect
 {
     [Header("Equipment values")]
-    public string SpecialEffectName;    
+    public string SpecialEffectDescription;    
 
     /// <summary>
     /// If this effect is passive
     /// </summary>
     public bool HasPassiveEffect;
 
-    public Effects.SpecialEffects passiveEffect;
+    public SpecialEffects passiveEffect;
 
     public bool IsPassiveEffectActive
     {
@@ -24,7 +24,7 @@ public class EquipmentEffect : ItemEffect
         {
             isPassiveEffectActive = value;
         }
-    }
+    }    
 
     private bool isPassiveEffectActive = false;
 
@@ -32,32 +32,37 @@ public class EquipmentEffect : ItemEffect
     {
         if (player.SpendEnergy(energyCost))
         {
+            LinkedItem = item;
+
             //Play Item Effect
-            SoundManager.PlayFXSound(ItemActivate);
             base.Activate(player, item, enemy);
         }
         else
         {
-            SoundManager.PlayFXSound(ItemFail);
+            SoundManager.PlayFXSound(item.ItemFailSound);
 
             Debug.Log("Not enough energy to use Equipment.");
         }
     }
-    protected override void Equipped()
+    public override string GetEffectDescription(Item item)
     {
-        base.Equipped();
+        return $"Special Effect: {SpecialEffectDescription}";
+    }
+
+    public override void Equip()
+    {
+        base.Equip();
 
         if (HasPassiveEffect && IsEquipped)
         {
-                if (!IsPassiveEffectActive)
-                {
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().AddEffect(passiveEffect);
-                    IsPassiveEffectActive = true;
-                }
-                else if(IsPassiveEffectActive)
-                {
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().RemoveEffect(passiveEffect);
-                }            
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().AddEffect(passiveEffect,0,true);
+            SoundManager.PlayFXSound(LinkedItem.ItemActivateSound);
+            IsPassiveEffectActive = true;
         }
+        else if(HasPassiveEffect)
+        {            
+            SoundManager.PlayFXSound(LinkedItem.ItemDeactivateSound);
+            IsPassiveEffectActive = false;
+        }                   
     }
 }

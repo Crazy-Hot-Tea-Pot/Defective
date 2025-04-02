@@ -20,11 +20,6 @@ public class ChipManager : MonoBehaviour
     }
 
     /// <summary>
-    /// What the Player starts with in a new game.
-    /// </summary>
-    [SerializeField]
-    private List<NewChip> startingChips = new();
-    /// <summary>
     /// Making it read only to prevent future problems
     /// </summary>
     public IReadOnlyList<NewChip> StartingChips => startingChips;
@@ -32,7 +27,31 @@ public class ChipManager : MonoBehaviour
     /// <summary>
     /// Chips in the players hand.
     /// </summary>
-    public List<NewChip> PlayerHand = new();
+    public List<NewChip> PlayerHand
+    {
+        get
+        {
+            return playerHand;
+        }
+        private set
+        {
+            playerHand = value;
+        }
+    }
+    /// <summary>
+    /// If the player hand is empty or not
+    /// </summary>
+    public bool IsHandEmpty
+    {
+        get
+        {
+            if (PlayerHand.Count > 0)
+                return false;
+            else
+                return true;
+
+        }
+    }
 
     /// <summary>
     /// Chips in the players deck
@@ -55,6 +74,13 @@ public class ChipManager : MonoBehaviour
     public List<NewChip> UsedChips = new();
 
     /// <summary>
+    /// What the Player starts with in a new game.
+    /// </summary>
+    [SerializeField]
+    private List<NewChip> startingChips = new();    
+
+
+    /// <summary>
     /// All the chips in the whole game.
     /// </summary>
     public List<NewChip> AllChips
@@ -71,6 +97,17 @@ public class ChipManager : MonoBehaviour
 
     public GameObject chipPrefab;
 
+    public bool IsDeckEmpty
+    {
+        get
+        {
+            if (PlayerDeck.Count > 0)
+                return false;
+            else
+                return true;
+        }        
+    }
+
     [SerializeField]
     private int deckLimit = 8;
 
@@ -78,6 +115,7 @@ public class ChipManager : MonoBehaviour
     private int handLimit = 4;
 
     private static ChipManager instance;
+    private List<NewChip> playerHand = new();
     private List<NewChip> playerDeck = new();
     private List<NewChip> allChips = new();
 
@@ -118,6 +156,13 @@ public class ChipManager : MonoBehaviour
         {
 
             PlayerDeck.Add(CloneOfNewChip);
+
+            //Clone chip again
+            NewChip chipInstance = Instantiate(CloneOfNewChip);
+
+            //Increase chips collected
+            GameStatsTracker.Instance.TotalChipsCollected.Add(chipInstance);
+
             return true;
         }
         else
@@ -134,9 +179,8 @@ public class ChipManager : MonoBehaviour
     /// <param name="draws"></param>
     public void RefreshPlayerHand()
     {
-        if (PlayerDeck.Count == 0)
+        if (IsDeckEmpty)
         {
-            Debug.LogWarning("Deck is empty!");
             return;
         }
 
@@ -203,6 +247,21 @@ public class ChipManager : MonoBehaviour
         return AllChips.FindAll(chip => chip.chipRarity == chipRarity);
     }
 
+    public void ResetAllChips()
+    {
+        foreach (var chip in AllChips)
+        {
+            // Reset upgrade status
+            chip.IsUpgraded = false;
+            // Reset active status
+            chip.IsActive = false;
+            // Reset disable counter
+            chip.DisableCounter = 0;
+            Debug.Log($"{chip.chipName} reset to default values.");
+        }
+    }
+
+
 
     /// <summary>
     /// Load all Chip ScriptableObjects in the Resources folder.
@@ -230,6 +289,17 @@ public class ChipManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// A method to call a private method
+    /// </summary>
+    public void PuzzleResetDeck() //IEnumerator PuzzleResetDeck()
+    {
+        //yield return new WaitForSeconds(1f);
+        EndCombat();
+        
+    }
+
     private void EndCombat()
     {
         // Move unused chips back to the deck
@@ -278,4 +348,24 @@ public class ChipManager : MonoBehaviour
             GameManager.Instance.OnSceneChange -= SceneChange;
         }
     }
+
+    #region Cheats
+    //Cheats
+    [ContextMenu("Choose Custom Deck")]
+    private void ChooseYourDeck()
+    {
+        if (AllChips == null || AllChips.Count == 0)
+        {
+            Debug.LogWarning("No chips available to display.");
+            return;
+        }
+
+        // Switch to Chip Management Mode
+        GameManager.Instance.UpdateGameMode(GameManager.GameMode.CombatLoot);
+
+        // Send all chips to the UI for selection
+        UiManager.Instance.SendLoot(0, new List<Item>(), AllChips);
+    }
+
+    #endregion
 }

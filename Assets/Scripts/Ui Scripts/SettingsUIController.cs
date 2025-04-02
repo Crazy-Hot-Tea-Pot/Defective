@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
@@ -11,7 +9,7 @@ public class SettingsUIController : UiController
     //First Layer Settings Buttons
     private Button Optionsbtn;
     private Button Continuebtn;
-    private Button Exitbtn;
+    private Button Questbtn;
     private Button MainMenubtn;
 
     //Buttons for tabs
@@ -38,12 +36,23 @@ public class SettingsUIController : UiController
     private TMP_Dropdown aspectDropDown;
     private Toggle windowedOn;
 
+    //Buttons for audio settings
+    private Slider SoundEffectsSlider;
+    private Slider MusicSlider;
+    private Toggle MusicToggle;
+    private Toggle SFXToggle;
+
     //Apply&Discard buttons
     private Button Applybtn;
     private Button Discardbtn;
     private Button RestoreDefaultsbtn;
     private Button BackBtn;
     private GameObject titleScreenUI;
+
+    private bool hasOpenedVideo;
+    private bool hasOpenedAudio;
+
+    public GameObject QuestUIScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -96,9 +105,10 @@ public class SettingsUIController : UiController
         BackBtn.onClick.AddListener(ReturnToMiniMenu);
 
         //If title screen skip mini menu
-        if (GameManager.Instance.CurrentLevel == Levels.Title)
+        if (UiManager.Instance.TitleCheck())
         {
             SkipMiniMenu();
+            titleScreenUI = UiManager.Instance.FindTitleController("TitleController");
 
             //Make UI Manager above the title canvas.
             UiManager.Instance.GetComponent<Canvas>().sortingOrder = 1;
@@ -121,11 +131,12 @@ public class SettingsUIController : UiController
             Continuebtn.onClick.RemoveAllListeners();
             //Make the button for continue functional
             Continuebtn.onClick.AddListener(Continue);
-            //Find the exit button
-            Exitbtn = this.gameObject.transform.Find("ShortMenu").Find("Exitbtn").GetComponent<Button>();
-            Exitbtn.onClick.RemoveAllListeners();
-            //Make the exit button functional
-            Exitbtn.onClick.AddListener(Exit);
+            Questbtn = this.gameObject.transform.Find("ShortMenu").Find("Questbtn").GetComponent<Button>();
+            //Quest button
+            Questbtn.onClick.RemoveAllListeners();
+            //Make the Quest button functional
+            Questbtn.onClick.AddListener(OpenQuestUI);
+            Questbtn.onClick.AddListener(QuestUIScreen.GetComponent<QuestLogController>().OpenFullLog);
             //Find the main menu button
             MainMenubtn = this.gameObject.transform.Find("ShortMenu").Find("MainMenubtn").GetComponent<Button>();
             //Add the Main menu button
@@ -144,7 +155,7 @@ public class SettingsUIController : UiController
         {
             largeSettingMenu.SetActive(false);
             //If we aren't skipping main menu open it again
-            if (GameManager.Instance.CurrentLevel != Levels.Title)
+            if (UiManager.Instance.TitleCheck() == false)
             {
                 smallSettingMenu.SetActive(true);
             }
@@ -203,6 +214,7 @@ public class SettingsUIController : UiController
     /// </summary>
     public void OpenVideoSettingsTab()
     {
+        hasOpenedVideo = true;
         //Find the settings tabs
         videoSettingTab = VideoTabbtn.transform.parent.Find("VideoSettingsTab").gameObject;
         AudioTabbtn.transform.parent.Find("AudioSettingsTab").gameObject.SetActive(false);
@@ -214,6 +226,9 @@ public class SettingsUIController : UiController
         else
         {
             videoSettingTab.SetActive(true);
+            GammaSlider = videoSettingTab.transform.Find("GammaSlider").GetComponent<Slider>();
+            bloomOn = videoSettingTab.transform.Find("ToggleBloom").GetComponent<Toggle>();
+            GainSlider = videoSettingTab.transform.Find("GainSlider").GetComponent<Slider>();
         }
 
         //Set the values
@@ -233,8 +248,17 @@ public class SettingsUIController : UiController
     ///</summary>
     public void OpenAudioSettingsTab()
     {
+        hasOpenedAudio = true;
+        //Find the settings tabs
         audioSettingTab = AudioTabbtn.transform.parent.Find("AudioSettingsTab").gameObject;
         VideoTabbtn.transform.parent.Find("VideoSettingsTab").gameObject.SetActive(false);
+
+        //Find buttons for audio effect and assign them
+        SoundEffectsSlider = audioSettingTab.transform.Find("SoundEffectsSlider").GetComponent<Slider>();
+        MusicSlider = audioSettingTab.transform.Find("MusicSlider").GetComponent<Slider>();
+        MusicToggle = audioSettingTab.transform.Find("MuteMusic").GetComponent<Toggle>();
+        SFXToggle = audioSettingTab.transform.Find("MuteEffects").GetComponent<Toggle>();
+
         if (audioSettingTab.activeSelf)
         {
             audioSettingTab.SetActive(false);
@@ -245,25 +269,36 @@ public class SettingsUIController : UiController
         }
 
         //Enable buttons
-        RestoreDefaultsbtn.enabled = true;
-        Applybtn.enabled = true;
-        Discardbtn.enabled = true;
+        RestoreDefaultsbtn.gameObject.SetActive(true);
+        Applybtn.gameObject.SetActive(true);
+        Discardbtn.gameObject.SetActive(true);
 
         //Disable back button
-        BackBtn.enabled = false;
+        BackBtn.gameObject.SetActive(false);
+
+        setAudioValues();
     }
 
+    /// <summary>
+    /// Set the default values for audio
+    /// </summary>
+    public void setAudioValues()
+    {
+        
+        //Audio settings
+        MusicSlider.value = SettingsManager.Instance.SoundSettings.BGMVolume;
+        SoundEffectsSlider.value = SettingsManager.Instance.SoundSettings.SFXVolume;
+        MusicToggle.isOn = SettingsManager.Instance.SoundSettings.BGMMute;
+        SFXToggle.isOn = SettingsManager.Instance.SoundSettings.SFXMute;
+    }
     /// <summary>
     ///Set all buttons values inside of video settings
     /// </summary>
     public void setVolumeValues()
     {
         #region VolumProfileAdjustments
-        GammaSlider = videoSettingTab.transform.Find("GammaSlider").GetComponent<Slider>();
         GammaSlider.enabled = true;
-        bloomOn = videoSettingTab.transform.Find("ToggleBloom").GetComponent<Toggle>();
         bloomOn.enabled = true;
-        GainSlider = videoSettingTab.transform.Find("GainSlider").GetComponent<Slider>();
         GainSlider.enabled = true;
 
         //Set values
@@ -348,88 +383,100 @@ public class SettingsUIController : UiController
     //If we are applying settings
     public void ApplySettings()
     {
-        foreach (VolumeProfile levelProfile in SettingsManager.Instance.VolumeSettings)
+        if (videoSettingTab != null && videoSettingTab.activeSelf == true)
         {
-            //Try to get the variable for gain
-            if (levelProfile.TryGet(out LiftGammaGain gainSettings))
+            foreach (VolumeProfile levelProfile in SettingsManager.Instance.VolumeSettings)
             {
-                //Save the gain and gamma
-                SettingsManager.Instance.VideoSettings.SetandSaveGainandGamma(gainSettings, GammaSlider.value, GainSlider.value);
-                ////Set brightness to meet the new value. W represents the value of the intensity and we add +0.5f so it's usable as this value uses negative values but sliders don't.
-                //gainSettings.gamma.value += new Vector4(0, 0, 0, GammaSlider.value - 0.5f);
-                ////Repeat the same process for gain
-                //gainSettings.gain.value += new Vector4(0, 0, 0, GainSlider.value - 0.5f);
-            }
-            //If this value doesn't exist
-            else
-            {
-                Debug.Log("There is no gain");
-            }
-
-            //Enable and disable bloom check
-            if (levelProfile.TryGet(out Bloom bloomSettings))
-            {
-                if (bloomOn.isOn)
+                //Try to get the variable for gain
+                if (levelProfile.TryGet(out LiftGammaGain gainSettings))
                 {
-                    SettingsManager.Instance.VideoSettings.DisableBloom(bloomSettings);
+                    //Save the gain and gamma
+                    SettingsManager.Instance.VideoSettings.SetandSaveGainandGamma(gainSettings, GammaSlider.value, GainSlider.value);
+                    ////Set brightness to meet the new value. W represents the value of the intensity and we add +0.5f so it's usable as this value uses negative values but sliders don't.
+                    //gainSettings.gamma.value += new Vector4(0, 0, 0, GammaSlider.value - 0.5f);
+                    ////Repeat the same process for gain
+                    //gainSettings.gain.value += new Vector4(0, 0, 0, GainSlider.value - 0.5f);
                 }
+                //If this value doesn't exist
                 else
                 {
-                    SettingsManager.Instance.VideoSettings.EnabledBloom(bloomSettings);
+                    Debug.Log("There is no gain");
                 }
-                //bloomSettings.active = bloomOn.isOn;
+
+                //Enable and disable bloom check
+                if (levelProfile.TryGet(out Bloom bloomSettings))
+                {
+                    if (bloomOn.isOn)
+                    {
+                        SettingsManager.Instance.VideoSettings.DisableBloom(bloomSettings);
+                    }
+                    else
+                    {
+                        SettingsManager.Instance.VideoSettings.EnabledBloom(bloomSettings);
+                    }
+                    //bloomSettings.active = bloomOn.isOn;
+                }
+                //If there is no bloom
+                else
+                {
+                    Debug.Log("There is no bloom");
+                }
             }
-            //If there is no bloom
+
+            //Apply Unity Settings
+            //Check if windowed and assign the toggle to match
+            if (windowedOn.isOn == false)
+            {
+                //Sets full screen
+                SettingsManager.Instance.VideoSettings.IsFullScreen(true);
+                //UnityEngine.Screen.fullScreen = true;
+                Debug.Log("Full screen");
+            }
             else
             {
-                Debug.Log("There is no bloom");
+                //Sets windowed
+                SettingsManager.Instance.VideoSettings.IsFullScreen(false);
+                //UnityEngine.Screen.fullScreen = false;
+                Debug.Log("Windowed");
             }
-        }
 
-        //Apply Unity Settings
-        //Check if windowed and assign the toggle to match
-        if (windowedOn.isOn == false)
-        {
-            //Sets full screen
-            SettingsManager.Instance.VideoSettings.IsFullScreen(true);
-            //UnityEngine.Screen.fullScreen = true;
-            Debug.Log("Full screen");
+
+            //Screen resolution
+            SettingsManager.Instance.VideoSettings.SetandSaveResolution(resolutionDropDown.value);
+            //if (resolutionDropDown.value == 0)
+            //{
+            //    UnityEngine.Screen.SetResolution(1920, 1080, !windowedOn.isOn);
+            //    Debug.Log("1920x1080");
+            //}
+            //else if (resolutionDropDown.value == 1)
+            //{
+            //    UnityEngine.Screen.SetResolution(1366, 763, !windowedOn.isOn);
+            //    Debug.Log("1366x763");
+            //}
+            //else if (resolutionDropDown.value == 2)
+            //{
+
+            //    UnityEngine.Screen.SetResolution(2560, 1440, !windowedOn.isOn);
+            //    Debug.Log("2560x1440");
+            //}
+            //else if (resolutionDropDown.value == 3)
+            //{
+
+            //    UnityEngine.Screen.SetResolution(3840, 2160, !windowedOn.isOn);
+            //    Debug.Log("3840x2160");
+            //}
+
+            Debug.Log("Graphics settings applied");
         }
         else
         {
-            //Sets windowed
-            SettingsManager.Instance.VideoSettings.IsFullScreen(false);
-            //UnityEngine.Screen.fullScreen = false;
-            Debug.Log("Windowed");
+            //Audio settings
+            SettingsManager.Instance.SoundSettings.BGMVolume = MusicSlider.value;
+            SettingsManager.Instance.SoundSettings.SFXVolume = SoundEffectsSlider.value;
+            SettingsManager.Instance.SoundSettings.BGMMute = MusicToggle.isOn;
+            SettingsManager.Instance.SoundSettings.SFXMute = SFXToggle.isOn;
         }
 
-
-        //Screen resolution
-        SettingsManager.Instance.VideoSettings.SetandSaveResolution(resolutionDropDown.value);
-        //if (resolutionDropDown.value == 0)
-        //{
-        //    UnityEngine.Screen.SetResolution(1920, 1080, !windowedOn.isOn);
-        //    Debug.Log("1920x1080");
-        //}
-        //else if (resolutionDropDown.value == 1)
-        //{
-        //    UnityEngine.Screen.SetResolution(1366, 763, !windowedOn.isOn);
-        //    Debug.Log("1366x763");
-        //}
-        //else if (resolutionDropDown.value == 2)
-        //{
-
-        //    UnityEngine.Screen.SetResolution(2560, 1440, !windowedOn.isOn);
-        //    Debug.Log("2560x1440");
-        //}
-        //else if (resolutionDropDown.value == 3)
-        //{
-
-        //    UnityEngine.Screen.SetResolution(3840, 2160, !windowedOn.isOn);
-        //    Debug.Log("3840x2160");
-        //}
-
-        Debug.Log("Graphics settings applied");
         Options();
         ReturnToMiniMenu();
     }
@@ -439,7 +486,14 @@ public class SettingsUIController : UiController
     /// </summary>
     public void DiscardSettings()
     {
-        setVolumeValues();
+        if (hasOpenedVideo)
+        {
+            setVolumeValues();
+        }
+        else if (hasOpenedAudio)
+        {
+            setAudioValues();
+        }
         Options();
         ReturnToMiniMenu();
     }
@@ -447,6 +501,23 @@ public class SettingsUIController : UiController
     //Restore default values
     public void RestoreDefaults()
     {
+        if (audioSettingTab.activeSelf == false || audioSettingTab == null)
+        {
+            audioSettingTab = AudioTabbtn.transform.parent.Find("AudioSettingsTab").gameObject;
+
+            //Find buttons for audio effect and assign them
+            SoundEffectsSlider = audioSettingTab.transform.Find("SoundEffectsSlider").GetComponent<Slider>();
+            MusicSlider = audioSettingTab.transform.Find("MusicSlider").GetComponent<Slider>();
+            MusicToggle = audioSettingTab.transform.Find("MuteMusic").GetComponent<Toggle>();
+            SFXToggle = audioSettingTab.transform.Find("MuteEffects").GetComponent<Toggle>();
+        }
+
+        //Audio Defaults
+        MusicSlider.value = 100f;
+        SoundEffectsSlider.value = 100f;
+        MusicToggle.isOn = false;
+        SFXToggle.isOn = false;
+
         ApplySettings();
         if (SettingsManager.Instance.VolumeSettings.Count == SettingsManager.Instance.VolumeDefaults.Count)
         {
@@ -490,6 +561,7 @@ public class SettingsUIController : UiController
         {
             Debug.Log("Developer error there must be as many volume profiles as defaults");
         }
+
         DiscardSettings();
     }
 
@@ -499,10 +571,11 @@ public class SettingsUIController : UiController
     public void ReturnToMiniMenu()
     {
         //Skip this menu if applicable
-        if (GameManager.Instance.CurrentLevel == Levels.Title)
+        if (UiManager.Instance.TitleCheck())
         {
             titleScreenUI.SetActive(true);
             largeSettingMenu.SetActive(false);
+            smallSettingMenu.SetActive(false);
             UiManager.Instance.CloseSettingsOnClickTitle();
         }
         else
@@ -515,16 +588,6 @@ public class SettingsUIController : UiController
 
     public void SkipMiniMenu()
     {
-        //For some reason it is running skip menu way too much
-        try
-        {
-            titleScreenUI = GameObject.Find("Canvas");
-            titleScreenUI.SetActive(false);
-        }
-        catch
-        {
-            Debug.Log("Not Title");
-        }
         largeSettingMenu.SetActive(true);
         smallSettingMenu.SetActive(false);
     }
@@ -535,16 +598,15 @@ public class SettingsUIController : UiController
     public void MainMenu()
     {
         smallSettingMenu.SetActive(false);
-        Destroy(UiManager.Instance.CurrentUI);
         UnityEngine.Time.timeScale = 1;
         GameManager.Instance.RequestScene(Levels.Title);
     }
 
     /// <summary>
-    /// Exit the game
+    /// Opens the quest menu
     /// </summary>
-    public void Exit()
+    public void OpenQuestUI()
     {
-        Application.Quit();
+        QuestUIScreen.SetActive(true);
     }
 }

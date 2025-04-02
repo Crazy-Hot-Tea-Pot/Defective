@@ -53,6 +53,7 @@ public class LootUiController : UiController
     [Header("Selection stuff")]
     public GameObject SelectionDisplay;
     public GameObject SelectionContainer;
+    public GameObject SelectedChipInfo;
     public Button CancelButton;
 
     [Header("Animation values")]
@@ -85,6 +86,8 @@ public class LootUiController : UiController
     private List<NewChip> distributedChips=new();
     private List<Item> distributedItem=new();
     private List<NewChip> lootTempChip = new();
+
+    private bool firstTimeLootAppear = true;
     
 
 
@@ -116,7 +119,16 @@ public class LootUiController : UiController
         lootTempItems.AddRange(LootItems);
 
         StartCoroutine(UpdateScrapLootGainInfo());
-        StartCoroutine(SpawnLootWithDelay());
+        if (firstTimeLootAppear)
+        {
+            StartCoroutine(SpawnLootWithDelay());
+            firstTimeLootAppear = false;
+        }
+        else
+        {
+            SpawnLootInstantly();
+        }
+
     }
     /// <summary>
     /// Bring up the selection so user can replace chip for new chip.
@@ -127,6 +139,11 @@ public class LootUiController : UiController
         this.selectedChip = selectedChip;
 
         SelectionDisplay.SetActive(true);
+
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipImage.sprite=selectedChip.chipImage;
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipName.SetText(selectedChip.chipName);
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipDescription.SetText(selectedChip.ChipDescription);
+        SelectedChipInfo.GetComponent<ChipInfoController>().ChipType.SetText(selectedChip.ChipType.ToString());
 
         foreach (Transform child in SelectionContainer.transform)
         {
@@ -173,6 +190,58 @@ public class LootUiController : UiController
     {
         float randomNumber = UnityEngine.Random.Range(0, count - 1);
         return randomNumber;
+    }
+    /// <summary>
+    /// Instead of delay spawn loot instantly.
+    /// </summary>
+    private void SpawnLootInstantly()
+    {
+        if (distributionCheck)
+        {
+            distributedChips.Clear();
+            distributedItem.Clear();
+
+            int counter = Mathf.Min(LootTempChip.Count, 3); 
+            for (int i = 0; i < counter; i++)
+            {
+                // Select a random chip
+                int index = UnityEngine.Random.Range(0, LootTempChip.Count);
+                GameObject newLoot = Instantiate(LootPrefab, LootContainer.transform);
+                LootController lootController = newLoot.GetComponent<LootController>();
+                lootController.PopulateLoot(LootTempChip[index]);
+                distributedChips.Add(LootTempChip[index]);
+                LootTempChip.RemoveAt(index);
+            }
+
+            counter = Mathf.Min(lootTempItems.Count, 3);
+            for (int i = 0; i < counter; i++)
+            {
+                // Select a random item
+                int index = UnityEngine.Random.Range(0, lootTempItems.Count);
+                GameObject newLoot = Instantiate(LootPrefab, LootContainer.transform);
+                LootController lootController = newLoot.GetComponent<LootController>();
+                lootController.PopulateLoot(lootTempItems[index]);
+                distributedItem.Add(lootTempItems[index]);
+                lootTempItems.RemoveAt(index);
+            }
+        }
+        else
+        {
+            // Repopulate distributed loot
+            foreach (NewChip chip in distributedChips)
+            {
+                GameObject newLoot = Instantiate(LootPrefab, LootContainer.transform);
+                LootController lootController = newLoot.GetComponent<LootController>();
+                lootController.PopulateLoot(chip);
+            }
+
+            foreach (Item item in distributedItem)
+            {
+                GameObject newLoot = Instantiate(LootPrefab, LootContainer.transform);
+                LootController lootController = newLoot.GetComponent<LootController>();
+                lootController.PopulateLoot(item);
+            }
+        }
     }
     private void CancelSelection()
     {

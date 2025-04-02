@@ -38,32 +38,31 @@ public class GameData
     [System.Serializable]
     public class StoryProgress
     {
-        public string storyName;               // Which story is active?
-        public Levels currentLevel;            // The current 'level' from that story
-        public bool isStoryComplete;           // Example: Are we done?
-
-        // Optional: Track zone states, branching choices, or next level indexes
-        public List<ZoneState> zoneStates = new List<ZoneState>();
+        // Which story is active?
+        public string storyName;
+        // Store unique ID instead of just Levels enum
+        public string currentLevelUniqueID;
+        // The current 'level' from that story
+        public Levels currentLevel;            
+        // Example: Are we done?
+        public bool isStoryComplete;           
+        //Store all levels with their completion status
+        public List<SavedLevelData> levels = new List<SavedLevelData>();
 
         public StoryProgress()
         {
             storyName = "";
-            currentLevel = Levels.Title;
+            currentLevelUniqueID = "";
             isStoryComplete = false;
-            zoneStates = new List<ZoneState>();
+            levels = new List<SavedLevelData>();
         }
     }
     [System.Serializable]
-    public class ZoneState
+    public class SavedLevelData
     {
-        public string zoneID;   // Some unique ID for the zone/combat area
-        public bool isCleared;
-
-        public ZoneState(string id)
-        {
-            zoneID = id;
-            isCleared = false;
-        }
+        public string uniqueLevelID;
+        public Levels levelID;
+        public bool isCompleted;
     }
 
     //Name of Save
@@ -73,9 +72,9 @@ public class GameData
     //Levels the Player is on
     public Levels Level;
     //Player HealthBar
-    public int Health;
+    public float Health;
     //Player MaxHealth;
-    public int MaxHealth;
+    public float MaxHealth;
     //PlayerScrap
     public int Scraps;
     public StoryProgress storyProgress = new StoryProgress();
@@ -83,13 +82,19 @@ public class GameData
     public List<ChipData> Chips = new List<ChipData>();
     // Save Gears
     public List<GearData> Gear = new List<GearData>();
+    // Time stamp
     public string TimeStampString;
+
+    public float CompletionTime;
+
+    public List<string> TotalCollectedChips = new List<string>();
 
     //Default Constructor
     public GameData()
     {
         Chips = new List<ChipData>();
         Gear = new List<GearData>();
+        TotalCollectedChips=new List<string>();
     }
 
     // Synchronize TimeStamp with its string representation

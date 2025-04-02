@@ -9,6 +9,12 @@ public class QuestGoHere : Quest
     public string questEndNameForPositionCalc;
 
     private bool canEnd = false;
+
+    private void Awake()
+    {
+        modifiedQuestName = questName;
+        ccQuestName = modifiedQuestName;
+    }
     //Override the Run quest method
     public override void RunQuest()
     {
@@ -34,12 +40,12 @@ public class QuestGoHere : Quest
     //Overide complete quest to delete the queset object
     public override void CompleteQuest()
     {
-        //Use the base of the method
-        base.CompleteQuest();
-
         try
         {
             GameObject.Find(questEndNameForPositionCalc);
+            //QuestManager.Instance.UpdateQuestHud(this);
+            //Use the base of the method
+            base.CompleteQuest();
         }
         catch
         {
@@ -48,7 +54,7 @@ public class QuestGoHere : Quest
     }
 
     //Pass through can end to show collision has been made in QuestCollison
-    public override void TouchPassThrough()
+    public override void TouchPassThrough(string tag)
     {
         canEnd = true;
     }

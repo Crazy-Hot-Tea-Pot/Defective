@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class TicketVendor : Enemy
 {
-    private int intentRandom;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -17,29 +17,76 @@ public class TicketVendor : Enemy
             EnemyName = "Ticket Vendor";
 
         //Add Common Chips Todrop
-        DroppedChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Common);
+        var tempChips = ChipManager.Instance.GetChipsByRarity(NewChip.ChipRarity.Common);
+        int tempRandom = Random.Range(1, tempChips.Count);
+        DroppedChips.Add(tempChips[tempRandom]);
+
+
+        EnemyType = EnemyManager.TypeOfEnemies.TicketVendor;
 
         base.Start();
     }
+    public override void CombatStart()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.CombatStart();
+    }
+
+    public override void EndTurn()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.EndTurn();
+    }
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 60;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 90;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 120;
+                break;
+        }
+
+        if (CurrentHP <= 0)
+            CurrentHP = MaxHp;
+    }
+
     protected override void PerformIntent()
     {
-
-        if (intentRandom <= 3)
-            Halt();
-        else if (intentRandom <= 7)
-            Confiscate();
-        else
-            Redirect();
-
         base.PerformIntent();
+
+        switch (NextIntent.intentText)
+        {
+            case "Halt":
+                //Halt();
+                Animator.SetTrigger("Intent 1");
+                break;
+            case "Confiscate":
+                //Confiscate();
+                Animator.SetTrigger("Intent 2");
+                break;
+            case "Redirect":
+                //Redirect();
+                Animator.SetTrigger("Intent 3");
+                break;
+            default:
+                Debug.LogWarning("Shouldn't hit here!");
+                break;
+        }
+
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        intentRandom = Random.Range(1, 11);
-
-        if (intentRandom <= 3)
+        if (nextIntentRoll <= 3)
             return ("Halt", IntentType.Attack, 9);
-        else if (intentRandom <= 7)
+        else if (nextIntentRoll <= 7)
             return ("Confiscate", IntentType.Debuff, 7);
         else
             return ("Redirect", IntentType.Debuff, 7);

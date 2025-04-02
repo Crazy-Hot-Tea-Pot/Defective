@@ -17,6 +17,11 @@ TagManager:
   - CombatZone
   - Exit
   - Entrance
+  - PuzzleController
+  - PuzzleManager
+  - Puzzle
+  - Junk
+  - Info
   layers:
   - Default
   - TransparentFX
@@ -28,7 +33,7 @@ TagManager:
   - Ground
   - Enemy
   - Outline
-  - 
+  - Hidden
   - 
   - 
   - 

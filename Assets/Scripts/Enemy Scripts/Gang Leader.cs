@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class GangLeader : Enemy
@@ -24,35 +25,160 @@ public class GangLeader : Enemy
             looter2 = value;
         }
     }
+    public enum GangLeaderPhases
+    {
+        WithLooters,
+        Alone
+    }
 
+    public GangLeaderPhases CurrentPhase
+    {
+        get
+        {
+            if(Looter1 != null || Looter2!= null)
+                return GangLeaderPhases.WithLooters;
+            else
+                return GangLeaderPhases.Alone;
+        }
+    }
     private GameObject looter1;
     private GameObject looter2;
+
+    [Header("Sounds")]
+    public BgSound CustomBattleSound;
+    private BgSound previousBackgroundSound;
+    private bool wasBackgroundPlaying;
 
     // Start is called before the first frame update
     public override void Start()
     {
         if (EnemyName == null)
-            EnemyName = "Looter";
-        
+            EnemyName = "Gang Leader";
+
+        EnemyType = EnemyManager.TypeOfEnemies.GangLeader;
+
         base.Start();
+    }
+
+    public override void CombatStart()
+    {
+        Debug.Log("Enemy Combat Start");
+        
+        Debug.Log("Assigning Looters");
+        AssignLooters();
+
+        // Roll first intent at combat start
+        nextIntentRoll = Random.Range(1, 11);
+
+        // Save current background state
+        previousBackgroundSound = SoundManager.GetCurrentBackgroundSound();
+        wasBackgroundPlaying = GameObject.Find("BgSound")?.GetComponent<AudioSource>()?.isPlaying ?? false;
+
+        // Play the custom battle sound if set
+        if (CustomBattleSound != BgSound.None)
+        {
+            SoundManager.ChangeBackground(CustomBattleSound);
+            Debug.Log($"Playing custom battle sound: {CustomBattleSound}");
+        }
+
+        base.CombatStart();
+    }
+
+    public override void EndTurn()
+    {
+        // Roll next intent for the upcoming turn
+        nextIntentRoll = Random.Range(1, 11);
+        base.EndTurn();
+    }
+
+
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 60;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 80;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 100;
+                break;
+            case EnemyDifficulty.Boss:
+                MaxHp = 100;
+                break;
+        }
+        if (CurrentHP <= 0)
+            CurrentHP = MaxHp;
     }
 
     protected override void PerformIntent()
     {
-        if(Looter1.activeInHierarchy || Looter2.activeInHierarchy)
+        base.PerformIntent();
+
+        // If the selected intent is a Looter-dependent one
+        if (NextIntent.intentText == "Threaten" && (Looter1 == null && Looter2 == null))
         {
-            if (Random.Range(1, 11) < 5)
-                Threaten();
-            else
-                Intimidate();
+            Debug.Log("Looters are gone. Rerolling intent for Gang Leader...");
+
+            // Reroll intent phase
+            nextIntentRoll = Random.Range(1, 11);
+
+            // Get new intent (updates display)
+            var rerolledIntent = GetNextIntent();
+            NextIntent = rerolledIntent;
+
+            // Force update on UI
+            EnemyUI enemyUI = EnemyUIObject.GetComponent<EnemyUI>();
+            enemyUI.DisplayIntent(rerolledIntent.intentText, rerolledIntent.intentType, rerolledIntent.value);
         }
-        //Once Looters are defeated
-        else
+
+        // Now perform the actual intent
+        switch (NextIntent.intentText)
         {
-            if (Random.Range(1, 11) < 4)
-                Disorient();
+            case "Threaten":
+                //Threaten();
+                Animator.SetTrigger("Intent 1");
+                break;
+            case "Intimidate":
+                //Intimidate();
+                Animator.SetTrigger("Intent 2");
+                break;
+            case "Disorient":
+                //Disorient();
+                Animator.SetTrigger("Intent 3");
+                break;
+            case "Cower":
+                //Cower();
+                Animator.SetTrigger("Intent 4");
+                break;
+            default:
+                Debug.LogWarning($"Unknown intent: {NextIntent.intentText}");
+                break;
+        }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+
+        // Check if the previous sound exists and resume it
+        if (previousBackgroundSound != BgSound.None)
+        {
+            SoundManager.ChangeBackground(previousBackgroundSound);
+
+            if (wasBackgroundPlaying)
+            {
+                GameObject.Find("BgSound")?.GetComponent<AudioSource>()?.Play();
+                Debug.Log($"Resuming previous background sound: {previousBackgroundSound}");
+            }
             else
-                Cower();
+            {
+                Debug.Log($"Previous background sound was not playing, remaining silent.");
+            }
         }
     }
     /// <summary>
@@ -75,21 +201,26 @@ public class GangLeader : Enemy
     }
     /// <summary>
     /// Self and Looters gain 2 Power.
-    /// 50% change of this
+    /// 50% chance of this.
+    /// no reference as called by animator
     /// </summary>
     private void Threaten()
     {
+        // Gang Leader buffs self
         this.AddEffect(Effects.Buff.Power, 2);
 
-        //Come back and remove this for better logic
-        try
+        if (Looter1 != null)
         {
-            Looter1.GetComponent<Looter>().AddEffect(Effects.Buff.Power, 2);
-            Looter2.GetComponent<Looter>().AddEffect(Effects.Buff.Power, 2);
+            var enemy = Looter1.GetComponent<Enemy>();
+            if (enemy != null)
+                enemy.AddEffect(Effects.Buff.Power, 2);
         }
-        catch
+
+        if (Looter2 != null)
         {
-            Debug.Log("One of looters are dead.");
+            var enemy = Looter2.GetComponent<Enemy>();
+            if (enemy != null)
+                enemy.AddEffect(Effects.Buff.Power, 2);
         }
     }
     /// <summary>
@@ -102,21 +233,43 @@ public class GangLeader : Enemy
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.Drained, 1);
     }
 
+    private void AssignLooters()
+    {        
+        // Find all Looter enemies in the same combat zone
+        var looters = GameObject.FindGameObjectWithTag("CombatController")
+            .GetComponent<CombatController>().CombatEnemies
+            .Where(enemy => enemy.GetComponent<Enemy>().EnemyType == EnemyManager.TypeOfEnemies.Looter)
+            .Take(2)
+            .ToList();
+
+        if (looters.Count > 0)
+        {
+            Looter1 = looters[0];
+            Looter1.GetComponent<Looter>().IsWithLeader = true;
+        }
+
+        if (looters.Count > 1)
+        {
+            Looter2 = looters[1];
+            Looter2.GetComponent <Looter>().IsWithLeader = true;
+        }
+
+        Debug.Log($"Gang Leader assigned Looters: {Looter1?.name}, {Looter2?.name}");
+    }
+
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        if (Looter1.activeInHierarchy || Looter2.activeInHierarchy)
+        if (CurrentPhase == GangLeaderPhases.WithLooters)
         {
-            if (Random.Range(1, 11) < 5)
-                return ("Threaten", IntentType.Buff, 2);
-            else
-                return ("Intimidate", IntentType.Debuff, 1);
+            return nextIntentRoll < 5
+                ? ("Threaten", IntentType.Buff, 2)
+                : ("Intimidate", IntentType.Debuff, 1);
         }
         else
         {
-            if (Random.Range(1, 11) < 4)
-                return ("Disorient", IntentType.Attack, 6);
-            else
-                return ("Cower", IntentType.Shield, 15);
+            return nextIntentRoll < 4
+                ? ("Disorient", IntentType.Attack, 6)
+                : ("Cower", IntentType.Shield, 15);
         }
     }
 

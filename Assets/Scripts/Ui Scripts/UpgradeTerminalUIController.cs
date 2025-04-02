@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UpgradeTerminalUIController : UiController, IPointerClickHandler
-{          
+{
+    public Animator TerminalAnimator;
 
     [Header("Scrap Display")]
     public GameObject ScrapPanel;
@@ -96,6 +97,8 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
     public override void Initialize()
     {
         Debug.Log("Upgrade Terminal Initalize");
+
+        UpdateScrapDisplay(GameObject.Find("Player").GetComponent<PlayerController>().Scrap);
     }
     /// <summary>
     /// When Player clicks one of the links.
@@ -201,8 +204,10 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
             case "UpgradeChipScreen":
                 controller.SwitchToScreen(TerminalController.Screens.ChipUpgrade);
                 break;
-            case "UpgradeSelectedChip":               
-                controller.AttemptToUpgradeChip();
+            case "UpgradeSelectedChip":
+                UiManager.Instance.PopUpMessage(
+                    $"You are about to spend <color=yellow><b>{controller.SelectedChip.costToUpgrade}</b> Scrap</color> to upgrade <b><u>{controller.SelectedChip.chipName}</u></b>. Please confirm.",
+                    controller.AttemptToUpgradeChip);
                 break;
             case "DataServer":
                 controller.SwitchToScreen(TerminalController.Screens.Data);
@@ -289,9 +294,11 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
                 {
 
                     StartCoroutine(RevealText(ChipConsole, true, 0.01f, true,0.1f,5,false,0));
-                    StartCoroutine(BringUpChipSelector());
+                    IsWaitingForInput = false;
+                    TerminalAnimator.SetTrigger("BringInSelectionPanel");
 
                     CancelButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                    CancelButton.GetComponent<Button>().onClick.AddListener(() => controller.SelectedChip = null);
                     CancelButton.GetComponent<Button>().onClick.AddListener(() => controller.SwitchToScreen(TerminalController.Screens.Intro));
                 }
                 else
@@ -312,7 +319,7 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
                         "<color=#0000FF><b><u><link=\"UpgradeSelectedChip\">Upgrade Chip</color></link></u></b>\n" +
                         "<color=#0000FF><b><u><link=\"Exit2\">Exit</color></link></u></b>\n" +
                         "<color=#0000FF><u><link=\"Back\">Back</color></link></u>",
-                    controller.SelectedChip.chipRarity, controller.SelectedChip.chipName, controller.SelectedChip.description, controller.SelectedChip.costToUpgrade);
+                    controller.SelectedChip.chipRarity, controller.SelectedChip.chipName, controller.SelectedChip.ChipDescription, controller.SelectedChip.costToUpgrade);
 
 
 
@@ -444,19 +451,14 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
     private void UpdateErrorScreen(string message)
     {
         ErrorConsole.SetText(message);
-    }    
-
+    }
     /// <summary>
-    /// Populate the panel with Chips first and then,
-    /// Bring up window to select Chip.
+    /// Called by Animator.
+    ///  Bring up window to select Chip.
     /// </summary>
-    private IEnumerator BringUpChipSelector()
+    private void LoadChipsInSelector()
     {
-        IsWaitingForInput = false;
-
-        ChipHolder.SetActive(false);
-
-        foreach(NewChip newChip in ChipManager.Instance.PlayerDeck)
+        foreach (NewChip newChip in ChipManager.Instance.PlayerDeck)
         {
             if (newChip.canBeUpgraded)
             {
@@ -464,31 +466,15 @@ public class UpgradeTerminalUIController : UiController, IPointerClickHandler
 
                 UIChip.GetComponent<Chip>().NewChip = newChip;
 
-                UIChip.GetComponent<Chip>().SetChipModeTo(Chip.ChipMode.WorkShop);                                
+                UIChip.GetComponent<Chip>().SetChipModeTo(Chip.ChipMode.WorkShop);
+
+                if (newChip.IsUpgraded)
+                    UIChip.GetComponent<Button>().interactable = false;
             }
-            
+
         }
-
-        ChipHolder.SetActive(true);
-
-        float tempTime = 0;
-        RectTransform tempRectTransform = ChipSelectionPanel.GetComponent<RectTransform>();
-
-        while (tempTime < TimeForPanelToGetToCenter)
-        {
-            tempTime += Time.deltaTime;
-
-            float temp = Mathf.Clamp01(tempTime / TimeForPanelToGetToCenter);
-
-            tempRectTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, temp);
-
-            yield return null;
-        }
-
-        tempRectTransform.anchoredPosition=endPosition;
-
-        CancelButton.SetActive(true);
-    }    
+    }
+  
 
     /// <summary>
     /// Bring Up window to select Data

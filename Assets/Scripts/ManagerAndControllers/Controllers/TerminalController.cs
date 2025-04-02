@@ -34,8 +34,11 @@ public class TerminalController : MonoBehaviour
         {
             isInteracting = value;           
         }
-    }  
-
+    }
+    /// <summary>
+    /// Position for player to stand;
+    /// </summary>
+    public GameObject InteractionPosition;
     /// <summary>
     /// Chip Player has selected
     /// </summary>
@@ -45,7 +48,7 @@ public class TerminalController : MonoBehaviour
         {
             return selectedChip;
         }
-        private set
+        set
         {
             selectedChip = value;
         }
@@ -98,6 +101,9 @@ public class TerminalController : MonoBehaviour
 
     private CameraController Camera;
 
+    [Header("Sounds")]
+    public SoundFX TerminalIdleSound;
+
     void Awake()
     {
         defaultScreenText = DefaultScreen.GetComponent<TextMeshPro>();
@@ -111,7 +117,9 @@ public class TerminalController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SwitchToScreen(Screens.Default);        
+        SwitchToScreen(Screens.Default);
+
+        SoundManager.PlayFXSound(TerminalIdleSound,true,true,this.transform);
     }
 
     /// <summary>
@@ -123,6 +131,7 @@ public class TerminalController : MonoBehaviour
         // Stop specific coroutines before starting new ones
         StopAndClearCoroutine(ref activeScreenCoroutine);
         StopAndClearCoroutine(ref activeTextRevealCoroutine);
+        
 
         OnScreenChanged?.Invoke(screen);
         
@@ -229,7 +238,7 @@ public class TerminalController : MonoBehaviour
                         "<color=#0000FF><u><b><link=\"UpgradeSelectedChip\">Upgrade Chip</color></link></b></u>\n" +
                         "<color=#0000FF><u><b><link=\"Exit2\">Exit</color></link></b></u>\n" +
                         "<color=#0000FF><u><link=\"Back\">>Back</color></link></u>",
-                    SelectedChip.chipRarity, SelectedChip.chipName, SelectedChip.description, SelectedChip.costToUpgrade);
+                    SelectedChip.chipRarity, SelectedChip.chipName, SelectedChip.ChipDescription, SelectedChip.costToUpgrade);
 
                     chipUpgradeScreenText.SetText(tempText2);
 
@@ -288,7 +297,7 @@ public class TerminalController : MonoBehaviour
     /// <param name="chip"></param>
     public void ChipSelectToUpgrade(NewChip chip)
     {
-        selectedChip = chip;
+        SelectedChip = chip;
         SwitchToScreen(Screens.ChipUpgrade);
     }
 
@@ -344,13 +353,10 @@ public class TerminalController : MonoBehaviour
             tempPlayer.Heal(10);
 
             //Display new info
-            SwitchToScreen(TerminalController.Screens.HealthUpgrade);
+            SwitchToScreen(Screens.HealthUpgrade);
 
             //Refresh Scrap Amount
-            UiManager.Instance.UpdateScrapDisplay(
-            GameObject.FindGameObjectWithTag("Player")
-            .GetComponent<PlayerController>().Scrap
-            );
+            UiManager.Instance.UpdateScrapDisplay(tempPlayer.Scrap);
         }
         else
         {
@@ -373,6 +379,10 @@ public class TerminalController : MonoBehaviour
             var Bank = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().TakeScrap(SelectedChip.costToUpgrade);
 
             ChipManager.Instance.PlayerDeck.Find(item => item == SelectedChip).IsUpgraded = true;
+
+            UiManager.Instance.PopUpMessage("<b><u>" + SelectedChip.chipName + "</u></b> has been upgraded!");
+
+            SelectedChip = null;            
 
             // FOr now lets go back to main menu.
             SwitchToScreen(Screens.Intro);
@@ -422,8 +432,16 @@ public class TerminalController : MonoBehaviour
     {
         IsInteractingWithMe = true;
 
+        PlayerController playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        //Rotate player
+        playerController.StartSmoothRotate(DefaultScreen.transform.position);
+
+        //Move player
+        playerController.MovePlayerToPosition(InteractionPosition.transform.position);
+
+        //Change player Camera
         Camera.SwitchCamera(CameraController.CameraState.FirstPerson);
-        Camera.FirstPersonCamera.LookAt = IntroScreen.transform;       
+        Camera.FirstPersonCamera.LookAt = IntroScreen.transform;      
 
         yield return new WaitForSeconds(1f);
 
@@ -448,8 +466,8 @@ public class TerminalController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ExitTerminal()
     {
-        //deactive Scrap Panel
-        //UiManager.Instance.SetScrapDisplay(false);
+
+        SelectedChip = null;
 
         GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
 

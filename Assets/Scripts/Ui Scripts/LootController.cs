@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LootController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class LootController : MonoBehaviour, IPointerClickHandler
 {
     public TextMeshProUGUI lootDisplayName;
     public Image lootImage;
@@ -72,7 +72,7 @@ public class LootController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void Keep()
     {
-        if(NewChip != null)
+        if (NewChip != null)
             UiManager.Instance.SelectedChipToReplace(NewChip);
         else
             UiManager.Instance.AddItemToInventory(NewItem);
@@ -90,94 +90,42 @@ public class LootController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         Destroy(this.gameObject,1f);
     }
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (chipinfoDisplay == null && newChip!=null)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
+            if (chipinfoDisplay == null && newChip != null)
+            {
 
-            chipinfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
+                chipinfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
 
 
-            ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
+                ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
+                
+                controller.SetUpChipInfo(newChip);
 
-            StartCoroutine(DelayForAnimator(controller));
+                controller.animator.SetBool("IsEnlarging", true);
+                controller.animator.SetBool("IsShrinking", false);
+
+                controller.TargetPosition = this.transform.position;
+                controller.StartPosition = UiManager.Instance.transform.position;
+            }
+            else if (gearInfoDisplay == null && newItem != null)
+            {
+
+                gearInfoDisplay = Instantiate(GearInfoPrefab, UiManager.Instance.transform);
+
+                GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();                
+                
+                controller.SetUpGearInfo(NewItem);
+
+                controller.animator.SetBool("IsEnlarging", true);
+                controller.animator.SetBool("IsShrinking", false);
+
+                controller.TargetPosition = this.transform.position;
+                controller.StartPosition = UiManager.Instance.transform.position;
+            }
         }
-        else if (gearInfoDisplay == null && newItem != null)
-        {
-
-            gearInfoDisplay = Instantiate(GearInfoPrefab, UiManager.Instance.transform);
-
-            GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();
-
-            StartCoroutine(DelayForAnimator(controller));
-        }
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (chipinfoDisplay != null && newChip != null)
-        {
-            ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
-
-            // Animate shrinking
-            Vector3 targetPosition = this.transform.position;
-            Vector3 startPosition = UiManager.Instance.transform.position;
-
-            controller.Shrink(startPosition, targetPosition);
-
-            // Optional: Delay destruction for animation
-            Destroy(chipinfoDisplay, 1f);
-        }
-        else if (gearInfoDisplay != null && newItem != null)
-        {
-            GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();
-
-            // Animate shrinking
-            Vector3 targetPosition = this.transform.position;
-            Vector3 startPosition = UiManager.Instance.transform.position;
-
-            controller.Shrink(startPosition, targetPosition);
-
-            // Optional: Delay destruction for animation
-            Destroy(gearInfoDisplay, 1f);
-        }
-    }
-
-    private IEnumerator DelayForAnimator(ChipInfoController controller)
-    {
-        yield return null;
-
-        controller.ChipName.SetText(NewChip.chipName + " Chip");
-        controller.ChipImage.sprite = NewChip.chipImage;
-        controller.ChipType.SetText(NewChip.ChipType.ToString());
-        controller.ChipDescription.SetText(NewChip.description);
-
-        //Animate
-
-        Vector3 targetPosition = UiManager.Instance.transform.position;
-        Vector3 startPosition = this.transform.position;
-        controller.Enlarge(startPosition, targetPosition);
-    }
-    private IEnumerator DelayForAnimator(GearInfoController controller)
-    {
-        yield return null;
-
-        controller.GearName.SetText(newItem.itemName);
-        controller.GearDescription.SetText(newItem.itemDescription);
-        controller.GearImage.sprite = newItem.itemImage;
-        controller.GearType.SetText(newItem.itemType.ToString());
-        foreach (var effect in newItem.itemEffects)
-        {
-            GameObject temp = null;
-            temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);
-            temp.GetComponent<TextMeshProUGUI>().SetText(effect.ItemEffectDescription);
-        }
-
-
-        //Animate
-
-        Vector3 targetPosition = UiManager.Instance.transform.position;
-        Vector3 startPosition = this.transform.position;
-        controller.Enlarge(startPosition, targetPosition);
     }
     void OnDestroy()
     {

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c112f3aee6477b642855d7e9a4ccbd31, type: 3}
+  m_Name: Dialogue_BossEncounter
+  m_EditorClassIdentifier: 
+  lines:
+  - speakerName: Looter Boss
+    speakerImage: {fileID: 21300000, guid: 31494eb0da5ef6846b722e4f0d076230, type: 3}
+    dialogueText: So.... You're still alive. I must say Chip Sect knows how to make
+      you War Androids tough as nails.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: ...War Android?
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: 
+    speakerImage: {fileID: 0}
+    dialogueText: Chip Sect made me? Then why did they desire for me to be destroyed?
+    isPlayerSpeaking: 1
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Looter Boss
+    speakerImage: {fileID: 21300000, guid: 31494eb0da5ef6846b722e4f0d076230, type: 3}
+    dialogueText: You're asking the wrong person. All I was paid to do was to get
+      rid of you, you defective piece of junk.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Looter Boss
+    speakerImage: {fileID: 21300000, guid: 31494eb0da5ef6846b722e4f0d076230, type: 3}
+    dialogueText: And I intend to finish the job.
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1
+  - speakerName: Looter Boss
+    speakerImage: {fileID: 21300000, guid: 31494eb0da5ef6846b722e4f0d076230, type: 3}
+    dialogueText: Looters! Mobilize!
+    isPlayerSpeaking: 0
+    revealByLetter: 1
+    textSpeed: 0.05
+    timeBetweenLines: 1

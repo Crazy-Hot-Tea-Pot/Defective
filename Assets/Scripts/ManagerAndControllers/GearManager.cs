@@ -70,21 +70,12 @@ public class GearManager : MonoBehaviour
     public bool Acquire(Item newItem)
     {
         // Check if the player already has this item
-        Item existingItem = PlayerCurrentGear.Find(item => item.itemName == newItem.itemName);
+        Item existingItem = PlayerCurrentGear.Find(item => item.itemName == newItem.itemName && item.ItemTeir != Item.Teir.Platinum);
 
         if (existingItem != null)
         {
-            // Prioritize upgrading the equipped item if it exists
-            if (existingItem.IsEquipped)
-            {
-                UpgradeItem(existingItem);
-            }
-            else
-            {
-                UpgradeItem(existingItem);
-            }
-
-            Debug.Log($"{newItem.itemName} combined to increase tier.");
+            
+            UpgradeItem(existingItem);                      
             return true;
         }
         else
@@ -98,7 +89,7 @@ public class GearManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Inventory full! Cannot acquire new item.");
+                UiManager.Instance.PopUpMessage("Inventory full! Cannot acquire new item.");
                 return false;
             }
         }
@@ -115,6 +106,8 @@ public class GearManager : MonoBehaviour
 
         itemToRemove.IsPlayerOwned = false;
         itemToRemove.IsEquipped = false;
+
+        PlayerCurrentGear.Remove(itemToRemove);
     }
 
     /// <summary>
@@ -187,6 +180,13 @@ public class GearManager : MonoBehaviour
         }
         return null;
     }
+    public void ResetAllGear()
+    {
+        foreach (var item in AllGear)
+        {
+            item.ResetToDefault();
+        }
+    }
 
     /// <summary>
     /// Load all gear from scriptables
@@ -208,7 +208,7 @@ public class GearManager : MonoBehaviour
         {
             // Increase tier by one
             item.UpgradeTier();
-            Debug.Log($"{item.itemName} upgraded to {item.ItemTeir}.");
+            UiManager.Instance.PopUpMessage($"{item.itemName} combined to increase to teir {item.ItemTeir}");            
         }
         else
         {
@@ -246,4 +246,41 @@ public class GearManager : MonoBehaviour
             GameManager.Instance.OnSceneChange -= SceneChange;
         }
     }
+    #region Cheats
+    //Cheats
+    [ContextMenu("Give Random Gear")]
+    private void GiveRandomGear()
+    {
+        if (AllGear.Count == 0)
+        {
+            Debug.LogWarning("No gear available to give.");
+            return;
+        }
+
+        // Select a random item from AllGear
+        Item randomItem = AllGear[Random.Range(0, AllGear.Count)];
+
+        // Clone the item to ensure we don't modify the original
+        Item newItem = Instantiate(randomItem);
+
+        // Try to acquire the item
+        if (Acquire(newItem))
+        {
+            Debug.Log($"Gave player random gear: {newItem.itemName}");
+        }
+    }
+    [ContextMenu("Give Lucky Trinket")]
+    private void GiveluckyTrinket()
+    {
+        Item item = AllGear.Find(e => e.itemName == "Lucky Trinket");
+
+        Item newItem = Instantiate(item);
+
+        // Try to acquire the item
+        if (Acquire(newItem))
+        {
+            Debug.Log($"Gave player random gear: {newItem.itemName}");
+        }
+    }
+    #endregion
 }

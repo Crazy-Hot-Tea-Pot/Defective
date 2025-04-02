@@ -10,8 +10,9 @@ using static Effects;
 
 // Controller for Player this class is not the input class that is generated.
 public class PlayerController : MonoBehaviour
-{    
-    public PlayerUiController uiController;
+{
+    [SerializeField]
+    private PlayerUiController uiController;
 
     //Camera in the scene
     private Camera mainCamera;
@@ -25,37 +26,38 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject RipplePrefab;
     public GameObject RippleRunPrefab;
+    public GameObject CallScreen;
 
 
     [Header("Player stats")]
     #region PlayerStats 
-    private int health;
+    private float health;
     /// <summary>
     /// Returns PLayer HealthBar
     /// </summary>
-    public int Health
+    public float Health
     {
         get { return health; }
         private set
         {
-            health = value;
+            health = Mathf.Max(0, Mathf.Min(value, MaxHealth));
 
             UiManager.Instance.UpdateHealth(Health, MaxHealth);
 
             if (health > maxHealth)
                 health = maxHealth;
-            else if (health <= 0)
+            else if (health <= 0f)
             {
-                health = 0;
+                health = 0f;
                 PlayerDie();
             }
         }
     }
-    private int maxHealth;
+    private float maxHealth;
     /// <summary>
     /// Returns max HealthBar
     /// </summary>
-    public int MaxHealth
+    public float MaxHealth
     {
         get { return maxHealth; }
         private set
@@ -63,11 +65,11 @@ public class PlayerController : MonoBehaviour
             maxHealth = value;
         }
     }
-    private int shield;
+    private float shield;
     /// <summary>
     /// Player ShieldBar amount
     /// </summary>
-    public int Shield
+    public float Shield
     {
         get
         {
@@ -75,26 +77,26 @@ public class PlayerController : MonoBehaviour
         }
         private set
         {
-            shield = value;
+            shield = Mathf.Max(0, value);
 
             if (shield > maxShield)
-                maxShield = value;
+                maxShield = shield;
 
-            if (shield <= 0)
+            if (shield <= 0f)
             {
-                shield = 0;
-                maxShield = 100;
+                shield = 0f;
+                maxShield = 100f;
             }
 
-            UiManager.Instance.UpdateShield(Shield, MaxShield);
+            UiManager.Instance.UpdateShield(Mathf.Floor(Shield*10)/10, MaxShield);
         }
     }
-    private int maxShield=100; 
+    private float maxShield =100f; 
     
     /// <summary>
     /// Max amount of ShieldBar currently.
     /// </summary>
-    public int MaxShield
+    public float MaxShield
     {
         get
         {
@@ -105,11 +107,11 @@ public class PlayerController : MonoBehaviour
             maxShield = value;
         }
     }
-    private int energy;
+    private float energy;
     /// <summary>
     /// Returns PlayerEnergy
     /// </summary>
-    public int Energy
+    public float Energy
     {
         get { return energy; }
         private set
@@ -118,17 +120,19 @@ public class PlayerController : MonoBehaviour
 
             if (energy > maxEnergy)
                 energy = maxEnergy;
-            else if (energy <= 0)
+            else if (energy <= 0.0f)
                 energy = 0;
 
             UiManager.Instance.UpdateEnergy(Energy, MaxEnergy);
+
+            UiManager.Instance.UpdateGearButtonsStates(energy);
         }
     }
-    private readonly int maxEnergy=50;
+    private readonly float maxEnergy = 10.0f;
     /// <summary>
     /// Returns max energy
     /// </summary>
-    public int MaxEnergy
+    public float MaxEnergy
     {
         get { return maxEnergy; }
     }
@@ -161,25 +165,25 @@ public class PlayerController : MonoBehaviour
     private float lastClickTime;
     public SoundFX SoundWhenPlayerClicks;
 
+    private Coroutine rotateCoroutine;
+
 
     [Header("Status Effects")]
 
     #region Effects
 
     [SerializeField]
-    private List<Effects.StatusEffect> listOfActiveEffects = new List<Effects.StatusEffect>();
+    private List<StatusEffect> listOfActiveEffects = new List<StatusEffect>();
 
-    public List<Effects.StatusEffect> ListOfActiveEffects
+    public List<StatusEffect> ListOfActiveEffects
     {
         get
         {
             return listOfActiveEffects;
         }
-        set
+        private set
         {
-            listOfActiveEffects = value;
-            
-            uiController.UpdateEffectsPanel(listOfActiveEffects);
+            listOfActiveEffects = value;                       
         }
     }   
 
@@ -353,7 +357,11 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #endregion    
+    #endregion
+    [Header("Sounds")]
+    public SoundFX DamageTakenSound;
+    public SoundFX GainShieldSound;
+    public SoundFX EnterLevelSound;    
 
     // Awake is called when instance is being loaded
     void Awake()
@@ -377,7 +385,8 @@ public class PlayerController : MonoBehaviour
 
         Initialize();
 
-        CharacterSpeak("Made it\nhere we go.", false, 0.5f,2f);
+        //CharacterSpeak("Scanning Area, I seem to be in the *InsertSceneName*", false, 0.5f,2f); 
+        SoundManager.PlayFXSound(EnterLevelSound);
     }
 
     /// <summary>
@@ -465,7 +474,7 @@ public class PlayerController : MonoBehaviour
     /// Deal Damage to Player.
     /// </summary>
     /// <param name="damage">Amount of Damage as Int.</param>
-    public void DamagePlayerBy(int damage)
+    public void DamagePlayerBy(float damage)
     {
         //if Impervious
         if (IsImpervious)
@@ -474,11 +483,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            int modifiedDamage = damage;
+            float modifiedDamage = damage;
 
             if (IsWornDown)
             {
-                modifiedDamage = Mathf.CeilToInt(damage * 1.3f);
+                modifiedDamage *=  1.3f;
             }
             // if has ShieldAmount
             if (Shield > 0)
@@ -498,11 +507,26 @@ public class PlayerController : MonoBehaviour
                     modifiedDamage = 0;
                 }
             }
-            Health = Health - modifiedDamage;
+            if (IsGalvanized)
+            {
+                if (modifiedDamage >= GalvanizedStacks)
+                {
+                    modifiedDamage -= GalvanizedStacks;
+                    Debug.Log("Galvanized Abosrbed " + GalvanizedStacks + "Damage");
+                }
+                else
+                {
+                    modifiedDamage -= GalvanizedStacks;
+                    Debug.Log("Galvanized Abosrbed " + GalvanizedStacks + "Damage");
+                    modifiedDamage = 0;
+                }
+            }
+
+            Health -= modifiedDamage;
 
 
             //Play Sound
-            SoundManager.PlayFXSound(SoundFX.DamageTaken, this.transform);
+            SoundManager.PlayFXSound(DamageTakenSound, this.transform);
         }
     }
 
@@ -514,7 +538,7 @@ public class PlayerController : MonoBehaviour
     /// Give Player baseShieldAmount.
     /// </summary>
     /// <param name="shieldAmount"></param>
-    public void ApplyShield(int shieldAmount)
+    public void ApplyShield(float shieldAmount)
     {
         //Restore ShieldBar
         Shield += shieldAmount;
@@ -550,12 +574,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="energyAmount"></param>
     /// <returns></returns>
-    public bool SpendEnergy(int energyAmount)
+    public bool SpendEnergy(float energyAmount)
     {
         if(energyAmount>Energy)
             return false;
         
-        Energy-= energyAmount;
+        Energy -= energyAmount;
         return true;
     }
 
@@ -574,6 +598,7 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Buff buff, int stacks)
     {
         AddOrUpdateEffect(buff, stacks);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
     /// Add Debuff to Player
@@ -583,18 +608,18 @@ public class PlayerController : MonoBehaviour
     public void AddEffect(Effects.Debuff debuff, int stacks)
     {
         AddOrUpdateEffect(debuff, stacks);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
     /// <summary>
     /// Add Special effect to Player
     /// </summary>
     /// <param name="specialEffect"></param>
-    public void AddEffect(Effects.SpecialEffects specialEffect)
+    public void AddEffect(Effects.SpecialEffects specialEffect,int stacks=0,bool permnament=false)
     {
-        //if (!ListOfActiveEffects.Any(e => e.Effect.Equals(specialEffect)))
-        //{
-        //    ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 0));
-        //}
-        AddOrUpdateEffect(specialEffect, 1);
+        AddOrUpdateEffect(specialEffect,stacks,permnament);
+
+        if(specialEffect != SpecialEffects.LuckyTrinket)
+            UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -603,7 +628,7 @@ public class PlayerController : MonoBehaviour
     /// <typeparam name="T"></typeparam>
     /// <param name="effect"></param>
     /// <param name="stacks"></param>
-    private void AddOrUpdateEffect<T>(T effect, int stacks) where T : Enum
+    private void AddOrUpdateEffect<T>(T effect, int stacks=0,bool permnament=false) where T : Enum
     {
         for (int i = 0; i < ListOfActiveEffects.Count; i++)
         {
@@ -623,9 +648,9 @@ public class PlayerController : MonoBehaviour
             ListOfActiveEffects.Add(new StatusEffect(buffEffect, stacks));
         else if (effect is Debuff debuffEffect)
             ListOfActiveEffects.Add(new StatusEffect(debuffEffect, stacks));
-        else if (effect is SpecialEffects specialEffect)
-            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks));
-
+        else if (effect is SpecialEffects specialEffect)       
+            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks,permnament));        
+      
     }
 
     #endregion
@@ -642,6 +667,7 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.Buff buff, int stacks = 0, bool removeAll = false)
     {
         RemoveOrReduceEffect(buff, stacks, removeAll);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -654,6 +680,7 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.Debuff debuff, int stacks = 0, bool removeAll = false)
     {
         RemoveOrReduceEffect(debuff, stacks, removeAll);
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -663,6 +690,9 @@ public class PlayerController : MonoBehaviour
     public void RemoveEffect(Effects.SpecialEffects specialEffect)
     {
         ListOfActiveEffects.RemoveAll(e => e.SpecialEffect.Equals(specialEffect));
+
+        if (specialEffect != SpecialEffects.LuckyTrinket)
+            UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
     /// <summary>
@@ -714,7 +744,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"[PlayerController] Attempted to remove non-existent effect: {effect}");
+        UiManager.Instance.UpdateEffects(listOfActiveEffects);        
     }
 
     #endregion
@@ -744,6 +774,7 @@ public class PlayerController : MonoBehaviour
     public void GainScrap(int amount)
     {
         Scrap += amount;
+        GameStatsTracker.Instance.AddScrap(amount);
     }
 
     /// <summary>
@@ -856,7 +887,31 @@ public class PlayerController : MonoBehaviour
     {
         agent.SetDestination(TargetPosition);
     }
+    public void StartSmoothRotate(Vector3 targetPosition)
+    {
+        if (rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);
 
+        rotateCoroutine = StartCoroutine(SmoothRoatePlayerToTarget(targetPosition));
+    }
+    private IEnumerator SmoothRoatePlayerToTarget(Vector3 target)
+    {
+        // Keep rotation only on the horizontal axis
+        target.y = transform.position.y;
+
+        Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
+
+        // Loop until the rotation is almost complete
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+        {
+            // 180 degrees per second rotation speed
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 180f);
+            yield return null;
+        }
+
+        // Ensure final rotation is exactly at the target
+        transform.rotation = targetRotation;
+    }
     /// <summary>
     /// Totate to Target
     /// </summary>
@@ -877,18 +932,33 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Combat
+    /// <summary>
+    /// Prepare for start combat
+    /// </summary>
+    public void CombatStart()
+    {
+        //Restore energy to full
+        RecoverFullEnergy();
 
+        // Filter out permanent effects
+        ListOfActiveEffects = ListOfActiveEffects
+            .Where(effect => effect.permnamentEffect)
+            .ToList();
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
+    }
     /// <summary>
     /// Stuff to do at start of players turn.
     /// </summary>
     public void StartTurn()
     {
+
         //Remove ShieldAmount
         if (Shield > 0)
             Shield = 0;
 
         //Remove buffs by 1
-        RemoveOrReduceEffect(Effects.Buff.Galvanize, 1);
+        //RemoveOrReduceEffect(Effects.Buff.Galvanize, 1);
 
         UiManager.Instance.ChangeStateOfGear(!IsRedirected);
     }
@@ -922,27 +992,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Call when Player is dead.
-    /// Does stuff for game over.
-    /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
-    private void PlayerDie()
-    {
-        Debug.Log("Player died, game over.");
-
-        //Reset HealthBar, energy and other stuff for now.
-        Health = maxHealth;
-        Energy = maxEnergy;
-        //GainScrap(200);
-
-        GameManager.Instance.EndCombat();
-
-        // for now just restart the scene.
-        GameManager.Instance.RequestScene(Levels.Title);
-
-    }
-
-    /// <summary>
     /// Anything for player to do at combat end
     /// </summary>
     public void TriggerPassiveEffectsOnCombatEnd()
@@ -962,6 +1011,13 @@ public class PlayerController : MonoBehaviour
         }
 
        RemoveEffect(Effects.Buff.Power,0,true);
+
+        // Filter out permanent effects instead of clearing the whole list
+        ListOfActiveEffects = ListOfActiveEffects
+            .Where(effect => effect.permnamentEffect)
+            .ToList();
+
+        UiManager.Instance.UpdateEffects(ListOfActiveEffects);
     }
 
 
@@ -974,9 +1030,33 @@ public class PlayerController : MonoBehaviour
     /// <param name="revealByLetter">true if you want to reveal speech by letter or false by word</param>
     /// <param name="howFastToTalk"></param>
     /// <param name="howLongToDisplay">default is 3</param>
-    public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f)
+    public void CharacterSpeak(string message, bool revealByLetter, float howFastToTalk, float howLongToDisplay = 3f, bool isDialogue = false)
     {
-        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay);
+        uiController.PlayerTalk(message, revealByLetter, howFastToTalk, howLongToDisplay, isDialogue);                 
+    }
+
+    /// <summary>
+    /// Call when Player is dead.
+    /// Does stuff for game over.
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    private void PlayerDie()
+    {
+        Debug.Log("Player died, game over.");
+
+        //Reset HealthBar, energy and other stuff for now.
+        Health = maxHealth;
+        Energy = maxEnergy;
+        //GainScrap(200);
+
+        // Stop player actions
+        this.enabled = false;
+
+        GameManager.Instance.GameOver();
+
+        // Show Game Over UI
+        UiManager.Instance.ShowGameOverScreen();        
+
     }
 
     void OnDestroy()
@@ -994,11 +1074,16 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+    //DEBUG METHODS
     [ContextMenu("Test Speak")]
     private void TestSpeak()
     {
         CharacterSpeak("I have a voice.\nI realy do have a voice !!", true, 0.1f, 5f);
+    }
+    [ContextMenu("Give scrap")]
+    private void GivePlayerScrap()
+    {
+        GainScrap(1000);
     }
     [ContextMenu("Test Damage 5")]
     private void TestDamage()
@@ -1009,5 +1094,15 @@ public class PlayerController : MonoBehaviour
     private void TestPlayerdeath()
     {
         DamagePlayerBy(1000);
+    }
+    [ContextMenu("Spend 5 energy")]
+    private void TestEnergyUse()
+    {
+        SpendEnergy(5);
+    }
+    [ContextMenu("Add 5 energy")]
+    private void TestEnergyGain()
+    {
+        RecoverEnergy(5);
     }
 }

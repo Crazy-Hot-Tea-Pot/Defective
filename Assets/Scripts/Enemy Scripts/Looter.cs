@@ -5,7 +5,11 @@ using UnityEngine;
 public class Looter : Enemy
 {
     [Header("Custom for Enemy type")]
+    // To track the number of Swipes performed
+    private int swipeCount = 0;
+    private bool isShrouded;
     private int stolenScrap = 0;
+    private bool isWithLeader = false;
     /// <summary>
     /// To keep track of stolen Scraps
     /// </summary>
@@ -20,16 +24,21 @@ public class Looter : Enemy
             stolenScrap = value;
         }
     }
-
-    // To track the number of Swipes performed
-    private int swipeCount = 0;
-
-    private bool isShrouded;
-
     public bool IsShrouded
     {
         get { return isShrouded; }
         private set { isShrouded = value; }
+    }
+    public bool IsWithLeader
+    {
+        get
+        {
+            return isWithLeader;
+        }
+        set
+        {
+            isWithLeader = value;
+        }
     }
 
     // Start is called before the first frame update
@@ -41,42 +50,61 @@ public class Looter : Enemy
         swipeCount = 0;
         StolenScrap = 0;
 
+        EnemyType = EnemyManager.TypeOfEnemies.Looter;
+
         base.Start();
+    }
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 30;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 45;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 60;
+                break;
+        }
+        if (CurrentHP <= 0)
+            CurrentHP = MaxHp;
     }
 
     protected override void PerformIntent()
-    {    
+    {
+        base.PerformIntent();
+
         // Since 100% on first chance just made it this way.
 
         if (swipeCount < 3) // First three turns are Swipe
-        {
-            Swipe();
+        {   
+            //Swipe();
+            Animator.SetTrigger("Intent 1");
         }
         else if (swipeCount == 3 && !IsShrouded) // After three Swipes, do Shroud
         {
-            Shroud();
+            //Shroud();
+            Animator.SetTrigger("Intent 2");
         }
         else if (IsShrouded) // After Shroud, perform Escape
         {
-            Escape();
+            //Escape();
+            Animator.SetTrigger("Intent 3");
         }
-
-        base.PerformIntent();
     }
     /// <summary>
     /// Return all stolen Scraps upon killing
     /// </summary>
-    public override void Die()
+    protected override void Die()
     {        
         ReturnStolenScrap();
 
         base.Die();
     }    
-
-    public override void TakeDamage(int damage)
-    {
-        base.TakeDamage(damage);
-    }
 
     public override void CombatStart()
     {
@@ -90,7 +118,16 @@ public class Looter : Enemy
         else if (swipeCount == 3 && !IsShrouded)
             return ("Shroud", IntentType.Shield, 10);
         else if (IsShrouded)
-            return ("Escape", IntentType.Unique, 0);
+        {
+            //if with gangleader reset
+            if (IsWithLeader)
+            {
+                swipeCount = 0;
+                return ("Swipe", IntentType.Attack, 6);
+            }
+            else
+                return ("Escape", IntentType.Unique, 0);
+        }
 
         return ("Unknown", IntentType.None, 0);
     }
@@ -98,7 +135,7 @@ public class Looter : Enemy
     /// <summary>
     ///  After the 3rd Swipe, perform Shroud
     /// </summary>
-    private void Swipe()
+    public void Swipe()
     {
         Debug.Log($"{EnemyName} performs Swipe, dealing 4 damage and stealing 5 Scrap.");
         swipeCount++;
@@ -125,7 +162,7 @@ public class Looter : Enemy
 
     }
 
-    private void Shroud()
+    public void Shroud()
     {
         Debug.Log($"{EnemyName} performs Shroud, gaining 10 Shield.");
         Shield += 10;
@@ -133,11 +170,11 @@ public class Looter : Enemy
         isShrouded = true;
     }
 
-    private void Escape()
+    public void Escape()
     {
         Debug.Log($"{EnemyName} performs Escape, exiting the fight with {StolenScrap} Scrap.");
 
-        CombatController.LeaveCombat(this.gameObject,0,null,null);
+        CombatController.LeaveCombat(this.gameObject);
 
         EnemyManager.Instance.RemoveEnemy(this.gameObject);
     }

@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class CombatController : MonoBehaviour
@@ -107,6 +110,13 @@ public class CombatController : MonoBehaviour
     [SerializeField]
     private GameObject combatArea;
 
+
+    [Header("Combat Sounds")]
+    public SoundFX CombatStartSound;
+    public BgSound CombatSound;
+    public SoundFX CombatWinSound;
+    private BgSound previousSound;
+
     void OnEnable()
     {
         selectTargetAction = playerInputActions.PlayerCombat.SelectTarget;
@@ -133,11 +143,6 @@ public class CombatController : MonoBehaviour
             playerInputActions = new PlayerInputActions();
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
     /// <summary>
     /// Starts combat by initializing combatants and setting up the turn order.
     /// </summary>
@@ -147,10 +152,18 @@ public class CombatController : MonoBehaviour
 
         GameManager.Instance.StartCombat();
 
+        // Store the previous background sound before changing it
+        previousSound = SoundManager.GetCurrentBackgroundSound();
+
+        // Play the combat start sound first, then switch to combat background music
+        StartCoroutine(PlayCombatStartThenBG());
+
         RoundCounter = 1;
 
         // Setup player and enemies
         Player = GameObject.FindGameObjectWithTag("Player");
+
+        Player.GetComponent<PlayerController>().CombatStart();
 
         // Prepare turn queue: player always goes first
         turnQueue.Enqueue(Player);
@@ -165,10 +178,9 @@ public class CombatController : MonoBehaviour
             enemy.GetComponent<Enemy>().CombatStart();
         }
 
-        // Enable the end-turn button
-        UiManager.Instance.EndTurnButtonVisibility(true);
-
         StartTurn();
+
+        GameStatsTracker.Instance.StartCombatTimer();
     }
 
     /// <summary>
@@ -176,15 +188,12 @@ public class CombatController : MonoBehaviour
     /// </summary>
     /// <param name="combatant">The combatant that ended their turn.</param>
     public void EndTurn(GameObject combatant)
-    {
-        if (combatant == Player)        
-            UiManager.Instance.EndTurnButtonInteractable(false);
-
+    {                    
         StartTurn();
     }
 
     /// <summary>
-    /// Handles an enemy leaving combat, either by escaping or dying.
+    /// Handles an enemy leaving combat, either by dying.
     /// Adds loot and removes the enemy from the turn queue.
     /// </summary>
     /// <param name="enemy">The enemy leaving combat.</param>
@@ -193,12 +202,14 @@ public class CombatController : MonoBehaviour
     /// <param name="items">Items dropped by the enemy.</param>
     public void LeaveCombat(GameObject enemy, int scrapLoot, List<NewChip> newChips, List<Item> items)
     {
-        if (!CombatEnemies.Contains(enemy)) 
-            return;
+        //if (!CombatEnemies.Contains(enemy)) 
+        //    return;
 
         Debug.Log($"{enemy.name} has left combat!");
         CombatEnemies.Remove(enemy);
-        turnQueue = new Queue<GameObject>(CombatEnemies); // Rebuild the queue without the enemy
+
+        // Rebuild the queue without the enemy
+        turnQueue = new Queue<GameObject>(CombatEnemies);
 
         // Add loot
         ScrapLootForCurrentCombat += scrapLoot;
@@ -213,6 +224,31 @@ public class CombatController : MonoBehaviour
 
         // Check for combat end
         CheckCombatEnd();
+    }
+    /// <summary>
+    /// Handles an enemy leaving combat by escape.
+    /// </summary>
+    /// <param name="enemy"></param>
+    public void LeaveCombat(GameObject enemy)
+    {
+        if (!CombatEnemies.Contains(enemy))
+            return;
+
+        Debug.Log($"{enemy.name} has left combat!");
+        CombatEnemies.Remove(enemy);
+
+        // Rebuild the queue without the enemy
+        turnQueue = new Queue<GameObject>(CombatEnemies);
+
+        if (CombatEnemies.Count == 0)
+        {
+            Debug.Log("All enemies defeated or escaped. Combat ends.");
+            EndCombat();
+        }
+        else
+        {
+            StartTurn();
+        }
     }
 
     /// <summary>
@@ -257,18 +293,14 @@ public class CombatController : MonoBehaviour
         {
             EndRound();
             return;
-        }
-
-        RoundCounter++;
+        }        
 
         CurrentCombadant = turnQueue.Dequeue();
 
         if (CurrentCombadant == Player)
         {
 
-            UiManager.Instance.EndTurnButtonInteractable(true);
-
-            UiManager.Instance.ReDrawPlayerhand();            
+            UiManager.Instance.ChangeCombatScreenTemp(true);                        
 
             player.GetComponent<PlayerController>().StartTurn();
         }
@@ -302,7 +334,9 @@ public class CombatController : MonoBehaviour
         {
             turnQueue.Enqueue(enemy);
         }
-        
+
+        RoundCounter++;
+
         StartTurn();
     }
 
@@ -323,12 +357,23 @@ public class CombatController : MonoBehaviour
     /// </summary>
     private void EndCombat()
     {
-        Debug.Log("Combat has ended.");
+        Debug.Log("Combat has ended."); 
+        
+        GameStatsTracker.Instance.EndCombatTimer();
 
-        UiManager.Instance.EndTurnButtonVisibility(false);
+        SoundManager.PlayFXSound(CombatWinSound);
 
         // Notify GameManager or handle loot distribution
         GameManager.Instance.EndCombat();
+
+        // Check for Lucky Trinket effect
+        PlayerController playerController = Player.GetComponent<PlayerController>();
+
+        if (playerController.ListOfActiveEffects.Any(effect => effect.SpecialEffect == Effects.SpecialEffects.LuckyTrinket))
+        {
+            ScrapLootForCurrentCombat += 10;
+            Debug.Log("Lucky Trinket effect detected, adding 10 Scrap to a total of " + ScrapLootForCurrentCombat + " Scrap.");            
+        }
 
         if (ScrapLootForCurrentCombat > 0 || ItemsLootForCurrentCombat.Count > 0 || NewChipLootForCurrentCombat.Count > 0)
         {
@@ -340,11 +385,29 @@ public class CombatController : MonoBehaviour
         {
             GameManager.Instance.UpdateGameMode(GameManager.GameMode.Roaming);
         }
+        //Add loot to player
+        Player.GetComponent<PlayerController>().GainScrap(ScrapLootForCurrentCombat);
 
         //Delete CombatZone
         Destroy(CombatZone);
 
         Reset();
+    }
+    private IEnumerator PlayCombatStartThenBG()
+    {
+        // Play CombatStart sound effect
+        AudioClip combatStartClip = SoundManager.GetSoundFxClip(CombatStartSound);
+        if (combatStartClip != null)
+        {
+            SoundManager.PlayFXSound(CombatStartSound);
+
+            Debug.Log("Playing CombatStartSound");
+
+            yield return new WaitForSeconds(combatStartClip.length);
+        }
+
+        // Change to Combat Background Music
+        SoundManager.ChangeBackground(CombatSound);
     }
 
     /// <summary>
@@ -362,6 +425,9 @@ public class CombatController : MonoBehaviour
         ScrapLootForCurrentCombat = 0;
         ItemsLootForCurrentCombat.Clear();
         NewChipLootForCurrentCombat.Clear();
+
+        // Restore the previous background sound
+        SoundManager.ChangeBackground(previousSound);
     }
     #region Targeting
     /// <summary>
@@ -395,24 +461,30 @@ public class CombatController : MonoBehaviour
     /// <param name="context"></param>
     private void OnSelectTarget(InputAction.CallbackContext context)
     {
+        StartCoroutine(HandleTargetSelection());
+    }
+    private IEnumerator HandleTargetSelection()
+    {
+        yield return null; // Wait for UI to update this frame
+
         if (GameManager.Instance.CurrentGameMode != GameManager.GameMode.Combat)
-        {
-            return;
-        }
+            yield break;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            yield break;
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
 
-
         if (Physics.Raycast(ray, out hit))
         {
-            // Check if the clicked object is an enemy combatant
             if (hit.collider.CompareTag("Enemy"))
             {
                 SetTarget(hit.collider.gameObject);
             }
         }
     }
+
 
     /// <summary>
     /// Method to cycle through combatEnemies using Tab key

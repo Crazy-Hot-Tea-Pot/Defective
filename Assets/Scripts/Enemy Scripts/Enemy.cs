@@ -1,20 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using TMPro;
-using System.Linq;
-using System;
 public class Enemy : MonoBehaviour
-{   
+{    
     public enum EnemyDifficulty
     {
+        None,
         Easy,
         Medium,
         Hard,
         Boss
     }
-
     public enum IntentType
     {
         None,
@@ -24,8 +24,13 @@ public class Enemy : MonoBehaviour
         Debuff,
         Unique
     }
+    public enum IsEnemy
+    {
+        Human,
+        Robot
+    }
 
-
+    [Header("Enemy Components")]
     public GameObject enemyTarget;
     /// <summary>
     /// Enemy current Target.
@@ -38,27 +43,10 @@ public class Enemy : MonoBehaviour
             enemyTarget = value;
         }
     }
-
     /// <summary>
-    /// Range enemy must be to attack the Player.
+    /// Enemy Ui
     /// </summary>
-    public float AttackRange;     
-
-    public float DistanceToPlayer
-    {
-        get
-        {
-            distanceToPlayer= Vector3.Distance(transform.position, EnemyTarget.transform.position); ;
-            return distanceToPlayer;
-        }               
-    }
-
-    /// <summary>
-    /// Important for quest counter UI to know the type of enemy this is 
-    /// </summary>
-    public string EnemyType;
-
-    [Header("Enemy Components")]
+    public GameObject EnemyUIObject;
     /// <summary>
     /// reference to enemy canvas.
     /// </summary>
@@ -67,9 +55,9 @@ public class Enemy : MonoBehaviour
     /// Reference to combat controller.
     /// </summary>
     public CombatController CombatController;
-    public Animator animator;
-    public NavMeshAgent agent;
-    public GameObject TargetIcon;
+    public GameObject Model;
+    public NavMeshAgent agent;    
+    public Animator Animator;
     /// <summary>
     /// reference to Player camera.
     /// </summary>
@@ -77,8 +65,24 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy status")]
     #region EnemyStatus
+
     [SerializeField]
-    private string enemyName;
+    protected string enemyName;
+    protected bool inCombat;
+    [SerializeField]
+    protected EnemyDifficulty enemyDifficulty;
+    [SerializeField]
+    protected IsEnemy enemyIs;
+    protected EnemyManager.TypeOfEnemies enemyType;
+    protected float currentHp;
+    /// <summary>
+    /// Max Hp of Enemy
+    /// </summary>
+    protected float maxHp;
+    protected float shield;
+    protected float maxShield = 0f;
+    protected bool isTargeted;
+    protected int nextIntentRoll;
 
     /// <summary>
     /// Returns name of enemy
@@ -94,8 +98,7 @@ public class Enemy : MonoBehaviour
             enemyName = value;            
         }
     }
-
-    private bool inCombat;
+    
     /// <summary>
     /// Is the Enemy in Combat.
     /// </summary>
@@ -109,10 +112,7 @@ public class Enemy : MonoBehaviour
         {
             inCombat = value;            
         }
-    }
-
-    [SerializeField]
-    private EnemyDifficulty enemyDifficulty;
+    }  
 
     /// <summary>
     /// This Enemies Difficulty
@@ -126,17 +126,39 @@ public class Enemy : MonoBehaviour
         set
         {
             enemyDifficulty = value;
+            SetUpEnemy();
         }
     }
+
     /// <summary>
-    /// Max Hp of Enemy
+    /// IsEnemy Human Or Robot
     /// </summary>
-    public int maxHP;
-    private int currentHp;
+    public IsEnemy EnemyIs
+    {
+        get
+        {
+            return enemyIs;
+        }
+    }    
+
+    /// <summary>
+    /// What type is the enemy.
+    /// </summary>
+    public EnemyManager.TypeOfEnemies EnemyType
+    {
+        get
+        {
+            return enemyType;
+        }
+        protected set
+        {
+            enemyType = value;
+        }
+    }    
     /// <summary>
     /// Enemy Current Hp
     /// </summary>
-    public int CurrentHP
+    public float CurrentHP
     {
         get
         {
@@ -144,10 +166,11 @@ public class Enemy : MonoBehaviour
         }
         protected set
         {
-            currentHp = value;
+            //Make sure save as 1 decimal place
+            currentHp = (float)Math.Round((double)value,1);
 
             //Update UI for enemy HealthBar
-            thisEnemyUI.UpdateHealth(currentHp,maxHP);
+            thisEnemyUI.UpdateHealth(currentHp,MaxHp);
 
             if (currentHp <= 0)
             {
@@ -155,13 +178,23 @@ public class Enemy : MonoBehaviour
                 Die();
             }
         }
-    }
+    }    
 
-    private int shield;
+    public float MaxHp
+    {
+        get
+        {
+            return maxHp;
+        }
+        protected set
+        {
+            maxHp = value;
+        }
+    }
     /// <summary>
     /// Enemy ShieldBar Amount.
     /// </summary>
-    public int Shield
+    public float Shield
     {
         get
         {
@@ -182,9 +215,8 @@ public class Enemy : MonoBehaviour
 
             thisEnemyUI.UpdateShield(shield,maxShield);
         }
-    }
-    private int maxShield = 0;
-    private bool isTargeted;
+    }    
+    
     /// <summary>
     /// Is enemy being targeted by Player.
     /// When enemy is targeted by CombatController to change boarder.
@@ -207,19 +239,31 @@ public class Enemy : MonoBehaviour
             {
                 newLayer = 8;   
             }
-            foreach (Transform child in transform)
+
+            Model.layer = newLayer;
+
+            foreach(Transform child in Model.transform)
             {
                 child.gameObject.layer = newLayer;
 
-                foreach (Transform grandchild in child.transform)
+                foreach(Transform grandchild in child.transform)
                 {
                     grandchild.gameObject.layer = newLayer;
-                };
-            };
+                }
+            }
+            //foreach (Transform child in transform)
+            //{
+            //    child.gameObject.layer = newLayer;
+
+            //    foreach (Transform grandchild in child.transform)
+            //    {
+            //        grandchild.gameObject.layer = newLayer;
+            //    };
+            //};
 
             //TargetIcon.SetActive(value);
         }
-    }
+    }    
     #endregion
 
     [Header("Status Effects")]
@@ -326,12 +370,30 @@ public class Enemy : MonoBehaviour
     [Range(0,100)]
     public int DroppedScrap;
 
+    protected (string intentText, IntentType intentType, int value) NextIntent
+    {
+        get
+        {
+            return nextIntent;
+        }
+        set
+        {
+            nextIntent = value;
+        }
+    }
+
     private float distanceToPlayer;
+    protected (string intentText, IntentType intentType, int value) nextIntent;
+
+    [Header("Sound")]
+    public SoundFX EnemyDeathSound;
+    public SoundFX EnemyDamageTakenSound;
+
+    private Coroutine rotateCoroutine;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
         playerCamera = Camera.main;
         thisEnemyUI = this.gameObject.GetComponentInChildren<EnemyUI>();
     }
@@ -345,17 +407,23 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Initialize enemy
     /// </summary>
-    public virtual void Initialize()
+    protected virtual void Initialize()
     {
-        CurrentHP = maxHP;
-        gameObject.name = EnemyName;
-        thisEnemyUI.SetEnemyName(EnemyName);
 
         CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
         enemyTarget = GameObject.FindGameObjectWithTag("Player");
 
     }
-
+    /// <summary>
+    /// Set up enemy based on difficulty.
+    /// name is already set in base.
+    /// </summary>
+    protected virtual void SetUpEnemy()
+    {
+        EnemyUIObject.SetActive(true);
+        gameObject.name = EnemyName;
+        thisEnemyUI.SetEnemyName(EnemyName);        
+    }
     #region Combat
 
     /// <summary>
@@ -363,16 +431,25 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void CombatStart()
     {
+        NextIntent = GetNextIntent();
         UpdateIntentUI();
     }
 
     /// <summary>
-    /// Call at end of enemyies turn.
+    /// Call at end of enemiies turn.
     /// </summary>
     public virtual void EndTurn()
     {
+        EnemyUIObject.SetActive(true);
+
         //Remove debuffs by 1
         RemoveEffect(Effects.Debuff.Drained, 1);        
+
+        //Assign new intent AFTER performing the current one
+        NextIntent = GetNextIntent();
+        UpdateIntentUI();
+
+        CombatController.EndTurn(this.gameObject);
     }
 
     /// <summary>
@@ -397,7 +474,7 @@ public class Enemy : MonoBehaviour
 
         //Remove Buffs
         RemoveEffect(Effects.Buff.Power, 1);
-        RemoveEffect(Effects.Buff.Galvanize, 1);        
+        RemoveEffect(Effects.Buff.Galvanize, 1);
 
         //Look at Player
         //this.gameObject.transform.LookAt(EnemyTarget.transform);
@@ -405,8 +482,8 @@ public class Enemy : MonoBehaviour
         //Check if Player is in range
         //if (DistanceToPlayer <= AttackRange)
         //{
-            //agent.ResetPath();
-            PerformIntent();
+        //agent.ResetPath();
+        PerformIntent();
         //}
         //else
         //{
@@ -419,10 +496,11 @@ public class Enemy : MonoBehaviour
     /// Is called when enemy is attacked by Player.
     /// </summary>
     /// <param name="damage"></param>
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
+
         // Plays sound of taking damage
-        SoundManager.PlayFXSound(SoundFX.DamageTaken, this.gameObject.transform);
+        SoundManager.PlayFXSound(EnemyDamageTakenSound, this.gameObject.transform);
 
         // if has shield
         if (Shield > 0)
@@ -444,6 +522,13 @@ public class Enemy : MonoBehaviour
         CurrentHP -= damage;
 
         DisplayDamageTaken(damage);
+
+        RotateToPlayer(EnemyTarget.transform.position);
+
+        Animator.SetTrigger("Hit");
+
+        //Track damage
+        GameStatsTracker.Instance.ReportDamage(damage);
     }
 
     /// <summary>
@@ -451,27 +536,40 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void MyTurn()
     {
+        RotateToPlayer(EnemyTarget.transform.position);
+
         StartTurn();
     }
 
     /// <summary>
     /// Call when enemy die.
     /// </summary>
-    public virtual void Die()
+    protected virtual void Die()
     {
         //Update the quest for counting enemies to count it's death
         try
         {
             //Give enemy counter update the enemy name so they can verify it
-            QuestManager.Instance.CurrentQuest.EnemyQuestCounterUpdate(EnemyType);
+            foreach (Quest quest in QuestManager.Instance.CurrentQuest)
+            {
+                Debug.Log("Look at this" + EnemyType.ToString());
+                quest.EnemyQuestCounterUpdate(EnemyType.ToString());
+            }
         }
         catch
         {
 
         }
+        Animator.SetTrigger("Die");
+        
+        SoundManager.PlayFXSound(EnemyDeathSound, this.gameObject.transform);
+    }
 
-        SoundManager.PlayFXSound(SoundFX.EnemyDefeated, this.gameObject.transform);
-
+    /// <summary>
+    /// Finish death stuff after animation plays
+    /// </summary>
+    public void FinishDeath()
+    {
         Debug.Log($"{enemyName} has been defeated!");
 
         CombatController.LeaveCombat(this.gameObject, DroppedScrap, DroppedChips, DroppedItems);
@@ -485,10 +583,13 @@ public class Enemy : MonoBehaviour
     /// <param name="shieldAmount"></param>
     public virtual void ApplyShield(int shieldAmount)
     {
+        Animator.SetTrigger("Shield");
+
         //Restore ShieldBar
         Shield += shieldAmount;
 
         Debug.Log("Shield Restored: " + shield);
+
     }
 
     /// <summary>
@@ -496,8 +597,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void UpdateIntentUI()
     {
-        var nextIntent = GetNextIntent();
-        thisEnemyUI.DisplayIntent(nextIntent.intentText, nextIntent.intentType, nextIntent.value);
+        thisEnemyUI.DisplayIntent(NextIntent.intentText, NextIntent.intentType, NextIntent.value);
     }
 
     /// <summary>
@@ -506,18 +606,49 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected virtual void PerformIntent()
     {
-        if (this.gameObject != null)
-        {
-            CombatController.EndTurn(this.gameObject);
-            UpdateIntentUI();
-        }
+        //Don't do anything wait for death
+        if (CurrentHP <= 0)
+            return;
+
+        EnemyUIObject.SetActive(false);
     }
+
+    /// <summary>
+    /// Rotate enemy to player
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    protected void RotateToPlayer(Vector3 targetPosition)
+    {
+        if (rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);
+
+        rotateCoroutine = StartCoroutine(SmoothRoatePlayerToTarget(targetPosition));
+    }
+    protected IEnumerator SmoothRoatePlayerToTarget(Vector3 target)
+    {
+        // Keep rotation only on the horizontal axis
+        target.y = transform.position.y;
+
+        Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
+
+        // Loop until the rotation is almost complete
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+        {
+            // 180 degrees per second rotation speed
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 180f);
+            yield return null;
+        }
+
+        // Ensure final rotation is exactly at the target
+        transform.rotation = targetRotation;
+    }
+
 
     /// <summary>
     /// Display damage taken in game.
     /// </summary>
     /// <param name="damage"></param>
-    protected virtual void DisplayDamageTaken(int damage)
+    protected virtual void DisplayDamageTaken(float damage)
     {
         // Instantiate the damage text prefab
         // Calculate the position in front of the object
@@ -539,10 +670,8 @@ public class Enemy : MonoBehaviour
     protected virtual (string intentText, IntentType intentType, int value) GetNextIntent()
     {
         return ("Unknown", IntentType.None, 0);
-    }
-
-
-    #endregion
+    }    
+    #endregion   
 
     #region Effects
 
@@ -676,8 +805,6 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }
-
-        Debug.LogWarning($"[Enemy] Attempted to remove non-existent effect: {effect}");
     }
 
     #endregion
@@ -711,8 +838,14 @@ public class Enemy : MonoBehaviour
     }
 
     [ContextMenu("Test Death")]
-    public void TestDeath()
+    private void TestDeath()
     {
         CurrentHP = 0;
+    }
+
+    [ContextMenu("Take 5 Damage")]
+    private void TestHit()
+    {
+        TakeDamage(5);
     }
 }

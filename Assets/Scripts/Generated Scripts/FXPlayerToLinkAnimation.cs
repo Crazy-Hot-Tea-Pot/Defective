@@ -7,98 +7,93 @@ public class FXPlayerToLinkAnimation : MonoBehaviour
 
     public void CustomPlayFootSteps()
     {
-        // Randomly select a footstep sound
-        int randomIndex = Random.Range(1, 6);
-        switch (randomIndex)
-        {
-            case 1:
-                PlaySound_Footstep();
-                break;
-            case 2:
-                PlaySound_Footstep1();
-                break;
-            case 3:
-                PlaySound_Footstep2();
-                break;
-            case 4:
-                PlaySound_Footstep3();
-                break;
-            case 5:
-                PlaySound_Footstep4();
-                break;
-            case 6:
-                PlaySound_Footstep5();
-                break;
-        }
-
         //If help is less than 35% play another audio
         if (PlayerController.Health <= PlayerController.MaxHealth * 0.35f)
         {
-            SoundManager.PlayFXSound(SoundFX.DEFECTION_Glitch);
+            // Randomly select a footstep sound
+            int randomIndex = Random.Range(1, 6);
+            switch (randomIndex)
+            {
+                case 1:
+                    PlaySound_FootStepGlitch();
+                    break;
+                case 2:
+                    PlaySound_FootStepGlitch1();
+                    break;
+                case 3:
+                    PlaySound_FootStepGlitch2();
+                    break;
+                case 4:
+                    PlaySound_FootStepGlitch3();
+                    break;
+                case 5:
+                    PlaySound_FootStepGlitch4();
+                    break;
+                case 6:
+                    PlaySound_FootStepGlitch5();
+                    break;
+            }
+        }
+        else
+        {
+            // Randomly select a footstep sound
+            int randomIndex = Random.Range(1, 6);
+            switch (randomIndex)
+            {
+                case 1:
+                    PlaySound_Footstep();
+                    break;
+                case 2:
+                    PlaySound_Footstep1();
+                    break;
+                case 3:
+                    PlaySound_Footstep2();
+                    break;
+                case 4:
+                    PlaySound_Footstep3();
+                    break;
+                case 5:
+                    PlaySound_Footstep4();
+                    break;
+                case 6:
+                    PlaySound_Footstep5();
+                    break;
+            }
         }
     }
 
     // END CUSTOM
-
-    public void PlaySound_AlertSecurityDrone()
+    public void PlaySound_ChipsPlay()
     {
-        SoundManager.PlayFXSound(SoundFX.AlertSecurityDrone);
+        SoundManager.PlayFXSound(SoundFX.ChipsPlay);
     }
-    public void PlaySound_AlertSecurityDroneVariantSound()
+    public void PlaySound_DeckClose()
     {
-        SoundManager.PlayFXSound(SoundFX.AlertSecurityDroneVariantSound);
+        SoundManager.PlayFXSound(SoundFX.DeckClose);
     }
-    public void PlaySound_BattleStart()
+    public void PlaySound_DeckOpen()
     {
-        SoundManager.PlayFXSound(SoundFX.BattleStart);
+        SoundManager.PlayFXSound(SoundFX.DeckOpen);
     }
-    public void PlaySound_Buff()
+    public void PlaySound_Drained()
     {
-        SoundManager.PlayFXSound(SoundFX.Buff);
+        SoundManager.PlayFXSound(SoundFX.Drained);
     }
-    public void PlaySound_Charging_Up()
+    public void PlaySound_DroneAlarm()
     {
-        SoundManager.PlayFXSound(SoundFX.Charging_Up);
+        SoundManager.PlayFXSound(SoundFX.DroneAlarm);
     }
-    public void PlaySound_ChipPlayed()
+    public void PlaySound_DroneLaser()
     {
-        SoundManager.PlayFXSound(SoundFX.ChipPlayed);
+        SoundManager.PlayFXSound(SoundFX.DroneLaser);
     }
-    public void PlaySound_Click()
+    public void PlaySound_DroneRam()
     {
-        SoundManager.PlayFXSound(SoundFX.Click);
+        SoundManager.PlayFXSound(SoundFX.DroneRam);
     }
-    public void PlaySound_Click_Move()
+    public void PlaySound_EnterDoorSfx()
     {
-        SoundManager.PlayFXSound(SoundFX.Click_Move);
-    }
-    public void PlaySound_Click_Move1()
-    {
-        SoundManager.PlayFXSound(SoundFX.Click_Move1);
-    }
-    public void PlaySound_Click_Move2()
-    {
-        SoundManager.PlayFXSound(SoundFX.Click_Move2);
-    }
-    public void PlaySound_DamageTaken()
-    {
-        SoundManager.PlayFXSound(SoundFX.DamageTaken);
-    }
-    public void PlaySound_Debuff()
-    {
-        SoundManager.PlayFXSound(SoundFX.Debuff);
-    }
-    public void PlaySound_DisassembleMaintenanceBot()
-    {
-        SoundManager.PlayFXSound(SoundFX.DisassembleMaintenanceBot);
-    }
-    public void PlaySound_DrawingOutTheDeck()
-    {
-        SoundManager.PlayFXSound(SoundFX.DrawingOutTheDeck);
-    }
-    public void PlaySound_EnemyDefeated()
-    {
-        SoundManager.PlayFXSound(SoundFX.EnemyDefeated);
+        SoundManager.PlayFXSound(SoundFX.EnterDoorSfx);
     }
     public void PlaySound_Footstep()
     {
@@ -124,48 +119,88 @@ public class FXPlayerToLinkAnimation : MonoBehaviour
     {
         SoundManager.PlayFXSound(SoundFX.Footstep5);
     }
-    public void PlaySound_FootstepLoop()
+    public void PlaySound_FootStepGlitch()
     {
-        SoundManager.PlayFXSound(SoundFX.FootstepLoop);
+        SoundManager.PlayFXSound(SoundFX.FootStepGlitch);
     }
-    public void PlaySound_GalvanizeMainenanceBot()
+    public void PlaySound_FootStepGlitch1()
     {
-        SoundManager.PlayFXSound(SoundFX.GalvanizeMainenanceBot);
+        SoundManager.PlayFXSound(SoundFX.FootStepGlitch1);
+    }
+    public void PlaySound_FootStepGlitch2()
+    {
+        SoundManager.PlayFXSound(SoundFX.FootStepGlitch2);
+    }
+    public void PlaySound_FootStepGlitch3()
+    {
+        SoundManager.PlayFXSound(SoundFX.FootStepGlitch3);
+    }
+    public void PlaySound_FootStepGlitch4()
+    {
+        SoundManager.PlayFXSound(SoundFX.FootStepGlitch4);
+    }
+    public void PlaySound_FootStepGlitch5()
+    {
+        SoundManager.PlayFXSound(SoundFX.FootStepGlitch5);
+    }
+    public void PlaySound_Galvanize()
+    {
+        SoundManager.PlayFXSound(SoundFX.Galvanize);
+    }
+    public void PlaySound_GameOver()
+    {
+        SoundManager.PlayFXSound(SoundFX.GameOver);
+    }
+    public void PlaySound_GuardSound()
+    {
+        SoundManager.PlayFXSound(SoundFX.GuardSound);
+    }
+    public void PlaySound_Jam()
+    {
+        SoundManager.PlayFXSound(SoundFX.Jam);
+    }
+    public void PlaySound_LaserBeam()
+    {
+        SoundManager.PlayFXSound(SoundFX.LaserBeam);
+    }
+    public void PlaySound_LuckyTrinket()
+    {
+        SoundManager.PlayFXSound(SoundFX.LuckyTrinket);
     }
     public void PlaySound_MenuSelectClick()
     {
         SoundManager.PlayFXSound(SoundFX.MenuSelectClick);
     }
-    public void PlaySound_MenuSelectClick1()
-    {
-        SoundManager.PlayFXSound(SoundFX.MenuSelectClick1);
-    }
     public void PlaySound_MenuSelectionSound()
     {
         SoundManager.PlayFXSound(SoundFX.MenuSelectionSound);
     }
-    public void PlaySound_NeutralizeSecurityDrone()
+    public void PlaySound_Powerboost()
     {
-        SoundManager.PlayFXSound(SoundFX.NeutralizeSecurityDrone);
+        SoundManager.PlayFXSound(SoundFX.Powerboost);
     }
-    public void PlaySound_NeutralizeSecurityDroneAlternative()
+    public void PlaySound_RobotPunchHitHuman()
     {
-        SoundManager.PlayFXSound(SoundFX.NeutralizeSecurityDroneAlternative);
+        SoundManager.PlayFXSound(SoundFX.RobotPunchHitHuman);
     }
-    public void PlaySound_Punch()
+    public void PlaySound_RobotPunchMetal()
     {
-        SoundManager.PlayFXSound(SoundFX.Punch);
+        SoundManager.PlayFXSound(SoundFX.RobotPunchMetal);
     }
-    public void PlaySound_RepairMaintenaceBot()
+    public void PlaySound_ShivHitHuman()
     {
-        SoundManager.PlayFXSound(SoundFX.RepairMaintenaceBot);
+        SoundManager.PlayFXSound(SoundFX.ShivHitHuman);
     }
-    public void PlaySound_Running()
+    public void PlaySound_ShivHitMetal()
     {
-        SoundManager.PlayFXSound(SoundFX.Running);
+        SoundManager.PlayFXSound(SoundFX.ShivHitMetal);
     }
-    public void PlaySound_ShredGarbageBot()
+    public void PlaySound_SteelPlatingSound()
     {
-        SoundManager.PlayFXSound(SoundFX.ShredGarbageBot);
+        SoundManager.PlayFXSound(SoundFX.SteelPlatingSound);
+    }
+    public void PlaySound_WornDown()
+    {
+        SoundManager.PlayFXSound(SoundFX.WornDown);
     }
 }

@@ -48,19 +48,19 @@ public class GenerateFXPLayerScript
         // Add methods for each SoundFX
         foreach (string sound in soundFXNames)
         {
-            if (preservedContent["methods"].Exists(m => m.Contains($"PlaySound_{sound}")))
+            string existingMethod = preservedContent["methods"].Find(m => m.Contains($"PlaySound_{sound}"));
+            if (!string.IsNullOrEmpty(existingMethod))
             {
-                // Preserve existing PlaySound_<SoundName> methods
-                outputBuilder.AppendLine(preservedContent["methods"].Find(m => m.Contains($"PlaySound_{sound}")));
+                outputBuilder.AppendLine(existingMethod);
             }
             else
             {
-                // Add a new method
                 outputBuilder.AppendLine($"    public void PlaySound_{sound}()");
                 outputBuilder.AppendLine("    {");
                 outputBuilder.AppendLine($"        SoundManager.PlayFXSound(SoundFX.{sound});");
                 outputBuilder.AppendLine("    }");
             }
+
         }
 
         outputBuilder.AppendLine("}");
@@ -102,18 +102,20 @@ public class GenerateFXPLayerScript
     private static Dictionary<string, List<string>> ParseExistingContentWithCustomCode(string[] scriptLines)
     {
         var preservedContent = new Dictionary<string, List<string>> {
-            { "custom", new List<string>() },
-            { "methods", new List<string>() }
-        };
+        { "custom", new List<string>() },
+        { "methods", new List<string>() }
+    };
 
         if (scriptLines == null) return preservedContent;
 
         StringBuilder currentContent = new StringBuilder();
         bool insideCustomCode = false;
+        bool insideMethod = false;
+        int methodBraceCount = 0;
 
         foreach (string line in scriptLines)
         {
-            // Detect custom methods or sections
+            // Detect custom sections
             if (line.Contains("// START CUSTOM"))
             {
                 insideCustomCode = true;
@@ -136,14 +138,38 @@ public class GenerateFXPLayerScript
                 continue;
             }
 
-            // Detect PlaySound methods
+            // Detect PlaySound methods and preserve full implementations
             if (line.TrimStart().StartsWith("public void PlaySound_"))
             {
-                preservedContent["methods"].Add(line.Trim());
+                insideMethod = true;
+                methodBraceCount = 0; // Reset brace counter
+                currentContent.Clear();
+            }
+
+            if (insideMethod)
+            {
+                currentContent.AppendLine(line);
+
+                // Count braces to track method boundaries
+                foreach (char c in line)
+                {
+                    if (c == '{') methodBraceCount++;
+                    if (c == '}') methodBraceCount--;
+                }
+
+                // If method braces close, store the full method
+                if (methodBraceCount == 0 && insideMethod)
+                {
+                    preservedContent["methods"].Add(currentContent.ToString());
+                    insideMethod = false;
+                }
+
+                continue;
             }
         }
 
         return preservedContent;
     }
+
 #endif
 }

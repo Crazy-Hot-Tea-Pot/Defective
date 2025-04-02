@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9782ff461ba283541b00d26c04d227be, type: 3}
+  m_Name: L5QuestCollectable
+  m_EditorClassIdentifier: 
+  questName: 'Collect the last of the documents : '
+  ccQuestName: 'Collect the last of the documents : '
+  modifiedQuestName: 'Collect the last of the documents : '
+  questDesc: We almost have all the documents only a few more remain and must be
+    collected. Collect all 4 crumpled pages.
+  complete: 0
+  isTutorial: 0
+  mainQuest: 0
+  tagName: Junk
+  neededCollections: 4

@@ -16,6 +16,13 @@ public class MaintenanceBot : Enemy
             repairUsed = value;
         }
     }
+
+    [Header("Sound")]
+    public SoundFX RepairBotSound;
+    public SoundFX GalvanizeBotSound;
+ 
+    
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -43,35 +50,64 @@ public class MaintenanceBot : Enemy
             DroppedChips.Add(commonChips[secondIndex]);
         }
 
+        EnemyType = EnemyManager.TypeOfEnemies.Maintenancebot;
+
         base.Start();
     }
+    public override void EndTurn()
+    {
+        nextIntentRoll = Random.Range(1, 11);
+        base.EndTurn();
+    }
+    protected override void SetUpEnemy()
+    {
+        base.SetUpEnemy();
+
+        switch (Difficulty)
+        {
+            case EnemyDifficulty.Easy:
+                MaxHp = 50;
+                break;
+            case EnemyDifficulty.Medium:
+                MaxHp = 70;
+                break;
+            case EnemyDifficulty.Hard:
+                MaxHp = 90;
+                break;
+        }
+        if (CurrentHP <= 0)
+            CurrentHP = MaxHp;
+    }
+
     protected override void PerformIntent()
     {
+        base.PerformIntent();
 
-        if (CurrentHP <= maxHP / 2 && !RepairUsed)
+        if (CurrentHP <= MaxHp / 2 && !RepairUsed)
         {
-            Repair();
-            RepairUsed = true;
+            //Repair();
+            //RepairUsed = true;
+            Animator.SetTrigger("Intent 3");
         }
         else
         {           
-            if (Random.Range(1, 11) <= 4)
+            if (nextIntentRoll <= 4)
             {
-                Galvanize();                
+                //Galvanize();
+                Animator.SetTrigger("Intent 1");
             }
             else
             {
-                Disassemble();
+                //Disassemble();
+                Animator.SetTrigger("Intent 2");
             }
         }
-
-        base.PerformIntent();
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
-        if (CurrentHP <= maxHP / 2 && !RepairUsed)
+        if (CurrentHP <= MaxHp / 2 && !RepairUsed)
             return ("Repair", IntentType.Buff, 0);
-        else if (Random.Range(1, 11) <= 4)
+        else if (nextIntentRoll <= 4)
             return ("Galvanize", IntentType.Buff, 4);
         else
             return ("Disassemble", IntentType.Attack, 9);
@@ -82,7 +118,7 @@ public class MaintenanceBot : Enemy
     /// and
     /// Apply Worn
     /// </summary>
-    private void Disassemble()
+    public void Disassemble()
     {
         Debug.Log("Maintenance Bot uses Disassemble!");
         EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(9);
@@ -91,22 +127,27 @@ public class MaintenanceBot : Enemy
     /// <summary>
     /// Gains 4 stacks of Galvanize.
     /// </summary>
-    private void Galvanize()
+    public void Galvanize()
     {
         //PlaySound
-        SoundManager.PlayFXSound(SoundFX.GalvanizeMainenanceBot, this.gameObject.transform);
+        SoundManager.PlayFXSound(GalvanizeBotSound, this.gameObject.transform);
 
         AddEffect(Effects.Buff.Galvanize, 4);        
     }
     /// <summary>
     /// heals 30% of its Max Hp
     /// </summary>
-    private void Repair()
-    {        
-        //Play sound
-        SoundManager.PlayFXSound(SoundFX.RepairMaintenaceBot, this.gameObject.transform);
+    public void Repair()
+    {
+        //Make UI true to prevent error.
+        EnemyUIObject.SetActive(true);
 
-        int tempHealAmount = Mathf.RoundToInt(maxHP * 0.3f);
-        CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, maxHP);        
+        //Play sound
+        SoundManager.PlayFXSound(RepairBotSound);
+
+        int tempHealAmount = Mathf.RoundToInt(MaxHp * 0.3f);
+        CurrentHP = Mathf.Min(CurrentHP + tempHealAmount, MaxHp);
+
+        RepairUsed = true;
     }
 }

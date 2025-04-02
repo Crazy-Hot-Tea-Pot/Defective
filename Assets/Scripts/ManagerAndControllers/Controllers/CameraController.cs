@@ -32,7 +32,8 @@ public class CameraController : MonoBehaviour
         Free,
         BorderMovement,
         Combat,
-        FirstPerson
+        FirstPerson,
+        Call
     }
 
     [Header("Cameras")]
@@ -44,6 +45,7 @@ public class CameraController : MonoBehaviour
     public CinemachineVirtualCamera freeCamera;
     public CinemachineVirtualCamera BorderCamera;
     public CinemachineVirtualCamera FirstPersonCamera;
+    public CinemachineVirtualCamera CallCamera;
     public CinemachineVirtualCamera CombatCamera
     {
         get
@@ -173,7 +175,7 @@ public class CameraController : MonoBehaviour
             {
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
                 {
-                    if (hit.collider.CompareTag("Ground") && GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming)
+                    if (hit.collider.CompareTag("Ground") && (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming || GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat))
                     {
                         OnResetCamera();
                     }
@@ -182,8 +184,8 @@ public class CameraController : MonoBehaviour
         };
 
         // Handle rotation start and stop
-        playerInputActions.CameraControls.RotateCamera.started += ctx => SwitchCamera(CameraState.Rotation);
-        playerInputActions.CameraControls.RotateCamera.canceled += ctx => OnResetCamera();
+        //playerInputActions.CameraControls.RotateCamera.started += ctx => SwitchCamera(CameraState.Rotation);
+        //playerInputActions.CameraControls.RotateCamera.canceled += ctx => OnResetCamera();
 
 
         playerInputActions.CameraControls.FreeCam.performed += ctx => SwitchCamera(CameraState.Free);
@@ -200,7 +202,9 @@ public class CameraController : MonoBehaviour
     void Start()
     {
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();                
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        CallCamera = GameObject.Find("CallCamera").GetComponent<CinemachineVirtualCamera>();
 
         Target = player;
 
@@ -331,8 +335,7 @@ public class CameraController : MonoBehaviour
     {
         // Prevent the Reset action if Player is interacting
         if (IsPlayerInteracting())
-        {
-            Debug.Log("Camera reset ignored because the player is interacting.");
+        {            
             return;
         }
         switch (GameManager.Instance.CurrentGameMode)
@@ -344,6 +347,9 @@ public class CameraController : MonoBehaviour
                 break;
             case GameManager.GameMode.Combat:
                 SwitchCamera(CameraState.Combat);
+                break;
+            case GameManager.GameMode.Dialogue:
+                SwitchCamera(CameraState.Call);
                 break;
         }        
     }
@@ -357,15 +363,16 @@ public class CameraController : MonoBehaviour
     public void SwitchCamera(CameraState state)
     {
         if (IsPlayerInteracting())
-        {
-            Debug.Log("Camera reset ignored because the player is interacting.");
+        {            
             return;
         }
+
         DefaultCamera.Priority = 0;
         RotationCamera.Priority = 0;
         freeCamera.Priority = 0;
         BorderCamera.Priority = 0;
         FirstPersonCamera.Priority = 0;
+        CallCamera.Priority = 0;
 
         if(CombatCamera!=null)
             CombatCamera.Priority = 0;
@@ -391,6 +398,9 @@ public class CameraController : MonoBehaviour
             case CameraState.Combat:
                 CombatCamera.Priority = 10;
                 break;
+            case CameraState.Call:
+                CallCamera.Priority = 10;
+                break;
             default:
                 DefaultCamera.Priority = 10;
                 break;
@@ -404,7 +414,10 @@ public class CameraController : MonoBehaviour
     /// <returns></returns>
     private bool IsPlayerInteracting()
     {
-        if(GameManager.Instance.CurrentGameMode==GameManager.GameMode.Interacting || GameManager.Instance.CurrentGameMode == GameManager.GameMode.CombatLoot)
+        if(GameManager.Instance.CurrentGameMode==GameManager.GameMode.Interacting 
+            || GameManager.Instance.CurrentGameMode == GameManager.GameMode.CombatLoot
+            || GameManager.Instance.CurrentGameMode == GameManager.GameMode.BrowseringInventory
+            || (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat && CurrentCamera == CameraState.Combat))
             return true;
         else
             return false;        

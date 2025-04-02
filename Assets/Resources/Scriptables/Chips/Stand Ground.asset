@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Stand Ground
-  description: Gain 7 Shield, Gain 1 "Galvanize".
-  chipImage: {fileID: 21300000, guid: b5d5dc59abee750429fdcd3b112a3d53, type: 3}
+  StartingDescription: 
+  chipImage: {fileID: 21300000, guid: aea685bce923b0446b8be4c117e52dbb, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150
   ChipTip: Gain Galvanize to have constant source of Defense!
-  ChipRareityWeight: 0.15
+  ChipRareityWeight: 0
   hitAllTargets: 0
   chipType: 2
+  ChipActivate: 4
   shieldAmount: 7
   upgradedShieldAmountToApply: 2
   effectToApply: 0

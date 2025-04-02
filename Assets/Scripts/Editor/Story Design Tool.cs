@@ -102,8 +102,9 @@ public class StoryDesignTool : EditorWindow
             GUILayout.BeginHorizontal();
             try
             {
-                level.enemySpawns[j].enemyType = (EnemyType)EditorGUILayout.EnumPopup("Enemy Type:", level.enemySpawns[j].enemyType);
+                level.enemySpawns[j].enemyType = (TypeOfEnemies)EditorGUILayout.EnumPopup("Enemy Type:", level.enemySpawns[j].enemyType);
                 level.enemySpawns[j].enemyName = EditorGUILayout.TextField("Enemy Name:", level.enemySpawns[j].enemyName);
+                level.enemySpawns[j].difficulty = (Enemy.EnemyDifficulty)EditorGUILayout.EnumPopup("Difficulty:", level.enemySpawns[j].difficulty);
 
                 if (GUILayout.Button("Remove", GUILayout.Width(70)))
                 {

@@ -3,8 +3,9 @@
 [System.Serializable]
 public class EnemySpawn
 {
-    public EnemyManager.EnemyType enemyType;
+    public EnemyManager.TypeOfEnemies enemyType;
     public string enemyName;
+    public Enemy.EnemyDifficulty difficulty=Enemy.EnemyDifficulty.Medium;
 
     public GameObject GetEnemyPrefab()
     {

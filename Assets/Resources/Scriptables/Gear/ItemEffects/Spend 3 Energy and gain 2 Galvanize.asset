@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d80e112095c1b64bb5ed13de03c004a, type: 3}
+  m_Name: Spend 3 Energy and gain 2 Galvanize
+  m_EditorClassIdentifier: 
+  energyCost: 3
+  SpecialConditionEffect: 0
+  Condition: 0
+  deBuffEffectToApplyToEnemy: []
+  buffToApplyToPlayer:
+  - Buff: 1
+    AmountToBuff: 2
+  debuffToApplyToPlayer: []
+  effectToApplyToPlayer: 0
+  HitAllTargets: 0
+  specialEffectOnly: 1
+  baseShieldAmount: 0

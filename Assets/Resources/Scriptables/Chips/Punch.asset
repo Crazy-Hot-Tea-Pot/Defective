@@ -14,17 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 0
   chipName: Punch
-  description: Deal 5 Damage.
-  chipImage: {fileID: 21300000, guid: a2b0e2773a0fdb74b9956ce8f69bbff9, type: 3}
+  StartingDescription: 
+  chipImage: {fileID: 21300000, guid: beef7914719ac1740888673921805f19, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
   ChipTip: Use this to punch stuff. The ultimate solution to conflict resolution!
-  ChipRareityWeight: 0.2
+  ChipRareityWeight: 0
   hitAllTargets: 0
   chipType: 1
+  ChipActivate: 6
   damage: 5
   upgradedDamageByAmount: 0
   numberOfHits: 1
   debuffToApply: 0
   debuffStacks: 0
   upgradedDebuffStacksByAmout: 0
+  ChipHitShield: 6
+  ChipHitFlesh: 6
+  ChipHitMetal: 6

@@ -16,7 +16,7 @@ public class ItemEffect : ScriptableObject
         {
             isEquipped = value;
 
-            Equipped();
+            Equip();
         }
     }
 
@@ -27,15 +27,8 @@ public class ItemEffect : ScriptableObject
         /// </summary>
         LessThanHalfHealth 
     }
-
-    public string ItemEffectDescription;
     [Tooltip("Cost to use the ItemEffect")]
-    public int energyCost;
-
-    [Header("Sound Effects")]
-    public SoundFX ItemActivate;
-    public SoundFX ItemDeactivate;
-    public SoundFX ItemFail;
+    public float energyCost;
 
     [Space(20)]
 
@@ -54,6 +47,20 @@ public class ItemEffect : ScriptableObject
     public bool HitAllTargets = false;
 
     private bool isEquipped = false;
+
+    public Item LinkedItem
+    {
+        get
+        {
+            return linkedItem;
+        }
+        set
+        {
+            linkedItem = value;
+        }
+    }
+
+    private Item linkedItem;
 
     public virtual void Activate(PlayerController player, Item item, Enemy enemy = null)
     {        
@@ -77,7 +84,17 @@ public class ItemEffect : ScriptableObject
             }        
     }
 
-    protected virtual void Equipped()
+    //Todo put error sound effect
+    public virtual void Activate(PlayerController player, Item item, PuzzleRange puzzle = null)
+    {
+        //Put a sound here
+    }
+    public virtual string GetEffectDescription(Item item)
+    {
+        return "fail";
+    }
+
+    public virtual void Equip()
     {
 
     }

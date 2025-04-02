@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Chip : MonoBehaviour, IPointerClickHandler
 {
     public enum ChipMode
     {
@@ -66,7 +66,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             if (NewChip != null)
             {
-                ChipTitle = NewChip.chipName + " Chip";
+                ChipTitle = NewChip.chipName;
                 this.gameObject.name = ChipTitle;
                 NewChip.ThisChip = this.gameObject;
                 // Set image to chip
@@ -81,26 +81,44 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private string chipTitle;        
     private NewChip newChip;
-    private GameObject chipinfoDisplay;
+    private GameObject chipInfoDisplay;
     private CombatController CombatController;
+    private PuzzleController PuzzleController;
     private GameObject Player;
     private TerminalController UpgradeController;
+    private int attemptCounter=0;
+    private Animator animator;
 
     void Start()
     {        
-        Player = GameObject.FindGameObjectWithTag("Player"); 
+        Player = GameObject.FindGameObjectWithTag("Player");
+
+        animator = GetComponent<Animator>();
+
+        //if(GameManager.Instance.CurrentGameMode != GameManager.GameMode.Won)
+            //PuzzleController = GameObject.FindGameObjectWithTag("PuzzleController").GetComponent<PuzzleController>();
     }
     /// <summary>
     /// Runs Scriptable Chip
     /// </summary>
     public void ChipSelected()
-    {        
-        try
+    {
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)
         {
+            #region combatStuff
+            try
+            {
                 // Check if there is a target available
                 if (CombatController.Target == null)
                 {
-                    throw new NullReferenceException("No target assigned.");
+                    attemptCounter++;
+
+                    if (attemptCounter > 3)
+                    {
+                        UiManager.Instance.PopUpMessage("You must first select an enemy with your mouse.");
+                    }
+
+                    return;
                 }
 
                 //Check if Player is jammed
@@ -113,16 +131,19 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 if (newChip != null)
                 {
                     //Plays chip use sound
-                    SoundManager.PlayFXSound(SoundFX.ChipPlayed);
+                    SoundManager.PlayFXSound(NewChip.ChipActivate);
 
                     newChip.IsActive = true;
 
+                    //If motivated to play chip twice
                     if (Player.GetComponent<PlayerController>().IsMotivated)
                     {
                         if (newChip is DefenseChip defenseChip)
                         {
                             newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
                             newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
+
+                            Player.GetComponent<PlayerController>().RemoveEffect(Effects.SpecialEffects.Motivation);
                         }
                         else
                         {
@@ -141,6 +162,7 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             {
                                 newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
                                 newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+
                             }
                         }
                         //Remove effect after it has been used.
@@ -160,28 +182,98 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                                 }
                             }
                             else
+                            {
                                 newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), CombatController.Target.GetComponent<Enemy>());
+                            }
+
                         }
 
                     }
+
+                    ChipManager.Instance.AddToUsedChips(this.gameObject);
+
+                    UiManager.Instance.CanMakeAnyMoreMoves();
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.LogWarning($"Null reference error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Generic catch for any other exceptions that may occur
+                Debug.LogError($"An unexpected error occurred: {ex.Message}");
+            }
+            #endregion
+        }
+        else { 
+            #region puzzlestuff
+            try
+            {
+                //Check if targeted
+                if (PuzzleController.Target == null)
+                {
+                    throw new NullReferenceException("No target assigned for puzzles.");
+                }
+                //Plays chip use sound
+                SoundManager.PlayFXSound(NewChip.ChipActivate);
+
+                //Check if Player is jammed
+                if (Player.GetComponent<PlayerController>().IsJammed)
+                {
+                    return;
+                }
+
+                //Check if newChip is assigned
+                if (newChip != null)
+                {
+                    //Plays chip use sound
+                    SoundManager.PlayFXSound(SoundFX.ChipsPlay);
+
+                    newChip.IsActive = true;
+
+                    if (newChip is DefenseChip defenseChip)
+                        newChip.OnChipPlayed(Player.GetComponent<PlayerController>());
+                    else
+                    {
+                        if (newChip.hitAllTargets)
+                        {
+                            foreach (GameObject target in EnemyManager.Instance.CombatEnemies)
+                            {
+                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), target.GetComponent<Enemy>());
+                            }
+                        }
+                        else
+                        {
+                            if (PuzzleController.Target.tag == "Puzzle")
+                            {
+                                newChip.OnChipPlayed(Player.GetComponent<PlayerController>(), PuzzleController.Target.GetComponent<PuzzleRange>());
+                            }
+                        }
+
+                    }
+
+
 
                     ChipManager.Instance.AddToUsedChips(this.gameObject);
                 }
                 else
                 {
                     throw new NullReferenceException("No chip script attached.");
-                }           
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.LogWarning($"Null reference error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Generic catch for any other exceptions that may occur
+                Debug.LogError($"An unexpected error occurred: {ex.Message}");
+            }
+            #endregion
         }
-        catch (NullReferenceException ex)
-        {
-            Debug.LogWarning($"Null reference error: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            // Generic catch for any other exceptions that may occur
-            Debug.LogError($"An unexpected error occurred: {ex.Message}");
-        }
-    }    
+    }
     /// <summary>
     /// Set chip prefab to different mode so it can be used in multiple different enviroments.
     /// </summary>
@@ -196,7 +288,9 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 CombatController = GameObject.FindGameObjectWithTag("CombatController").GetComponent<CombatController>();
                 chipButton.interactable = true;
                 chipButton.onClick.AddListener(ChipSelected);                
-                newChip.IsActive = true;                
+                newChip.IsActive = true;   
+                if(animator==null)
+                    animator=GetComponent<Animator>();
                 break;
             case ChipMode.WorkShop:
                 UpgradeController = GameObject.FindGameObjectWithTag("UpgradeController").GetComponent<TerminalController>();
@@ -216,70 +310,67 @@ public class Chip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 break;
         }
     }
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (chipinfoDisplay == null)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
+            GameObject infoInScene = GameObject.FindGameObjectWithTag("Info");
+            if (chipInfoDisplay == null && infoInScene == null)
+            {
 
-            chipinfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
+                chipInfoDisplay = Instantiate(ChipinfoPrefab, UiManager.Instance.transform);
 
 
-            ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
+                ChipInfoController controller = chipInfoDisplay.GetComponent<ChipInfoController>();
 
-            StartCoroutine(DelayForAnimator(controller));            
+                controller.SetUpChipInfo(NewChip);
+
+                switch (NewChip.ChipType)
+                {
+                    case NewChip.TypeOfChips.Attack:
+                        controller.ChipType.color = Color.red;
+                        break;
+                    case NewChip.TypeOfChips.Defense:
+                        controller.ChipType.color = Color.blue;
+                        break;
+                    case NewChip.TypeOfChips.Skill:
+                        controller.ChipType.color = Color.green;
+                        break;
+                    default:
+                        controller.ChipType.color = Color.white;
+                        break;
+                }
+
+                controller.animator.SetBool("IsEnlarging", true);
+                controller.animator.SetBool("IsShrinking", false);
+
+                controller.TargetPosition = this.transform.position;
+                controller.StartPosition = UiManager.Instance.transform.position;
+            }
         }
-    }
-    public void OnPointerExit(PointerEventData eventData)
+    }    
+    public void SelectChip(bool state)
     {
-        if(chipinfoDisplay != null)
-        {
-            ChipInfoController controller = chipinfoDisplay.GetComponent<ChipInfoController>();
-
-            // Animate shrinking
-            Vector3 targetPosition = this.transform.position;
-            Vector3 startPosition = UiManager.Instance.transform.position;
-
-            controller.Shrink(startPosition, targetPosition);
-
-            // Optional: Delay destruction for animation
-            Destroy(chipinfoDisplay, 1f);
-        }
+        animator.SetBool("Selected", state);
     }
-
     /// <summary>
     /// Tell the Upgrade Controller this is the chip the user selected to ugprade.
     /// </summary>
     private void UpgradeChipSelected()
     {
         UpgradeController.ChipSelectToUpgrade(newChip);
-    }
-
-    private IEnumerator DelayForAnimator(ChipInfoController controller)
-    {
-        yield return null;
-
-        controller.ChipName.SetText(ChipTitle);
-        controller.ChipImage.sprite = NewChip.chipImage;
-        controller.ChipType.SetText(NewChip.ChipType.ToString());
-        controller.ChipDescription.SetText(NewChip.description);
-
-        //Animate
-
-        Vector3 targetPosition = UiManager.Instance.transform.position;
-        Vector3 startPosition = this.transform.position;
-        controller.Enlarge(startPosition, targetPosition);
-    }
+    }  
     void OnDestroy()
     {
-        if(chipinfoDisplay != null)
-            Destroy(chipinfoDisplay);
+        if(chipInfoDisplay != null)
+            Destroy(chipInfoDisplay);
 
         chipButton.onClick.RemoveAllListeners();
     }
     void OnDisable()
     {
-        if (chipinfoDisplay != null)
-            Destroy(chipinfoDisplay);
+        if (chipInfoDisplay != null)
+            Destroy(chipInfoDisplay);
     }
 
 }

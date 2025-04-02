@@ -75,7 +75,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -108,8 +108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeLook: {fileID: 0}
-  CameraUIObject: {fileID: 0}
-  CameraUI: {fileID: 0}
   borderThreshold: 0.05
   screenWidth: 0
   screenHeight: 0
@@ -120,8 +118,6 @@ MonoBehaviour:
   BorderCamera: {fileID: 0}
   FirstPersonCamera: {fileID: 0}
   AllowBoarderMovement: 0
-  boarderCameraSpeed: 0
-  freeCameraSpeed: 5
   freeCameraLookSensitivity: 1
   rotationSensitivity: 1
 --- !u!114 &3725951058795707144

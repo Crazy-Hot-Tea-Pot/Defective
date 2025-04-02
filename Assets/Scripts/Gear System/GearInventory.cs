@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GearInventory : MonoBehaviour, IPointerClickHandler
 {
     public enum Mode
     {
@@ -36,8 +36,6 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private GameObject gearInfoDisplay;
     private Mode mode;
 
-
-
     public Item Item
     {
         get
@@ -53,7 +51,7 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     void Start()
     {
         GearImage.sprite = Item.itemImage;
-        GearName.SetText(Item.itemName);        
+        GearName.SetText(Item.itemName+" - "+Item.ItemTeir);        
 
         switch(PrefabMode)
         {
@@ -67,61 +65,35 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 GearDescription.SetText("Scrap Value: " + Item.GetScrapValue());
                 ScrapButton.gameObject.SetActive(true);
                 ScrapButton.onClick.AddListener(VerifyScrapItem);
+                if (Item.IsEquipped)
+                    ScrapButton.interactable = false;
                 break;
             default:
                 Debug.LogWarning("Prefab Mode not set!!");
                 break;
         }        
-    }    
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (gearInfoDisplay == null)
-        {
-
-            gearInfoDisplay = Instantiate(GearInfoPrefab, UiManager.Instance.transform);
-
-            GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();
-
-            StartCoroutine(DelayForAnimator(controller));
-        }
     }
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (gearInfoDisplay != null)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
-            GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();
+            GameObject infoInScene = GameObject.FindGameObjectWithTag("Info");
+            if (gearInfoDisplay == null && infoInScene == null)
+            {
 
-            // Animate shrinking
-            Vector3 targetPosition = this.transform.position;
-            Vector3 startPosition = UiManager.Instance.transform.position;
+                gearInfoDisplay = Instantiate(GearInfoPrefab, UiManager.Instance.transform);
 
-            controller.Shrink(startPosition, targetPosition);
+                GearInfoController controller = gearInfoDisplay.GetComponent<GearInfoController>();
 
-            // Optional: Delay destruction for animation
-            Destroy(gearInfoDisplay, 1f);
+                controller.SetUpGearInfo(Item);
+
+                controller.animator.SetBool("IsEnlarging", true);
+                controller.animator.SetBool("IsShrinking", false);
+
+                controller.TargetPosition = this.transform.position;
+                controller.StartPosition = UiManager.Instance.transform.position;
+            }
         }
-    }
-    private IEnumerator DelayForAnimator(GearInfoController controller)
-    {
-        yield return null;
-
-        controller.GearName.SetText(Item.itemName);
-        controller.GearDescription.SetText(Item.itemDescription);
-        controller.GearImage.sprite = Item.itemImage;
-        controller.GearType.SetText(Item.itemType.ToString());
-        foreach(var effect in Item.itemEffects)
-        {
-            GameObject temp = null;
-            temp = Instantiate(EffectPrefab, controller.EffectsContainer.transform);
-            temp.GetComponent<TextMeshProUGUI>().SetText(effect.ItemEffectDescription);
-        }
-        
-
-        //Animate
-
-        Vector3 targetPosition = UiManager.Instance.transform.position;
-        Vector3 startPosition = this.transform.position;
-        controller.Enlarge(startPosition, targetPosition);
     }
     private void EquipGear()
     {
@@ -135,11 +107,10 @@ public class GearInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     /// </summary>
     private void VerifyScrapItem()
     {
-        GameObject temp = Instantiate(ConfirmationWindow,UiManager.Instance.transform);
-        temp.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow("You are about to scrap the item " 
-            + item.itemName + 
+        UiManager.Instance.PopUpMessage("You are about to scrap the item "
+            + item.itemName +
             " for the scrap value of "
-            + item.GetScrapValue(),ConfirmScrap);        
+            + item.GetScrapValue(), ConfirmScrap);       
     }
     private void ConfirmScrap()
     {

@@ -46,3 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemsLootForCurrentCombat: []
   NewChipLootForCurrentCombat: []
+  combatArea: {fileID: 0}
+  CombatStartSound: 8
+  CombatSound: 2
+  CombatWinSound: 10

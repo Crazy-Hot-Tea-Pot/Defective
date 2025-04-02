@@ -50,7 +50,7 @@ public class DataManager : MonoBehaviour
             if (!Directory.Exists(saveDirectory))
             {
                 Directory.CreateDirectory(saveDirectory);
-            }          
+            }
         }
         else
         {
@@ -74,7 +74,10 @@ public class DataManager : MonoBehaviour
         CurrentGameData.TimeStamp = DateTime.Now;
         CurrentGameData.UpdateTimeStamp();
 
-        // Save Chips
+        float completionTime = Time.time-GameStatsTracker.Instance.SessionStartTime;
+        CurrentGameData.CompletionTime = completionTime;
+
+        // Save Chips in player deck
         CurrentGameData.Chips.Clear();
 
         foreach (var chip in ChipManager.Instance.PlayerDeck)
@@ -87,6 +90,14 @@ public class DataManager : MonoBehaviour
             };
 
             CurrentGameData.Chips.Add(chipData);
+        }
+
+        //Save all chips player colelcted
+        CurrentGameData.TotalCollectedChips.Clear();
+
+        foreach (var chip in GameStatsTracker.Instance.TotalChipsCollected)
+        {
+            CurrentGameData.TotalCollectedChips.Add(chip.chipName);
         }
 
         //Save Gear
@@ -104,7 +115,7 @@ public class DataManager : MonoBehaviour
             CurrentGameData.Gear.Add(gearData);
         }
 
-        StoryManager.Instance.SaveStoryProgress();
+        StoryManager.Instance.SaveStoryProgress();        
 
         string json = JsonUtility.ToJson(CurrentGameData, true);
         File.WriteAllText(saveFilePath, json);
@@ -180,6 +191,19 @@ public class DataManager : MonoBehaviour
         // Parse the string back into a DateTime object
         loadedData.ParseTimeStamp();
         CurrentGameData = loadedData;
+
+        //load tracking data
+        GameStatsTracker.Instance.SessionStartTime = Time.time - loadedData.CompletionTime;
+        GameStatsTracker.Instance.TotalChipsCollected.Clear();
+
+        foreach (var chipName in loadedData.TotalCollectedChips)
+        {
+            NewChip matchedChip = ChipManager.Instance.AllChips.Find(chip => chip.chipName == chipName);
+            if (matchedChip != null)
+            {
+                GameStatsTracker.Instance.TotalChipsCollected.Add(Instantiate(matchedChip));
+            }
+        }
 
         //Load Player stats
         CurrentGameData.Health = loadedData.Health;
@@ -298,5 +322,5 @@ public class DataManager : MonoBehaviour
         }
         Debug.LogWarning($"Attempted to delete a save that does not exist: {saveName}");
         return false;
-    }
+    }    
 }
