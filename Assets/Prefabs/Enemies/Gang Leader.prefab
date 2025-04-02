@@ -412,6 +412,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d1bc0b3d8539e2c4d8e6ce44da7e8d19, type: 2}
+    - target: {fileID: -7823293702887809713, guid: 27940974869aa904692996979dfaae2b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 587265ab144b97745b530152ae90389f, type: 2}
     - target: {fileID: -6126564370839708100, guid: 27940974869aa904692996979dfaae2b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -423,15 +427,19 @@ PrefabInstance:
     - target: {fileID: -3956972279374895377, guid: 27940974869aa904692996979dfaae2b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cbe95ef5f19255f478841327dd1342de, type: 2}
+      objectReference: {fileID: 2100000, guid: a62b8d6a3b427774ba1ab81f15cebada, type: 2}
     - target: {fileID: -3685076225284235933, guid: 27940974869aa904692996979dfaae2b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f90c4e5c123614e47a5258910f8d8870, type: 2}
+    - target: {fileID: -1391101608445812263, guid: 27940974869aa904692996979dfaae2b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a62b8d6a3b427774ba1ab81f15cebada, type: 2}
     - target: {fileID: 271861592369912973, guid: 27940974869aa904692996979dfaae2b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cbe95ef5f19255f478841327dd1342de, type: 2}
+      objectReference: {fileID: 2100000, guid: a62b8d6a3b427774ba1ab81f15cebada, type: 2}
     - target: {fileID: 919132149155446097, guid: 27940974869aa904692996979dfaae2b, type: 3}
       propertyPath: m_Name
       value: Looter Boss 1
