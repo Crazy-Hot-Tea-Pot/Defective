@@ -27,4 +27,4 @@ MonoBehaviour:
   nextQuest: {fileID: 0}
   secondQuest: {fileID: 0}
   InCombat: 0
-  Index: 1
+  Index: 0

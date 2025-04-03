@@ -105,7 +105,7 @@ public class QuestManager : MonoBehaviour
             //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
             //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, SummonQuest);
 
-            UiManager.Instance.PopUpMessage(text, SummonQuest);
+            UiManager.Instance.PopUpMessage(text, SummonQuest, false);
 
             //So much easier
 
@@ -149,7 +149,7 @@ public class QuestManager : MonoBehaviour
         //GameObject window = Instantiate(ConfirmationWindow, UiManager.Instance.transform);
         //window.GetComponent<ConfirmationWindow>().SetUpComfirmationWindow(text, ForceComplete);
 
-        UiManager.Instance.PopUpMessage(text, ForceComplete);
+        UiManager.Instance.PopUpMessage(text, ForceComplete,false);
     }
 
     public void ForceComplete()
