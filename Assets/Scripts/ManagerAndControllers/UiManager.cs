@@ -367,7 +367,7 @@ public class UiManager : MonoBehaviour
         AdditiveSceneLoadandUnload("Settings", true);
     }
 
-    private void AdditiveSceneLoadandUnload(string scene, bool unload)
+    public void AdditiveSceneLoadandUnload(string scene, bool unload)
     {
         if(unload)
         {

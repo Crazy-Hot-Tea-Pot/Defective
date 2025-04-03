@@ -274,8 +274,12 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private IEnumerator Quit()
     {
-
-        DataManager.Instance.AutoSave();
+        try
+        {
+            DataManager.Instance.AutoSave();
+        }
+        catch { 
+        }
 
         // Wait for the duration of the sound (or a short delay)
         yield return new WaitForSeconds(1f);

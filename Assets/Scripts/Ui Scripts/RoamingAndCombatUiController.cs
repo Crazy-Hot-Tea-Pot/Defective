@@ -124,7 +124,7 @@ public class RoamingAndCombatUiController : UiController
         HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, targetHealthPercentage);
 
         // Update the health text
-        HealthText.SetText(currentHealth.ToString("F1"));//$"{percentage}%");
+        HealthText.SetText(currentHealth.ToString("F1"));
 
     }   
     

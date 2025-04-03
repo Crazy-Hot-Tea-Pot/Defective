@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SettingsUIController : UiController
 {
@@ -65,11 +66,11 @@ public class SettingsUIController : UiController
 
         //When adding buttons remove all listeners for when we go to main menu and back to in game otherwise we could have alot of listeners
         //Buttons for tabs
-        VideoTabbtn = this.gameObject.transform.Find("OptionsScreen").Find("VideoSettingsbtn").GetComponent<Button>();
+        VideoTabbtn = this.gameObject.transform.Find("OptionsScreen").Find("TabBar").Find("VideoSettingsbtn").GetComponent<Button>();
         VideoTabbtn.onClick.RemoveAllListeners();
         //Add a button for opening video settings
         VideoTabbtn.onClick.AddListener(OpenVideoSettingsTab);
-        AudioTabbtn = this.gameObject.transform.Find("OptionsScreen").Find("Audiobtn").GetComponent<Button>();
+        AudioTabbtn = this.gameObject.transform.Find("OptionsScreen").Find("TabBar").Find("Audiobtn").GetComponent<Button>();
         AudioTabbtn.onClick.RemoveAllListeners();
         //Add a button for opening audio settings
         AudioTabbtn.onClick.AddListener(OpenAudioSettingsTab);
@@ -169,11 +170,11 @@ public class SettingsUIController : UiController
             smallSettingMenu.SetActive(false);
 
             //Buttons for video tab
-            VideoTabbtn = this.gameObject.transform.Find("OptionsScreen").Find("VideoSettingsbtn").GetComponent<Button>();
+            VideoTabbtn = this.gameObject.transform.Find("OptionsScreen").Find("TabBar").Find("VideoSettingsbtn").GetComponent<Button>();
             VideoTabbtn.onClick.RemoveAllListeners();
             VideoTabbtn.onClick.AddListener(OpenVideoSettingsTab);
             //Buttons for audio tab
-            AudioTabbtn = this.gameObject.transform.Find("OptionsScreen").Find("Audiobtn").GetComponent<Button>();
+            AudioTabbtn = this.gameObject.transform.Find("OptionsScreen").Find("TabBar").Find("Audiobtn").GetComponent<Button>();
             AudioTabbtn.onClick.RemoveAllListeners();
             AudioTabbtn.onClick.AddListener(OpenAudioSettingsTab);
 
@@ -216,8 +217,8 @@ public class SettingsUIController : UiController
     {
         hasOpenedVideo = true;
         //Find the settings tabs
-        videoSettingTab = VideoTabbtn.transform.parent.Find("VideoSettingsTab").gameObject;
-        AudioTabbtn.transform.parent.Find("AudioSettingsTab").gameObject.SetActive(false);
+        videoSettingTab = VideoTabbtn.transform.parent.transform.parent.Find("VideoSettingsTab").gameObject;
+        AudioTabbtn.transform.parent.transform.parent.Find("AudioSettingsTab").gameObject.SetActive(false);
         //Open/Close tab
         if (videoSettingTab.activeSelf)
         {
@@ -250,8 +251,8 @@ public class SettingsUIController : UiController
     {
         hasOpenedAudio = true;
         //Find the settings tabs
-        audioSettingTab = AudioTabbtn.transform.parent.Find("AudioSettingsTab").gameObject;
-        VideoTabbtn.transform.parent.Find("VideoSettingsTab").gameObject.SetActive(false);
+        audioSettingTab = AudioTabbtn.transform.parent.transform.parent.Find("AudioSettingsTab").gameObject;
+        VideoTabbtn.transform.parent.transform.parent.Find("VideoSettingsTab").gameObject.SetActive(false);
 
         //Find buttons for audio effect and assign them
         SoundEffectsSlider = audioSettingTab.transform.Find("SoundEffectsSlider").GetComponent<Slider>();
@@ -577,6 +578,7 @@ public class SettingsUIController : UiController
             largeSettingMenu.SetActive(false);
             smallSettingMenu.SetActive(false);
             UiManager.Instance.CloseSettingsOnClickTitle();
+            UiManager.Instance.AdditiveSceneLoadandUnload("Settings", true);
         }
         else
         {
