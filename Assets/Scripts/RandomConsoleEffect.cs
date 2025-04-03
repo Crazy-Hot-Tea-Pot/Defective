@@ -89,7 +89,7 @@ public class RandomConsoleEffect : MonoBehaviour
     {
         while (true)
         {
-            string command = isGlitching ? GenerateBinaryMessage() : GenerateRandomCommand();
+            string command = isGlitching ? GetSpecialMessage() : GenerateRandomCommand();
             yield return StartCoroutine(TypeText(command));
             yield return new WaitForSeconds(lineDelay);
         }
@@ -116,6 +116,14 @@ public class RandomConsoleEffect : MonoBehaviour
     {
         string message = binaryMessages[Random.Range(0, binaryMessages.Length)];
         return ConvertToBinary(message);
+    }
+
+    private string GetSpecialMessage()
+    {
+        if (string.IsNullOrWhiteSpace(specialMessage))
+            return GenerateBinaryMessage();
+
+        return convertToBinary ? ConvertToBinary(specialMessage) : specialMessage;
     }
 
     private string ConvertToBinary(string text)

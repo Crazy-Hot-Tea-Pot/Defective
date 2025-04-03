@@ -85,24 +85,34 @@ public class SecurityCameraController : MonoBehaviour
         {
             Renderer monitorRenderer = SecurityMonitor.GetComponent<Renderer>();
 
-            // Ensure each Security Monitor has its own material without creating leaks
-            if (monitorRenderer.sharedMaterial == null || monitorRenderer.sharedMaterial.name.EndsWith("(Instance)"))
+            if (!Application.isPlaying)
             {
-                screenMaterial = new Material(monitorRenderer.sharedMaterial); // Duplicate only if necessary
-                screenMaterial.name = "MonitorMaterial_" + GetInstanceID(); // Unique name for clarity
-                monitorRenderer.material = screenMaterial;
+                if (monitorRenderer.sharedMaterial == null)
+                    return;
+
+                screenMaterial=monitorRenderer.sharedMaterial;
             }
             else
             {
-                screenMaterial = monitorRenderer.material; // Use existing one if already unique
-            }
+                // Ensure each Security Monitor has its own material without creating leaks
+                if (monitorRenderer.sharedMaterial == null || monitorRenderer.sharedMaterial.name.EndsWith("(Instance)"))
+                {
+                    screenMaterial = new Material(monitorRenderer.sharedMaterial); // Duplicate only if necessary
+                    screenMaterial.name = "MonitorMaterial_" + GetInstanceID(); // Unique name for clarity
+                    monitorRenderer.material = screenMaterial;
+                }
+                else
+                {
+                    screenMaterial = monitorRenderer.material; // Use existing one if already unique
+                }
 
-            // Ensure each monitor has its own render texture
-            if (screenMaterial.mainTexture == null || !(screenMaterial.mainTexture is RenderTexture))
-            {
-                renderTexture = new RenderTexture(1920, 1080, 16);
-                securityCamera.targetTexture = renderTexture;
-                screenMaterial.mainTexture = renderTexture;
+                // Ensure each monitor has its own render texture
+                if (screenMaterial.mainTexture == null || !(screenMaterial.mainTexture is RenderTexture))
+                {
+                    renderTexture = new RenderTexture(1920, 1080, 16);
+                    securityCamera.targetTexture = renderTexture;
+                    screenMaterial.mainTexture = renderTexture;
+                }
             }
         }
 

@@ -22,7 +22,8 @@ public class Enemy : MonoBehaviour
         Shield,
         Buff,
         Debuff,
-        Unique
+        Unique,
+        Galvanize
     }
     public enum IsEnemy
     {
@@ -716,7 +717,7 @@ public class Enemy : MonoBehaviour
     /// <typeparam name="T"></typeparam>
     /// <param name="effect"></param>
     /// <param name="stacks"></param>
-    private void AddOrUpdateEffect<T>(T effect, int stacks) where T : Enum
+    protected virtual void AddOrUpdateEffect<T>(T effect, int stacks) where T : Enum
     {
         for (int i = 0; i < ListOfActiveEffects.Count; i++)
         {

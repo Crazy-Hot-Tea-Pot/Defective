@@ -4,6 +4,7 @@ public class MaintenanceBot : Enemy
 {
     [Header("Custom for Enemy type")]
     private bool repairUsed;
+    public GameObject GalvanizeEffect;
 
     public bool RepairUsed
     {
@@ -16,6 +17,7 @@ public class MaintenanceBot : Enemy
             repairUsed = value;
         }
     }
+
 
     [Header("Sound")]
     public SoundFX RepairBotSound;
@@ -59,6 +61,12 @@ public class MaintenanceBot : Enemy
         nextIntentRoll = Random.Range(1, 11);
         base.EndTurn();
     }
+    protected override void AddOrUpdateEffect<T>(T effect, int stacks)
+    {
+        base.AddOrUpdateEffect(effect, stacks);
+
+        GalvanizeEffect.SetActive(IsGalvanized);
+    }
     protected override void SetUpEnemy()
     {
         base.SetUpEnemy();
@@ -83,32 +91,28 @@ public class MaintenanceBot : Enemy
     {
         base.PerformIntent();
 
-        if (CurrentHP <= MaxHp / 2 && !RepairUsed)
+        switch (NextIntent.intentText)
         {
-            //Repair();
-            //RepairUsed = true;
-            Animator.SetTrigger("Intent 3");
-        }
-        else
-        {           
-            if (nextIntentRoll <= 4)
-            {
+            case "Repair":
+                //Repair();
+                Animator.SetTrigger("Intent 3");
+                break;
+            case "Galvanize":
                 //Galvanize();
                 Animator.SetTrigger("Intent 1");
-            }
-            else
-            {
+                break;
+            case "Disassemble":
                 //Disassemble();
                 Animator.SetTrigger("Intent 2");
-            }
-        }
+                break;
+        }        
     }
     protected override (string intentText, IntentType intentType, int value) GetNextIntent()
     {
         if (CurrentHP <= MaxHp / 2 && !RepairUsed)
             return ("Repair", IntentType.Buff, 0);
         else if (nextIntentRoll <= 4)
-            return ("Galvanize", IntentType.Buff, 4);
+            return ("Galvanize", IntentType.Galvanize, 4);
         else
             return ("Disassemble", IntentType.Attack, 9);
     }

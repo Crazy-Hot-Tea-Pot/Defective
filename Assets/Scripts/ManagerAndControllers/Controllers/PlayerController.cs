@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public GameObject RipplePrefab;
     public GameObject RippleRunPrefab;
     public GameObject CallScreen;
+    public GameObject GalvanizeEffectOnBody;
 
 
     [Header("Player stats")]
@@ -169,7 +170,6 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Status Effects")]
-
     #region Effects
 
     [SerializeField]
@@ -649,8 +649,9 @@ public class PlayerController : MonoBehaviour
         else if (effect is Debuff debuffEffect)
             ListOfActiveEffects.Add(new StatusEffect(debuffEffect, stacks));
         else if (effect is SpecialEffects specialEffect)       
-            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks,permnament));        
-      
+            ListOfActiveEffects.Add(new StatusEffect(specialEffect, stacks,permnament));
+
+        GalvanizeEffectOnBody.SetActive(IsGalvanized);
     }
 
     #endregion

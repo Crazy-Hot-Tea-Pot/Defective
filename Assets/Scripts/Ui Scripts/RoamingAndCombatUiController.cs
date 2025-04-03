@@ -123,11 +123,12 @@ public class RoamingAndCombatUiController : UiController
         HealthBar.fillAmount = targetHealthPercentage;
         HealthBar.color = Color.Lerp(lowHealthColor, fullHealthColor, targetHealthPercentage);
 
-        // Update the health text
-        HealthText.SetText(currentHealth.ToString("F1"));
+        // Format health to 1 decimal if not a whole number
+        string formattedHealth = (currentHealth % 1f == 0f) ? currentHealth.ToString("F0") : currentHealth.ToString("F1");
+        HealthText.SetText(formattedHealth);
+    }
 
-    }   
-    
+
     /// <summary>
     /// Updates the UI for Player ShieldAmount
     /// </summary>

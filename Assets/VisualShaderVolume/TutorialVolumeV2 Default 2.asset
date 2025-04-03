@@ -58,10 +58,10 @@ MonoBehaviour:
     m_Value: {x: 0.98603034, y: 0.97836685, z: 1, w: 0}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0, y: 0, z: 0, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 0, y: 0, z: 0, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
 --- !u!114 &-3576111271538729732
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: TutorialVolumeV2
+  m_Name: TutorialVolumeV2 Default 2
   m_EditorClassIdentifier: 
   components:
   - {fileID: 3575688954990780142}

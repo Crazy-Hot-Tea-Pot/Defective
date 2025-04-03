@@ -208,7 +208,7 @@ public class GearManager : MonoBehaviour
         {
             // Increase tier by one
             item.UpgradeTier();
-            UiManager.Instance.PopUpMessage($"{item.itemName} combined to increase to teir {item.ItemTeir}");            
+            UiManager.Instance.PopUpMessage($"{item.itemName} combined to increase to tier {item.ItemTeir}");            
         }
         else
         {
