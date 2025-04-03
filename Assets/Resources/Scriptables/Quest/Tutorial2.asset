@@ -19,6 +19,7 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
+  scrap: 1
   PopupText: To attack, select an enemy with your mouse. Each combat, you have 8
     "Chips" in your Deck, which are consumables that refresh at the end of each combat.
     You will draw up to 4 each turn, and may inspect them by right-clicking on them.

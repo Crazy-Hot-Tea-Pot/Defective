@@ -19,10 +19,12 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
+  scrap: 1
   UIElementPath: Canvas/Setting UI/ShortMenu/Questbtn
   curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
   xOffset: 0
-  yOffset: -10
+  yOffset: 10
   nextQuest: {fileID: 0}
   secondQuest: {fileID: 0}
   InCombat: 0
+  FindAnyChild: 0

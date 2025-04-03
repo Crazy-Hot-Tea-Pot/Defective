@@ -19,4 +19,5 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
+  scrap: 1
   questSpawn: {fileID: 11400000, guid: be85751e627828c41b56ce093f5ac207, type: 2}

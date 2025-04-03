@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: PuzzleTutorial
   m_EditorClassIdentifier: 
   questName: An extra step
+  ccQuestName: An extra step
+  modifiedQuestName: An extra step
   questDesc: Go to the marked location
   complete: 0
+  isTutorial: 0
+  mainQuest: 0
+  scrap: 20
   questEndNameForPositionCalc: QuestMarker(Clone) (1)

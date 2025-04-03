@@ -19,6 +19,7 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
+  scrap: 1
   PopupText: To end your turn you must press the end turn button. This will refresh
     your hand and draw new cards. Remember you only have 8 chips per combat.
   nextQuest: {fileID: 11400000, guid: 7f4a57f01dec88446945da9d7c750bc7, type: 2}

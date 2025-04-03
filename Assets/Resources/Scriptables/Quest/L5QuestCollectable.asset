@@ -20,5 +20,6 @@ MonoBehaviour:
   complete: 0
   isTutorial: 0
   mainQuest: 0
+  scrap: 10
   tagName: Junk
   neededCollections: 4

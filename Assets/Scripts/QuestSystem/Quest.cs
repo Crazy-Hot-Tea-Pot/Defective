@@ -12,6 +12,7 @@ public class Quest : ScriptableObject
     public bool complete = false;
     public bool isTutorial;
     public bool mainQuest;
+    public int scrap;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class Quest : ScriptableObject
         questName = "\n" + ccQuestName + " (Complete)";
         GameObject.Find("UiManager/Roaming And Combat UI/MiniBarSettingAndUi").GetComponent<QuestUIController>().AnimateLog();
         Debug.Log("Quest Complete: " + questName);
+        GameObject.Find("Player").GetComponent<PlayerController>().GainScrap(scrap);
         //QuestManager.Instance.UpdateQuestHud(this);
     }
 

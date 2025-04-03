@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: L3LooterKills
   m_EditorClassIdentifier: 
   questName: 'Looting Looters  :'
-  ccQuestName: 'Looting Looters :'
+  ccQuestName: 'Looting Looters  :'
   modifiedQuestName: 'Looting Looters :'
   questDesc: Destroy 2 looter bots
   complete: 0
   isTutorial: 0
   mainQuest: 1
+  scrap: 20
   totalEnemies: 2
   enemyType: Looter

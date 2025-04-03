@@ -19,6 +19,7 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
+  scrap: 1
   UIElementPath: UiManager/Roaming And Combat UI/PlayerHand
   curserArrow: {fileID: 625391041913044323, guid: 24a62900b4c1da54b9e92190883dffd3, type: 3}
   xOffset: 0

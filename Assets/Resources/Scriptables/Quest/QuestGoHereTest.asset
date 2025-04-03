@@ -19,4 +19,5 @@ MonoBehaviour:
   complete: 0
   isTutorial: 0
   mainQuest: 1
+  scrap: 5
   questEndNameForPositionCalc: QuestMarker(Clone)

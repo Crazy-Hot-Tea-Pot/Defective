@@ -19,6 +19,7 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
+  scrap: 1
   PopupText: After combat, you will gain some "Scrap" and other items. Scrap can
     be used at the Terminal to upgrade your existing Chips or Max Health. Chips can
     be added to your Deck by removing an existing Chip, and gear can be swapped through

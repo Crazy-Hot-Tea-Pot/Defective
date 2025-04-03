@@ -19,6 +19,7 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
+  scrap: 1
   PopupText: 'Additionally, you also have "Abilities" located on the bottom left
     side of your screen. Each ability costs "Energy" which are the squares surrounding
     the ability ring. You have 10 Energy that refreshes at the start of your turn.

@@ -19,6 +19,7 @@ MonoBehaviour:
   complete: 0
   isTutorial: 1
   mainQuest: 0
+  scrap: 1
   PopupText: Your main quest is displayed on the top-right corner of the screen.
     Other quests can be viewed through the pause menu. Press the escape key to view
     them.

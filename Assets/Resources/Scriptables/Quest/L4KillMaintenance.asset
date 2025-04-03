@@ -19,5 +19,6 @@ MonoBehaviour:
   complete: 0
   isTutorial: 0
   mainQuest: 1
+  scrap: 20
   totalEnemies: 2
   enemyType: Maintenancebot
