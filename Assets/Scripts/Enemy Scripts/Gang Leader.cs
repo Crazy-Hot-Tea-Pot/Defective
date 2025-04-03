@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -91,6 +92,41 @@ public class GangLeader : Enemy
         base.EndTurn();
     }
 
+    public override void UpdateIntentUI()
+    {
+        var ui = EnemyUIObject.GetComponent<EnemyUI>();
+
+        if (NextIntents[0].intentText == "Disorient")
+        {
+            ui.DisplayIntent(new List<(string, IntentType, int)>
+        {
+            ("Deal Damage", IntentType.Attack, 6),
+            ("Apply Jam", IntentType.Jam, 1)
+        });
+        }
+        else if (NextIntents[0].intentText == "Cower")
+        {
+            ui.DisplayIntent(new List<(string, IntentType, int)>
+        {
+            ("Gain Shield", IntentType.Shield, 15),
+            ("Deal Damage", IntentType.Attack, 3)
+        });
+        }
+        else if (NextIntents[0].intentText == "Intimidate")
+        {
+            ui.DisplayIntent(new List<(string, IntentType, int)>
+        {
+            ("Apply Worn", IntentType.WornDown, 1),
+            ("Apply Drained", IntentType.Drained, 1)
+        });
+        }
+        else
+        {
+            // Fallback to standard UI
+            base.UpdateIntentUI();
+        }
+    }
+
 
     protected override void SetUpEnemy()
     {
@@ -120,7 +156,7 @@ public class GangLeader : Enemy
         base.PerformIntent();
 
         // If the selected intent is a Looter-dependent one
-        if (NextIntent.intentText == "Threaten" && (Looter1 == null && Looter2 == null))
+        if (NextIntents[0].intentText == "Threaten" && (Looter1 == null && Looter2 == null))
         {
             Debug.Log("Looters are gone. Rerolling intent for Gang Leader...");
 
@@ -128,16 +164,17 @@ public class GangLeader : Enemy
             nextIntentRoll = Random.Range(1, 11);
 
             // Get new intent (updates display)
-            var rerolledIntent = GetNextIntent();
-            NextIntent = rerolledIntent;
+            var rerolledIntent = GetNextIntents();
+            NextIntents = rerolledIntent;
 
             // Force update on UI
             EnemyUI enemyUI = EnemyUIObject.GetComponent<EnemyUI>();
-            enemyUI.DisplayIntent(rerolledIntent.intentText, rerolledIntent.intentType, rerolledIntent.value);
+            UpdateIntentUI();
+
         }
 
         // Now perform the actual intent
-        switch (NextIntent.intentText)
+        switch (NextIntents[0].intentText)
         {
             case "Threaten":
                 //Threaten();
@@ -156,7 +193,7 @@ public class GangLeader : Enemy
                 Animator.SetTrigger("Intent 4");
                 break;
             default:
-                Debug.LogWarning($"Unknown intent: {NextIntent.intentText}");
+                Debug.LogWarning($"Unknown intent: {NextIntents[0].intentText}");
                 break;
         }
     }
@@ -256,20 +293,44 @@ public class GangLeader : Enemy
 
         Debug.Log($"Gang Leader assigned Looters: {Looter1?.name}, {Looter2?.name}");
     }
-
-    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
+    protected override List<(string intentText, IntentType intentType, int value)> GetNextIntents()
     {
         if (CurrentPhase == GangLeaderPhases.WithLooters)
         {
-            return nextIntentRoll < 5
-                ? ("Threaten", IntentType.Buff, 2)
-                : ("Intimidate", IntentType.Debuff, 1);
+            if (nextIntentRoll < 5)
+            {
+                return new List<(string, IntentType, int)>
+            {
+                ("Threaten", IntentType.Power, 2)
+            };
+            }
+            else
+            {
+                return new List<(string, IntentType, int)>
+            {
+                ("Intimidate", IntentType.WornDown, 1),
+                ("Intimidate", IntentType.Drained, 1)
+            };
+            }
         }
         else
         {
-            return nextIntentRoll < 4
-                ? ("Disorient", IntentType.Attack, 6)
-                : ("Cower", IntentType.Shield, 15);
+            if (nextIntentRoll < 4)
+            {
+                return new List<(string, IntentType, int)>
+            {
+                ("Disorient", IntentType.Attack, 6),
+                ("Disorient", IntentType.Jam, 1)
+            };
+            }
+            else
+            {
+                return new List<(string, IntentType, int)>
+            {
+                ("Cower", IntentType.Shield, 15),
+                ("Cower", IntentType.Attack, 3)
+            };
+            }
         }
     }
 

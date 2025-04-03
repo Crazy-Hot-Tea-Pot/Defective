@@ -442,7 +442,7 @@ public class PlayerController : MonoBehaviour
     /// heal Player by amount
     /// </summary>
     /// <param name="amountHeal"></param>
-    public void Heal(int amountHeal)
+    public void Heal(float amountHeal)
     {
         //Heal the Player using the getter and setter value
         //This will also check for over healing and correct
@@ -1019,6 +1019,10 @@ public class PlayerController : MonoBehaviour
             .ToList();
 
         UiManager.Instance.UpdateEffects(ListOfActiveEffects);
+
+        Shield = 0;
+
+        Heal(MaxHealth * 0.2f);
     }
 
 

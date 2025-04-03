@@ -23,7 +23,11 @@ public class Enemy : MonoBehaviour
         Buff,
         Debuff,
         Unique,
-        Galvanize
+        Galvanize,
+        Jam,
+        Drained,
+        WornDown,
+        Power
     }
     public enum IsEnemy
     {
@@ -203,7 +207,7 @@ public class Enemy : MonoBehaviour
         }
         protected set
         {
-            shield = value;
+            shield = (float)Math.Round(value,1);
 
             if (shield > maxShield)
                 maxShield = value;
@@ -213,8 +217,7 @@ public class Enemy : MonoBehaviour
                 shield = 0;
                 maxShield = value;
             }
-
-            thisEnemyUI.UpdateShield(shield,maxShield);
+            StartCoroutine(WaitAndApplyShield());            
         }
     }    
     
@@ -371,20 +374,20 @@ public class Enemy : MonoBehaviour
     [Range(0,100)]
     public int DroppedScrap;
 
-    protected (string intentText, IntentType intentType, int value) NextIntent
+    protected List<(string intentText, IntentType intentType, int value)> NextIntents
     {
         get
         {
-            return nextIntent;
+            return nextIntents;
         }
         set
         {
-            nextIntent = value;
+            nextIntents = value;
         }
     }
 
     private float distanceToPlayer;
-    protected (string intentText, IntentType intentType, int value) nextIntent;
+    protected List<(string intentText, IntentType intentType, int value)> nextIntents;
 
     [Header("Sound")]
     public SoundFX EnemyDeathSound;
@@ -426,13 +429,21 @@ public class Enemy : MonoBehaviour
         thisEnemyUI.SetEnemyName(EnemyName);        
     }
     #region Combat
+    protected IEnumerator WaitAndApplyShield()
+    {
+        while (!EnemyUIObject.activeInHierarchy)
+        {
+            yield return null;
+        }
 
+        thisEnemyUI.UpdateShield(shield, maxShield);
+    }
     /// <summary>
     /// Combat start stuff for everyenemy.
     /// </summary>
     public virtual void CombatStart()
     {
-        NextIntent = GetNextIntent();
+        NextIntents = GetNextIntents();
         UpdateIntentUI();
     }
 
@@ -447,7 +458,7 @@ public class Enemy : MonoBehaviour
         RemoveEffect(Effects.Debuff.Drained, 1);        
 
         //Assign new intent AFTER performing the current one
-        NextIntent = GetNextIntent();
+        NextIntents = GetNextIntents();
         UpdateIntentUI();
 
         CombatController.EndTurn(this.gameObject);
@@ -598,7 +609,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void UpdateIntentUI()
     {
-        thisEnemyUI.DisplayIntent(NextIntent.intentText, NextIntent.intentType, NextIntent.value);
+        thisEnemyUI.DisplayIntent(NextIntents);
     }
 
     /// <summary>
@@ -668,11 +679,15 @@ public class Enemy : MonoBehaviour
     }
 
 
-    protected virtual (string intentText, IntentType intentType, int value) GetNextIntent()
+    protected virtual List<(string intentText, IntentType intentType, int value)> GetNextIntents()
     {
-        return ("Unknown", IntentType.None, 0);
-    }    
-    #endregion   
+        return new List<(string, IntentType, int)>
+        {
+            ("Unknown", IntentType.None, 0)
+        };
+    }
+
+    #endregion
 
     #region Effects
 

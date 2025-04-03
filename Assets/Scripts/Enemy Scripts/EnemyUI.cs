@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static Enemy;
+using static UnityEngine.Rendering.DebugUI;
 
 public class EnemyUI : MonoBehaviour
 {
@@ -131,22 +132,10 @@ public class EnemyUI : MonoBehaviour
 
             // Calculate the target shield percentage
             float shieldPercentage = currentShield / maxShield;
+            shieldBar.fillAmount = shieldPercentage;
 
-            //ShieldBar.fillAmount = shieldPercentage;
-
-            StopAllCoroutines();
-
-            if (this.gameObject.activeInHierarchy)
-                // Start the coroutine to smoothly update the shield bar
-                StartCoroutine(UpdateShieldOverTime(shieldPercentage, maxShield));
-            else            
-                StartCoroutine(WaitToCallBackShield(shieldPercentage, maxShield));            
+            shieldText.SetText($"{currentShield}");
         }
-    }
-    private IEnumerator WaitToCallBackShield(float currentShield, float maxShield)
-    {
-        yield return new WaitForSeconds(1f);
-        UpdateShield(currentShield, maxShield);
     }
     /// <summary>
     /// Update the Effects for Enemy
@@ -208,46 +197,48 @@ public class EnemyUI : MonoBehaviour
     /// Update intent box.
     /// </summary>
     /// <param name="intent"></param>
-    public void DisplayIntent(string intentText,Enemy.IntentType intentType,int value = 0)
+    public void DisplayIntent(List<(string text,Enemy.IntentType intentType,int value)> intents)
     {
         IntentContainer.SetActive(true);
 
         var textComponent = IntentText.GetComponent<TextMeshProUGUI>();
+        textComponent.text = "";
 
-        // Define colors based on IntentType
-        string colorTag = intentType switch
+        foreach (var (text, type, value) in intents)
         {
-            // Red for damage
-            IntentType.Attack => "<color=#FF0000>",
-            // Blue for shield
-            IntentType.Shield => "<color=#0000FF>",
-            // Green for buffs
-            IntentType.Buff => "<color=#00FF00>",
-            // Yellow for debuffs
-            IntentType.Debuff => "<color=#FFFF00>",
-            // Orange for unique actions
-            IntentType.Unique => "<color=#FFA500>",
-            // Default white
-            _ => "<color=#FFFFFF>"
-        };
+            string colorTag = type switch
+            {
+                Enemy.IntentType.Attack => "<color=#FF0000>",
+                Enemy.IntentType.Power => "<color=#FF0000>",
+                Enemy.IntentType.Shield => "<color=#0000FF>",
+                Enemy.IntentType.Buff => "<color=#00FF00>",
+                Enemy.IntentType.Debuff => "<color=#FFFF00>",
+                Enemy.IntentType.Unique => "<color=#FFA500>",
+                _ => "<color=#FFFFFF>"
+            };
 
-        // Define corresponding icons based on IntentType
-        string iconTag = intentType switch
-        {
-            IntentType.Attack => "<sprite name=Attacking>",
-            IntentType.Shield => "<sprite name=Shielding>",
-            IntentType.Buff => "<sprite name=Buff>",
-            IntentType.Debuff => "<sprite name=Debuff>",
-            IntentType.Galvanize => "<sprite name=Galvanize>",
-            IntentType.Unique => "<sprite name=Unique1> " + intentText + " <sprite name=Unique2>",
-            _ => ""
-        };
+            string iconTag = type switch
+            {
+                Enemy.IntentType.Attack => "<sprite name=Attacking>",
+                Enemy.IntentType.Shield => "<sprite name=Shielding>",
+                Enemy.IntentType.Buff => "<sprite name=Buff>",
+                Enemy.IntentType.Debuff => "<sprite name=Debuff>",
+                Enemy.IntentType.Galvanize => "<sprite name=Galvanize>",
+                Enemy.IntentType.Jam => "<sprite name=Jam>",
+                Enemy.IntentType.WornDown => "<sprite name=WornDown>",
+                Enemy.IntentType.Drained => "<sprite name=Drained>",
+                Enemy.IntentType.Power => "<sprite name=Power>",
+                Enemy.IntentType.Unique => $"<sprite name=Unique1> {text} <sprite name=Unique2>",
+                _ => ""
+            };
 
-        // If there is a numeric value, format appropriately
-        string formattedText = value > 0 ? $"{colorTag}{value}</color> {iconTag}" : $"{iconTag}";
+            string formattedText = value > 0 ? $"{colorTag}{value}</color> {iconTag} " : $"{iconTag} ";
 
-        // Set the text
-        textComponent.SetText(formattedText);
+            if(!string.IsNullOrEmpty(textComponent.text))
+                textComponent.text += "\n";
+
+            textComponent.text += formattedText;
+        }
     }
 
     /// <summary>
@@ -294,45 +285,5 @@ public class EnemyUI : MonoBehaviour
         // Snap to exact final value to prevent small inconsistencies
         healthBar.fillAmount = targetFillAmount;
         healthText.SetText($"{currentHp}");
-    }
-    private IEnumerator UpdateShieldOverTime(float targetFillAmount,float maxShield)
-    {
-        float initialFillAmount = shieldBar.fillAmount;
-        float elapsedTime = 0f;
-
-        // Initial shield amount
-        int initialCurrentShield = Mathf.RoundToInt(initialFillAmount * maxShield);
-
-        // Target shield amount
-        int targetCurrentShield = Mathf.RoundToInt(targetFillAmount * maxShield);
-
-        // Store the initial max shield value
-        int initialMaxShield = (int)maxShield;
-
-        // Target max shield value
-        int finalMaxShield = Mathf.RoundToInt(targetFillAmount * maxShield);
-
-        while (elapsedTime < UiDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float progress = elapsedTime / UiDuration;
-
-            // Lerp shield bar fill amount
-            float newFillAmount = Mathf.Lerp(initialFillAmount, targetFillAmount, progress);
-            shieldBar.fillAmount = newFillAmount;
-
-            // Dynamically calculate current and max shield values
-            int currentShield = Mathf.RoundToInt(Mathf.Lerp(initialCurrentShield, targetCurrentShield, progress));
-            int updatedMaxShield = Mathf.RoundToInt(Mathf.Lerp(initialMaxShield, finalMaxShield, progress));
-
-            // Update the shield text
-            shieldText.SetText($"{currentShield}/{updatedMaxShield}");
-
-            yield return null;
-        }
-
-        // Ensure it snaps to the final values
-        shieldBar.fillAmount = targetFillAmount;
-        shieldText.SetText($"{targetCurrentShield}/{finalMaxShield}");
     }
 }

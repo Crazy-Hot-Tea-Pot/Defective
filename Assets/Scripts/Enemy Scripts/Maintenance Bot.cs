@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MaintenanceBot : Enemy
@@ -91,7 +92,7 @@ public class MaintenanceBot : Enemy
     {
         base.PerformIntent();
 
-        switch (NextIntent.intentText)
+        switch (NextIntents[0].intentText)
         {
             case "Repair":
                 //Repair();
@@ -107,15 +108,16 @@ public class MaintenanceBot : Enemy
                 break;
         }        
     }
-    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
+    protected override List<(string, IntentType, int)> GetNextIntents()
     {
         if (CurrentHP <= MaxHp / 2 && !RepairUsed)
-            return ("Repair", IntentType.Buff, 0);
+            return new() { ("Repair", IntentType.Buff, 0) };
         else if (nextIntentRoll <= 4)
-            return ("Galvanize", IntentType.Galvanize, 4);
+            return new() { ("Galvanize", IntentType.Galvanize, 4) };
         else
-            return ("Disassemble", IntentType.Attack, 9);
+            return new() { ("Disassemble", IntentType.Attack, 9) };
     }
+
 
     /// <summary>
     /// Deals 9 Damage

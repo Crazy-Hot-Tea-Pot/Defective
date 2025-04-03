@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SecurityDrone : Enemy
@@ -162,21 +163,16 @@ public class SecurityDrone : Enemy
 
         IntentsPerformed++;               
     }
-    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
+    protected override List<(string, IntentType, int)> GetNextIntents()
     {
         if (IntentsPerformed > 5 && NumberOfAlertDrones < 3)
-        {
-            return ("Alert", IntentType.Unique, 0);
-        }
+            return new() { ("Alert", IntentType.Unique, 0) };
         else if (nextIntentRoll <= 3)
-        {
-            return ("Neutralize", IntentType.Attack, neutralizeDamage);
-        }
+            return new() { ("Neutralize", IntentType.Attack, neutralizeDamage), ("Drained", IntentType.Drained, 1) };
         else
-        {
-            return ("Ram", IntentType.Attack, ramDamage);
-        }
+            return new() { ("Ram", IntentType.Attack, ramDamage) };
     }
+
 
     /// <summary>
     /// Deals 12 Damage.

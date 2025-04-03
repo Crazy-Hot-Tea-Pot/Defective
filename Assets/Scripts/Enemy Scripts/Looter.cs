@@ -111,26 +111,26 @@ public class Looter : Enemy
         base.CombatStart();               
     }
 
-    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
+    protected override List<(string, IntentType, int)> GetNextIntents()
     {
         if (swipeCount < 3)
-            return ("Swipe", IntentType.Attack, 6);
+            return new() { ("Swipe", IntentType.Attack, 6) };
         else if (swipeCount == 3 && !IsShrouded)
-            return ("Shroud", IntentType.Shield, 10);
+            return new() { ("Shroud", IntentType.Shield, 10) };
         else if (IsShrouded)
         {
-            //if with gangleader reset
             if (IsWithLeader)
             {
                 swipeCount = 0;
-                return ("Swipe", IntentType.Attack, 6);
+                return new() { ("Swipe", IntentType.Attack, 6) };
             }
             else
-                return ("Escape", IntentType.Unique, 0);
+                return new() { ("Escape", IntentType.Unique, 0) };
         }
 
-        return ("Unknown", IntentType.None, 0);
+        return new() { ("Unknown", IntentType.None, 0) };
     }
+
 
     /// <summary>
     ///  After the 3rd Swipe, perform Shroud

@@ -53,34 +53,34 @@ public class GarbageBot : Enemy
     protected override void PerformIntent()
     {
         base.PerformIntent();
-        switch (NextIntent.intentText)
-        {
-            case "Compact":
-                    //Compact();
-                    Animator.SetTrigger("Intent 1");
-                break;
-            case "Shred":
-                    //Shred();
-                    Animator.SetTrigger("Intent 2");
-                break;
-            case "PileOn":
-                //PileOn();
-                Animator.SetTrigger("Intent 3");
-                break;
-            default:
-                Debug.LogWarning("Should never hit here!");
-                break;
-        }
+        //switch (NextIntent.intentText)
+        //{
+        //    case "Compact":
+        //            //Compact();
+        //            Animator.SetTrigger("Intent 1");
+        //        break;
+        //    case "Shred":
+        //            //Shred();
+        //            Animator.SetTrigger("Intent 2");
+        //        break;
+        //    case "PileOn":
+        //        //PileOn();
+        //        Animator.SetTrigger("Intent 3");
+        //        break;
+        //    default:
+        //        Debug.LogWarning("Should never hit here!");
+        //        break;
+        //}
     }
-    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
-    {
-        if (nextIntentRoll <= 3)
-            return ("Compact", IntentType.Attack, 15);
-        else if (nextIntentRoll <= 6)
-            return ("Shred", IntentType.Attack, 7);
-        else
-            return ("Pile On", IntentType.Attack, 10);
-    }
+    //protected override (string intentText, IntentType intentType, int value) GetNextIntent()
+    //{
+    //    if (nextIntentRoll <= 3)
+    //        return ("Compact", IntentType.Attack, 15);
+    //    else if (nextIntentRoll <= 6)
+    //        return ("Shred", IntentType.Attack, 7);
+    //    else
+    //        return ("Pile On", IntentType.Attack, 10);
+    //}
 
     /// <summary>
     /// Deals 15 damage.

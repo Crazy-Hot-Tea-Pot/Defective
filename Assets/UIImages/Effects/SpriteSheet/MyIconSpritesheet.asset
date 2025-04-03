@@ -98,8 +98,8 @@ MonoBehaviour:
     m_Unicode: 65534
     m_GlyphIndex: 9
     m_Scale: 1
-    m_Name: Icon Spritesheet_11
-    m_HashCode: -756283150
+    m_Name: Jam
+    m_HashCode: 83750
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 10
@@ -110,20 +110,20 @@ MonoBehaviour:
     m_Unicode: 65534
     m_GlyphIndex: 11
     m_Scale: 1
-    m_Name: Icon Spritesheet_6
-    m_HashCode: -413369244
+    m_Name: Power
+    m_HashCode: 94339295
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 12
     m_Scale: 1
-    m_Name: Icon Spritesheet_7
-    m_HashCode: -413369243
+    m_Name: Drained
+    m_HashCode: 1256670609
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 13
     m_Scale: 1
-    m_Name: Icon Spritesheet_9
-    m_HashCode: -413369237
+    m_Name: WornDown
+    m_HashCode: -1002518378
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:

@@ -261,7 +261,6 @@ public class Item : ScriptableObject
     {
         isEquipped = false;
         playerOwned = false;
-        ItemTeir = Teir.Base;
-        Debug.Log($"{itemName} reset to default values.");
+        ItemTeir = Teir.Base;        
     }
 }

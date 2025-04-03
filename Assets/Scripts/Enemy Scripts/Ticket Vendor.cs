@@ -62,35 +62,35 @@ public class TicketVendor : Enemy
     {
         base.PerformIntent();
 
-        switch (NextIntent.intentText)
-        {
-            case "Halt":
-                //Halt();
-                Animator.SetTrigger("Intent 1");
-                break;
-            case "Confiscate":
-                //Confiscate();
-                Animator.SetTrigger("Intent 2");
-                break;
-            case "Redirect":
-                //Redirect();
-                Animator.SetTrigger("Intent 3");
-                break;
-            default:
-                Debug.LogWarning("Shouldn't hit here!");
-                break;
-        }
+        //switch (NextIntent.intentText)
+        //{
+        //    case "Halt":
+        //        //Halt();
+        //        Animator.SetTrigger("Intent 1");
+        //        break;
+        //    case "Confiscate":
+        //        //Confiscate();
+        //        Animator.SetTrigger("Intent 2");
+        //        break;
+        //    case "Redirect":
+        //        //Redirect();
+        //        Animator.SetTrigger("Intent 3");
+        //        break;
+        //    default:
+        //        Debug.LogWarning("Shouldn't hit here!");
+        //        break;
+        //}
 
     }
-    protected override (string intentText, IntentType intentType, int value) GetNextIntent()
-    {
-        if (nextIntentRoll <= 3)
-            return ("Halt", IntentType.Attack, 9);
-        else if (nextIntentRoll <= 7)
-            return ("Confiscate", IntentType.Debuff, 7);
-        else
-            return ("Redirect", IntentType.Debuff, 7);
-    }
+    //protected override (string intentText, IntentType intentType, int value) GetNextIntent()
+    //{
+    //    if (nextIntentRoll <= 3)
+    //        return ("Halt", IntentType.Attack, 9);
+    //    else if (nextIntentRoll <= 7)
+    //        return ("Confiscate", IntentType.Debuff, 7);
+    //    else
+    //        return ("Redirect", IntentType.Debuff, 7);
+    //}
 
     private void Redirect()
     {

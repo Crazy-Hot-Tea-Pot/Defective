@@ -144,13 +144,11 @@ public static class SoundManager
     {
         if (sound == SoundFX.None)
         {
-            Debug.Log("No sound selected. Skipping sound effect.");
             return;
         }
 
         if (soundOrigin == null)
         {
-            Debug.LogError("Sound origin not provided for 3D sound. Skipping sound effect.");
             return;
         }
 
