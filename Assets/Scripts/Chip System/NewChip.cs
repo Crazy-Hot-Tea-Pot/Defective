@@ -233,13 +233,16 @@ public class NewChip : ScriptableObject
             case TypeOfChips.Defense:
                 if (this is DefenseChip defenseChip)
                 {
-                    int baseShield = defenseChip.shieldAmount;
-                    int upgradedShield = baseShield + defenseChip.upgradedShieldAmountToApply;
+                    if (defenseChip.shieldAmount > 0)
+                    {
+                        int baseShield = defenseChip.shieldAmount;
+                        int upgradedShield = baseShield + defenseChip.upgradedShieldAmountToApply;
 
-                    if (IsUpgraded)
-                        description += $"\nGrants {upgradedShield} Shield";
-                    else
-                        description += $"\nGrants {baseShield} Shield";                    
+                        if (IsUpgraded)
+                            description += $"\nGrants {upgradedShield} Shield";
+                        else
+                            description += $"\nGrants {baseShield} Shield";
+                    }
 
                     if (defenseChip.buffToApply != Effects.Buff.None)
                     {

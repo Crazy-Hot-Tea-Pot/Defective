@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 0
   chipName: Guard
-  StartingDescription: 
+  StartingDescription: Brace for impact!
   chipImage: {fileID: 21300000, guid: 8b506c98ea453744db5b85a546378d3d, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0

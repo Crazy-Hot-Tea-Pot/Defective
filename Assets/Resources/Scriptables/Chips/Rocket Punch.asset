@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 2
   chipName: Rocket Punch
-  StartingDescription: 
+  StartingDescription: Use thrusters to move your fist foward!
   chipImage: {fileID: 21300000, guid: 6ef4f08965126e840a1c26e91015a3f1, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150

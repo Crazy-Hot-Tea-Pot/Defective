@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Stand Ground
-  StartingDescription: 
+  StartingDescription: Heavy Defense!
   chipImage: {fileID: 21300000, guid: aea685bce923b0446b8be4c117e52dbb, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Static Shock
-  StartingDescription: 
+  StartingDescription: Electrifying!
   chipImage: {fileID: 21300000, guid: ccc1619e67a699d48be479dcdbb16875, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150

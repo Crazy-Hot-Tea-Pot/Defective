@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 1
   chipName: Well Structured
-  StartingDescription: 
+  StartingDescription: A good structure starts with a good foundation!
   chipImage: {fileID: 21300000, guid: 184925ca11d3c45449dfb303e4845dfe, type: 3}
   canBeUpgraded: 1
   costToUpgrade: 150

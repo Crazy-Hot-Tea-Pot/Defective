@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipRarity: 2
   chipName: Impervious
-  StartingDescription: You take no Damage this Turn
+  StartingDescription: You take no Damage this Turn!
   chipImage: {fileID: 21300000, guid: ddca4a470d951b348acb58977cee00f6, type: 3}
   canBeUpgraded: 0
   costToUpgrade: 0
