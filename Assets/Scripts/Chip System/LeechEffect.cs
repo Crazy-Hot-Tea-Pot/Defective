@@ -17,7 +17,7 @@ public class LeechEffect : SkillEffects
     {
         if (target != null)
         {            
-            int damage = card.IsUpgraded ? damageAmount + 5 : damageAmount;
+            float damage = card.IsUpgraded ? damageAmount + 5 : damageAmount;
             target.TakeDamage(damage);
             player.RecoverEnergy(damage);
             Debug.Log("Leech Effect: Dealt " + damage + " damage and recovered energy.");

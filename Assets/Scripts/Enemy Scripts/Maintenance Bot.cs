@@ -5,6 +5,7 @@ public class MaintenanceBot : Enemy
 {
     [Header("Custom for Enemy type")]
     private bool repairUsed;
+    private float baseDissassembleDamage = 9;
     public GameObject GalvanizeEffect;
 
     public bool RepairUsed
@@ -127,7 +128,7 @@ public class MaintenanceBot : Enemy
     public void Disassemble()
     {
         Debug.Log("Maintenance Bot uses Disassemble!");
-        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(9);
+        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(CalculateFinalDamage(baseDissassembleDamage));
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.WornDown, 1);        
     }
     /// <summary>

@@ -180,7 +180,7 @@ public class SecurityDrone : Enemy
     /// </summary>
     public void Ram()
     {
-        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(ramDamage);
+        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(CalculateFinalDamage(ramDamage));
         SoundManager.PlayFXSound(RamSound);
     }
     /// <summary>
@@ -192,10 +192,9 @@ public class SecurityDrone : Enemy
     {
         // Play Sound
         SoundManager.PlayFXSound(NeutralizeSound);
+        
 
-        Debug.Log(this.gameObject.name + " is Neutralizing.");
-
-        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(neutralizeDamage);
+        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(CalculateFinalDamage(neutralizeDamage));
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.Drained, 1);
     }
     /// <summary>

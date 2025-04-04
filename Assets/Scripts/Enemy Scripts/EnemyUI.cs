@@ -183,6 +183,7 @@ public class EnemyUI : MonoBehaviour
                 {
                     effectPrefab.GetComponent<Image>().sprite = EffectImages.Find(sprite => sprite.name == effectName);
                     effectPrefab.GetComponent<EffectsInfo>().SetAmountOfEffect(statusEffect.StackCount);
+                    effectPrefab.GetComponent<EffectsInfo>().IsEnemyEffect = true;
                 }
                 catch
                 {

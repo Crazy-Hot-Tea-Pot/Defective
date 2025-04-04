@@ -9,6 +9,19 @@ public class EffectsInfo : MonoBehaviour, IPointerEnterHandler
     [SerializeField]
     private TextMeshProUGUI DisplayEffectAmount;
 
+    public bool IsEnemyEffect
+    {
+        get
+        {
+            return isEnemyEffect;
+        }
+        set
+        {
+            isEnemyEffect = value;
+        }
+    }
+    private bool isEnemyEffect = false;
+
     public void SetAmountOfEffect(int amount)
     {
         if (amount == 0)
@@ -22,6 +35,7 @@ public class EffectsInfo : MonoBehaviour, IPointerEnterHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UiManager.Instance.CurrentUI.GetComponent<RoamingAndCombatUiController>().DisplayEffectInfo(this.gameObject.name);
+        if (!isEnemyEffect) 
+            UiManager.Instance.CurrentUI.GetComponent<RoamingAndCombatUiController>().DisplayEffectInfo(this.gameObject.name);
     }
 }

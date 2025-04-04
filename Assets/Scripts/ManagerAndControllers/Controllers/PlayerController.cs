@@ -553,7 +553,7 @@ public class PlayerController : MonoBehaviour
     /// Give Player energy.
     /// </summary>
     /// <param name="energyAmount"></param>
-    public void RecoverEnergy(int energyAmount)
+    public void RecoverEnergy(float energyAmount)
     {
         //Restore energy this will inside of the getter and setter variable check if we are over energizing and correct
         Energy += energyAmount;
@@ -1023,6 +1023,8 @@ public class PlayerController : MonoBehaviour
         Shield = 0;
 
         Heal(MaxHealth * 0.2f);
+
+        GalvanizeEffectOnBody.SetActive(IsGalvanized);
     }
 
 

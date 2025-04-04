@@ -88,6 +88,7 @@ public class Enemy : MonoBehaviour
     protected float maxShield = 0f;
     protected bool isTargeted;
     protected int nextIntentRoll;
+    protected bool iAmDead = false;
 
     /// <summary>
     /// Returns name of enemy
@@ -282,13 +283,32 @@ public class Enemy : MonoBehaviour
         set
         {
             listOfActiveEffects = value;
-
-            // Update the UI when effects change
-            thisEnemyUI.UpdateEffectsPanel(listOfActiveEffects);
         }
     }
 
-
+    /// <summary>
+    /// Returns if the Enemy is in worndown state.
+    /// </summary>
+    public bool IsWornDown
+    {
+        get
+        {
+            if (WornDownStacks > 0)
+                return true;
+            else
+                return false;
+        }
+    }
+    /// <summary>
+    /// Returns how many stacks of worn down the enemy has.
+    /// </summary>
+    public int WornDownStacks
+    {
+        get
+        {
+            return GetStacks(Effects.Debuff.WornDown);
+        }
+    }
     /// <summary>
     /// Is enemy GalvanizedStacks.
     /// Added for animation or effect later.
@@ -452,10 +472,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void EndTurn()
     {
-        EnemyUIObject.SetActive(true);
-
-        //Remove debuffs by 1
-        RemoveEffect(Effects.Debuff.Drained, 1);        
+        EnemyUIObject.SetActive(true);        
 
         //Assign new intent AFTER performing the current one
         NextIntents = GetNextIntents();
@@ -473,6 +490,8 @@ public class Enemy : MonoBehaviour
         {
             Shield += GalvanizedStacks;            
         }
+        //Remove debuffs by 1
+        RemoveEffect(Effects.Debuff.Drained, 1);
     }
 
     /// <summary>
@@ -495,7 +514,8 @@ public class Enemy : MonoBehaviour
         //if (DistanceToPlayer <= AttackRange)
         //{
         //agent.ResetPath();
-        PerformIntent();
+        if(!iAmDead)
+            PerformIntent();
         //}
         //else
         //{
@@ -514,34 +534,50 @@ public class Enemy : MonoBehaviour
         // Plays sound of taking damage
         SoundManager.PlayFXSound(EnemyDamageTakenSound, this.gameObject.transform);
 
+        float modifiedDamage = damage;
+
+        if (IsWornDown)
+        {
+            modifiedDamage *= 1.3f;
+        }
         // if has shield
         if (Shield > 0)
         {
-            if (damage >= Shield)
+            if (modifiedDamage >= Shield)
             {
-                damage -= Shield;
+                modifiedDamage -= Shield;
                 Shield = 0;
                 Debug.Log("Enemy " + name + "Shield destroyed.");
             }
             else
             {
                 // Reduce the shield by the damage amount
-                Shield -= damage;
+                Shield -= modifiedDamage;
                 // No remaining damage to apply to HP
-                damage = 0;
+                modifiedDamage = 0;
             }
         }
-        CurrentHP -= damage;
+        CurrentHP -= modifiedDamage;
 
-        DisplayDamageTaken(damage);
+        DisplayDamageTaken(modifiedDamage);
 
         RotateToPlayer(EnemyTarget.transform.position);
 
         Animator.SetTrigger("Hit");
 
         //Track damage
-        GameStatsTracker.Instance.ReportDamage(damage);
+        GameStatsTracker.Instance.ReportDamage(modifiedDamage);
     }
+
+    protected float CalculateFinalDamage(float baseDamage)
+    {
+        if (PowerStacks > 0)
+            baseDamage += PowerStacks;
+        if (DrainedStacks > 0)
+            baseDamage *= 0.8f;
+        return baseDamage;
+    }
+
 
     /// <summary>
     /// Current CombatEnemies turn to act.
@@ -573,6 +609,7 @@ public class Enemy : MonoBehaviour
 
         }
         Animator.SetTrigger("Die");
+        iAmDead = true;
         
         SoundManager.PlayFXSound(EnemyDeathSound, this.gameObject.transform);
     }
@@ -754,6 +791,9 @@ public class Enemy : MonoBehaviour
             ListOfActiveEffects.Add(new Effects.StatusEffect(debuffEffect, stacks));
         else if (effect is Effects.SpecialEffects specialEffect)
             ListOfActiveEffects.Add(new Effects.StatusEffect(specialEffect, 1));
+
+        // Update the UI when effects change
+        thisEnemyUI.UpdateEffectsPanel(listOfActiveEffects);
     }
 
     #endregion
@@ -821,6 +861,9 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }
+
+        // Update the UI when effects change
+        thisEnemyUI.UpdateEffectsPanel(listOfActiveEffects);
     }
 
     #endregion

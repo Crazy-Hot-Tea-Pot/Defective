@@ -45,6 +45,9 @@ public class GangLeader : Enemy
     private GameObject looter1;
     private GameObject looter2;
 
+    private float baseDisorientDamage = 6;
+    private float baseCowerDamage = 3;
+
     [Header("Sounds")]
     public BgSound CustomBattleSound;
     private BgSound previousBackgroundSound;
@@ -126,7 +129,6 @@ public class GangLeader : Enemy
             base.UpdateIntentUI();
         }
     }
-
 
     protected override void SetUpEnemy()
     {
@@ -225,7 +227,9 @@ public class GangLeader : Enemy
     private void Disorient()
     {
         EnemyTarget.GetComponent<PlayerController>().AddEffect(Effects.Debuff.Jam, 1);
-        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(6);
+        
+
+        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(CalculateFinalDamage(baseDisorientDamage));
     }
     /// <summary>
     ///  Gain 15 ShieldBar, Deal 3 Damage.
@@ -234,7 +238,8 @@ public class GangLeader : Enemy
     private void Cower()
     {
         ApplyShield(15);
-        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(3);
+
+        EnemyTarget.GetComponent<PlayerController>().DamagePlayerBy(CalculateFinalDamage(baseCowerDamage));
     }
     /// <summary>
     /// Self and Looters gain 2 Power.

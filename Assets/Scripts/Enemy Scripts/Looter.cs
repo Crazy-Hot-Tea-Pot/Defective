@@ -10,6 +10,7 @@ public class Looter : Enemy
     private bool isShrouded;
     private int stolenScrap = 0;
     private bool isWithLeader = false;
+    private float baseSwipeDamage;
     /// <summary>
     /// To keep track of stolen Scraps
     /// </summary>
@@ -62,12 +63,15 @@ public class Looter : Enemy
         {
             case EnemyDifficulty.Easy:
                 MaxHp = 30;
+                baseSwipeDamage = 6;
                 break;
             case EnemyDifficulty.Medium:
                 MaxHp = 45;
+                baseSwipeDamage = 6;
                 break;
             case EnemyDifficulty.Hard:
                 MaxHp = 60;
+                baseSwipeDamage = 6;
                 break;
         }
         if (CurrentHP <= 0)
@@ -142,24 +146,15 @@ public class Looter : Enemy
 
         StolenScrap += EnemyTarget.GetComponent<PlayerController>().TakeScrap(5);
 
+        float adjustedDamage = baseSwipeDamage;
         // Empower Swipe
-        if (PowerStacks > 0)
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().DamagePlayerBy(6 + PowerStacks);
-            RemoveEffect(Effects.Buff.Power,0, true);
-        }
+        if (PowerStacks > 0)        
+            adjustedDamage += PowerStacks;                                
         // Drained Swipe
-        else if (DrainedStacks > 0)
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().DamagePlayerBy(Mathf.FloorToInt(6 - 0.8f));
-            RemoveEffect(Effects.Debuff.Drained,1, false);            
-        }
-        // Default Swipe
-        else
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().DamagePlayerBy(6);
-        }
-
+        if (DrainedStacks > 0)
+            adjustedDamage += adjustedDamage * 0.8f;
+        
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().DamagePlayerBy(adjustedDamage);
     }
 
     public void Shroud()

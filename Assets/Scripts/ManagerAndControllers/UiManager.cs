@@ -110,9 +110,9 @@ public class UiManager : MonoBehaviour
     }
     public void UpdateShield(float currentShield, float MaxShield)
     {
-        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.GameOver)
-            return;
-        GetCurrentController<RoamingAndCombatUiController>().UpdateShield(currentShield, MaxShield);
+        if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Roaming ||
+            GameManager.Instance.CurrentGameMode == GameManager.GameMode.Combat)           
+            GetCurrentController<RoamingAndCombatUiController>().UpdateShield(currentShield, MaxShield);
     }
     public void UpdateEnergy(float currentEnergy, float MaxEnergy)
     {

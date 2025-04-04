@@ -389,7 +389,6 @@ public class LootUiController : UiController
                 {
                     //Sum = (random * weight)(random2 * weight2)...
                     sum += (RandomNumberForSelection(lootTempItems.Count) * item.ItemRarityWeight);
-                    Debug.Log("Chip Value Sum for random drops: " + sum);
                     //sumWeigh = weight1 + weight2...
                     sumWeight += item.ItemRarityWeight;
                 }
